@@ -5,13 +5,25 @@
 #include "main.h"
 
 #include <StaticLib/staticlib_func.h>
+#ifdef _DEBUG
 #pragma comment(lib, "StaticLib/StaticLib_D.lib")
+#else
+#pragma comment(lib, "StaticLib/StaticLib.lib")
+#endif
+
+//#include <DynamicLib/Dll_func.h>
+//#ifdef _DEBUG
+//#pragma comment(lib, "DynamicLib/DynamicLib_D.lib")
+//#else
+//#pragma comment(lib, "DynamicLib/DynamicLib.lib")
+//#endif
 
 #define MAX_LOADSTRING 100
 
 // 전역 변수:
 HINSTANCE g_hInst = nullptr;                               // 현재 인스턴스입니다.
 
+typedef float (*Dll_Func)(float);
 
 // 이 코드 모듈에 포함된 함수의 선언을 전달합니다:
 ATOM                MyRegisterClass(HINSTANCE hInstance);
@@ -24,7 +36,24 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                      _In_ LPWSTR    lpCmdLine,
                      _In_ int       nCmdShow)
 {
+    // 정적 라이브러리
+    int i = Pow(2, 10);
+
+    // 동적 라이브러리
+    HMODULE library = LoadLibrary(L"DynamicLib_D.dll");
+    
+    Dll_Func pFunc = nullptr;
+    
+    pFunc = (Dll_Func)GetProcAddress(library, "floor");
+
+    //float f = floor(99.99f);
+
+    float f = pFunc(58.45f);
+
+    FreeLibrary(library);
+
     MyRegisterClass(hInstance);
+
 
     g_hInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
 
