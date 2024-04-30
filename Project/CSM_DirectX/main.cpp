@@ -4,20 +4,6 @@
 #include "framework.h"
 #include "main.h"
 
-#include <StaticLib/staticlib_func.h>
-#ifdef _DEBUG
-#pragma comment(lib, "StaticLib/StaticLib_D.lib")
-#else
-#pragma comment(lib, "StaticLib/StaticLib.lib")
-#endif
-
-//#include <DynamicLib/Dll_func.h>
-//#ifdef _DEBUG
-//#pragma comment(lib, "DynamicLib/DynamicLib_D.lib")
-//#else
-//#pragma comment(lib, "DynamicLib/DynamicLib.lib")
-//#endif
-
 #define MAX_LOADSTRING 100
 
 // 전역 변수:
@@ -36,22 +22,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                      _In_ LPWSTR    lpCmdLine,
                      _In_ int       nCmdShow)
 {
-    // 정적 라이브러리
-    int i = Pow(2, 10);
-
-    // 동적 라이브러리
-    HMODULE library = LoadLibrary(L"DynamicLib_D.dll");
-    
-    Dll_Func pFunc = nullptr;
-    
-    pFunc = (Dll_Func)GetProcAddress(library, "floor");
-
-    //float f = floor(99.99f);
-
-    float f = pFunc(58.45f);
-
-    FreeLibrary(library);
-
     MyRegisterClass(hInstance);
 
 
@@ -73,12 +43,23 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     MSG msg = {};
 
     // 기본 메시지 루프입니다:
-    while (GetMessage(&msg, nullptr, 0, 0))
+    while (true)
     {
-        if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
+        if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
         {
-            TranslateMessage(&msg);
-            DispatchMessage(&msg);
+            if (WM_QUIT == msg.message)
+                break;
+
+            if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
+            {
+                TranslateMessage(&msg);
+                DispatchMessage(&msg);
+            }
+        }
+
+        else
+        {
+
         }
     }
 
