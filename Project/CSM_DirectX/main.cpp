@@ -4,16 +4,22 @@
 #include "framework.h"
 #include "main.h"
 
+#ifdef _DEBUG
+#pragma comment(lib, "Engine\\Engine_D")
+#else
+#pragma comment(lib, "Engine\\Engine")
+#endif
+
+#include <Engine/global.h>
+#include <Engine/CEngine.h>
+
 #define MAX_LOADSTRING 100
 
 // 전역 변수:
 HINSTANCE g_hInst = nullptr;                               // 현재 인스턴스입니다.
 
-typedef float (*Dll_Func)(float);
-
 // 이 코드 모듈에 포함된 함수의 선언을 전달합니다:
 ATOM                MyRegisterClass(HINSTANCE hInstance);
-BOOL                InitInstance(HINSTANCE, int);
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 
@@ -23,7 +29,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                      _In_ int       nCmdShow)
 {
     MyRegisterClass(hInstance);
-
 
     g_hInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
 
@@ -37,6 +42,14 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     ShowWindow(hWnd, nCmdShow);
     UpdateWindow(hWnd);
+
+    // CEngine 객체 초기화
+    if (FAILED(CEngine::GetInst()->Init(hWnd, POINT{ 1280,768 })))
+    {
+        MessageBox(nullptr, L"장치 초기화 실패", L"Engine 초기화 실패", MB_OK);
+        return 0;
+    }
+
 
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_CSMDIRECTX));
 
@@ -59,7 +72,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
         else
         {
-
+            CEngine::GetInst()->Progress();
         }
     }
 
@@ -87,7 +100,7 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
     wcex.hIcon          = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_CSMDIRECTX));
     wcex.hCursor        = LoadCursor(nullptr, IDC_ARROW);
     wcex.hbrBackground  = (HBRUSH)(COLOR_WINDOW+1);
-    wcex.lpszMenuName   = MAKEINTRESOURCEW(IDC_CSMDIRECTX);
+    wcex.lpszMenuName   = nullptr;//MAKEINTRESOURCEW(IDC_CSMDIRECTX);
     wcex.lpszClassName  = L"MyWindowClass";
     wcex.hIconSm        = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
 
