@@ -25,6 +25,22 @@
     <ClInclude Include="SimpleMath.h">
       <Filter>Module</Filter>
     </ClInclude>
+    <ClInclude Include="CPathMgr.h">
+      <Filter>04. Manager\01. PathMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="CTaskMgr.h">
+      <Filter>04. Manager\TaskMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="CTimeMgr.h">
+      <Filter>04. Manager\02. TimeMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="CKeyMgr.h">
+      <Filter>04. Manager\03. KeyMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="Temp.h" />
+    <ClInclude Include="struct.h">
+      <Filter>01. Header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CEngine.cpp">
@@ -39,6 +55,19 @@
     <ClCompile Include="CDevice.cpp">
       <Filter>03. Device</Filter>
     </ClCompile>
+    <ClCompile Include="CPathMgr.cpp">
+      <Filter>04. Manager\01. PathMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="CTaskMgr.cpp">
+      <Filter>04. Manager\TaskMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="CTimeMgr.cpp">
+      <Filter>04. Manager\02. TimeMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="CKeyMgr.cpp">
+      <Filter>04. Manager\03. KeyMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="Temp.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Default">
@@ -56,10 +85,33 @@
     <Filter Include="Module">
       <UniqueIdentifier>{9f2f76aa-c5b1-4508-9b1d-84ae6b0a6f34}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04. Manager">
+      <UniqueIdentifier>{de87a75a-7d47-4e8d-9305-301ea2e740b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Manager\01. PathMgr">
+      <UniqueIdentifier>{4698a1a3-c621-4602-bd22-b695e559c97b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Manager\02. TimeMgr">
+      <UniqueIdentifier>{7a294d78-e408-445f-a3ea-a3212c4c2ddc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Manager\03. KeyMgr">
+      <UniqueIdentifier>{8dae6303-387d-4c98-8fe4-8860890cda62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Manager\TaskMgr">
+      <UniqueIdentifier>{03716406-4a2c-475e-8f1e-ccc714f2ecfd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HLSL">
+      <UniqueIdentifier>{b9cd1d4d-0d15-4005-ba51-73b332d62a94}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="SimpleMath.inl">
       <Filter>Module</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="test.fx">
+      <Filter>HLSL</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

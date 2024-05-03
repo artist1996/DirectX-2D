@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "CEngine.h"
 #include "CDevice.h"
+#include "Temp.h"
 
 CEngine::CEngine()
 	: m_hWnd(nullptr)
@@ -8,7 +9,9 @@ CEngine::CEngine()
 {}
 
 CEngine::~CEngine()
-{}
+{
+	TempRelease();
+}
 
 int CEngine::Init(HWND _hWnd, POINT _ptResolution)
 {
@@ -23,6 +26,8 @@ int CEngine::Init(HWND _hWnd, POINT _ptResolution)
 		MessageBox(nullptr, L"장치 초기화 실패", L"CDevice 초기화 실패", MB_OK);
 		return E_FAIL;
 	}
+
+	TempInit();
 
 	return S_OK;
 }
@@ -42,7 +47,11 @@ void CEngine::ChangeWindowScale(UINT _Width, UINT _Height)
 
 void CEngine::Progress()
 {
+	TempTick();
+
 	CDevice::GetInst()->Present();
+
+	TempRender();
 
 	CDevice::GetInst()->Clear();
 }

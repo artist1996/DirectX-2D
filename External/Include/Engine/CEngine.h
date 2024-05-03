@@ -10,6 +10,9 @@ private:
 	POINT m_ptResolution;	// Window Resolution
 
 public:
+	HWND GetMainWnd() { return m_hWnd; }
+
+public:
 	int Init(HWND _hWnd, POINT _ptResolution);
 	void Progress();
 	void ChangeWindowScale(UINT _Width, UINT _Height);
