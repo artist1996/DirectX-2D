@@ -11,7 +11,7 @@ CPathMgr::~CPathMgr()
 {
 }
 
-void CPathMgr::init()
+void CPathMgr::Init()
 {
 	// 실행경로를 얻어낸다
 	wchar_t szBuffer[256] = {};

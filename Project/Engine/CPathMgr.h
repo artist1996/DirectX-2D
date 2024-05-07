@@ -1,6 +1,7 @@
 #pragma once
 
 class CPathMgr
+	: public CSingleton<CPathMgr>
 {
 	SINGLE(CPathMgr);
 private:
@@ -9,14 +10,14 @@ private:
 
 
 public:
-	void init();
+	void Init();
 	void render();
 
 private:
 	void GetParentPath(_Inout_ wchar_t* _Buffer);
 
 public:
-	const wstring& GetContehtPath() { return m_Content; }
+	const wstring& GetContentPath() { return m_Content; }
 	const wstring& GetSolutionPath() { return m_Solution; }	
 };
 

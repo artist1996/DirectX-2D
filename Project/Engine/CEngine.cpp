@@ -1,7 +1,10 @@
 #include "pch.h"
 #include "CEngine.h"
 #include "CDevice.h"
+#include "CPathMgr.h"
+
 #include "Temp.h"
+
 
 CEngine::CEngine()
 	: m_hWnd(nullptr)
@@ -27,7 +30,13 @@ int CEngine::Init(HWND _hWnd, POINT _ptResolution)
 		return E_FAIL;
 	}
 
-	TempInit();
+	CPathMgr::GetInst()->Init();
+
+	if (FAILED(TempInit()))
+	{
+		MessageBox(nullptr, L"Failed TempInit", L"CEngine 초기화 실패", MB_OK);
+		return E_FAIL;
+	}
 
 	return S_OK;
 }

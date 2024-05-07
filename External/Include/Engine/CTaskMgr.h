@@ -2,6 +2,7 @@
 
 
 class CTaskMgr
+	: CSingleton<CTaskMgr>
 {
 	SINGLE(CTaskMgr)
 private:
