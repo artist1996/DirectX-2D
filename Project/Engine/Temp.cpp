@@ -9,8 +9,6 @@
 ID3D11Buffer* g_VB = nullptr;
 Vtx g_Vtx[3] = {};
 
-
-
 // Vertex Shader 생성
 ID3DBlob*			g_VSBlob = nullptr;
 ID3D11VertexShader* g_VS = nullptr;
@@ -30,13 +28,14 @@ int TempInit()
 {
 	// Vertex Buffer 생성	(삼각형 그릴 것 정점 3개)
 	g_Vtx[0].vPos = Vec3(0.f, 1.f, 0.f);
-	g_Vtx[0].vColor = Vec4(1.f, 1.f, 1.f, 1.f);
+	g_Vtx[0].vColor = Vec4(1.f, 0.f, 0.f, 1.f);
 
 	g_Vtx[1].vPos = Vec3(1.f, -1.f, 0.f);
-	g_Vtx[1].vColor = Vec4(1.f, 1.f, 1.f, 1.f);
+	g_Vtx[1].vColor = Vec4(0.f, 1.f, 0.f, 1.f);
 
 	g_Vtx[2].vPos = Vec3(-1.f, -1.f, 0.f);
-	g_Vtx[2].vColor = Vec4(1.f, 1.f, 1.f, 1.f);
+	g_Vtx[2].vColor = Vec4(0.f, 0.f, 1.f, 1.f);
+
 
 	D3D11_BUFFER_DESC tVtxBufferDesc = {};
 	
@@ -92,6 +91,7 @@ int TempInit()
 							, nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE
 							, "PS_Test", "ps_5_0", D3DCOMPILE_DEBUG, 0, &g_PSBlob, &g_ErrBlob);
 
+
 	if (FAILED(hr))
 	{
 		if (nullptr != g_ErrBlob)
@@ -117,7 +117,7 @@ int TempInit()
 	// Layout 생성
 	D3D11_INPUT_ELEMENT_DESC Element[2] = {};		          // 현재 Vtx의 멤버가 Position, Color 2개 이기 때문에 2개를 초기화
 
-	Element[0].AlignedByteOffset = 0;					      // 정점의 시작 위치
+	Element[0].AlignedByteOffset = 0;					      // 정점 데이터의 시작 위치
 	Element[0].Format = DXGI_FORMAT_R32G32B32_FLOAT;	      // Data 크기
 	Element[0].InputSlot = 0;							      // Buffer가 여러 개 있을 경우 Index 지정
 	Element[0].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;  // Vertex Data (Instance 아직 안함)
@@ -125,8 +125,8 @@ int TempInit()
 	Element[0].SemanticName = "POSITION";					  // Semantic Name 요소의 의미를 나타내는 이름, Shader Code의 입력 Semantic과 일치 해야 함
 	Element[0].SemanticIndex = 0;							  // SemanticName 중복 시 증가
 	
-	Element[1].AlignedByteOffset = 0;					    
-	Element[1].Format = DXGI_FORMAT_R32G32B32_FLOAT;	    
+	Element[1].AlignedByteOffset = 12;					    
+	Element[1].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;	    
 	Element[1].InputSlot = 0;							    
 	Element[1].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
 	Element[1].InstanceDataStepRate = 0;
@@ -140,7 +140,6 @@ int TempInit()
 
 void TempTick()
 {
-
 }
 
 void TempRender()
@@ -149,8 +148,8 @@ void TempRender()
 	UINT Offset = 0;
 
 	CONTEXT->IASetVertexBuffers(0, 1, &g_VB, &Stride, &Offset);
-	CONTEXT->IASetInputLayout(g_Layout);
 	CONTEXT->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST); // 3개의 점을 하나의 삼각형으로 해석
+	CONTEXT->IASetInputLayout(g_Layout);
 	
 	CONTEXT->VSSetShader(g_VS, nullptr, 0);
 	CONTEXT->PSSetShader(g_PS, nullptr, 0);

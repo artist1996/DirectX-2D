@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "CDevice.h"
 
+#include "CEngine.h"
+
 CDevice::CDevice()
 	: m_hWnd(nullptr)
 	, m_Device(nullptr)
@@ -44,6 +46,7 @@ int CDevice::Init(HWND _hWnd, UINT _Width, UINT _Height)
 {
 	// Window Main Handle and Resoultion Setting
 	m_hWnd = _hWnd;
+
 	m_vResolution.x = (float)_Width;
 	m_vResolution.y = (float)_Height;
 
@@ -81,6 +84,20 @@ int CDevice::Init(HWND _hWnd, UINT _Width, UINT _Height)
 	// Output Merge State (출력 병합 단계)
 	m_Context->OMSetRenderTargets(1, &m_RTView, m_DSView);
 
+	// ViewPort 설정
+	// 출력 시킬 화면 윈도우 영역을 설정
+	D3D11_VIEWPORT Viewport = {};
+
+	Viewport.TopLeftX = 0;
+	Viewport.TopLeftY = 0;
+	Viewport.Width = m_vResolution.x;
+	Viewport.Height = m_vResolution.y;
+
+	Viewport.MinDepth = 0.f;
+	Viewport.MaxDepth = 1.f;
+
+	m_Context->RSSetViewports(1, &Viewport);
+
 	return S_OK;
 }
 
@@ -91,7 +108,7 @@ int CDevice::CreateSwapChain()
 
 	DXGI_SWAP_CHAIN_DESC Desc = {};
 
-	Desc.BufferCount = 1;	// 백버퍼 개수
+	Desc.BufferCount = 1;								 // 백버퍼 개수
 	Desc.BufferDesc.Width = m_vResolution.x;			 // 백버퍼 해상도
 	Desc.BufferDesc.Height = m_vResolution.y;			 // 백버퍼 해상도
 	Desc.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM; // 픽셀 포맷 (RGBA) 4Byte

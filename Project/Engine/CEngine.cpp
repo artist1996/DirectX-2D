@@ -58,9 +58,9 @@ void CEngine::Progress()
 {
 	TempTick();
 
-	CDevice::GetInst()->Present();
+	CDevice::GetInst()->Clear();
 
 	TempRender();
 
-	CDevice::GetInst()->Clear();
+	CDevice::GetInst()->Present();
 }
