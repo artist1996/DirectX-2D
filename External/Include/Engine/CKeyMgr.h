@@ -50,8 +50,8 @@ private:
 	Vec2				m_DragDir;
 
 public:
-	void init();
-	void tick();
+	void Init();
+	void Tick();
 
 public:
 	KEY_STATE GetKeyState(KEY _Key) { return m_vecKeyInfo[(UINT)_Key].eKeyState; }

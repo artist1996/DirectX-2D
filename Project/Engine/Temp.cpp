@@ -4,10 +4,12 @@
 #include "CDevice.h"
 
 #include "CPathMgr.h"
+#include "CKeyMgr.h"
+#include "CTimeMgr.h"
 
 // Vertex Buffer
 ID3D11Buffer* g_VB = nullptr;
-Vtx g_Vtx[3] = {};
+Vtx g_Vtx[6] = {};
 
 // Vertex Shader 생성
 ID3DBlob*			g_VSBlob = nullptr;
@@ -27,19 +29,27 @@ ID3D11InputLayout*  g_Layout = nullptr;
 int TempInit()
 {
 	// Vertex Buffer 생성	(삼각형 그릴 것 정점 3개)
-	g_Vtx[0].vPos = Vec3(0.f, 1.f, 0.f);
+	g_Vtx[0].vPos = Vec3(-0.5f, 0.5f, 0.f);
 	g_Vtx[0].vColor = Vec4(1.f, 0.f, 0.f, 1.f);
 
-	g_Vtx[1].vPos = Vec3(1.f, -1.f, 0.f);
+	g_Vtx[1].vPos = Vec3(0.5f, -0.5f, 0.f);
 	g_Vtx[1].vColor = Vec4(0.f, 1.f, 0.f, 1.f);
 
-	g_Vtx[2].vPos = Vec3(-1.f, -1.f, 0.f);
+	g_Vtx[2].vPos = Vec3(-0.5f, -0.5f, 0.f);
 	g_Vtx[2].vColor = Vec4(0.f, 0.f, 1.f, 1.f);
 
+	g_Vtx[3].vPos = Vec3(-0.5f, 0.5f, 0.f);
+	g_Vtx[3].vColor = Vec4(0.f, 0.f, 1.f, 1.f);
+
+	g_Vtx[4].vPos = Vec3(0.5f, 0.5f, 0.f);
+	g_Vtx[4].vColor = Vec4(1.f, 0.f, 0.f, 1.f);
+	
+	g_Vtx[5].vPos = Vec3(0.5f, -0.5f, 0.f);
+	g_Vtx[5].vColor = Vec4(0.f, 1.f, 0.f, 1.f);
 
 	D3D11_BUFFER_DESC tVtxBufferDesc = {};
 	
-	tVtxBufferDesc.ByteWidth = sizeof(Vtx) * 3;
+	tVtxBufferDesc.ByteWidth = sizeof(Vtx) * 6;					// 중요
 	tVtxBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 	tVtxBufferDesc.Usage = D3D11_USAGE_DEFAULT;
 	tVtxBufferDesc.CPUAccessFlags = 0;
@@ -155,7 +165,7 @@ void TempRender()
 	CONTEXT->PSSetShader(g_PS, nullptr, 0);
 
 
-	CONTEXT->Draw(3, 0);
+	CONTEXT->Draw(6, 0);
 }
 
 void TempRelease()

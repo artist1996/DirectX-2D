@@ -34,7 +34,7 @@ CKeyMgr::~CKeyMgr()
 
 }
 
-void CKeyMgr::init()
+void CKeyMgr::Init()
 {
 	for (int i = 0; i < (int)KEY::KEY_END; ++i)
 	{
@@ -49,7 +49,7 @@ void CKeyMgr::init()
 
 
 
-void CKeyMgr::tick()
+void CKeyMgr::Tick()
 {
 	// MainWindow 가 포커싱 상태이다.
 	if (CEngine::GetInst()->GetMainWnd() == GetFocus())

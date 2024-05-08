@@ -17,8 +17,8 @@ private:
 	float			m_Time;			// 프로그램이 켜진 이후로 진행된 시간
 
 public:
-	void init();
-	void tick();
+	void Init();
+	void Tick();
 
 public:
 	float GetDeltaTime() { return m_DeltaTime; }

@@ -19,7 +19,7 @@ CTimeMgr::~CTimeMgr()
 
 }
 
-void CTimeMgr::init()
+void CTimeMgr::Init()
 {
 	// 초당 1000 을 카운팅하는 GetTickCount 함수는 미세한 시간을 측정하기에는 정확도가 떨어진다.
 
@@ -30,7 +30,7 @@ void CTimeMgr::init()
 	m_llPrevCount = m_llCurCount;	
 }
 
-void CTimeMgr::tick()
+void CTimeMgr::Tick()
 {
 	// 현재 카운트 계산
 	QueryPerformanceCounter(&m_llCurCount);
