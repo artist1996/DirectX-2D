@@ -2,9 +2,10 @@
 #include "CEngine.h"
 #include "CDevice.h"
 #include "CPathMgr.h"
+#include "CKeyMgr.h"
+#include "CTimeMgr.h"
 
 #include "Temp.h"
-
 
 CEngine::CEngine()
 	: m_hWnd(nullptr)
@@ -30,7 +31,12 @@ int CEngine::Init(HWND _hWnd, POINT _ptResolution)
 		return E_FAIL;
 	}
 
+	// Manager Init
+
 	CPathMgr::GetInst()->Init();
+	CKeyMgr::GetInst()->Init();
+	CTimeMgr::GetInst()->Init();
+
 
 	if (FAILED(TempInit()))
 	{
@@ -56,6 +62,9 @@ void CEngine::ChangeWindowScale(UINT _Width, UINT _Height)
 
 void CEngine::Progress()
 {
+	CKeyMgr::GetInst()->Tick();
+	CTimeMgr::GetInst()->Tick();
+
 	TempTick();
 
 	CDevice::GetInst()->Clear();

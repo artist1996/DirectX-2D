@@ -9,7 +9,11 @@
 
 // Vertex Buffer
 ID3D11Buffer* g_VB = nullptr;
-Vtx g_Vtx[6] = {};
+Vtx g_Vtx[4] = {};
+
+// Index Buffer
+ID3D11Buffer* g_IB = nullptr;
+UINT g_Idx[6] = {};
 
 // Vertex Shader 생성
 ID3DBlob*			g_VSBlob = nullptr;
@@ -32,27 +36,21 @@ int TempInit()
 	g_Vtx[0].vPos = Vec3(-0.5f, 0.5f, 0.f);
 	g_Vtx[0].vColor = Vec4(1.f, 0.f, 0.f, 1.f);
 
-	g_Vtx[1].vPos = Vec3(0.5f, -0.5f, 0.f);
+	g_Vtx[1].vPos = Vec3(0.5f, 0.5f, 0.f);
 	g_Vtx[1].vColor = Vec4(0.f, 1.f, 0.f, 1.f);
 
-	g_Vtx[2].vPos = Vec3(-0.5f, -0.5f, 0.f);
+	g_Vtx[2].vPos = Vec3(0.5f, -0.5f, 0.f);
 	g_Vtx[2].vColor = Vec4(0.f, 0.f, 1.f, 1.f);
 
-	g_Vtx[3].vPos = Vec3(-0.5f, 0.5f, 0.f);
+	g_Vtx[3].vPos = Vec3(-0.5f, -0.5f, 0.f);
 	g_Vtx[3].vColor = Vec4(0.f, 0.f, 1.f, 1.f);
-
-	g_Vtx[4].vPos = Vec3(0.5f, 0.5f, 0.f);
-	g_Vtx[4].vColor = Vec4(1.f, 0.f, 0.f, 1.f);
-	
-	g_Vtx[5].vPos = Vec3(0.5f, -0.5f, 0.f);
-	g_Vtx[5].vColor = Vec4(0.f, 1.f, 0.f, 1.f);
 
 	D3D11_BUFFER_DESC tVtxBufferDesc = {};
 	
-	tVtxBufferDesc.ByteWidth = sizeof(Vtx) * 6;					// 중요
+	tVtxBufferDesc.ByteWidth = sizeof(Vtx) * 4;					// 중요
 	tVtxBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-	tVtxBufferDesc.Usage = D3D11_USAGE_DEFAULT;
-	tVtxBufferDesc.CPUAccessFlags = 0;
+	tVtxBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
+	tVtxBufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 	tVtxBufferDesc.MiscFlags = 0;
 	tVtxBufferDesc.StructureByteStride = 0;
 
@@ -65,13 +63,36 @@ int TempInit()
 		return E_FAIL;
 	}
 	
+	// Index Buffer 생성
+	g_Idx[0] = 0; g_Idx[1] = 1; g_Idx[2] = 2;
+	g_Idx[3] = 0; g_Idx[4] = 2; g_Idx[5] = 3;
+
+	D3D11_BUFFER_DESC tIdxBufferDesc = {};
+
+	tIdxBufferDesc.ByteWidth = sizeof(UINT) * 6;
+	tIdxBufferDesc.BindFlags = D3D11_BIND_INDEX_BUFFER;
+
+	// Index Buffer가 생성된 이후에 데이터가 변경될 일이 없다.
+	tIdxBufferDesc.Usage = D3D11_USAGE_DEFAULT;
+	tIdxBufferDesc.CPUAccessFlags = 0;
+	tIdxBufferDesc.MiscFlags = 0;
+	tIdxBufferDesc.StructureByteStride = 0;
+	
+	tSub.pSysMem = g_Idx;
+
+	if (FAILED(DEVICE->CreateBuffer(&tIdxBufferDesc, &tSub, &g_IB)))
+	{
+		MessageBox(nullptr, L"IndexBuffer 생성 실패", L"Temp 초기화 실패", MB_OK);
+		return E_FAIL;
+	}
+
 	// Vertex Shader 생성
 	wstring strShaderPath = CPathMgr::GetInst()->GetContentPath();
 
 	HRESULT hr = D3DCompileFromFile((strShaderPath + L"shader\\test.fx").c_str()
 									, nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE
 									, "VS_Test", "vs_5_0", D3DCOMPILE_DEBUG, 0, &g_VSBlob, &g_ErrBlob);
-
+	
 	if (FAILED(hr))
 	{
 		if (nullptr != g_ErrBlob)
@@ -150,6 +171,32 @@ int TempInit()
 
 void TempTick()
 {
+	float DeltaTime = CTimeMgr::GetInst()->GetDeltaTime();
+
+
+	if (KEY_STATE::PRESSED == CKeyMgr::GetInst()->GetKeyState(KEY::RIGHT))
+	{
+		for (int i = 0; i < 4; ++i)
+		{
+			g_Vtx[i].vPos.x += DeltaTime * 1.f;
+		}
+	}
+
+	if (KEY_STATE::PRESSED == CKeyMgr::GetInst()->GetKeyState(KEY::LEFT))
+	{
+		for (int i = 0; i < 4; ++i)
+		{
+			g_Vtx[i].vPos.x -= DeltaTime * 1.f;
+		}
+	}
+
+	D3D11_MAPPED_SUBRESOURCE tMapSub = {};
+
+	CONTEXT->Map(g_VB, 0, D3D11_MAP_WRITE_DISCARD, 0, &tMapSub);
+
+	memcpy(tMapSub.pData, g_Vtx, sizeof(Vtx) * 4);
+
+	CONTEXT->Unmap(g_VB, 0);
 }
 
 void TempRender()
@@ -158,6 +205,7 @@ void TempRender()
 	UINT Offset = 0;
 
 	CONTEXT->IASetVertexBuffers(0, 1, &g_VB, &Stride, &Offset);
+	CONTEXT->IASetIndexBuffer(g_IB, DXGI_FORMAT_R32_UINT, 0);
 	CONTEXT->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST); // 3개의 점을 하나의 삼각형으로 해석
 	CONTEXT->IASetInputLayout(g_Layout);
 	
@@ -165,14 +213,18 @@ void TempRender()
 	CONTEXT->PSSetShader(g_PS, nullptr, 0);
 
 
-	CONTEXT->Draw(6, 0);
+	//CONTEXT->Draw(4, 0);
+	CONTEXT->DrawIndexed(6, 0, 0);
 }
 
 void TempRelease()
 {
+
 	g_VB->Release();
 	g_VSBlob->Release();
 	g_VS->Release();
+
+	g_IB->Release();
 
 	g_PSBlob->Release();
 	g_PS->Release();
