@@ -25,4 +25,3 @@ public:
 	float GetTime() { return m_Time; }
 	UINT GetFPS() { return m_FPS; }
 };
-

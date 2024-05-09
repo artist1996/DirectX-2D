@@ -5,41 +5,10 @@
 
 CDevice::CDevice()
 	: m_hWnd(nullptr)
-	, m_Device(nullptr)
-	, m_Context(nullptr)
-	, m_SwapChain(nullptr)
-	, m_RTTex(nullptr)
-	, m_DSTex(nullptr)
-	, m_RTView(nullptr)
-	, m_DSView(nullptr)
-	, m_BSState(nullptr)
-	, m_DSState(nullptr)
-	, m_Sampler(nullptr)
-	, m_RSState(nullptr)
 {}
 
 CDevice::~CDevice()
 {
-	if (nullptr != m_Device)
-		m_Device->Release();
-
-	if (nullptr != m_Context)
-		m_Context->Release();
-
-	if (nullptr != m_SwapChain)
-		m_SwapChain->Release();
-
-	if (nullptr != m_RTTex)
-		m_RTTex->Release();
-
-	if (nullptr != m_DSTex)
-		m_DSTex->Release();
-
-	if (nullptr != m_RTView)
-		m_RTView->Release();
-
-	if (nullptr != m_DSView)
-		m_DSView->Release();
 }
 
 int CDevice::Init(HWND _hWnd, UINT _Width, UINT _Height)
@@ -61,7 +30,7 @@ int CDevice::Init(HWND _hWnd, UINT _Width, UINT _Height)
 								, nullptr, Flag
 								, nullptr, 0
 								, D3D11_SDK_VERSION
-								, &m_Device, nullptr, &m_Context)))
+								, m_Device.GetAddressOf(), nullptr, m_Context.GetAddressOf())))
 	{
 		MessageBox(nullptr, L"Device, Context 생성 실패", L"장치 초기화 실패", MB_OK);
 		return E_FAIL;
@@ -82,7 +51,7 @@ int CDevice::Init(HWND _hWnd, UINT _Width, UINT _Height)
 	}
 
 	// Output Merge State (출력 병합 단계)
-	m_Context->OMSetRenderTargets(1, &m_RTView, m_DSView);
+	m_Context->OMSetRenderTargets(1, m_RTView.GetAddressOf(), m_DSView.Get());
 
 	// ViewPort 설정
 	// 출력 시킬 화면 윈도우 영역을 설정
@@ -124,25 +93,21 @@ int CDevice::CreateSwapChain()
 	Desc.SampleDesc.Quality = 0;
 	Desc.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
 	
-	IDXGIDevice* Device = nullptr;
-	IDXGIAdapter* Adapter = nullptr;
-	IDXGIFactory* Factory = nullptr;
+	ComPtr<IDXGIDevice>  Device = nullptr;
+	ComPtr<IDXGIAdapter> Adapter = nullptr;
+	ComPtr<IDXGIFactory> Factory = nullptr;
 
-	if (FAILED(m_Device->QueryInterface(__uuidof(IDXGIDevice), (void**)&Device)))
+	if (FAILED(m_Device->QueryInterface(__uuidof(IDXGIDevice), (void**)Device.GetAddressOf())))
 		return E_FAIL;
 
-	if (FAILED(Device->GetParent(__uuidof(IDXGIAdapter), (void**)&Adapter)))
+	if (FAILED(Device->GetParent(__uuidof(IDXGIAdapter), (void**)Adapter.GetAddressOf())))
 		return E_FAIL;
 
-	if (FAILED(Adapter->GetParent(__uuidof(IDXGIFactory), (void**)&Factory)))
+	if (FAILED(Adapter->GetParent(__uuidof(IDXGIFactory), (void**)Factory.GetAddressOf())))
 		return E_FAIL;
 
-	if (FAILED(Factory->CreateSwapChain(m_Device, &Desc, &m_SwapChain)))
+	if (FAILED(Factory->CreateSwapChain(m_Device.Get(), &Desc, m_SwapChain.GetAddressOf())))
 		return E_FAIL;
-	
-	Device->Release();
-	Adapter->Release();
-	Factory->Release();
 
 	return S_OK;
 }
@@ -174,7 +139,7 @@ int CDevice::CreateView()
 	Desc.SampleDesc.Count = 1;
 	Desc.SampleDesc.Quality = 0;
 
-	if (FAILED(m_Device->CreateTexture2D(&Desc, nullptr, &m_DSTex)))
+	if (FAILED(m_Device->CreateTexture2D(&Desc, nullptr, m_DSTex.GetAddressOf())))
 	{
 		MessageBox(nullptr, L"DepthStencil Texture 생성 실패", L"View 생성 실패", MB_OK);
 		return E_FAIL;
@@ -184,13 +149,13 @@ int CDevice::CreateView()
 	// RenderTargetView, DepthStencilView 생성
 	// =======================================
 
-	if (FAILED(m_Device->CreateRenderTargetView(m_RTTex, nullptr, &m_RTView)))
+	if (FAILED(m_Device->CreateRenderTargetView(m_RTTex.Get(), nullptr, m_RTView.GetAddressOf())))
 	{
 		MessageBox(nullptr, L"RenderTargetView 생성 실패", L"View 생성 실패", MB_OK);
 		return E_FAIL;
 	}
 
-	if (FAILED(m_Device->CreateDepthStencilView(m_DSTex, nullptr, &m_DSView)))
+	if (FAILED(m_Device->CreateDepthStencilView(m_DSTex.Get(), nullptr, m_DSView.GetAddressOf())))
 	{
 		MessageBox(nullptr, L"DepthStencilView 생성 실패", L"View 생성 실패", MB_OK);
 		return E_FAIL;
@@ -208,6 +173,6 @@ int CDevice::CreateView()
 void CDevice::Clear()
 {
 	float color[4] = { 0.4f, 0.4f, 0.4f, 1.f };
-	m_Context->ClearRenderTargetView(m_RTView, color);
-	m_Context->ClearDepthStencilView(m_DSView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.f, 0);
+	m_Context->ClearRenderTargetView(m_RTView.Get(), color);
+	m_Context->ClearDepthStencilView(m_DSView.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.f, 0);
 }

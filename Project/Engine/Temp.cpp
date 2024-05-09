@@ -8,26 +8,26 @@
 #include "CTimeMgr.h"
 
 // Vertex Buffer
-ID3D11Buffer* g_VB = nullptr;
+ComPtr<ID3D11Buffer>	    g_VB = nullptr;
 Vtx g_Vtx[4] = {};
 
 // Index Buffer
-ID3D11Buffer* g_IB = nullptr;
+ComPtr<ID3D11Buffer>	    g_IB = nullptr;
 UINT g_Idx[6] = {};
 
 // Vertex Shader 생성
-ID3DBlob*			g_VSBlob = nullptr;
-ID3D11VertexShader* g_VS = nullptr;
+ComPtr<ID3DBlob>		    g_VSBlob = nullptr;
+ComPtr<ID3D11VertexShader>  g_VS = nullptr;
 
 // Pixel Shader 생성
-ID3DBlob*		    g_PSBlob = nullptr;
-ID3D11PixelShader*  g_PS = nullptr;
+ComPtr<ID3DBlob>		    g_PSBlob = nullptr;
+ComPtr<ID3D11PixelShader>   g_PS = nullptr;
 
 // Error Blob
-ID3DBlob*			g_ErrBlob = nullptr;
+ComPtr<ID3DBlob>			g_ErrBlob = nullptr;
 
 // Layout
-ID3D11InputLayout*  g_Layout = nullptr;
+ComPtr<ID3D11InputLayout>   g_Layout = nullptr;
 
 
 int TempInit()
@@ -57,7 +57,7 @@ int TempInit()
 	D3D11_SUBRESOURCE_DATA tSub = {};
 	tSub.pSysMem = g_Vtx;
 
-	if (FAILED(DEVICE->CreateBuffer(&tVtxBufferDesc, &tSub, &g_VB)))
+	if (FAILED(DEVICE->CreateBuffer(&tVtxBufferDesc, &tSub, g_VB.GetAddressOf())))
 	{
 		MessageBox(nullptr, L"VertexBuffer 생성 실패", L"Temp 초기화 실패", MB_OK);
 		return E_FAIL;
@@ -80,18 +80,18 @@ int TempInit()
 	
 	tSub.pSysMem = g_Idx;
 
-	if (FAILED(DEVICE->CreateBuffer(&tIdxBufferDesc, &tSub, &g_IB)))
+	if (FAILED(DEVICE->CreateBuffer(&tIdxBufferDesc, &tSub, g_IB.GetAddressOf())))
 	{
 		MessageBox(nullptr, L"IndexBuffer 생성 실패", L"Temp 초기화 실패", MB_OK);
 		return E_FAIL;
 	}
-
+	
 	// Vertex Shader 생성
 	wstring strShaderPath = CPathMgr::GetInst()->GetContentPath();
 
 	HRESULT hr = D3DCompileFromFile((strShaderPath + L"shader\\test.fx").c_str()
-									, nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE
-									, "VS_Test", "vs_5_0", D3DCOMPILE_DEBUG, 0, &g_VSBlob, &g_ErrBlob);
+								, nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE
+								, "VS_Test", "vs_5_0", D3DCOMPILE_DEBUG, 0, g_VSBlob.GetAddressOf(), g_ErrBlob.GetAddressOf());
 	
 	if (FAILED(hr))
 	{
@@ -114,13 +114,13 @@ int TempInit()
 	
 	// Blob으로 컴파일된 Shader Code의 Pointer와 Size를 넘겨주고 VertexShader 생성
 	DEVICE->CreateVertexShader(g_VSBlob->GetBufferPointer()
-							  , g_VSBlob->GetBufferSize(), nullptr, &g_VS);
+							  , g_VSBlob->GetBufferSize(), nullptr, g_VS.GetAddressOf());
 
 	
 	// Pixel Shader 생성
 	hr = D3DCompileFromFile((strShaderPath + L"shader\\test.fx").c_str()
 							, nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE
-							, "PS_Test", "ps_5_0", D3DCOMPILE_DEBUG, 0, &g_PSBlob, &g_ErrBlob);
+							, "PS_Test", "ps_5_0", D3DCOMPILE_DEBUG, 0, g_PSBlob.GetAddressOf(), g_ErrBlob.GetAddressOf());
 
 
 	if (FAILED(hr))
@@ -143,7 +143,7 @@ int TempInit()
 	}
 
 	DEVICE->CreatePixelShader(g_PSBlob->GetBufferPointer()
-							, g_PSBlob->GetBufferSize(), nullptr, &g_PS);
+							, g_PSBlob->GetBufferSize(), nullptr, g_PS.GetAddressOf());
 
 	// Layout 생성
 	D3D11_INPUT_ELEMENT_DESC Element[2] = {};		          // 현재 Vtx의 멤버가 Position, Color 2개 이기 때문에 2개를 초기화
@@ -164,7 +164,7 @@ int TempInit()
 	Element[1].SemanticName = "COLOR";					
 	Element[1].SemanticIndex = 0;
 
-	DEVICE->CreateInputLayout(Element, 2, g_VSBlob->GetBufferPointer(), g_VSBlob->GetBufferSize(), &g_Layout);
+	DEVICE->CreateInputLayout(Element, 2, g_VSBlob->GetBufferPointer(), g_VSBlob->GetBufferSize(), g_Layout.GetAddressOf());
 
 	return S_OK;
 }
@@ -192,11 +192,11 @@ void TempTick()
 
 	D3D11_MAPPED_SUBRESOURCE tMapSub = {};
 
-	CONTEXT->Map(g_VB, 0, D3D11_MAP_WRITE_DISCARD, 0, &tMapSub);
+	CONTEXT->Map(g_VB.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &tMapSub);
 
 	memcpy(tMapSub.pData, g_Vtx, sizeof(Vtx) * 4);
 
-	CONTEXT->Unmap(g_VB, 0);
+	CONTEXT->Unmap(g_VB.Get(), 0);
 }
 
 void TempRender()
@@ -204,33 +204,17 @@ void TempRender()
 	UINT Stride = sizeof(Vtx);	// Vertex 크기
 	UINT Offset = 0;
 
-	CONTEXT->IASetVertexBuffers(0, 1, &g_VB, &Stride, &Offset);
-	CONTEXT->IASetIndexBuffer(g_IB, DXGI_FORMAT_R32_UINT, 0);
+	CONTEXT->IASetVertexBuffers(0, 1, g_VB.GetAddressOf(), &Stride, &Offset);
+	CONTEXT->IASetIndexBuffer(g_IB.Get(), DXGI_FORMAT_R32_UINT, 0);
 	CONTEXT->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST); // 3개의 점을 하나의 삼각형으로 해석
-	CONTEXT->IASetInputLayout(g_Layout);
+	CONTEXT->IASetInputLayout(g_Layout.Get());
 	
-	CONTEXT->VSSetShader(g_VS, nullptr, 0);
-	CONTEXT->PSSetShader(g_PS, nullptr, 0);
+	CONTEXT->VSSetShader(g_VS.Get(), nullptr, 0);
+	CONTEXT->PSSetShader(g_PS.Get(), nullptr, 0);
 
-
-	//CONTEXT->Draw(4, 0);
 	CONTEXT->DrawIndexed(6, 0, 0);
 }
 
 void TempRelease()
 {
-
-	g_VB->Release();
-	g_VSBlob->Release();
-	g_VS->Release();
-
-	g_IB->Release();
-
-	g_PSBlob->Release();
-	g_PS->Release();
-	
-	g_Layout->Release();
-
-	if (nullptr != g_ErrBlob)
-		g_ErrBlob->Release();
 }
