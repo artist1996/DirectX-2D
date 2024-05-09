@@ -15,6 +15,10 @@ Vtx g_Vtx[4] = {};
 ComPtr<ID3D11Buffer>	    g_IB = nullptr;
 UINT g_Idx[6] = {};
 
+// Constant Buffer
+ComPtr<ID3D11Buffer>		g_CB = nullptr;
+tTransform				    g_ObjTrans = {};
+
 // Vertex Shader 생성
 ComPtr<ID3DBlob>		    g_VSBlob = nullptr;
 ComPtr<ID3D11VertexShader>  g_VS = nullptr;
@@ -32,10 +36,12 @@ ComPtr<ID3D11InputLayout>   g_Layout = nullptr;
 
 int TempInit()
 {
+	g_ObjTrans.Scale = Vec4(1.f, 1.f, 1.f, 1.f);
+
 	// Vertex Buffer 생성	(삼각형 그릴 것 정점 3개)
 	g_Vtx[0].vPos = Vec3(-0.5f, 0.5f, 0.f);
 	g_Vtx[0].vColor = Vec4(1.f, 0.f, 0.f, 1.f);
-
+	
 	g_Vtx[1].vPos = Vec3(0.5f, 0.5f, 0.f);
 	g_Vtx[1].vColor = Vec4(0.f, 1.f, 0.f, 1.f);
 
@@ -49,8 +55,8 @@ int TempInit()
 	
 	tVtxBufferDesc.ByteWidth = sizeof(Vtx) * 4;					// 중요
 	tVtxBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-	tVtxBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
-	tVtxBufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+	tVtxBufferDesc.Usage = D3D11_USAGE_DEFAULT;
+	tVtxBufferDesc.CPUAccessFlags = 0;
 	tVtxBufferDesc.MiscFlags = 0;
 	tVtxBufferDesc.StructureByteStride = 0;
 
@@ -85,7 +91,21 @@ int TempInit()
 		MessageBox(nullptr, L"IndexBuffer 생성 실패", L"Temp 초기화 실패", MB_OK);
 		return E_FAIL;
 	}
+
+	// Constant Buffer 생성
+	D3D11_BUFFER_DESC tCBDesc = {};
+
+	tCBDesc.ByteWidth = sizeof(tTransform);
+	tCBDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+	tCBDesc.Usage = D3D11_USAGE_DYNAMIC;
+	tCBDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 	
+	if (FAILED(DEVICE->CreateBuffer(&tCBDesc, nullptr, g_CB.GetAddressOf())))
+	{
+		MessageBox(nullptr, L"ConstantBuffer 생성 실패", L"Temp 초기화 실패", MB_OK);
+		return E_FAIL;
+	}
+
 	// Vertex Shader 생성
 	wstring strShaderPath = CPathMgr::GetInst()->GetContentPath();
 
@@ -176,27 +196,31 @@ void TempTick()
 
 	if (KEY_STATE::PRESSED == CKeyMgr::GetInst()->GetKeyState(KEY::RIGHT))
 	{
-		for (int i = 0; i < 4; ++i)
-		{
-			g_Vtx[i].vPos.x += DeltaTime * 1.f;
-		}
+		g_ObjTrans.Pos.x += DeltaTime * 1.f;
 	}
 
 	if (KEY_STATE::PRESSED == CKeyMgr::GetInst()->GetKeyState(KEY::LEFT))
 	{
-		for (int i = 0; i < 4; ++i)
-		{
-			g_Vtx[i].vPos.x -= DeltaTime * 1.f;
-		}
+		g_ObjTrans.Pos.x -= DeltaTime * 1.f;
+	}
+
+	if (KEY_STATE::PRESSED == CKeyMgr::GetInst()->GetKeyState(KEY::UP))
+	{
+		g_ObjTrans.Pos.y += DeltaTime * 1.f;
+	}
+
+	if (KEY_STATE::PRESSED == CKeyMgr::GetInst()->GetKeyState(KEY::DOWN))
+	{
+		g_ObjTrans.Pos.y -= DeltaTime * 1.f;
 	}
 
 	D3D11_MAPPED_SUBRESOURCE tMapSub = {};
 
-	CONTEXT->Map(g_VB.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &tMapSub);
+	CONTEXT->Map(g_CB.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &tMapSub);
 
-	memcpy(tMapSub.pData, g_Vtx, sizeof(Vtx) * 4);
+	memcpy(tMapSub.pData, &g_ObjTrans, sizeof(tTransform));
 
-	CONTEXT->Unmap(g_VB.Get(), 0);
+	CONTEXT->Unmap(g_CB.Get(), 0);
 }
 
 void TempRender()
@@ -209,6 +233,7 @@ void TempRender()
 	CONTEXT->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST); // 3개의 점을 하나의 삼각형으로 해석
 	CONTEXT->IASetInputLayout(g_Layout.Get());
 	
+	CONTEXT->VSSetConstantBuffers(0, 1, g_CB.GetAddressOf());
 	CONTEXT->VSSetShader(g_VS.Get(), nullptr, 0);
 	CONTEXT->PSSetShader(g_PS.Get(), nullptr, 0);
 
