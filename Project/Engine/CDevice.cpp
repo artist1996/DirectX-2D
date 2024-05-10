@@ -2,6 +2,7 @@
 #include "CDevice.h"
 
 #include "CEngine.h"
+#include "CConstBuffer.h"
 
 CDevice::CDevice()
 	: m_hWnd(nullptr)
@@ -9,6 +10,11 @@ CDevice::CDevice()
 
 CDevice::~CDevice()
 {
+	for (UINT i = 0; i < (UINT)CB_TYPE::END; ++i)
+	{
+		if (nullptr != m_arrCB[i])
+			delete m_arrCB[i];
+	}
 }
 
 int CDevice::Init(HWND _hWnd, UINT _Width, UINT _Height)
@@ -66,6 +72,12 @@ int CDevice::Init(HWND _hWnd, UINT _Width, UINT _Height)
 	Viewport.MaxDepth = 1.f;
 
 	m_Context->RSSetViewports(1, &Viewport);
+
+	// ConstantBuffer 积己
+	if (FAILED(CreateConstBuffer()))
+	{
+		return E_FAIL;
+	}
 
 	return S_OK;
 }
@@ -166,6 +178,23 @@ int CDevice::CreateView()
 	// DepthStencilView
 	// ShaderResourceView
 	// UnorderedAccessView
+
+	return S_OK;
+}
+
+int CDevice::CreateConstBuffer()
+{
+
+	CConstBuffer* pCB = nullptr;
+	pCB = new CConstBuffer;
+
+	if (FAILED(pCB->Create(CB_TYPE::TRANSFORM, sizeof(tTransform))))
+	{
+		MessageBox(nullptr, L"ConstantBuffer 积己 角菩", L"Buffer 积己 角菩", MB_OK);
+		return E_FAIL;
+	}
+
+	m_arrCB[(UINT)CB_TYPE::TRANSFORM] = pCB;
 
 	return S_OK;
 }

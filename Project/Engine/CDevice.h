@@ -1,4 +1,7 @@
 #pragma once
+
+class CConstBuffer;
+
 class CDevice
 	: public CSingleton<CDevice>
 {
@@ -22,13 +25,17 @@ private:
 	ComPtr<ID3D11DepthStencilState> m_DSState;
 	ComPtr<ID3D11SamplerState>      m_Sampler;
 	ComPtr<ID3D11RasterizerState>	m_RSState;
+
+	CConstBuffer*					m_arrCB[(UINT)CB_TYPE::END];
 	
 private:
 	int CreateSwapChain();
 	int CreateView();
+	int CreateConstBuffer();
 
 public:
 	int Init(HWND _hWnd, UINT _Width, UINT _Height);
+	CConstBuffer* GetConstBuffer(CB_TYPE _Type) { return m_arrCB[(UINT)_Type]; }
 
 public:
 	void Clear();
