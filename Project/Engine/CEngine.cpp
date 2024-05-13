@@ -4,6 +4,8 @@
 #include "CPathMgr.h"
 #include "CKeyMgr.h"
 #include "CTimeMgr.h"
+#include "CAssetMgr.h"
+#include "CLevelMgr.h"
 
 #include "Temp.h"
 
@@ -36,6 +38,8 @@ int CEngine::Init(HWND _hWnd, POINT _ptResolution)
 	CPathMgr::GetInst()->Init();
 	CKeyMgr::GetInst()->Init();
 	CTimeMgr::GetInst()->Init();
+	CAssetMgr::GetInst()->Init();
+	CLevelMgr::GetInst()->Init();
 
 
 	if (FAILED(TempInit()))
@@ -65,10 +69,11 @@ void CEngine::Progress()
 	CKeyMgr::GetInst()->Tick();
 	CTimeMgr::GetInst()->Tick();
 
+	CLevelMgr::GetInst()->Progress();
 	TempTick();
-
 	CDevice::GetInst()->Clear();
 
+	CLevelMgr::GetInst()->Render();
 	TempRender();
 
 	CDevice::GetInst()->Present();

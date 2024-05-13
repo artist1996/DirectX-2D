@@ -24,4 +24,3 @@ public:
     CGraphicShader();
     virtual ~CGraphicShader();
 };
-

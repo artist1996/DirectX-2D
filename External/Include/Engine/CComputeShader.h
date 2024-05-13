@@ -9,4 +9,3 @@ public:
     CComputeShader();
     virtual ~CComputeShader();
 };
-

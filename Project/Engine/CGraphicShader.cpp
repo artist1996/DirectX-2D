@@ -57,7 +57,7 @@ int CGraphicShader::CreateVertexShader(const wstring& _RelativePath, const strin
 	Element[0].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;  // Vertex Data (Instance 아직 안함)
 	Element[0].InstanceDataStepRate = 0;
 	Element[0].SemanticName = "POSITION";					  // Semantic Name 요소의 의미를 나타내는 이름, Shader Code의 입력 Semantic과 일치 해야 함
-	Element[0].SemanticIndex = 0;							  // SemanticName 중복 시 증가
+	Element[0].SemanticIndex = 0;							  // Semantic Name 중복 시 증가
 
 	Element[1].AlignedByteOffset = 12;
 	Element[1].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;

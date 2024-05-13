@@ -90,8 +90,8 @@ int CDevice::CreateSwapChain()
 	DXGI_SWAP_CHAIN_DESC Desc = {};
 
 	Desc.BufferCount = 1;								 // 백버퍼 개수
-	Desc.BufferDesc.Width = m_vResolution.x;			 // 백버퍼 해상도
-	Desc.BufferDesc.Height = m_vResolution.y;			 // 백버퍼 해상도
+	Desc.BufferDesc.Width = (UINT)m_vResolution.x;			 // 백버퍼 해상도
+	Desc.BufferDesc.Height = (UINT)m_vResolution.y;			 // 백버퍼 해상도
 	Desc.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM; // 픽셀 포맷 (RGBA) 4Byte
 	Desc.BufferDesc.RefreshRate.Denominator = 60;
 	Desc.BufferDesc.RefreshRate.Numerator = 1;
@@ -136,8 +136,8 @@ int CDevice::CreateView()
 	// DepthStencil Texture 생성
 	D3D11_TEXTURE2D_DESC Desc = {};
 	
-	Desc.Width = m_vResolution.x;
-	Desc.Height = m_vResolution.y;
+	Desc.Width = (UINT)m_vResolution.x;
+	Desc.Height = (UINT)m_vResolution.y;
 	Desc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT; // Depth 24bit, Stencil 8Bit
 	Desc.ArraySize = 1;						     // 생성 할 DepthStencil Texture 개수
 	Desc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
