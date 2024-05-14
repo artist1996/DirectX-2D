@@ -26,8 +26,8 @@ VTX_OUT VS_Test(VTX_IN _in)
 {
     VTX_OUT output = (VTX_OUT) 0.f;
     
-    _in.vPos.xyz += g_ObjectPos.xyz;
     _in.vPos.xyz *= g_ObjectScale.xyz;
+    _in.vPos.xyz += g_ObjectPos.xyz;
     
     output.vPosition = float4(_in.vPos, 1.f);
     output.vColor = _in.vColor;

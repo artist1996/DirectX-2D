@@ -70,11 +70,10 @@ void CEngine::Progress()
 	CTimeMgr::GetInst()->Tick();
 
 	CLevelMgr::GetInst()->Progress();
-	TempTick();
+
 	CDevice::GetInst()->Clear();
 
 	CLevelMgr::GetInst()->Render();
-	TempRender();
 
 	CDevice::GetInst()->Present();
 }

@@ -2,6 +2,7 @@
 #include "CEntity.h"
 
 class CLayer;
+class CGameObject;
 
 class CLevel :
     public CEntity
@@ -10,7 +11,10 @@ private:
     CLayer* m_Layer[MAX_LAYER];
 
 public:
-    void Init();
+    void AddObject(int _LayerIdx, CGameObject* _Object);
+
+public:
+    void Begin();
     void Tick();
     void FinalTick();
     void Render();
@@ -20,4 +24,3 @@ public:
     CLevel();
     virtual ~CLevel();
 };
-
