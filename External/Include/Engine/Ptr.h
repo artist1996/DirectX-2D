@@ -29,7 +29,6 @@ public:
 
 	Ptr& operator = (const Ptr<T>& _Other)
 	{
-
 		if (nullptr != Asset)
 			Asset->Release();
 
@@ -37,7 +36,7 @@ public:
 
 		if (nullptr != Asset)
 			Asset->AddRef();
-
+		
 		return *this;
 	}
 
