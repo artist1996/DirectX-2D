@@ -9,7 +9,7 @@ class CLayer :
 private:
     vector<CGameObject*> m_Parents;
     int                  m_LayerIdx;
-
+    
 public:
     void AddObject(CGameObject* _Object) { m_Parents.push_back(_Object); }
 
@@ -24,4 +24,3 @@ public:
     CLayer(int _LayerIdx);
     virtual ~CLayer();
 };
-

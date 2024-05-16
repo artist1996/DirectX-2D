@@ -10,11 +10,11 @@ private:
     UINT                       m_VtxCount;
     UINT                       m_IdxCount;
     
-    D3D11_BUFFER_DESC         m_VBDesc;
-    D3D11_BUFFER_DESC         m_IBDesc;
+    D3D11_BUFFER_DESC          m_VBDesc;
+    D3D11_BUFFER_DESC          m_IBDesc;
 
-    void*                     m_VtxSysMem;
-    void*                     m_IdxSysMem;
+    void*                      m_VtxSysMem;
+    void*                      m_IdxSysMem;
 
 public:
     int Create(Vtx* _VtxSysMem, UINT _VtxCount, UINT* _IdxSysMem, UINT _IdxCount);

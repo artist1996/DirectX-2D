@@ -17,6 +17,7 @@ CGameObject::CGameObject()
 
 CGameObject::~CGameObject()
 {
+	Delete_Array(m_arrCom);
 }
 
 void CGameObject::AddComponent(CComponent* _Component)

@@ -8,10 +8,6 @@ CAssetMgr::CAssetMgr()
 
 CAssetMgr::~CAssetMgr()
 {
-	for (UINT i = 0; i < (UINT)ASSET_TYPE::END; ++i)
-	{
-		Delete_Map(m_mapAsset[i]);
-	}
 }
 
 void CAssetMgr::Init()
@@ -36,14 +32,24 @@ void CAssetMgr::Init()
 	arrIdx[0] = 0; arrIdx[1] = 1; arrIdx[2] = 2;
 	arrIdx[3] = 0; arrIdx[4] = 2; arrIdx[5] = 3;
 	
-	CMesh* pMesh = nullptr;
+	Ptr<CMesh> pMesh = nullptr;
 	pMesh = new CMesh;
 	pMesh->Create(arrVtx, 4, arrIdx, 6);
 	AddAsset(L"RectMesh", pMesh);
 	
-	CGraphicShader* pShader = nullptr;
+	Ptr<CGraphicShader> pShader = nullptr;
 	pShader = new CGraphicShader;
 	pShader->CreateVertexShader(L"shader\\test.fx", "VS_Test");
 	pShader->CreatePixelShader(L"shader\\test.fx", "PS_Test");
 	AddAsset(L"TestShader", pShader);
+}
+
+Ptr<CAsset> CAssetMgr::FindAsset(ASSET_TYPE _Type, const wstring& _Key)
+{
+	map<wstring, Ptr<CAsset>>::iterator iter = m_mapAsset[(UINT)_Type].find(_Key);
+
+	if (iter == m_mapAsset[(UINT)_Type].end())
+		return nullptr;
+
+	return iter->second;
 }

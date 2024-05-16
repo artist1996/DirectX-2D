@@ -8,14 +8,26 @@ private:
     wstring     m_RelativePath;
 
     ASSET_TYPE  m_Type;
+    int         m_RefCount;
 
 public:
     const wstring& GetKey()          { return m_Key; }
     const wstring& GetRelativePath() { return m_RelativePath; }
+    ASSET_TYPE GetAssetType()        { return m_Type; }
     
 private:
     void SetKey(const wstring& _Key)          { m_Key = _Key; }
     void SetRelativePath(const wstring _Path) { m_RelativePath = _Path; }
+
+    void AddRef() { ++m_RefCount; }
+    void Release()
+    {
+        --m_RefCount; 
+        if (0 >= m_RefCount)
+        {
+            delete this;
+        }
+    }
 
 public:
     virtual void Binding() PURE;
@@ -23,7 +35,11 @@ public:
 
 public:
     CAsset(ASSET_TYPE _Type);
+    CAsset(const CAsset& _Other);
     virtual ~CAsset();
+
+    template<typename T>
+    friend class Ptr;
 
     friend class CAssetMgr;
 };
