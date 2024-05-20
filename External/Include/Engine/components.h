@@ -6,7 +6,7 @@
 //#include "CAnimator2D.h"
 //#include "CAnimator3D.h"
 //#include "CRigidBody.h"
-//#include "CCamera.h"
+#include "CCamera.h"
 //#include "CStateMachine.h"
 
 #include "CMeshRender.h"

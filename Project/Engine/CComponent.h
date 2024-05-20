@@ -2,11 +2,13 @@
 #include "CEntity.h"
 #include "CGameObject.h"
 
+#define GET_OTHER_COMPONENT(Type) C##Type* Type() { return m_Owner->Type(); }
+
 class CComponent :
     public CEntity
 {
 private:
-    CGameObject*   m_Owner;
+    CGameObject*         m_Owner;
     const COMPONENT_TYPE m_Type;
     
 public:
@@ -17,6 +19,10 @@ public:
     virtual void Begin();
     virtual void Tick();
     virtual void FinalTick() PURE;
+
+    GET_OTHER_COMPONENT(Transform);
+    GET_OTHER_COMPONENT(MeshRender);
+    GET_OTHER_COMPONENT(Camera);
 
 private:
     void SetOwner(CGameObject* _Object) { m_Owner = _Object; }

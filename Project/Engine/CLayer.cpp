@@ -35,11 +35,3 @@ void CLayer::FinalTick()
 		m_Parents[i]->FinalTick();
 	}
 }
-
-void CLayer::Render()
-{
-	for (size_t i = 0; i < m_Parents.size(); ++i)
-	{
-		m_Parents[i]->Render();
-	}
-}

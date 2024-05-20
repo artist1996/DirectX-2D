@@ -10,6 +10,7 @@ private:
     Vec3   m_RelativeRotation;
 
     Matrix m_matWorld;  // 이동, 크기, 회전
+    
 
 public:
     void SetRelativePos(Vec3 _Pos)      { m_RelativePos = _Pos; }

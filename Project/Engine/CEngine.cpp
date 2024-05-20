@@ -6,6 +6,7 @@
 #include "CTimeMgr.h"
 #include "CAssetMgr.h"
 #include "CLevelMgr.h"
+#include "CRenderMgr.h"
 
 #include "Temp.h"
 
@@ -40,15 +41,22 @@ int CEngine::Init(HWND _hWnd, POINT _ptResolution)
 	CTimeMgr::GetInst()->Init();
 	CAssetMgr::GetInst()->Init();
 	CLevelMgr::GetInst()->Init();
-
-
-	if (FAILED(TempInit()))
-	{
-		MessageBox(nullptr, L"Failed TempInit", L"CEngine 초기화 실패", MB_OK);
-		return E_FAIL;
-	}
+	CRenderMgr::GetInst()->Init();
 
 	return S_OK;
+}
+
+void CEngine::Progress()
+{
+	// Manager
+	CKeyMgr::GetInst()->Tick();
+	CTimeMgr::GetInst()->Tick();
+	CLevelMgr::GetInst()->Progress();
+
+	// Render
+	CDevice::GetInst()->Clear();
+	CRenderMgr::GetInst()->Tick();
+	CDevice::GetInst()->Present();
 }
 
 void CEngine::ChangeWindowScale(UINT _Width, UINT _Height)
@@ -62,18 +70,4 @@ void CEngine::ChangeWindowScale(UINT _Width, UINT _Height)
 	RECT rt = { 0,0, (LONG)_Width, (LONG)_Height };
 	AdjustWindowRect(&rt, WS_OVERLAPPEDWINDOW, bMenu);
 	SetWindowPos(m_hWnd, nullptr, 0, 0, rt.right - rt.left, rt.bottom - rt.top, 0);
-}
-
-void CEngine::Progress()
-{
-	CKeyMgr::GetInst()->Tick();
-	CTimeMgr::GetInst()->Tick();
-
-	CLevelMgr::GetInst()->Progress();
-
-	CDevice::GetInst()->Clear();
-
-	CLevelMgr::GetInst()->Render();
-
-	CDevice::GetInst()->Present();
 }

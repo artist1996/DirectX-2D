@@ -8,16 +8,17 @@ class CLayer :
 {
 private:
     vector<CGameObject*> m_Parents;
-    int                  m_LayerIdx;
+    const int            m_LayerIdx;
     
 public:
-    void AddObject(CGameObject* _Object) { m_Parents.push_back(_Object); }
+    int GetLayerIdx()                              { return m_LayerIdx; }
+    void AddObject(CGameObject* _Object)           { m_Parents.push_back(_Object); }
+    const vector<CGameObject*>& GetParentObjects() { return m_Parents; }
 
 public:
     void Begin();
     void Tick();
     void FinalTick();
-    void Render();
 
 public:
     virtual CLayer* Clone() { return new CLayer(*this); }

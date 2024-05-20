@@ -4,10 +4,7 @@
 #include "CKeyMgr.h"
 #include "CTimeMgr.h"
 
-#include "CComponent.h"
-#include "CTransform.h"
-#include "CRenderComponent.h"
-
+#include "components.h"
 
 CGameObject::CGameObject()
 	: m_arrCom{}
@@ -25,20 +22,29 @@ void CGameObject::AddComponent(CComponent* _Component)
 	COMPONENT_TYPE Type = _Component->GetComponentType();
 
 	assert(nullptr == m_arrCom[(UINT)Type]);
-	
+
 	m_arrCom[(UINT)Type] = _Component;
 	m_arrCom[(UINT)Type]->SetOwner(this);
 
 	CRenderComponent* pRenderCom = dynamic_cast<CRenderComponent*>(_Component);
-	
+
 	assert(!(pRenderCom && m_RenderCom));
 
-	if(pRenderCom)
+	if (pRenderCom)
+	{
 		m_RenderCom = pRenderCom;
+	}
 }
 
 void CGameObject::Begin()
 {
+	for (UINT i = 0; i < (UINT)COMPONENT_TYPE::END; ++i)
+	{
+		if (nullptr == m_arrCom[i])
+			continue;
+
+		m_arrCom[i]->Begin();
+	}
 }
 
 void CGameObject::Tick()
@@ -66,6 +72,15 @@ void CGameObject::Tick()
 		vPos.y -= fDT * 1.f;
 	}
 
+	if (KEY_PRESSED(KEY::Z))
+	{
+		Vec3 vRot = Transform()->GetRelativeRotation();
+
+		vRot.z += DT * XM_PI * 2.f;
+
+		Transform()->SetRelativeRotation(vRot);
+	}
+
 	Transform()->SetRelativePos(vPos);
 }
 
@@ -80,6 +95,6 @@ void CGameObject::FinalTick()
 
 void CGameObject::Render()
 {
-	if(m_RenderCom)
+	if (m_RenderCom)
 		m_RenderCom->Render();
 }

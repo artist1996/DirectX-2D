@@ -44,11 +44,3 @@ void CLevel::FinalTick()
 		m_Layer[i]->FinalTick();
 	}
 }
-
-void CLevel::Render()
-{
-	for (int i = 0; i < MAX_LAYER; ++i)
-	{
-		m_Layer[i]->Render();
-	}
-}
