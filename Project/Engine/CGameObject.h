@@ -3,6 +3,7 @@
 
 class CComponent;
 class CRenderComponent;
+class CScript;
 
 #define GET_COMPONENT(Type, TYPE) class C##Type* Type() {return (C##Type*)GetComponent(COMPONENT_TYPE::TYPE);}
 
@@ -12,6 +13,8 @@ class CGameObject :
 private:
     CComponent*       m_arrCom[(UINT)COMPONENT_TYPE::END];
     CRenderComponent* m_RenderCom;
+
+    vector<CScript*>  m_vecScript;
 
 public:
     void AddComponent(CComponent* _Component);

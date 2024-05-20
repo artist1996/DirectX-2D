@@ -110,6 +110,12 @@
     <ClInclude Include="CLevel.h">
       <Filter>05. Level</Filter>
     </ClInclude>
+    <ClInclude Include="CScript.h">
+      <Filter>08. Component\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayerScript.h">
+      <Filter>Scripts</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CEngine.cpp">
@@ -193,6 +199,12 @@
     </ClCompile>
     <ClCompile Include="CRenderMgr.cpp">
       <Filter>04. Manager\06. RenderMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="CScript.cpp">
+      <Filter>08. Component\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayerScript.cpp">
+      <Filter>Scripts</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -321,6 +333,12 @@
     </Filter>
     <Filter Include="04. Manager\06. RenderMgr">
       <UniqueIdentifier>{16f26bd4-246f-47b1-95dd-f2e3b12cae6d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="08. Component\Script">
+      <UniqueIdentifier>{3cb56d09-9b2f-4ce2-9c14-49c7fcfd79f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts">
+      <UniqueIdentifier>{7d23adb1-c34e-4ba4-b5a8-d5f55c3ab535}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

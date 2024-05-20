@@ -36,6 +36,7 @@ private:
 public:
 	int Init(HWND _hWnd, UINT _Width, UINT _Height);
 	CConstBuffer* GetConstBuffer(CB_TYPE _Type) { return m_arrCB[(UINT)_Type]; }
+	Vec2 GetResolution() { return m_vResolution; }
 
 public:
 	void Clear();

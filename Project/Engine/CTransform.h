@@ -9,9 +9,10 @@ private:
     Vec3   m_RelativeScale;
     Vec3   m_RelativeRotation;
 
-    Matrix m_matWorld;  // 이동, 크기, 회전
-    
+    Vec3   m_RelativeDir[3] = {}; // 방향
 
+    Matrix m_matWorld;  // 이동, 크기, 회전
+      
 public:
     void SetRelativePos(Vec3 _Pos)      { m_RelativePos = _Pos; }
     void SetRelativeScale(Vec3 _Scale)  { m_RelativeScale = _Scale; }

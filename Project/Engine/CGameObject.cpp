@@ -15,24 +15,34 @@ CGameObject::CGameObject()
 CGameObject::~CGameObject()
 {
 	Delete_Array(m_arrCom);
+	Delete_Vec(m_vecScript);
 }
 
 void CGameObject::AddComponent(CComponent* _Component)
 {
 	COMPONENT_TYPE Type = _Component->GetComponentType();
 
-	assert(nullptr == m_arrCom[(UINT)Type]);
-
-	m_arrCom[(UINT)Type] = _Component;
-	m_arrCom[(UINT)Type]->SetOwner(this);
-
-	CRenderComponent* pRenderCom = dynamic_cast<CRenderComponent*>(_Component);
-
-	assert(!(pRenderCom && m_RenderCom));
-
-	if (pRenderCom)
+	if (COMPONENT_TYPE::SCRIPT == Type)
 	{
-		m_RenderCom = pRenderCom;
+		m_vecScript.push_back((CScript*)_Component);
+		_Component->SetOwner(this);
+	}
+
+	else
+	{
+		assert(nullptr == m_arrCom[(UINT)Type]);
+
+		m_arrCom[(UINT)Type] = _Component;
+		m_arrCom[(UINT)Type]->SetOwner(this);
+
+		CRenderComponent* pRenderCom = dynamic_cast<CRenderComponent*>(_Component);
+
+		assert(!(pRenderCom && m_RenderCom));
+
+		if (pRenderCom)
+		{
+			m_RenderCom = pRenderCom;
+		}
 	}
 }
 
@@ -45,43 +55,25 @@ void CGameObject::Begin()
 
 		m_arrCom[i]->Begin();
 	}
+
+	for (size_t i = 0; i < m_vecScript.size(); ++i)
+	{
+		m_vecScript[i]->Begin();
+	}
 }
 
 void CGameObject::Tick()
 {
-	float fDT = CTimeMgr::GetInst()->GetDeltaTime();
-	Vec3 vPos = Transform()->GetRelativePos();
-
-	if (KEY_STATE::PRESSED == CKeyMgr::GetInst()->GetKeyState(KEY::RIGHT))
+	for (UINT i = 0; i < (UINT)COMPONENT_TYPE::END; ++i)
 	{
-		vPos.x += fDT * 1.f;
+		if(nullptr != m_arrCom[i])
+			m_arrCom[i]->Tick();
 	}
 
-	if (KEY_STATE::PRESSED == CKeyMgr::GetInst()->GetKeyState(KEY::LEFT))
+	for (size_t i = 0; i < m_vecScript.size(); ++i)
 	{
-		vPos.x -= fDT * 1.f;
+		m_vecScript[i]->Tick();
 	}
-
-	if (KEY_STATE::PRESSED == CKeyMgr::GetInst()->GetKeyState(KEY::UP))
-	{
-		vPos.y += fDT * 1.f;
-	}
-
-	if (KEY_STATE::PRESSED == CKeyMgr::GetInst()->GetKeyState(KEY::DOWN))
-	{
-		vPos.y -= fDT * 1.f;
-	}
-
-	if (KEY_PRESSED(KEY::Z))
-	{
-		Vec3 vRot = Transform()->GetRelativeRotation();
-
-		vRot.z += DT * XM_PI * 2.f;
-
-		Transform()->SetRelativeRotation(vRot);
-	}
-
-	Transform()->SetRelativePos(vPos);
 }
 
 void CGameObject::FinalTick()

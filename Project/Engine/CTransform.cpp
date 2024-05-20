@@ -29,6 +29,19 @@ void CTransform::FinalTick()
 				  * XMMatrixRotationZ(m_RelativeRotation.z);
 
 	m_matWorld = matScale * matRot * matTranslation;
+
+	m_RelativeDir[DIR::RIGHT] = Vec3(1.f, 0.f, 0.f);
+	m_RelativeDir[DIR::UP] = Vec3(0.f, 1.f, 0.f);
+	m_RelativeDir[DIR::FRONT] = Vec3(0.f, 0.f, 1.f);
+
+	// HLSL mul
+	// w를 1로 확장
+	
+	for (int i = 0; i < 3; ++i)
+	{
+		m_RelativeDir[i] = XMVector3TransformNormal(m_RelativeDir[i], matRot);
+		m_RelativeDir[i].Normalize();
+	}
 }
 
 void CTransform::Binding()

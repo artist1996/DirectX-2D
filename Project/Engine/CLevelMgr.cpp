@@ -9,6 +9,8 @@
 #include "CAssetMgr.h"
 #include "assets.h"
 
+#include "CPlayerScript.h"
+
 CLevelMgr::CLevelMgr()
 	: m_CurLevel(nullptr)
 {
@@ -31,18 +33,21 @@ void CLevelMgr::Init()
 
 	CamObj->Camera()->SetPriority(0);
 
+	CamObj->Camera()->SetLayerAll();
+	CamObj->Camera()->SetLayer(31, false);
 	m_CurLevel->AddObject(0, CamObj);
 
 	CGameObject* pObject = new CGameObject;
 	pObject->SetName(L"Player");
 	pObject->AddComponent(new CTransform);
 	pObject->AddComponent(new CMeshRender);
+	pObject->AddComponent(new CPlayerScript);
 
-	pObject->Transform()->SetRelativePos(-0.5f, 0.5f, 0.f);
-	pObject->Transform()->SetRelativeScale(0.2f, 0.2f, 0.2f);
+	pObject->Transform()->SetRelativePos(0.f, 0.f, 500.f);
+	pObject->Transform()->SetRelativeScale(200.f, 200.f, 1.f);
 	pObject->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
 	pObject->MeshRender()->SetShader(CAssetMgr::GetInst()->FindAsset<CGraphicShader>(L"TestShader"));
-
+	
 	m_CurLevel->AddObject(0, pObject);
 
 	m_CurLevel->Begin();

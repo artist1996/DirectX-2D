@@ -14,3 +14,4 @@
 //#include "CDecal.h"
 //#include "CParticleSystem.h"
 //#include "CLandScape.h"
+#include "CScript.h"
