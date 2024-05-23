@@ -18,7 +18,7 @@
 
 
 #define CLONE(Type) virtual Type* Clone() { return new Type(*this);}
-#define CLONE_DISABLE virtual Type* Clone() { return nullptr; }
+#define CLONE_DISABLE(Type) virtual Type* Clone() { return nullptr; }
 
 typedef Vector2 Vec2;
 typedef Vector3 Vec3;

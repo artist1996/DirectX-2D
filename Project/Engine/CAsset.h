@@ -29,6 +29,9 @@ private:
         }
     }
 
+    virtual int Load(const wstring& _FilePath) { return S_OK; }
+    virtual int Save(const wstring& _FilePath) { return S_OK; }
+
 public:
     virtual void Binding() PURE;
     virtual CAsset* Clone() { return nullptr; }

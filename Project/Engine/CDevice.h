@@ -16,10 +16,10 @@ private:
 	ComPtr<IDXGISwapChain>			m_SwapChain;
 	
 	ComPtr<ID3D11Texture2D>			m_RTTex;
-	ComPtr<ID3D11Texture2D>			m_DSTex;
+
+	Ptr<CTexture>					m_DSTex;
 	
 	ComPtr<ID3D11RenderTargetView>  m_RTView;
-	ComPtr<ID3D11DepthStencilView>  m_DSView;
 
 	ComPtr<ID3D11BlendState>	    m_BSState;
 	ComPtr<ID3D11DepthStencilState> m_DSState;

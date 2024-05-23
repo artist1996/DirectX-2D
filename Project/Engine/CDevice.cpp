@@ -3,6 +3,7 @@
 
 #include "CEngine.h"
 #include "CConstBuffer.h"
+#include "CAssetMgr.h"
 
 CDevice::CDevice()
 	: m_hWnd(nullptr)
@@ -63,7 +64,7 @@ int CDevice::Init(HWND _hWnd, UINT _Width, UINT _Height)
 	}
 
 	// Output Merge State (출력 병합 단계)
-	m_Context->OMSetRenderTargets(1, m_RTView.GetAddressOf(), m_DSView.Get());
+	m_Context->OMSetRenderTargets(1, m_RTView.GetAddressOf(), m_DSTex->GetDSV().Get());
 
 	// ViewPort 설정
 	// 출력 시킬 화면 윈도우 영역을 설정
@@ -140,28 +141,11 @@ int CDevice::CreateView()
 	m_SwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&m_RTTex);
 
 	// DepthStencil Texture 생성
-	D3D11_TEXTURE2D_DESC Desc = {};
-	
-	Desc.Width = (UINT)m_vResolution.x;
-	Desc.Height = (UINT)m_vResolution.y;
-	Desc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT; // Depth 24bit, Stencil 8Bit
-	Desc.ArraySize = 1;						     // 생성 할 DepthStencil Texture 개수
-	Desc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
-
-	Desc.Usage = D3D11_USAGE_DEFAULT;			 // System Memory 와의 연계 설정
-	Desc.CPUAccessFlags = 0;
-
-	Desc.MiscFlags = 0;
-	Desc.MipLevels = 1;		// 열화버전 해상도 이미지 추가 생성
-
-	Desc.SampleDesc.Count = 1;
-	Desc.SampleDesc.Quality = 0;
-
-	if (FAILED(m_Device->CreateTexture2D(&Desc, nullptr, m_DSTex.GetAddressOf())))
-	{
-		MessageBox(nullptr, L"DepthStencil Texture 생성 실패", L"View 생성 실패", MB_OK);
-		return E_FAIL;
-	}
+	m_DSTex = CAssetMgr::GetInst()->CreateTexture(L"DepthStencilTex"
+												, (UINT)m_vResolution.x
+												, (UINT)m_vResolution.y
+												, DXGI_FORMAT_D24_UNORM_S8_UINT
+												, D3D11_BIND_DEPTH_STENCIL);
 
 	// =======================================
 	// RenderTargetView, DepthStencilView 생성
@@ -170,12 +154,6 @@ int CDevice::CreateView()
 	if (FAILED(m_Device->CreateRenderTargetView(m_RTTex.Get(), nullptr, m_RTView.GetAddressOf())))
 	{
 		MessageBox(nullptr, L"RenderTargetView 생성 실패", L"View 생성 실패", MB_OK);
-		return E_FAIL;
-	}
-
-	if (FAILED(m_Device->CreateDepthStencilView(m_DSTex.Get(), nullptr, m_DSView.GetAddressOf())))
-	{
-		MessageBox(nullptr, L"DepthStencilView 생성 실패", L"View 생성 실패", MB_OK);
 		return E_FAIL;
 	}
 
@@ -234,5 +212,5 @@ void CDevice::Clear()
 {
 	float color[4] = { 0.4f, 0.4f, 0.4f, 1.f };
 	m_Context->ClearRenderTargetView(m_RTView.Get(), color);
-	m_Context->ClearDepthStencilView(m_DSView.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.f, 0);
+	m_Context->ClearDepthStencilView(m_DSTex->GetDSV().Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.f, 0);
 }

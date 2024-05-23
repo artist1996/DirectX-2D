@@ -65,3 +65,15 @@ public:
 			Asset->Release();
 	}
 };
+
+template<typename T>
+bool operator ==(void* _Asset, Ptr<T> _PtrAsset)
+{
+	return _Asset == _PtrAsset.Get();
+}
+
+template<typename T>
+bool operator !=(void* _Asset, Ptr<T> _PtrAsset)
+{
+	return _Asset != _PtrAsset.Get();
+}
