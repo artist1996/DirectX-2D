@@ -26,10 +26,6 @@ struct VTX_OUT
 VTX_OUT VS_Test(VTX_IN _in)
 {
     VTX_OUT output = (VTX_OUT) 0.f;
-    
-    //_in.vPos.xyz *= g_ObjectScale.xyz;
-    //_in.vPos.xyz += g_ObjectPos.xyz;
-    
     // LocalSpace -> WorldSpace
     // float 3 x float4x4(matrix)
     // float3 를 float4 로 차수를 맞추어준다.

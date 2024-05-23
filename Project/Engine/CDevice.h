@@ -24,7 +24,7 @@ private:
 	ComPtr<ID3D11BlendState>	    m_BSState;
 	ComPtr<ID3D11DepthStencilState> m_DSState;
 	ComPtr<ID3D11SamplerState>      m_Sampler;
-	ComPtr<ID3D11RasterizerState>	m_RSState;
+	ComPtr<ID3D11RasterizerState>	m_RSState[(UINT)RS_TYPE::END];
 
 	CConstBuffer*					m_arrCB[(UINT)CB_TYPE::END];
 	
@@ -32,15 +32,18 @@ private:
 	int CreateSwapChain();
 	int CreateView();
 	int CreateConstBuffer();
+	int CreateRasterizerState();
 
 public:
 	int Init(HWND _hWnd, UINT _Width, UINT _Height);
-	CConstBuffer* GetConstBuffer(CB_TYPE _Type) { return m_arrCB[(UINT)_Type]; }
 	Vec2 GetResolution() { return m_vResolution; }
 
-public:
 	void Clear();
-	void Present()					  { m_SwapChain->Present(0, 0); }
-	ID3D11Device* GetDevice()	      { return m_Device.Get(); }
-	ID3D11DeviceContext* GetContext() { return m_Context.Get(); }
+	void Present() { m_SwapChain->Present(0, 0); }
+
+public:				     
+	CConstBuffer*		   GetConstBuffer(CB_TYPE _Type) { return m_arrCB[(UINT)_Type]; }
+	ID3D11Device*          GetDevice()					 { return m_Device.Get(); }
+	ID3D11DeviceContext*   GetContext()					 { return m_Context.Get(); }
+	ID3D11RasterizerState* GetRSState(RS_TYPE _Type)	 { return m_RSState[(UINT)_Type].Get(); }
 };

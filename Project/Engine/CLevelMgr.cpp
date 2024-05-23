@@ -10,6 +10,7 @@
 #include "assets.h"
 
 #include "CPlayerScript.h"
+#include "CCameraMoveScript.h"
 
 CLevelMgr::CLevelMgr()
 	: m_CurLevel(nullptr)
@@ -30,11 +31,14 @@ void CLevelMgr::Init()
 	CamObj->SetName(L"MainCamera");
 	CamObj->AddComponent(new CTransform);
 	CamObj->AddComponent(new CCamera);
+	CamObj->AddComponent(new CCameraMoveScript);
 
 	CamObj->Camera()->SetPriority(0);
 
 	CamObj->Camera()->SetLayerAll();
 	CamObj->Camera()->SetLayer(31, false);
+	//CamObj->Camera()->SetProjType(PROJ_TYPE::ORTHOGRAPHIC);
+	CamObj->Camera()->SetProjType(PROJ_TYPE::PERSPECTIVE);
 	m_CurLevel->AddObject(0, CamObj);
 
 	CGameObject* pObject = new CGameObject;

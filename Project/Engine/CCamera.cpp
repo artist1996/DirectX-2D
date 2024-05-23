@@ -18,8 +18,11 @@ CCamera::CCamera()
 	: CComponent(COMPONENT_TYPE::CAMERA)
 	, m_Priority(-1)
 	, m_LayerCheck(0)
+	, m_ProjType(PROJ_TYPE::ORTHOGRAPHIC)
 	, m_Width(0.f)
 	, m_Height(0.f)
+	, m_Far(10000.f)
+	, m_FOV(XM_PI / 2.f)
 {
 	Vec2 vResolution = CDevice::GetInst()->GetResolution();
 	m_Width = vResolution.x;
@@ -50,27 +53,35 @@ void CCamera::FinalTick()
 	// View 행렬을 계산한다.
 	// View 행렬은 World Space -> View Space 로 변경할때 사용하는 행렬
 	
-	m_matView = XMMatrixTranslation(-Transform()->GetRelativePos().x, -Transform()->GetRelativePos().y, -Transform()->GetRelativePos().z);
+	Matrix matTrans = XMMatrixTranslation(-Transform()->GetRelativePos().x, -Transform()->GetRelativePos().y, -Transform()->GetRelativePos().z);
+	Matrix matRot;
+	Vec3 vR = Transform()->GetDir(DIR::RIGHT);
+	Vec3 vU = Transform()->GetDir(DIR::UP);
+	Vec3 vF = Transform()->GetDir(DIR::FRONT);
 
+	// 전치
+	matRot._11 = vR.x; matRot._12 = vU.x; matRot._13 = vF.x;
+	matRot._21 = vR.y; matRot._22 = vU.y; matRot._23 = vF.y;
+	matRot._31 = vR.z; matRot._32 = vU.z; matRot._33 = vF.z;
+
+	m_matView = matTrans * matRot;
+	
 	// Projection Space 투영 좌표계(NDC)
-	// 1. 직교 투영 (Orthographic)
-	// 투영을 일직선으로
-	// 시야 범위를 NDC 로 압축
-	m_matProj = XMMatrixOrthographicLH(m_Width, m_Height, 1.f, 10000.f);
-
-	// 2. 원근 투영 (Perspective)
-
-	if (KEY_PRESSED(KEY::A))
+	if (PROJ_TYPE::ORTHOGRAPHIC == m_ProjType)
 	{
-		vPos.x += 100.f * DT;
+		// 1. 직교 투영 (Orthographic)
+		// 투영을 일직선으로
+		// 시야 범위를 NDC 로 압축
+		m_matProj = XMMatrixOrthographicLH(m_Width, m_Height, 1.f, m_Far);
 	}
 
-	if (KEY_PRESSED(KEY::D))
+	else
 	{
-		vPos.x -= 100.f * DT;
+		// 2. 원근 투영 (Perspective)
+		// 종횡비(Ratio)
+		float AspectRatio = m_Width / m_Height;
+		m_matProj = XMMatrixPerspectiveFovLH(m_FOV, AspectRatio, 1.f, m_Far);
 	}
-
-	Transform()->SetRelativePos(vPos);
 }
 
 void CCamera::Render()

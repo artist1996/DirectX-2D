@@ -56,6 +56,12 @@ int CDevice::Init(HWND _hWnd, UINT _Width, UINT _Height)
 		return E_FAIL;
 	}
 
+	if (FAILED(CreateRasterizerState()))
+	{
+		MessageBox(nullptr, L"Rasterizer State 생성 실패", L"장치 초기화 실패", MB_OK);
+		return E_FAIL;
+	}
+
 	// Output Merge State (출력 병합 단계)
 	m_Context->OMSetRenderTargets(1, m_RTView.GetAddressOf(), m_DSView.Get());
 
@@ -195,6 +201,31 @@ int CDevice::CreateConstBuffer()
 	}
 
 	m_arrCB[(UINT)CB_TYPE::TRANSFORM] = pCB;
+
+	return S_OK;
+}
+
+int CDevice::CreateRasterizerState()
+{
+	D3D11_RASTERIZER_DESC Desc = {};
+
+	// Cull Back
+	m_RSState[(UINT)RS_TYPE::CULL_BACK] = nullptr;
+
+	// Cull Front
+	Desc.CullMode = D3D11_CULL_FRONT;
+	Desc.FillMode = D3D11_FILL_SOLID;
+	DEVICE->CreateRasterizerState(&Desc, m_RSState[(UINT)RS_TYPE::CULL_FRONT].GetAddressOf());
+
+	// Cull None
+	Desc.CullMode = D3D11_CULL_NONE;
+	Desc.FillMode = D3D11_FILL_SOLID;
+	DEVICE->CreateRasterizerState(&Desc, m_RSState[(UINT)RS_TYPE::CULL_NONE].GetAddressOf());
+
+	// Wire Frame
+	Desc.CullMode = D3D11_CULL_NONE;
+	Desc.FillMode = D3D11_FILL_WIREFRAME;
+	DEVICE->CreateRasterizerState(&Desc, m_RSState[(UINT)RS_TYPE::WIRE_FRAME].GetAddressOf());
 
 	return S_OK;
 }

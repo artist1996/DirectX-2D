@@ -37,7 +37,6 @@
     <ClInclude Include="CKeyMgr.h">
       <Filter>04. Manager\03. KeyMgr</Filter>
     </ClInclude>
-    <ClInclude Include="Temp.h" />
     <ClInclude Include="struct.h">
       <Filter>01. Header</Filter>
     </ClInclude>
@@ -116,6 +115,9 @@
     <ClInclude Include="CPlayerScript.h">
       <Filter>Scripts</Filter>
     </ClInclude>
+    <ClInclude Include="CCameraMoveScript.h">
+      <Filter>Scripts</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CEngine.cpp">
@@ -142,7 +144,6 @@
     <ClCompile Include="CKeyMgr.cpp">
       <Filter>04. Manager\03. KeyMgr</Filter>
     </ClCompile>
-    <ClCompile Include="Temp.cpp" />
     <ClCompile Include="CAsset.cpp">
       <Filter>06. Asset</Filter>
     </ClCompile>
@@ -204,6 +205,9 @@
       <Filter>08. Component\Script</Filter>
     </ClCompile>
     <ClCompile Include="CPlayerScript.cpp">
+      <Filter>Scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="CCameraMoveScript.cpp">
       <Filter>Scripts</Filter>
     </ClCompile>
   </ItemGroup>

@@ -73,9 +73,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <TargetName>$(ProjectName)_D</TargetName>
     <OutDir>$(SolutionDir)External\Library\Engine\</OutDir>
+    <IncludePath>$(SolutionDir)External\Include\;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)External\Library\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)External\Library\Engine\</OutDir>
+    <IncludePath>$(SolutionDir)External\Include\;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)External\Library\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -160,6 +164,7 @@ call EngineHeaderCopy.bat</Command>
     <ClInclude Include="CAsset.h" />
     <ClInclude Include="CAssetMgr.h" />
     <ClInclude Include="CCamera.h" />
+    <ClInclude Include="CCameraMoveScript.h" />
     <ClInclude Include="CComponent.h" />
     <ClInclude Include="CComputeShader.h" />
     <ClInclude Include="CConstBuffer.h" />
@@ -197,12 +202,12 @@ call EngineHeaderCopy.bat</Command>
     <ClInclude Include="SimpleMath.h" />
     <ClInclude Include="singleton.h" />
     <ClInclude Include="struct.h" />
-    <ClInclude Include="Temp.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CAsset.cpp" />
     <ClCompile Include="CAssetMgr.cpp" />
     <ClCompile Include="CCamera.cpp" />
+    <ClCompile Include="CCameraMoveScript.cpp" />
     <ClCompile Include="CComponent.cpp" />
     <ClCompile Include="CComputeShader.cpp" />
     <ClCompile Include="CConstBuffer.cpp" />
@@ -237,7 +242,6 @@ call EngineHeaderCopy.bat</Command>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="Temp.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="SimpleMath.inl" />

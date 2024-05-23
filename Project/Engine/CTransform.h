@@ -25,6 +25,8 @@ public:
     Vec3 GetRelativePos()       { return m_RelativePos; }
     Vec3 GetRelativeScale()     { return m_RelativeScale; }
     Vec3 GetRelativeRotation()  { return m_RelativeRotation; }
+    
+    Vec3 GetDir(DIR _Dir)       { return m_RelativeDir[_Dir]; };
 
 public:
     virtual void FinalTick() override;

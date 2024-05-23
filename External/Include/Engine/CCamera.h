@@ -1,19 +1,30 @@
 #pragma once
 #include "CComponent.h"
 
+enum PROJ_TYPE
+{
+    ORTHOGRAPHIC,       // 직교 투영
+    PERSPECTIVE,        // 원근 투영
+};
+
 class CCamera :
     public CComponent
 {
 private:
-    int    m_Priority;
+    int       m_Priority;
 
-    UINT   m_LayerCheck; // 원하는 레이어만 카메라에 찍히도록 설정
+    UINT      m_LayerCheck; // 원하는 레이어만 카메라에 찍히도록 설정
 
-    float  m_Width;
-    float  m_Height;
+    PROJ_TYPE m_ProjType;
 
-    Matrix m_matView;
-    Matrix m_matProj;
+    float     m_Width;
+    float     m_Height;
+    float     m_Far;        // 카메라가 바라볼 수 있는 z축의 거리
+
+    float     m_FOV;        // Field Of View (시야 범위, 시야 각) 원근 투영 시
+
+    Matrix    m_matView;
+    Matrix    m_matProj;
 
 public:
     void SetPriority(int _Priority) { m_Priority = _Priority; }
@@ -26,7 +37,12 @@ public:
             m_LayerCheck &= ~(1 << _LayerIdx);
     }
 
-    void SetLayerAll() { m_LayerCheck = 0xffffffff; }
+    void SetLayerAll()                { m_LayerCheck = 0xffffffff; }
+    void SetProjType(PROJ_TYPE _Type) { m_ProjType = _Type; }
+    void SetFar(float _Far)           { m_Far = _Far; }
+
+    PROJ_TYPE GetProjType() { return m_ProjType; }
+    float GetFar()          { return m_Far; }
     
 
 public:

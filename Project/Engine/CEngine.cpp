@@ -8,8 +8,6 @@
 #include "CLevelMgr.h"
 #include "CRenderMgr.h"
 
-#include "Temp.h"
-
 CEngine::CEngine()
 	: m_hWnd(nullptr)
 	, m_ptResolution{}
@@ -17,7 +15,6 @@ CEngine::CEngine()
 
 CEngine::~CEngine()
 {
-	TempRelease();
 }
 
 int CEngine::Init(HWND _hWnd, POINT _ptResolution)
