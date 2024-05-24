@@ -22,7 +22,10 @@ public:
     int CreateVertexShader(const wstring& _RelativePath, const string& _FuncName);
     int CreatePixelShader(const wstring& _RelativePath, const string& _FuncName);
 
-    virtual void Binding() override;
+    virtual int Load(const wstring& _Key) override { return S_OK; }
+    virtual int Save(const wstring& _Key) override { return S_OK; }
+
+    void Binding();
 
 public:
     CGraphicShader();

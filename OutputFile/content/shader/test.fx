@@ -1,26 +1,21 @@
 #ifndef _TEST
 #define _TEST
 
+#include "value.fx"
 
-// ConstantBuffer
-cbuffer OBJECT_POS : register(b0)
-{
-    row_major matrix matWorld;
-    row_major matrix matView;
-    row_major matrix matProj;
-}
-    
 // Vertex Shader
 struct VTX_IN
 {
-    float3 vPos : POSITION;
+    float3 vPos   : POSITION;
     float4 vColor : COLOR;
+    float2 vUV    : TEXCOORD;
 };
 
 struct VTX_OUT
 {
     float4 vPosition : SV_Position;
-    float4 vColor : COLOR;
+    float4 vColor    : COLOR;
+    float2 vUV       : TEXCOORD;
 };
 
 VTX_OUT VS_Test(VTX_IN _in)
@@ -36,14 +31,18 @@ VTX_OUT VS_Test(VTX_IN _in)
     float4 vProjPos = mul(vViewPos, matProj);
     
     output.vPosition = vProjPos;
-    output.vColor = _in.vColor;
+    output.vColor    = _in.vColor;
+    output.vUV       = _in.vUV;
     
     return output;
 }
 
 float4 PS_Test(VTX_OUT _in) : SV_Target
 {
-    return _in.vColor;
+    float4 vColor = g_tex_0.Sample(g_sam_1, _in.vUV);
+    vColor.a = 0.f;
+    
+    return vColor;
 }
 
 #endif

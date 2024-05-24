@@ -31,6 +31,8 @@ public:
 	Ptr<CTexture> CreateTexture(const wstring& _strKey, UINT _Width, UINT _Height
 							  , DXGI_FORMAT _Format, UINT _Flags
 							  , D3D11_USAGE _Usage = D3D11_USAGE::D3D11_USAGE_DEFAULT);
+
+	Ptr<CTexture> CreateTexutre(const wstring& _Key, ComPtr<ID3D11Texture2D> _Tex2D);
 };
 
 template<typename T>

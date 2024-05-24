@@ -15,16 +15,15 @@ private:
 
 	ComPtr<IDXGISwapChain>			m_SwapChain;
 	
-	ComPtr<ID3D11Texture2D>			m_RTTex;
+	Ptr<CTexture>					m_RTTex;
 
 	Ptr<CTexture>					m_DSTex;
-	
-	ComPtr<ID3D11RenderTargetView>  m_RTView;
+
+	ComPtr<ID3D11RasterizerState>	m_RSState[(UINT)RS_TYPE::END];
+	ComPtr<ID3D11SamplerState>      m_Sampler[2];
 
 	ComPtr<ID3D11BlendState>	    m_BSState;
 	ComPtr<ID3D11DepthStencilState> m_DSState;
-	ComPtr<ID3D11SamplerState>      m_Sampler;
-	ComPtr<ID3D11RasterizerState>	m_RSState[(UINT)RS_TYPE::END];
 
 	CConstBuffer*					m_arrCB[(UINT)CB_TYPE::END];
 	
@@ -33,6 +32,7 @@ private:
 	int CreateView();
 	int CreateConstBuffer();
 	int CreateRasterizerState();
+	int CreateSamplerState();
 
 public:
 	int Init(HWND _hWnd, UINT _Width, UINT _Height);

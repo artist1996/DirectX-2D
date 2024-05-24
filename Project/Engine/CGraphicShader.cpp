@@ -50,7 +50,7 @@ int CGraphicShader::CreateVertexShader(const wstring& _RelativePath, const strin
 		, m_VSBlob->GetBufferSize(), nullptr, m_VS.GetAddressOf());
 
 	// Layout 생성
-	D3D11_INPUT_ELEMENT_DESC Element[2] = {};		          // 현재 Vtx의 멤버가 Position, Color 2개 이기 때문에 2개를 초기화
+	D3D11_INPUT_ELEMENT_DESC Element[3] = {};		          // 현재 Vtx의 멤버가 Position, Color 2개 이기 때문에 2개를 초기화
 
 	Element[0].AlignedByteOffset = 0;					      // 정점 데이터의 시작 위치
 	Element[0].Format = DXGI_FORMAT_R32G32B32_FLOAT;	      // Data 크기
@@ -68,7 +68,15 @@ int CGraphicShader::CreateVertexShader(const wstring& _RelativePath, const strin
 	Element[1].SemanticName = "COLOR";
 	Element[1].SemanticIndex = 0;
 
-	DEVICE->CreateInputLayout(Element, 2
+	Element[2].AlignedByteOffset = 28;
+	Element[2].Format = DXGI_FORMAT_R32G32_FLOAT;
+	Element[2].InputSlot = 0;
+	Element[2].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
+	Element[2].InstanceDataStepRate = 0;
+	Element[2].SemanticName = "TEXCOORD";
+	Element[2].SemanticIndex = 0;
+
+	DEVICE->CreateInputLayout(Element, 3
 							, m_VSBlob->GetBufferPointer()
 							, m_VSBlob->GetBufferSize()
 							, m_Layout.GetAddressOf());

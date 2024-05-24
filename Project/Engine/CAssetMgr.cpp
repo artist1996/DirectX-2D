@@ -18,15 +18,19 @@ void CAssetMgr::Init()
 	
 	arrVtx[0].vPos = Vec3(-0.5f, 0.5f, 0.f);
 	arrVtx[0].vColor = Vec4(1.f, 0.f, 0.f, 1.f);
+	arrVtx[0].vUV = Vec2(0.f, 0.f);
 	
 	arrVtx[1].vPos = Vec3(0.5f, 0.5f, 0.f);
 	arrVtx[1].vColor = Vec4(0.f, 1.f, 0.f, 1.f);
-	
+	arrVtx[1].vUV = Vec2(1.f, 0.f);
+
 	arrVtx[2].vPos = Vec3(0.5f, -0.5f, 0.f);
 	arrVtx[2].vColor = Vec4(0.f, 0.f, 1.f, 1.f);
+	arrVtx[2].vUV = Vec2(1.f, 1.f);
 	
 	arrVtx[3].vPos = Vec3(-0.5f, -0.5f, 0.f);
 	arrVtx[3].vColor = Vec4(0.f, 0.f, 1.f, 1.f);
+	arrVtx[3].vUV = Vec2(0.f, 1.f);
 	
 	// Index Buffer 생성
 	arrIdx[0] = 0; arrIdx[1] = 1; arrIdx[2] = 2;
@@ -70,5 +74,26 @@ Ptr<CTexture> CAssetMgr::CreateTexture(const wstring& _strKey, UINT _Width, UINT
 		return nullptr;
 	}
 		
+	return pTexture;
+}
+
+Ptr<CTexture> CAssetMgr::CreateTexutre(const wstring& _Key, ComPtr<ID3D11Texture2D> _Tex2D)
+{
+	// 중복 키 검사
+	Ptr<CTexture> pTexture = FindAsset<CTexture>(_Key);
+	assert(!pTexture.Get());
+
+	pTexture = new CTexture;
+
+	if (FAILED(pTexture->Create(_Tex2D)))
+	{
+		MessageBox(nullptr, L"텍스쳐 생성 실패", L"텍스쳐 생성 실패", MB_OK);
+		return nullptr;
+	}
+
+	// 맵에 등록
+	pTexture->m_Key = _Key;
+	m_mapAsset[(UINT)ASSET_TYPE::TEXTURE].insert(make_pair(_Key, pTexture.Get()));
+	
 	return pTexture;
 }
