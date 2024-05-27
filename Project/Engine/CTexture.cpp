@@ -157,7 +157,21 @@ int CTexture::Create(ComPtr<ID3D11Texture2D> _Tex2D)
 
 void CTexture::Binding(UINT _RegisterNum)
 {
+	CONTEXT->VSSetShaderResources(_RegisterNum, 1, m_SRV.GetAddressOf());
+	CONTEXT->HSSetShaderResources(_RegisterNum, 1, m_SRV.GetAddressOf());
+	CONTEXT->DSSetShaderResources(_RegisterNum, 1, m_SRV.GetAddressOf());
+	CONTEXT->GSSetShaderResources(_RegisterNum, 1, m_SRV.GetAddressOf());
 	CONTEXT->PSSetShaderResources(_RegisterNum, 1, m_SRV.GetAddressOf());
+}
+
+void CTexture::Clear(UINT _RegisterNum)
+{
+	ID3D11ShaderResourceView* pRSV = nullptr;
+	CONTEXT->VSSetShaderResources(_RegisterNum, 1, &pRSV);
+	CONTEXT->HSSetShaderResources(_RegisterNum, 1, &pRSV);
+	CONTEXT->DSSetShaderResources(_RegisterNum, 1, &pRSV);
+	CONTEXT->GSSetShaderResources(_RegisterNum, 1, &pRSV);
+	CONTEXT->PSSetShaderResources(_RegisterNum, 1, &pRSV);
 }
 
 int CTexture::Save(const wstring& _FilePath)

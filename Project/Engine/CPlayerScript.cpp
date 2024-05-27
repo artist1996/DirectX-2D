@@ -25,9 +25,16 @@ void CPlayerScript::Tick()
 
 	if (KEY_PRESSED(KEY::Z))
 	{
-		Vec3 vRot = Transform()->GetRelativeRotation();
-		vRot.y += XM_PI * DT;
-		Transform()->SetRelativeRotation(vRot);
+		MeshRender()->GetMaterial()->SetScalarParam(INT_0, 1);
+
+		//Vec3 vRot = Transform()->GetRelativeRotation();
+		//vRot.y += XM_PI * DT;
+		//Transform()->SetRelativeRotation(vRot);
+	}
+
+	else
+	{
+		MeshRender()->GetMaterial()->SetScalarParam(INT_0, 0);
 	}
 
 	Transform()->SetRelativePos(vPos);

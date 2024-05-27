@@ -179,6 +179,15 @@ int CDevice::CreateConstBuffer()
 
 	m_arrCB[(UINT)CB_TYPE::TRANSFORM] = pCB;
 
+	pCB = new CConstBuffer;
+	if (FAILED(pCB->Create(CB_TYPE::MATERIAL, sizeof(tMtrlConst))))
+	{
+		MessageBox(nullptr, L"ConstantBuffer 积己 角菩", L"Buffer 积己 角菩", MB_OK);
+		return E_FAIL;
+	}
+
+	m_arrCB[(UINT)CB_TYPE::MATERIAL] = pCB;
+
 	return S_OK;
 }
 

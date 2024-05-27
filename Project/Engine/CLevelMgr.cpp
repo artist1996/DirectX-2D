@@ -12,6 +12,8 @@
 #include "CPlayerScript.h"
 #include "CCameraMoveScript.h"
 
+#include "CMaterial.h"
+
 CLevelMgr::CLevelMgr()
 	: m_CurLevel(nullptr)
 {
@@ -25,9 +27,13 @@ CLevelMgr::~CLevelMgr()
 
 void CLevelMgr::Init()
 {
-	// Texture ·Îµù
+	// Std2DMtrl
+	Ptr<CMaterial> pMtrl = CAssetMgr::GetInst()->FindAsset<CMaterial>(L"Std2DMtrl");
 	Ptr<CTexture> pTexture = CAssetMgr::GetInst()->Load<CTexture>(L"PlayerTex", L"texture\\Character.png");
-	pTexture->Binding(0);
+	pMtrl->SetScalarParam(INT_0, 1);
+	pMtrl->SetTexParam(TEX_0, pTexture);
+
+
 	m_CurLevel = new CLevel;
 
 	CGameObject* CamObj = new CGameObject;
@@ -40,8 +46,9 @@ void CLevelMgr::Init()
 
 	CamObj->Camera()->SetLayerAll();
 	CamObj->Camera()->SetLayer(31, false);
-	//CamObj->Camera()->SetProjType(PROJ_TYPE::ORTHOGRAPHIC);
-	CamObj->Camera()->SetProjType(PROJ_TYPE::PERSPECTIVE);
+	CamObj->Camera()->SetFar(10000.f);
+	CamObj->Camera()->SetProjType(PROJ_TYPE::ORTHOGRAPHIC);
+	//CamObj->Camera()->SetProjType(PROJ_TYPE::PERSPECTIVE);
 	m_CurLevel->AddObject(0, CamObj);
 
 	CGameObject* pObject = new CGameObject;
@@ -52,8 +59,9 @@ void CLevelMgr::Init()
 
 	pObject->Transform()->SetRelativePos(0.f, 0.f, 500.f);
 	pObject->Transform()->SetRelativeScale(200.f, 200.f, 1.f);
+
 	pObject->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
-	pObject->MeshRender()->SetShader(CAssetMgr::GetInst()->FindAsset<CGraphicShader>(L"TestShader"));
+	pObject->MeshRender()->SetMaterial(pMtrl);
 	
 	m_CurLevel->AddObject(0, pObject);
 

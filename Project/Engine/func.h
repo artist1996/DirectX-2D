@@ -46,8 +46,8 @@ ASSET_TYPE GetAssetType()
 	//if constexpr (std::is_same_v<T, CMeshData>)
 	//	return ASSET_TYPE::MESH_DATA;
 	//
-	//if constexpr (std::is_same_v<T, CMaterial>)
-	//	return ASSET_TYPE::MATERIAL;
+	if constexpr (std::is_same_v<T, CMaterial>)
+		return ASSET_TYPE::MATERIAL;
 	//
 	//if constexpr (std::is_same_v<T, CPrefab>)
 	//	return ASSET_TYPE::PREFAB;

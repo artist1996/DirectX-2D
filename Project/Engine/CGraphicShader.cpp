@@ -50,7 +50,7 @@ int CGraphicShader::CreateVertexShader(const wstring& _RelativePath, const strin
 		, m_VSBlob->GetBufferSize(), nullptr, m_VS.GetAddressOf());
 
 	// Layout 생성
-	D3D11_INPUT_ELEMENT_DESC Element[3] = {};		          // 현재 Vtx의 멤버가 Position, Color 2개 이기 때문에 2개를 초기화
+	D3D11_INPUT_ELEMENT_DESC Element[3] = {};
 
 	Element[0].AlignedByteOffset = 0;					      // 정점 데이터의 시작 위치
 	Element[0].Format = DXGI_FORMAT_R32G32B32_FLOAT;	      // Data 크기
