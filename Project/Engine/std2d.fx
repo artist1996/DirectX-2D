@@ -40,13 +40,13 @@ VTX_OUT VS_Std2D(VTX_IN _in)
 
 float4 PS_Std2D(VTX_OUT _in) : SV_Target
 {
-    float4 vColor = float4(0.f, 0.f, 0.f, 0.f);
+    float4 vColor = float4(0.f, 0.f, 0.f, 1.f);
     
     if(g_btex_0)
     {
         vColor = g_tex_0.Sample(g_sam_1, _in.vUV);
         
-        if(g_int_0)
+        if(g_int_1)
         {
             vColor.r *= 2.f;
         }
@@ -55,6 +55,12 @@ float4 PS_Std2D(VTX_OUT _in) : SV_Target
     {
         vColor = float4(1.f, 0.f, 1.f, 1.f);
     }
+    
+    //if(vColor.a == 0.f)
+    //{
+    //    clip(-1);
+    //    discard;
+    //}
     
     return vColor;
 }

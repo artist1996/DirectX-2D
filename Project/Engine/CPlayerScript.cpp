@@ -22,6 +22,16 @@ void CPlayerScript::Tick()
 		vPos.y += m_Speed * DT;
 	if (KEY_PRESSED(KEY::DOWN))
 		vPos.y -= m_Speed * DT;
+	
+	if (KEY_PRESSED(KEY::X))
+	{
+		
+	}
+
+	else
+	{
+
+	}
 
 	if (KEY_PRESSED(KEY::Z))
 	{

@@ -54,6 +54,10 @@ void CAssetMgr::CreateEngineMaterial()
 
 	pMtrl->SetShader(FindAsset<CGraphicShader>(L"Std2DShader"));
 	AddAsset(L"Std2DMtrl", pMtrl);
+
+	pMtrl = new CMaterial;
+	pMtrl->SetShader(FindAsset<CGraphicShader>(L"Std2DAlphaBlendShader"));
+	AddAsset(L"Std2DAlphaBlendMtrl", pMtrl);
 }
 
 void CAssetMgr::CreateEngineTexture()
@@ -62,12 +66,29 @@ void CAssetMgr::CreateEngineTexture()
 
 void CAssetMgr::CreateEngineGraphicShader()
 {
+	// Std2DShader
 	Ptr<CGraphicShader> pShader = nullptr;
 	pShader = new CGraphicShader;
 	pShader->CreateVertexShader(L"shader\\std2d.fx", "VS_Std2D");
 	pShader->CreatePixelShader(L"shader\\std2d.fx", "PS_Std2D");
 	pShader->SetRSType(RS_TYPE::CULL_NONE);
+
+	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_MASKED); 
+
 	AddAsset(L"Std2DShader", pShader);
+
+	// Std2DAlphaBlend
+	pShader = new CGraphicShader;
+	pShader->CreateVertexShader(L"shader\\std2d.fx", "VS_Std2D");
+	pShader->CreatePixelShader(L"shader\\std2d.fx", "PS_Std2D");
+	pShader->SetRSType(RS_TYPE::CULL_NONE);
+	pShader->SetDSType(DS_TYPE::NO_TEST_NO_WRITE); // 투명한것들이 적용 되는 것들은 다 따로 렌더링 방식을
+	pShader->SetBSType(BS_TYPE::ALPHABLEND);	   // 지정 해줘야 하고 렌더링을 뒤로 미뤄야 하기 때문에 깊이값 검사 하지 않음
+	
+	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_TRANSPARENT);	// 알파블렌드 이기 때문에 반투명
+
+	AddAsset(L"Std2DAlphaBlendShader", pShader);
+
 }
 
 void CAssetMgr::CreateEngineComputeShader()
