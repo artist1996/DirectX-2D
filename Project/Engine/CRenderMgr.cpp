@@ -32,3 +32,7 @@ void CRenderMgr::RegisterCamera(CCamera* _Cam, int _CamPriority)
 	// 카메라 우선순위에 맞는 위치에 넣는다.
 	m_vecCam[_CamPriority] = _Cam;
 }
+
+void CRenderMgr::RenderDebugShape()
+{
+}

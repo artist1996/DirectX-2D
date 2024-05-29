@@ -4,6 +4,8 @@
 #include "CDevice.h"
 #include "CConstBuffer.h"
 
+#include "CCamera.h"
+
 CTransform::CTransform()
 	: CComponent(COMPONENT_TYPE::TRANSFORM)
 {
@@ -47,6 +49,8 @@ void CTransform::FinalTick()
 void CTransform::Binding()
 {
 	g_Trans.matWorld = m_matWorld;
+	g_Trans.matWV = g_Trans.matWorld * g_Trans.matView;
+	g_Trans.matWVP = g_Trans.matWV * g_Trans.matProj;
 	
 	CConstBuffer* pTransformCB = CDevice::GetInst()->GetConstBuffer(CB_TYPE::TRANSFORM);
 	pTransformCB->SetData(&g_Trans);

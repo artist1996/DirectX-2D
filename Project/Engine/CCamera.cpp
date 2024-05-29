@@ -9,6 +9,8 @@
 #include "CLayer.h"
 #include "CGameObject.h"
 
+#include "CRenderComponent.h"
+
 #include "CTransform.h"
 
 #include "CKeyMgr.h"
@@ -84,11 +86,8 @@ void CCamera::FinalTick()
 	}
 }
 
-void CCamera::Render()
+void CCamera::SortGameObject()
 {
-	g_Trans.matView = m_matView;
-	g_Trans.matProj = m_matProj;
-
 	CLevel* pLevel = CLevelMgr::GetInst()->GetCurrentLevel();
 
 	for (UINT i = 0; i < MAX_LAYER; ++i)
@@ -96,9 +95,74 @@ void CCamera::Render()
 		CLayer* pLayer = pLevel->GetLayer(i);
 
 		const vector<CGameObject*>& vecObjects = pLayer->GetParentObjects();
+
+				
 		for (size_t j = 0; j < vecObjects.size(); ++j)
 		{
-			vecObjects[j]->Render();
+			if (nullptr == vecObjects[j]->GetRenderComponent()
+			 || nullptr == vecObjects[j]->GetRenderComponent()->GetMesh()
+			 || nullptr == vecObjects[j]->GetRenderComponent()->GetMaterial()
+			 || nullptr == vecObjects[j]->GetRenderComponent()->GetMaterial()->GetShader())
+			{
+				continue;
+			}
+			
+			Ptr<CGraphicShader> pShader = vecObjects[j]->GetRenderComponent()->GetMaterial()->GetShader();
+			SHADER_DOMAIN Domain = pShader->GetDomain();
+			
+			switch (Domain)
+			{
+			case DOMAIN_OPAQUE:
+				m_vecOpaque.push_back(vecObjects[j]);
+				break;
+			case DOMAIN_MASKED:
+				m_vecMasked.push_back(vecObjects[j]);
+				break;
+			case DOMAIN_TRANSPARENT:
+				m_vecTransparent.push_back(vecObjects[j]);
+				break;
+			case DOMAIN_PARTICLE:
+				m_vecParticles.push_back(vecObjects[j]);
+				break;
+			}
 		}
 	}
+}
+
+void CCamera::Render()
+{
+	g_Trans.matView = m_matView;
+	g_Trans.matProj = m_matProj;
+
+	SortGameObject();
+
+	// Opaque
+	for (size_t i = 0; i < m_vecOpaque.size(); ++i)
+	{
+		m_vecOpaque[i]->Render();
+	}
+
+	// Masked
+	for (size_t i = 0; i < m_vecMasked.size(); ++i)
+	{
+		m_vecMasked[i]->Render();
+	}
+
+	// Transparent
+	for (size_t i = 0; i < m_vecTransparent.size(); ++i)
+	{
+		m_vecTransparent[i]->Render();
+	}
+
+	// Particles
+	for (size_t i = 0; i < m_vecParticles.size(); ++i)
+	{
+		m_vecParticles[i]->Render();
+	}
+
+	// Runtime 중 Domain Type이 변경 될 수 있기 때문에 Render 호출 하고 clear 시켜줌
+	m_vecOpaque.clear();
+	m_vecMasked.clear();
+	m_vecTransparent.clear();
+	m_vecParticles.clear();
 }

@@ -12,6 +12,9 @@ struct tTransform
 	Matrix matWorld;
 	Matrix matView;
 	Matrix matProj;
+
+	Matrix matWV;
+	Matrix matWVP;
 };
 
 struct tMtrlConst
@@ -22,6 +25,21 @@ struct tMtrlConst
 	Vec4	v4Arr[4];
 	Matrix  matArr[4];
 	int		btex[TEX_PARAM::END + 2];
+};
+
+struct tDebugShapeInfo
+{
+	DEBUG_SHAPE Shape;
+	Vec3		vPos;
+	Vec3		vScale;
+	Vec3		vRot;
+	Matrix		matWorld;
+	Vec4		vColor;
+
+	float		LifeTime;
+	float		Age;
+
+	bool		DepthTest;
 };
 
 extern tTransform g_Trans;

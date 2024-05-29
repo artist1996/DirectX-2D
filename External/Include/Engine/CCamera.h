@@ -26,6 +26,11 @@ private:
     Matrix    m_matView;
     Matrix    m_matProj;
 
+    vector<CGameObject*> m_vecOpaque;       // 불투명
+    vector<CGameObject*> m_vecMasked;       // 투명, 불투명
+    vector<CGameObject*> m_vecTransparent;  // 투명, 반투명
+    vector<CGameObject*> m_vecParticles;    // 투명, 반투명, 입자
+
 public:
     void SetPriority(int _Priority) { m_Priority = _Priority; }
     void SetLayer(UINT _LayerIdx, bool _bCheck)
@@ -48,6 +53,11 @@ public:
 public:
     virtual void Begin() override;
     virtual void FinalTick() override;
+
+private:
+    void SortGameObject();
+
+public:
     void Render();
 
 public:
