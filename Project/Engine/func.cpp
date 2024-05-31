@@ -36,3 +36,22 @@ void DrawDebugRect(Matrix _matWorld, Vec4 _Color, float _Life, bool _DepthTest)
 
 	CRenderMgr::GetInst()->AddDebugShapeInfo(Info);
 }
+
+void DrawDebugCircle(Vec3 _Pos, float _Radius, Vec4 _Color, float _Life, bool _DepthTest)
+{
+	tDebugShapeInfo Info = {};
+
+	Info.Shape = DEBUG_SHAPE::CIRCLE;
+	Info.vPos = _Pos;
+	Info.vScale = Vec3(_Radius * 2.f, _Radius * 2.f, 1.f);
+	Info.vRot = Vec3(0.f, 0.f, 0.f);
+	Info.LifeTime = _Life;
+
+	Info.matWorld = XMMatrixScaling(Info.vScale.x, Info.vScale.y, Info.vScale.z)
+				  * XMMatrixTranslation(_Pos.x, _Pos.y, _Pos.z);
+					
+	Info.vColor = _Color;
+	Info.DepthTest = _DepthTest;
+
+	CRenderMgr::GetInst()->AddDebugShapeInfo(Info);
+}

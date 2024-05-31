@@ -46,6 +46,13 @@ void CAssetMgr::CreateEngineMesh()
 	pMesh->Create(arrVtx, 4, arrIdx, 6);
 	AddAsset(L"RectMesh", pMesh);
 
+	// Debug RectMesh
+	arrIdx[0] = 0;	arrIdx[1] = 1; arrIdx[2] = 2; arrIdx[3] = 3; arrIdx[4] = 0;
+	
+	pMesh = new CMesh;
+	pMesh->Create(arrVtx, 4, arrIdx, 5);
+	AddAsset(L"RectMesh_Debug", pMesh);
+
 	// Circle Mesh
 	vector<Vtx> vecVtx;
 	vector<UINT> vecIdx;
@@ -89,6 +96,18 @@ void CAssetMgr::CreateEngineMesh()
 	pMesh = new CMesh;
 	pMesh->Create(vecVtx.data(), (UINT)vecVtx.size(), vecIdx.data(), (UINT)vecIdx.size());	// 배열의 첫번째 주소와, 정점의 개수 전달
 	AddAsset(L"CircleMesh", pMesh);
+
+	// Debug Circle Mesh
+	vecIdx.clear();
+	
+	for (size_t i = 0; i < vecVtx.size() - 1; ++i)
+	{
+		vecIdx.push_back(i + 1);
+	}
+
+	pMesh = new CMesh;
+	pMesh->Create(vecVtx.data(), (UINT)vecVtx.size(), vecIdx.data(), (UINT)vecIdx.size());
+	AddAsset(L"CircleMesh_Debug", pMesh);
 }
 
 void CAssetMgr::CreateEngineMaterial()
@@ -145,12 +164,13 @@ void CAssetMgr::CreateEngineGraphicShader()
 	pShader = new CGraphicShader;
 	pShader->CreateVertexShader(L"shader\\debug.fx", "VS_DebugShape");
 	pShader->CreatePixelShader(L"shader\\debug.fx", "PS_DebugShape");
-	//pShader->SetRSType(RS_TYPE::CULL_NONE);
-	pShader->SetRSType(RS_TYPE::WIRE_FRAME);
+	pShader->SetRSType(RS_TYPE::CULL_NONE);
+	//pShader->SetRSType(RS_TYPE::WIRE_FRAME);
 	pShader->SetDSType(DS_TYPE::LESS);
 	pShader->SetBSType(BS_TYPE::DEFAULT);
+	pShader->SetTopology(D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP);
 
-	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_MASKED);
+	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_DEBUG);
 
 	AddAsset(L"DebugShapeShader", pShader);
 }

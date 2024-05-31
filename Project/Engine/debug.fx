@@ -26,25 +26,7 @@ VS_OUT VS_DebugShape(VS_IN _in)
 }
 
 float4 PS_DebugShape(VS_OUT _in) : SV_Target
-{
-    //if(g_int_1)
-    //{
-    //    if (g_float_0 <= _in.vUV.x && (1.f - g_float_0) >= _in.vUV.x
-    //        && g_float_0 <= _in.vUV.y && (1.f - g_float_0) >= _in.vUV.y)
-    //    {
-    //        discard;
-    //    }
-    //}
-    //else
-    //{
-    //    float fDist = distance(float2(0.5f, 0.5f), _in.vUV);
-    //    
-    //    if (fDist < 0.5f - g_float_0)
-    //    {
-    //        discard;
-    //    }
-    //}
-    
+{  
     return g_vec4_0;
 }
 #endif

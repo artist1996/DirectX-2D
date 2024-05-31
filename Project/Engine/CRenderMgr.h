@@ -1,6 +1,7 @@
 #pragma once
 
 class CCamera;
+class CGameObject;
 
 class CRenderMgr
 	: public CSingleton<CRenderMgr>
@@ -9,6 +10,8 @@ class CRenderMgr
 private:
 	vector<CCamera*>		m_vecCam;
 	list<tDebugShapeInfo>	m_DebugShapeList;
+
+	CGameObject*			m_DebugObject;
 
 public:
 	void AddDebugShapeInfo(tDebugShapeInfo _Info) { m_DebugShapeList.push_back(_Info); }

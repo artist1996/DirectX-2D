@@ -22,17 +22,11 @@ void CPlayerScript::Tick()
 		vPos.y += m_Speed * DT;
 	if (KEY_PRESSED(KEY::DOWN))
 		vPos.y -= m_Speed * DT;
-	
-	if (KEY_PRESSED(KEY::X))
+	if (KEY_TAP(KEY::SPACE))
 	{
-		
+		DrawDebugCircle(Transform()->GetRelativePos(), 100.f, Vec4(0.f, 1.f, 0.f, 1.f), 3.f, false);
+		//DrawDebugRect(Transform()->GetWorldMatrix(), Vec4(0.f, 1.f, 0.f, 1.f), 3.f, true);
 	}
-
-	else
-	{
-
-	}
-
 	if (KEY_PRESSED(KEY::Z))
 	{
 		MeshRender()->GetMaterial()->SetScalarParam(INT_0, 1);
