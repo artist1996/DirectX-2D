@@ -4,6 +4,10 @@
 #include "CKeyMgr.h"
 #include "CTimeMgr.h"
 
+#include "CLevelMgr.h"
+#include "CLevel.h"
+#include "CLayer.h"
+
 #include "components.h"
 
 CGameObject::CGameObject()
@@ -18,6 +22,7 @@ CGameObject::~CGameObject()
 {
 	Delete_Array(m_arrCom);
 	Delete_Vec(m_vecScript);
+	Delete_Vec(m_vecChildren);
 }
 
 void CGameObject::AddComponent(CComponent* _Component)
@@ -48,6 +53,24 @@ void CGameObject::AddComponent(CComponent* _Component)
 	}
 }
 
+void CGameObject::AddChild(CGameObject* _ChildObject)
+{
+	m_vecChildren.push_back(_ChildObject);
+	_ChildObject->m_Parent = this;
+}
+
+void CGameObject::DisconnectWithLayer()
+{
+	if (nullptr == m_Parent)
+	{
+		CLevel* pLevel = CLevelMgr::GetInst()->GetCurrentLevel();
+		CLayer* pLayer = pLevel->GetLayer(m_LayerIdx);
+		pLayer->DisconnectWithObject(this);
+	}
+
+	m_LayerIdx = -1;
+}
+
 void CGameObject::Begin()
 {
 	for (UINT i = 0; i < (UINT)COMPONENT_TYPE::END; ++i)
@@ -61,6 +84,12 @@ void CGameObject::Begin()
 	for (size_t i = 0; i < m_vecScript.size(); ++i)
 	{
 		m_vecScript[i]->Begin();
+	}
+
+	// 자식 오브젝트
+	for (size_t i = 0; i < m_vecChildren.size(); ++i)
+	{
+		m_vecChildren[i]->Begin();
 	}
 }
 
@@ -91,6 +120,12 @@ void CGameObject::FinalTick()
 		if (nullptr != m_arrCom[i])
 			m_arrCom[i]->FinalTick();
 	}
+
+	// Layer 등록
+	assert(-1 != m_LayerIdx);
+	CLevel* pLevel = CLevelMgr::GetInst()->GetCurrentLevel();
+	CLayer* pLayer = pLevel->GetLayer(m_LayerIdx);
+	pLayer->RegisterGameObject(this);
 
 	// 자식 오브젝트
 	for (size_t i = 0; i < m_vecChildren.size(); ++i)

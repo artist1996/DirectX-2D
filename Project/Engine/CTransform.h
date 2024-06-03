@@ -9,10 +9,13 @@ private:
     Vec3   m_RelativeScale;
     Vec3   m_RelativeRotation;
 
-    Vec3   m_RelativeDir[3] = {}; // 방향
+    Vec3   m_RelativeDir[3]; // 방향
+    Vec3   m_WorldDir[3];    // 최종 방향
+
 
     Matrix m_matWorld;  // 이동, 크기, 회전
-      
+    bool   m_IndipendentScale; // 부모의 크기에 영향 받지 않음
+    
 public:
     void SetRelativePos(Vec3 _Pos)      { m_RelativePos = _Pos; }
     void SetRelativeScale(Vec3 _Scale)  { m_RelativeScale = _Scale; }
@@ -28,7 +31,8 @@ public:
     Vec3 GetRelativeScale()     { return m_RelativeScale; }
     Vec3 GetRelativeRotation()  { return m_RelativeRotation; }
 
-    Vec3 GetDir(DIR _Dir)       { return m_RelativeDir[_Dir]; };
+    Vec3 GetRelativeDir(DIR _Dir) { return m_RelativeDir[_Dir]; };
+    Vec3 GetWorldDir(DIR _Dir)    { return m_WorldDir[_Dir]; }
     
     Matrix GetWorldMatrix()     { return m_matWorld; }
 

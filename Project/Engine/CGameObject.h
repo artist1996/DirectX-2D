@@ -25,8 +25,13 @@ public:
     CComponent* GetComponent(COMPONENT_TYPE _Type) { return m_arrCom[(UINT)_Type]; }
     CRenderComponent* GetRenderComponent()         { return m_RenderCom; }
 
-    CGameObject* GetParent() { return m_Parent; }
-    int GetLayerIdx()        { return m_LayerIdx; }
+    CGameObject* GetParent()                 { return m_Parent; }
+    const vector<CGameObject*> GetChildren() { return m_vecChildren; }
+
+    int GetLayerIdx() { return m_LayerIdx; }
+    void AddChild(CGameObject* _ChildObject);
+
+    void DisconnectWithLayer();
 
     GET_COMPONENT(Transform, TRANSFORM);
     GET_COMPONENT(MeshRender, MESHRENDER);

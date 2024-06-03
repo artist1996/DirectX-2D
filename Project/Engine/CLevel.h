@@ -11,8 +11,10 @@ private:
     CLayer* m_Layer[MAX_LAYER];
 
 public:
-    void AddObject(int _LayerIdx, CGameObject* _Object);
+    void AddObject(int _LayerIdx, CGameObject* _Object, bool _bMoveChild = false);
     CLayer* GetLayer(int _LayderIdx) { return m_Layer[_LayderIdx]; }
+
+    void ClearObject();
 
 public:
     void Begin();

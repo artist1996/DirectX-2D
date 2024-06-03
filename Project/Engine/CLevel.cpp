@@ -16,11 +16,6 @@ CLevel::~CLevel()
 	Delete_Array(m_Layer);
 }
 
-void CLevel::AddObject(int _LayerIdx, CGameObject* _Object)
-{
-	m_Layer[_LayerIdx]->AddObject(_Object);
-}
-
 void CLevel::Begin()
 {
 	for (int i = 0; i < MAX_LAYER; ++i)
@@ -42,5 +37,18 @@ void CLevel::FinalTick()
 	for (int i = 0; i < MAX_LAYER; ++i)
 	{
 		m_Layer[i]->FinalTick();
+	}
+}
+
+void CLevel::AddObject(int _LayerIdx, CGameObject* _Object, bool _bMoveChild)
+{
+	m_Layer[_LayerIdx]->AddObject(_Object, _bMoveChild);
+}
+
+void CLevel::ClearObject()
+{
+	for (UINT i = 0; i < MAX_LAYER; ++i)
+	{
+		m_Layer[i]->ClearObject();
 	}
 }

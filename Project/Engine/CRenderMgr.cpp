@@ -87,7 +87,6 @@ void CRenderMgr::RenderDebugShape()
 		// 렌더링
 		m_DebugObject->Render();
 
-
 		// 수명이 다한 디버그 정보 삭제
 		(*iter).Age += DT;
 		if ((*iter).LifeTime <= (*iter).Age)
