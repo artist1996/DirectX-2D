@@ -22,6 +22,9 @@ public:
 
     void DisconnectWithObject(CGameObject* _Object);
 
+    void DeregisterObjectAsParent(CGameObject* _Object);
+    void DeregisterObject(CGameObject* _Object);
+
 public:
     void Begin();
     void Tick();

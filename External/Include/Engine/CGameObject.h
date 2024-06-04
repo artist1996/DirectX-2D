@@ -25,17 +25,22 @@ public:
     CComponent* GetComponent(COMPONENT_TYPE _Type) { return m_arrCom[(UINT)_Type]; }
     CRenderComponent* GetRenderComponent()         { return m_RenderCom; }
 
-    CGameObject* GetParent()                 { return m_Parent; }
-    const vector<CGameObject*> GetChildren() { return m_vecChildren; }
+    CGameObject* GetParent()                  { return m_Parent; }
+    const vector<CGameObject*>& GetChildren() { return m_vecChildren; }
 
     int GetLayerIdx() { return m_LayerIdx; }
     void AddChild(CGameObject* _ChildObject);
 
     void DisconnectWithLayer();
 
+    // Unregister : 등록을 취소하다, 등록하는 행위를 취소하다.
+    // Deregister : 등록된 것을 취소하다.
+    void DeregisterChild();
+
     GET_COMPONENT(Transform, TRANSFORM);
     GET_COMPONENT(MeshRender, MESHRENDER);
     GET_COMPONENT(Camera, CAMERA);
+    GET_COMPONENT(Collider2D, COLLIDER2D);
 
 public:
     void Begin();

@@ -8,6 +8,7 @@
 
 CTransform::CTransform()
 	: CComponent(COMPONENT_TYPE::TRANSFORM)
+	, m_IndipendentScale(false)
 {
 }
 
@@ -53,9 +54,21 @@ void CTransform::FinalTick()
 	{
 		// 부모의 월드행렬을 곱해서 최종 월드행렬을 계산함
 		const Matrix& matParentWorldMat = GetOwner()->GetParent()->Transform()->GetWorldMatrix();
+		
+		if (m_IndipendentScale)
+		{ 
+			// 부모의 크기 행렬의 역행렬을 구해서 부모의 크기에 상대적인 크기를 갖지 않고 독립적인 크기를 갖게 해준다.
+			Vec3 vParentScale = GetOwner()->GetParent()->Transform()->GetRelativeScale();
+			Matrix matParentMat = XMMatrixScaling(vParentScale.x, vParentScale.y, vParentScale.y);
+			Matrix matParentScaleInv = XMMatrixInverse(nullptr, matParentMat);
 
-		m_matWorld *= matParentWorldMat;
+			m_matWorld = m_matWorld * matParentScaleInv * matParentWorldMat;
+		}
 
+		else
+		{
+			m_matWorld *= matParentWorldMat;
+		}
 		// 최종 월드기준 오브젝트의 방향벡터를 구함
 		for (int i = 0; i < 3; ++i)
 		{
@@ -72,6 +85,26 @@ void CTransform::FinalTick()
 			m_WorldDir[i] = m_RelativeDir[i];
 		}
 	}
+}
+
+Vec3 CTransform::GetWorldScale()
+{
+	Vec3 vWorldScale = Vec3(1.f, 1.f, 1.f);
+
+	CGameObject* pObject = GetOwner();
+
+	while (pObject)
+	{
+		vWorldScale = vWorldScale *= pObject->Transform()->GetRelativeScale();
+
+		// 만약 독립적인 크기를 가진 Object 라면 break 해줘야한다.
+		if (pObject->Transform()->m_IndipendentScale)
+			break;
+
+		pObject = GetOwner()->GetParent();
+	}
+
+	return vWorldScale;
 }
 
 void CTransform::Binding()
