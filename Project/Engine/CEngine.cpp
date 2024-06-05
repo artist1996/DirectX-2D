@@ -7,6 +7,7 @@
 #include "CAssetMgr.h"
 #include "CLevelMgr.h"
 #include "CRenderMgr.h"
+#include "CCollisionMgr.h"
 
 CEngine::CEngine()
 	: m_hWnd(nullptr)
@@ -49,6 +50,9 @@ void CEngine::Progress()
 	CKeyMgr::GetInst()->Tick();
 	CTimeMgr::GetInst()->Tick();
 	CLevelMgr::GetInst()->Progress();
+
+	// Collision
+	CCollisionMgr::GetInst()->Tick();
 
 	// Render
 	CDevice::GetInst()->Clear();

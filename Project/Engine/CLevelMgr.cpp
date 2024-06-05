@@ -9,6 +9,8 @@
 #include "CAssetMgr.h"
 #include "assets.h"
 
+#include "CCollisionMgr.h"
+
 #include "CPlayerScript.h"
 #include "CCameraMoveScript.h"
 
@@ -52,6 +54,12 @@ void CLevelMgr::Init()
 	//CamObj->Camera()->SetProjType(PROJ_TYPE::PERSPECTIVE);
 	m_CurLevel->AddObject(0, CamObj);
 
+	m_CurLevel->GetLayer(0)->SetName(L"Default");
+	m_CurLevel->GetLayer(1)->SetName(L"Background");
+	m_CurLevel->GetLayer(2)->SetName(L"Tile");
+	m_CurLevel->GetLayer(3)->SetName(L"Player");
+	m_CurLevel->GetLayer(4)->SetName(L"Monster");
+
 	// Player Object
 	CGameObject* pObject = new CGameObject;
 	pObject->SetName(L"Player");
@@ -94,22 +102,29 @@ void CLevelMgr::Init()
 	
 	pObject->AddChild(pChild);
 
-	m_CurLevel->AddObject(0, pObject);
+	m_CurLevel->AddObject(3, pObject);
 
 
 	// Monster Object
-	//pObject = new CGameObject;
-	//pObject->SetName(L"Monster");
-	//pObject->AddComponent(new CTransform);
-	//pObject->AddComponent(new CMeshRender);
-	//pObject->Transform()->SetRelativePos(100.f, 0.f, 200.f);
-	//pObject->Transform()->SetRelativeScale(200.f, 200.f, 1.f);
-	//
-	//pObject->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
-	//pObject->MeshRender()->SetMaterial(pMtrl);
-	//
-	//m_CurLevel->AddObject(0, pObject);
-	//
+	CGameObject* pMonster = new CGameObject;
+	pMonster->SetName(L"Monster");
+	pMonster->AddComponent(new CTransform);
+	pMonster->AddComponent(new CMeshRender);
+	pMonster->AddComponent(new CCollider2D);
+	pMonster->Transform()->SetRelativePos(-100.f, 0.f, 200.f);
+	pMonster->Transform()->SetRelativeScale(200.f, 200.f, 1.f);
+
+	pMonster->Collider2D()->SetIndependentScale(true);
+	pMonster->Collider2D()->SetOffset(Vec3(0.f, 0.f, 0.f));
+	pMonster->Collider2D()->SetScale(Vec3(220.f, 220.f, 1.f));
+	
+	pMonster->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
+	pMonster->MeshRender()->SetMaterial(pMtrl);
+	
+	m_CurLevel->AddObject(4, pMonster);
+
+	CCollisionMgr::GetInst()->CollisionCheck(3, 4);
+	
 	m_CurLevel->Begin();
 }
 

@@ -19,9 +19,10 @@ public:
     void SetScale(Vec3 _Scale)          { m_Scale = _Scale; }
     void SetIndependentScale(bool _Set) { m_IndependentScale = _Set; }
     
-    Vec3 GetOffset()    { return m_Offset; }
-    Vec3 GetScale()     { return m_Scale; }
-    //Vec3 GetFinalPos()  { return m_FinalPos; }
+    Vec3 GetOffset()               { return m_Offset; }
+    Vec3 GetScale()                { return m_Scale; }
+    Vec3 GetWorldPos()             { return m_matColWorld.Translation(); }
+    const Matrix& GetWorldMatrix() { return m_matColWorld; }
 
     int GetOverlapCount() { return m_OverlapCount; }
 

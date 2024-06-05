@@ -25,6 +25,8 @@ public:
     virtual int Load(const wstring& _FilePath) override { return S_OK; }
     virtual int Save(const wstring& _FilePath) override { return S_OK; }
 
+    void* GetVtxSysMem() { return m_VtxSysMem; }
+
 public:
     CMesh();
     virtual ~CMesh();
