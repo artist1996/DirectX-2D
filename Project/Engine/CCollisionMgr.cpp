@@ -91,7 +91,7 @@ void CCollisionMgr::CollisionBtwLayer(UINT _Left, UINT _Right)
 				iter = m_mapCollisionInfo.find(id.ID);
 			}
 
-			//bool bDead = vecLeft[i]->GetOwner()->IsDead() || vecRight[j]->GetOwner()->IsDead();
+			bool bDead = pLeftCol->GetOwner()->IsDead() || pRightCol->GetOwner()->IsDead();
 			//bool bDeactive = !vecLeft[i]->IsActive() || !vecRight[j]->IsActive();
 
 
@@ -116,12 +116,12 @@ void CCollisionMgr::CollisionBtwLayer(UINT _Left, UINT _Right)
 
 				// 두 충돌체중 하나라도 Dead 상태거나 비활성화 상태라면
 				// 추가로 충돌 해제를 호출시켜준다.
-				//if (bDead || bDeactive)
-				//{
-				//	vecLeft[i]->EndOverlap(vecRight[j]);
-				//	vecRight[j]->EndOverlap(vecLeft[i]);
-				//	iter->second = false;
-				//}
+				if (bDead) //|| bDeactive)
+				{
+					pLeftCol->EndOverlap(pRightCol);
+					pRightCol->EndOverlap(pLeftCol);
+					iter->second = false;
+				}
 			}
 
 			// 두 충돌체가 지금 충돌중이 아니다.

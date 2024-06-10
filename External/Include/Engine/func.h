@@ -1,10 +1,14 @@
 #pragma once
 
+void CreateObject(class CGameObject* _NewObject, int _LayerIndex);
+void DeleteObject(CGameObject* _DeleteObject);
+
+bool IsValid(CGameObject*& _Object);
+
 void DrawDebugRect(Vec3 _Pos, Vec3 _Scale, Vec3 _Rot, Vec4 _Color, float _Life, bool _DepthTest);
 void DrawDebugRect(Matrix _matWorld, Vec4 _Color,float _Life, bool _DepthTest);
 void DrawDebugCircle(Vec3 _Pos, float _Radius, Vec4 _Color, float _Life, bool _DepthTest);
 //void DrawDebugLine(Vec3 _Pos, Vec3 _Scale, Vec3 _Rot, Vec4 _Color, float _Life, bool _DepthTest);
-
 
 
 
@@ -73,4 +77,10 @@ ASSET_TYPE GetAssetType()
 
 	if constexpr (std::is_same_v<T, CComputeShader>)
 		return ASSET_TYPE::COMPUTE_SHADER;
+
+	if constexpr (std::is_same_v<T, CSprite>)
+		return ASSET_TYPE::SPRITE;
+
+	if constexpr (std::is_same_v<T, CFlipBook>)
+		return ASSET_TYPE::FLIPBOOK;
 }

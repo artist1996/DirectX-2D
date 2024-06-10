@@ -42,4 +42,11 @@ struct tDebugShapeInfo
 	bool		DepthTest;
 };
 
+struct tTask
+{
+	TASK_TYPE Type;
+	DWORD_PTR Param_0;
+	DWORD_PTR Param_1;
+};
+
 extern tTransform g_Trans;

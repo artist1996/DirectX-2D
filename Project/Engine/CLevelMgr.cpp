@@ -59,6 +59,8 @@ void CLevelMgr::Init()
 	m_CurLevel->GetLayer(2)->SetName(L"Tile");
 	m_CurLevel->GetLayer(3)->SetName(L"Player");
 	m_CurLevel->GetLayer(4)->SetName(L"Monster");
+	m_CurLevel->GetLayer(5)->SetName(L"PlayerProjectile");
+	m_CurLevel->GetLayer(6)->SetName(L"MonsterProjectile");
 
 	// Player Object
 	CGameObject* pObject = new CGameObject;
@@ -82,25 +84,25 @@ void CLevelMgr::Init()
 	pObject->MeshRender()->GetMaterial()->SetScalarParam(VEC4_0, Vec4(0.f, 1.f, 0.f, 1.f));
 	
 	// Child Object
-	CGameObject* pChild = new CGameObject;
-	pChild->SetName(L"Child");
-
-	pChild->AddComponent(new CTransform);
-	pChild->AddComponent(new CCollider2D);
-	pChild->AddComponent(new CMeshRender);
-
-	pChild->Transform()->SetIndipendentScale(true);
-	pChild->Transform()->SetRelativePos(400.f, 0.f, 0.f);
-	pChild->Transform()->SetRelativeScale(100.f, 100.f, 1.f);
-	
-	pChild->Collider2D()->SetIndependentScale(true);
-	pChild->Collider2D()->SetOffset(Vec3(0.f, 0.f, 0.f));
-	pChild->Collider2D()->SetScale(Vec3(110.f, 110.f, 1.f));
-
-	pChild->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
-	pChild->MeshRender()->SetMaterial(pMtrl);
-	
-	pObject->AddChild(pChild);
+	//CGameObject* pChild = new CGameObject;
+	//pChild->SetName(L"Child");
+	//
+	//pChild->AddComponent(new CTransform);
+	//pChild->AddComponent(new CCollider2D);
+	//pChild->AddComponent(new CMeshRender);
+	//
+	//pChild->Transform()->SetIndipendentScale(true);
+	//pChild->Transform()->SetRelativePos(400.f, 0.f, 0.f);
+	//pChild->Transform()->SetRelativeScale(100.f, 100.f, 1.f);
+	//
+	//pChild->Collider2D()->SetIndependentScale(true);
+	//pChild->Collider2D()->SetOffset(Vec3(0.f, 0.f, 0.f));
+	//pChild->Collider2D()->SetScale(Vec3(110.f, 110.f, 1.f));
+	//
+	//pChild->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
+	//pChild->MeshRender()->SetMaterial(pMtrl);
+	//
+	//pObject->AddChild(pChild);
 
 	m_CurLevel->AddObject(3, pObject);
 
@@ -111,7 +113,7 @@ void CLevelMgr::Init()
 	pMonster->AddComponent(new CTransform);
 	pMonster->AddComponent(new CMeshRender);
 	pMonster->AddComponent(new CCollider2D);
-	pMonster->Transform()->SetRelativePos(-100.f, 0.f, 200.f);
+	pMonster->Transform()->SetRelativePos(-300.f, 0.f, 200.f);
 	pMonster->Transform()->SetRelativeScale(200.f, 200.f, 1.f);
 
 	pMonster->Collider2D()->SetIndependentScale(true);
@@ -124,6 +126,7 @@ void CLevelMgr::Init()
 	m_CurLevel->AddObject(4, pMonster);
 
 	CCollisionMgr::GetInst()->CollisionCheck(3, 4);
+	CCollisionMgr::GetInst()->CollisionCheck(4, 5);
 	
 	m_CurLevel->Begin();
 }

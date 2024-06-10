@@ -19,6 +19,7 @@ private:
     vector<CGameObject*> m_vecChildren;
 
     int                  m_LayerIdx;    // 소속 레이어의 인덱스 번호
+    bool                 m_Dead;        // Object Dead
 
 public:
     void AddComponent(CComponent* _Component);
@@ -27,6 +28,7 @@ public:
 
     CGameObject* GetParent()                  { return m_Parent; }
     const vector<CGameObject*>& GetChildren() { return m_vecChildren; }
+    const vector<CScript*>& GetScripts()      { return m_vecScript; }
 
     int GetLayerIdx() { return m_LayerIdx; }
     void AddChild(CGameObject* _ChildObject);
@@ -36,6 +38,8 @@ public:
     // Unregister : 등록을 취소하다, 등록하는 행위를 취소하다.
     // Deregister : 등록된 것을 취소하다.
     void DeregisterChild();
+
+    bool IsDead() { return m_Dead; }
 
     GET_COMPONENT(Transform, TRANSFORM);
     GET_COMPONENT(MeshRender, MESHRENDER);
@@ -55,4 +59,5 @@ public:
 
     friend class CLevel;
     friend class CLayer;
+    friend class CTaskMgr;
 };

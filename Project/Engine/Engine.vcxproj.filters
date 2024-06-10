@@ -130,6 +130,18 @@
     <ClInclude Include="CCollisionMgr.h">
       <Filter>04. Manager\07. CollisionMgr</Filter>
     </ClInclude>
+    <ClInclude Include="CMissileScript.h">
+      <Filter>Scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="CAnimator2D.h">
+      <Filter>08. Component\04. Animator2D</Filter>
+    </ClInclude>
+    <ClInclude Include="CFlipBook.h">
+      <Filter>06. Asset\09. FlipBook</Filter>
+    </ClInclude>
+    <ClInclude Include="CSprite.h">
+      <Filter>06. Asset\08. Sprite</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CEngine.cpp">
@@ -239,6 +251,18 @@
     </ClCompile>
     <ClCompile Include="CCollisionMgr.cpp">
       <Filter>04. Manager\07. CollisionMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="CMissileScript.cpp">
+      <Filter>Scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="CAnimator2D.cpp">
+      <Filter>08. Component\04. Animator2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CFlipBook.cpp">
+      <Filter>06. Asset\09. FlipBook</Filter>
+    </ClCompile>
+    <ClCompile Include="CSprite.cpp">
+      <Filter>06. Asset\08. Sprite</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -376,6 +400,12 @@
     </Filter>
     <Filter Include="04. Manager\07. CollisionMgr">
       <UniqueIdentifier>{7956ea5b-5cfc-444d-a3e8-b3f26a1e7df8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06. Asset\08. Sprite">
+      <UniqueIdentifier>{4ba25bbd-1299-44b2-a16e-db2a061d0fcb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06. Asset\09. FlipBook">
+      <UniqueIdentifier>{a8a048e3-14d2-4232-ae19-8931005e6324}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

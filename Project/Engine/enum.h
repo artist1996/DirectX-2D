@@ -21,6 +21,8 @@ enum class ASSET_TYPE
 	SOUND,
 	GRAPHIC_SHADER,
 	COMPUTE_SHADER,
+	SPRITE,
+	FLIPBOOK,
 	END,
 };
 
@@ -128,4 +130,17 @@ enum class DEBUG_SHAPE
 	LINE,
 	CUBE,
 	SPHERE,
+};
+
+enum TASK_TYPE
+{
+	// Param_0 : Layer, Parem_1 : Object Address
+	CREATE_OBJECT,
+
+	// Param_0 : Delete Object Address
+	DELETE_OBJECT,
+	CHANGE_LEVEL,
+	ADD_CHILD,
+	COMPONENT_ACTIVATE,
+	COMPONENT_DEACTIVATE,
 };
