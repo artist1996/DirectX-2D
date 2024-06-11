@@ -9,7 +9,3 @@ CFlipBook::CFlipBook()
 CFlipBook::~CFlipBook()
 {
 }
-
-void CFlipBook::FinalTick()
-{
-}

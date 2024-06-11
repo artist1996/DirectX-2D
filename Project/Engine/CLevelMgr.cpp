@@ -67,6 +67,7 @@ void CLevelMgr::Init()
 	pObject->SetName(L"Player");
 	pObject->AddComponent(new CTransform);
 	pObject->AddComponent(new CCollider2D);
+	pObject->AddComponent(new CFlipBookComponent);
 	pObject->AddComponent(new CMeshRender);
 	pObject->AddComponent(new CPlayerScript);
 
@@ -79,9 +80,14 @@ void CLevelMgr::Init()
 
 	pObject->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
 	pObject->MeshRender()->SetMaterial(pMtrl);
-	pObject->MeshRender()->GetMaterial()->SetScalarParam(INT_1, 0);
-	pObject->MeshRender()->GetMaterial()->SetScalarParam(FLOAT_0, 0.01f);
-	pObject->MeshRender()->GetMaterial()->SetScalarParam(VEC4_0, Vec4(0.f, 1.f, 0.f, 1.f));
+
+	pObject->FlipBookComponent()->AddFlipBook(CAssetMgr::GetInst()->FindAsset<CFlipBook>(L"Link_MoveDown"));
+	pObject->FlipBookComponent()->Play(0, 10, true);
+
+	m_CurLevel->AddObject(3, pObject);
+	//pObject->MeshRender()->GetMaterial()->SetScalarParam(INT_1, 0);
+	//pObject->MeshRender()->GetMaterial()->SetScalarParam(FLOAT_0, 0.01f);
+	//pObject->MeshRender()->GetMaterial()->SetScalarParam(VEC4_0, Vec4(0.f, 1.f, 0.f, 1.f));
 	
 	// Child Object
 	//CGameObject* pChild = new CGameObject;
@@ -103,8 +109,6 @@ void CLevelMgr::Init()
 	//pChild->MeshRender()->SetMaterial(pMtrl);
 	//
 	//pObject->AddChild(pChild);
-
-	m_CurLevel->AddObject(3, pObject);
 
 
 	// Monster Object

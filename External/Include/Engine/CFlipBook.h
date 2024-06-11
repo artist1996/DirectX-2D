@@ -1,16 +1,22 @@
 #pragma once
 #include "CAsset.h"
 
-class CSprite;
+#include "CSprite.h"
 
 class CFlipBook :
     public CAsset
 {
 private:
-    vector<CSprite*> m_vecSprite;
+    vector<Ptr<CSprite>> m_vecSprite;
 
 public:
-    void FinalTick();
+    void AddSprite(Ptr<CSprite> _Sprite) { m_vecSprite.push_back(_Sprite); }
+    Ptr<CSprite> GetSprite(int _Idx)     { return m_vecSprite[_Idx]; }
+    int GetMaxFrameCount()               { return (int)m_vecSprite.size(); }
+
+public:
+    virtual int Load(const wstring& _FilePath) { return S_OK; }
+    virtual int Save(const wstring& _FilePath) { return S_OK; }
 
 public:
     CFlipBook();

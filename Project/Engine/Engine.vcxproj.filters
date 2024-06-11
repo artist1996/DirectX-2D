@@ -133,8 +133,8 @@
     <ClInclude Include="CMissileScript.h">
       <Filter>Scripts</Filter>
     </ClInclude>
-    <ClInclude Include="CAnimator2D.h">
-      <Filter>08. Component\04. Animator2D</Filter>
+    <ClInclude Include="CFlipBookComponent.h">
+      <Filter>08. Component\04. FlipBookComponent</Filter>
     </ClInclude>
     <ClInclude Include="CFlipBook.h">
       <Filter>06. Asset\09. FlipBook</Filter>
@@ -255,8 +255,8 @@
     <ClCompile Include="CMissileScript.cpp">
       <Filter>Scripts</Filter>
     </ClCompile>
-    <ClCompile Include="CAnimator2D.cpp">
-      <Filter>08. Component\04. Animator2D</Filter>
+    <ClCompile Include="CFlipBookComponent.cpp">
+      <Filter>08. Component\04. FlipBookComponent</Filter>
     </ClCompile>
     <ClCompile Include="CFlipBook.cpp">
       <Filter>06. Asset\09. FlipBook</Filter>
@@ -356,9 +356,6 @@
     <Filter Include="08. Component\03. Collider3D">
       <UniqueIdentifier>{20b6f255-f8ef-4f43-ae08-db9c3261facf}</UniqueIdentifier>
     </Filter>
-    <Filter Include="08. Component\04. Animator2D">
-      <UniqueIdentifier>{b7a1db6f-9204-44c4-823f-cf626f35356b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="08. Component\05. Animator3D">
       <UniqueIdentifier>{fb9de0fc-c1b2-4692-bf85-adcc423b4eeb}</UniqueIdentifier>
     </Filter>
@@ -406,6 +403,9 @@
     </Filter>
     <Filter Include="06. Asset\09. FlipBook">
       <UniqueIdentifier>{a8a048e3-14d2-4232-ae19-8931005e6324}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="08. Component\04. FlipBookComponent">
+      <UniqueIdentifier>{b7a1db6f-9204-44c4-823f-cf626f35356b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

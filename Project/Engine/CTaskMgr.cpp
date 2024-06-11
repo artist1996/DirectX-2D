@@ -37,7 +37,7 @@ void CTaskMgr::ExecuteTask()
 		case TASK_TYPE::CREATE_OBJECT:
 		{
 			CLevel* pCurLevel = CLevelMgr::GetInst()->GetCurrentLevel();
-			int Layer = m_vecTask[i].Param_0;
+			int Layer = (int)m_vecTask[i].Param_0;
 			CGameObject* pObj = (CGameObject*)m_vecTask[i].Param_1;
 			pCurLevel->AddObject(Layer, pObj);
 		}
