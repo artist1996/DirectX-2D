@@ -151,6 +151,8 @@ void CAssetMgr::CreateEngineSprite()
 		pSprite = new CSprite;
 
 		pSprite->Create(pTexture, Vec2((float)i * 120.f, 520.f), Vec2(120.f, 130.f));
+		pSprite->SetBackgroundUV(Vec2(200.f, 200.f));
+
 		AddAsset(szKey, pSprite);
 	}
 	

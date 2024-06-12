@@ -7,6 +7,9 @@ struct Vtx
 	Vec2	vUV;
 };
 
+// ====================
+// 상수 버퍼 연동 구조체
+// ====================
 struct tTransform
 {
 	Matrix matWorld;
@@ -17,6 +20,8 @@ struct tTransform
 	Matrix matWVP;
 };
 
+extern tTransform g_Trans;
+
 struct tMtrlConst
 {
 	int		iArr[4];
@@ -25,6 +30,16 @@ struct tMtrlConst
 	Vec4	v4Arr[4];
 	Matrix  matArr[4];
 	int		btex[TEX_PARAM::END + 2];
+};
+
+struct tSpriteInfo
+{
+	Vec2 vLeftTopUV;
+	Vec2 vSliceUV;
+	Vec2 vBackGroundUV;
+	Vec2 vOffsetUV;
+	int  UseFlipBook;
+	int  Padding[3];
 };
 
 struct tDebugShapeInfo
@@ -48,5 +63,3 @@ struct tTask
 	DWORD_PTR Param_0;
 	DWORD_PTR Param_1;
 };
-
-extern tTransform g_Trans;

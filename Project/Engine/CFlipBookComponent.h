@@ -21,10 +21,13 @@ private:
     bool                     m_Finish;       // FlipBook 재생이 끝에 도달했는지 여부
 
 public:
-    void AddFlipBook(Ptr<CFlipBook> _FlipBook) { m_vecFlipBook.push_back(_FlipBook); }
+    void AddFlipBook(int _Idx, Ptr<CFlipBook> _FlipBook);
     Ptr<CFlipBook> FindFlipBook(const wstring& _Key);
     void Play(int _FlipBookIdx, float _FPS, bool _Repeat);
     void Reset();
+    void Binding();
+
+    static void Clear();
 
 public:
     Ptr<CSprite> GetCurSprite() { return m_CurFrmSprite; }

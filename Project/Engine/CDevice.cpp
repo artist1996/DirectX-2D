@@ -200,6 +200,15 @@ int CDevice::CreateConstBuffer()
 
 	m_arrCB[(UINT)CB_TYPE::MATERIAL] = pCB;
 
+	pCB = new CConstBuffer;
+	if (FAILED(pCB->Create(CB_TYPE::SPRITE, sizeof(tSpriteInfo))))
+	{
+		MessageBox(nullptr, L"ConstantBuffer 积己 角菩", L"Buffer 积己 角菩", MB_OK);
+		return E_FAIL;
+	}
+
+	m_arrCB[(UINT)CB_TYPE::SPRITE] = pCB;
+
 	return S_OK;
 }
 

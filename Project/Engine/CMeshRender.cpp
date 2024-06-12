@@ -25,19 +25,10 @@ void CMeshRender::Render()
 		return;
 
 	if (FlipBookComponent())
-	{
-		Ptr<CSprite> pCurSprite = FlipBookComponent()->GetCurSprite();
-		pCurSprite->GetAtlasTexture()->Binding(10);
-
-		GetMaterial()->SetScalarParam(VEC2_0, pCurSprite->GetLeftTopUV());
-		GetMaterial()->SetScalarParam(VEC2_1, pCurSprite->GetSliceUV());
-		GetMaterial()->SetScalarParam(INT_0, 1);
-	}
-
+		FlipBookComponent()->Binding();
 	else
-	{
-		GetMaterial()->SetScalarParam(INT_0, 0);
-	}
+		CFlipBookComponent::Clear();
+	
 
 	Transform()->Binding();
 	GetMaterial()->Binding();

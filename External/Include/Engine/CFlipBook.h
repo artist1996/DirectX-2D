@@ -22,4 +22,3 @@ public:
     CFlipBook();
     virtual ~CFlipBook();
 };
-
