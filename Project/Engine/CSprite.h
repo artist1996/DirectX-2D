@@ -27,8 +27,8 @@ public:
     Vec2 GetOffsetUV()              { return m_OffsetUV; }
 
 public:
-    virtual int Load(const wstring& _FilePath) override { return S_OK; }
-    virtual int Save(const wstring& _FilePath) override { return S_OK; }
+    virtual int Load(const wstring& _FilePath) override;
+    virtual int Save(const wstring& _FilePath) override;
 
 public:
     CSprite();

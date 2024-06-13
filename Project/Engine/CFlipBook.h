@@ -15,8 +15,8 @@ public:
     int GetMaxFrameCount()               { return (int)m_vecSprite.size(); }
 
 public:
-    virtual int Load(const wstring& _FilePath) { return S_OK; }
-    virtual int Save(const wstring& _FilePath) { return S_OK; }
+    virtual int Load(const wstring& _FilePath);
+    virtual int Save(const wstring& _FilePath);
 
 public:
     CFlipBook();

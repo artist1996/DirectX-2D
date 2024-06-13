@@ -57,7 +57,8 @@ float4 PS_Std2D(VTX_OUT _in) : SV_Target
         }
         else
         {
-            vColor = float4(1.f, 1.f, 0.f, 1.f);
+            discard;
+            //vColor = float4(1.f, 1.f, 0.f, 1.f);
         }
     }
     // FlipBook 을 사용 하지 않는다.

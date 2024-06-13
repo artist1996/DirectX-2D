@@ -103,3 +103,36 @@ void CAssetMgr::AddAsset(const wstring& _Key, Ptr<T> _Asset)
 	_Asset->SetKey(_Key);
 	m_mapAsset[(UINT)Type].insert(make_pair(_Key, _Asset.Get()));
 }
+
+template<typename T>
+void SaveAssetRef(Ptr<T> _Asset, FILE* _pFile)
+{
+	// nullptr 면 false 아니라면 true
+	bool bAsset = _Asset.Get();
+	fwrite(&bAsset, 1, 1, _pFile);
+
+	// true 라면 Key 값과 RelativePath 값 저장
+	if (bAsset)
+	{
+		SaveWString(_Asset->GetKey(), _pFile);
+		SaveWString(_Asset->GetRelativePath(), _pFile);
+	}
+}
+
+template<typename T>
+void LoadAssetRef(Ptr<T>& _Asset, FILE* _pFile)
+{
+	bool bAsset = false;
+	
+	// 저장 해놓은 bool 값 읽어 온 후 true 일 때 Key 값과 RelativePath 읽어와서 Texture Load
+	fread(&bAsset, 1, 1, _pFile);
+
+	if (bAsset)
+	{
+		wstring Key, RelativePath;
+		LoadWString(Key, _pFile);
+		LoadWString(RelativePath, _pFile);
+		
+		_Asset = CAssetMgr::GetInst()->Load<T>(Key, RelativePath);
+	}
+}

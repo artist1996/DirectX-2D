@@ -140,34 +140,74 @@ void CAssetMgr::CreateEngineTexture()
 void CAssetMgr::CreateEngineSprite()
 {
 	// Sprite ¡¶¿€
-	Ptr<CTexture> pTexture = Load<CTexture>(L"texture\\link_32.bmp", L"texture\\link_32.bmp");
+	//Ptr<CTexture> pTexture = Load<CTexture>(L"texture\\link.png", L"texture\\link.png");
+	//
+	//Ptr<CSprite> pSprite = nullptr;
+	//
+	//wstring strContentPath = CPathMgr::GetInst()->GetContentPath();
+	//
+	//for (int i = 0; i < 10; ++i)
+	//{
+	//	wchar_t szKey[50] = {};
+	//	swprintf_s(szKey, 50, L"Link_MoveDown%d", i);
+	//	pSprite = new CSprite;
+	//
+	//	pSprite->Create(pTexture, Vec2((float)i * 120.f, 520.f), Vec2(120.f, 130.f));
+	//	pSprite->SetBackgroundUV(Vec2(200.f, 200.f));
+	//	pSprite->SetRelativePath(wstring(L"Animation\\") + szKey + L".sprite");
+	//
+	//	AddAsset(szKey, pSprite);
+	//	pSprite->Save(strContentPath + L"Animation\\" + szKey + L".sprite");
+	//}
+	//
+	//Ptr<CFlipBook> pFlipBook = nullptr;
+	//pFlipBook = new CFlipBook;
+	//
+	//for (int i = 0; i < 10; ++i)
+	//{
+	//	wchar_t szKey[50] = {};
+	//	swprintf_s(szKey, 50, L"Link_MoveDown%d", i);
+	//
+	//	pFlipBook->AddSprite(FindAsset<CSprite>(szKey));
+	//}
+	//
+	//AddAsset(L"Link_MoveDown", pFlipBook);	
+	//pFlipBook->Save(strContentPath + L"Animation\\" + L"Link_MoveDown" + L".flip");
 
-	Ptr<CSprite> pSprite = nullptr;
-
-	for (int i = 0; i < 10; ++i)
-	{
-		wchar_t szKey[50] = {};
-		swprintf_s(szKey, 50, L"Link_MoveDown%d", i);
-		pSprite = new CSprite;
-
-		pSprite->Create(pTexture, Vec2((float)i * 120.f, 520.f), Vec2(120.f, 130.f));
-		pSprite->SetBackgroundUV(Vec2(200.f, 200.f));
-
-		AddAsset(szKey, pSprite);
-	}
+	//Ptr<CSprite> pSprite = nullptr;
+	//wstring strContentPath = CPathMgr::GetInst()->GetContentPath();
+	//
+	//for (int i = 0; i < 10; ++i)
+	//{
+	//	wchar_t Buffer[50] = {};
+	//	swprintf_s(Buffer, 50, L"Link_MoveDown%d", i);
+	//
+	//	pSprite = Load<CSprite>(Buffer, wstring(L"Animation\\") + Buffer + L".sprite");
+	//
+	//	pSprite->SetRelativePath(wstring(L"Animation\\") + Buffer + L".sprite");
+	//	pSprite->Save(strContentPath + L"Animation\\" + Buffer + L".sprite");
+	//}
+	//
+	//
+	//Ptr<CFlipBook> pFilpBook = new CFlipBook;
+	//
+	//for (int i = 0; i < 10; ++i)
+	//{
+	//	wchar_t Buffer[50] = {};
+	//	swprintf_s(Buffer, 50, L"Link_MoveDown%d", i);
+	//	pFilpBook->AddSprite(FindAsset<CSprite>(Buffer));
+	//}
+	//
+	//AddAsset(L"Link_MoveDown", pFilpBook);
+	//pFilpBook->Save(strContentPath + L"Animation\\" + L"Link_MoveDown" + L".flip");
+	wstring strCotentPath = CPathMgr::GetInst()->GetContentPath();
 	
 	Ptr<CFlipBook> pFlipBook = nullptr;
+	
 	pFlipBook = new CFlipBook;
 	
-	for (int i = 0; i < 10; ++i)
-	{
-		wchar_t szKey[50] = {};
-		swprintf_s(szKey, 50, L"Link_MoveDown%d", i);
-
-		pFlipBook->AddSprite(FindAsset<CSprite>(szKey));
-	}
-
-	AddAsset(L"Link_MoveDown", pFlipBook);	
+	pFlipBook->Load(strCotentPath + L"Animation\\" + L"Link_MoveDown" + L".flip");
+	AddAsset(L"Link_MoveDown", pFlipBook);
 }
 
 void CAssetMgr::CreateEngineGraphicShader()
