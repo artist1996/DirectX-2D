@@ -64,8 +64,8 @@ void CPlayerScript::Tick()
 
 void CPlayerScript::BeginOverlap(CCollider2D* _OwnCollider, CGameObject* _OtherObj, CCollider2D* _OtherCollider)
 {
-	if (L"Monster" == _OtherObj->GetName())
-	{
-		DeleteObject(_OtherObj);
-	}
+	//if (L"Monster" == _OtherObj->GetName())
+	//{
+	//	DeleteObject(_OtherObj);
+	//}
 }

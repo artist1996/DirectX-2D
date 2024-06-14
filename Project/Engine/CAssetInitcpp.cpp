@@ -131,6 +131,12 @@ void CAssetMgr::CreateEngineMaterial()
 	pMtrl = new CMaterial;
 	pMtrl->SetShader(FindAsset<CGraphicShader>(L"DebugShapeShader"));
 	AddAsset(L"DebugShapeMtrl", pMtrl);
+
+	// TileMapMtrl
+	pMtrl = new CMaterial;
+	pMtrl->SetShader(FindAsset<CGraphicShader>(L"TileMapShader"));
+	AddAsset(L"TileMapMtrl", pMtrl);
+
 }
 
 void CAssetMgr::CreateEngineTexture()
@@ -202,11 +208,10 @@ void CAssetMgr::CreateEngineSprite()
 	//pFilpBook->Save(strContentPath + L"Animation\\" + L"Link_MoveDown" + L".flip");
 	wstring strCotentPath = CPathMgr::GetInst()->GetContentPath();
 	
-	Ptr<CFlipBook> pFlipBook = nullptr;
-	
-	pFlipBook = new CFlipBook;
+	Ptr<CFlipBook> pFlipBook = new CFlipBook;
 	
 	pFlipBook->Load(strCotentPath + L"Animation\\" + L"Link_MoveDown" + L".flip");
+
 	AddAsset(L"Link_MoveDown", pFlipBook);
 }
 
@@ -248,6 +253,19 @@ void CAssetMgr::CreateEngineGraphicShader()
 	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_DEBUG);
 
 	AddAsset(L"DebugShapeShader", pShader);
+
+	// TileMapShader
+	pShader = new CGraphicShader;
+	pShader->CreateVertexShader(L"shader\\tilemap.fx", "VS_TileMap");
+	pShader->CreatePixelShader(L"shader\\tilemap.fx", "PS_TileMap");
+	pShader->SetRSType(RS_TYPE::CULL_NONE);
+	pShader->SetDSType(DS_TYPE::LESS);
+	pShader->SetBSType(BS_TYPE::DEFAULT);
+	pShader->SetTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	
+	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_MASKED);
+
+	AddAsset(L"TileMapShader", pShader);
 }
 
 void CAssetMgr::CreateEngineComputeShader()

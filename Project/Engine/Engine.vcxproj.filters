@@ -142,6 +142,9 @@
     <ClInclude Include="CSprite.h">
       <Filter>06. Asset\08. Sprite</Filter>
     </ClInclude>
+    <ClInclude Include="CTileMap.h">
+      <Filter>08. Component\RenderComponent\02. TileMap</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CEngine.cpp">
@@ -263,6 +266,9 @@
     </ClCompile>
     <ClCompile Include="CSprite.cpp">
       <Filter>06. Asset\08. Sprite</Filter>
+    </ClCompile>
+    <ClCompile Include="CTileMap.cpp">
+      <Filter>08. Component\RenderComponent\02. TileMap</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -407,6 +413,12 @@
     <Filter Include="08. Component\04. FlipBookComponent">
       <UniqueIdentifier>{b7a1db6f-9204-44c4-823f-cf626f35356b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="HLSL\01. Header">
+      <UniqueIdentifier>{f64c447e-0990-49ce-b3c7-9a1d159a2e14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HLSL\02. Render">
+      <UniqueIdentifier>{6f314835-5a03-4c91-a83b-7766e21b791b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="SimpleMath.inl">
@@ -414,17 +426,20 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="std2d.fx">
-      <Filter>HLSL</Filter>
+    <FxCompile Include="func.fx">
+      <Filter>HLSL\01. Header</Filter>
     </FxCompile>
     <FxCompile Include="value.fx">
-      <Filter>HLSL</Filter>
-    </FxCompile>
-    <FxCompile Include="func.fx">
-      <Filter>HLSL</Filter>
+      <Filter>HLSL\01. Header</Filter>
     </FxCompile>
     <FxCompile Include="debug.fx">
-      <Filter>HLSL</Filter>
+      <Filter>HLSL\02. Render</Filter>
+    </FxCompile>
+    <FxCompile Include="std2d.fx">
+      <Filter>HLSL\02. Render</Filter>
+    </FxCompile>
+    <FxCompile Include="tilemap.fx">
+      <Filter>HLSL\02. Render</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

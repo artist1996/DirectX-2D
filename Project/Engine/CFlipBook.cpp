@@ -56,6 +56,7 @@ int CFlipBook::Load(const wstring& _FilePath)
 		LoadAssetRef(m_vecSprite[i], pFile);
 	}
 
+	
 	fclose(pFile);
 
 	return S_OK;

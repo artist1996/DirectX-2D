@@ -85,6 +85,22 @@ void CLevelMgr::Init()
 	pObject->FlipBookComponent()->Play(5, 10, true);
 
 	m_CurLevel->AddObject(3, pObject);
+
+	CGameObject* pTileMap = new CGameObject;
+	pTileMap->AddComponent(new CTransform);
+	pTileMap->AddComponent(new CTileMap);
+	
+	pTileMap->Transform()->SetRelativePos(Vec3(-500.f, 250.f, 500.f));
+
+	pTileMap->TileMap()->SetRowCol(1, 1);
+	pTileMap->TileMap()->SetTileSize(Vec2(64.f, 64.f));
+
+	Ptr<CTexture> pTileAtlas = CAssetMgr::GetInst()->Load<CTexture>(L"TileAtlasTex", L"texture\\TILE.bmp");
+	pTileMap->TileMap()->SetAtlasTexture(pTileAtlas);
+	pTileMap->TileMap()->SetAtlasTileSize(Vec2(64.f, 64.f));
+
+	m_CurLevel->AddObject(2, pTileMap);
+
 	//pObject->MeshRender()->GetMaterial()->SetScalarParam(INT_1, 0);
 	//pObject->MeshRender()->GetMaterial()->SetScalarParam(FLOAT_0, 0.01f);
 	//pObject->MeshRender()->GetMaterial()->SetScalarParam(VEC4_0, Vec4(0.f, 1.f, 0.f, 1.f));
@@ -112,22 +128,22 @@ void CLevelMgr::Init()
 
 
 	// Monster Object
-	CGameObject* pMonster = new CGameObject;
-	pMonster->SetName(L"Monster");
-	pMonster->AddComponent(new CTransform);
-	pMonster->AddComponent(new CMeshRender);
-	pMonster->AddComponent(new CCollider2D);
-	pMonster->Transform()->SetRelativePos(-300.f, 0.f, 200.f);
-	pMonster->Transform()->SetRelativeScale(200.f, 200.f, 1.f);
-
-	pMonster->Collider2D()->SetIndependentScale(true);
-	pMonster->Collider2D()->SetOffset(Vec3(0.f, 0.f, 0.f));
-	pMonster->Collider2D()->SetScale(Vec3(220.f, 220.f, 1.f));
-	
-	pMonster->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
-	pMonster->MeshRender()->SetMaterial(pMtrl);
-	
-	m_CurLevel->AddObject(4, pMonster);
+	//CGameObject* pMonster = new CGameObject;
+	//pMonster->SetName(L"Monster");
+	//pMonster->AddComponent(new CTransform);
+	//pMonster->AddComponent(new CMeshRender);
+	//pMonster->AddComponent(new CCollider2D);
+	//pMonster->Transform()->SetRelativePos(-300.f, 0.f, 200.f);
+	//pMonster->Transform()->SetRelativeScale(200.f, 200.f, 1.f);
+	//
+	//pMonster->Collider2D()->SetIndependentScale(true);
+	//pMonster->Collider2D()->SetOffset(Vec3(0.f, 0.f, 0.f));
+	//pMonster->Collider2D()->SetScale(Vec3(220.f, 220.f, 1.f));
+	//
+	//pMonster->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
+	//pMonster->MeshRender()->SetMaterial(pMtrl);
+	//
+	//m_CurLevel->AddObject(4, pMonster);
 
 	CCollisionMgr::GetInst()->CollisionCheck(3, 4);
 	CCollisionMgr::GetInst()->CollisionCheck(4, 5);
