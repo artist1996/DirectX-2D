@@ -92,7 +92,7 @@ void CLevelMgr::Init()
 	
 	pTileMap->Transform()->SetRelativePos(Vec3(-500.f, 250.f, 500.f));
 
-	pTileMap->TileMap()->SetRowCol(1, 1);
+	pTileMap->TileMap()->SetRowCol(4, 4);
 	pTileMap->TileMap()->SetTileSize(Vec2(64.f, 64.f));
 
 	Ptr<CTexture> pTileAtlas = CAssetMgr::GetInst()->Load<CTexture>(L"TileAtlasTex", L"texture\\TILE.bmp");

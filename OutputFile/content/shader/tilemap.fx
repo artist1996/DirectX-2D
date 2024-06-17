@@ -3,14 +3,21 @@
 
 #include "value.fx"
 
+struct tTileInfo
+{
+    uint  ImgIdx;
+    int3  Padding;
+};
+
 // =========================
 // TileMap Shader Parameter
-#define AtlasTex        g_tex_0
-#define IsAtlasBind     g_btex_0
-#define ImgIdx          g_int_0
-#define AtlasMaxRow     g_int_1
-#define AtlasMaxCol     g_int_2
-#define TileSliceUV     g_vec2_0
+#define AtlasTex            g_tex_0
+#define IsAtlasBind         g_btex_0
+#define AtlasMaxRow         g_int_1
+#define AtlasMaxCol         g_int_2
+#define TileSliceUV         g_vec2_0
+#define TileColRow          g_vec2_1
+StructuredBuffer<tTileInfo> g_buffer : register(t15);
 
 // =========================
 struct VS_IN
@@ -35,7 +42,7 @@ VS_OUT VS_TileMap(VS_IN _in)
     _in.vPos.y -= 0.5f;
 
     output.vPosition = mul(float4(_in.vPos, 1.f), matWVP);
-    output.vUV = _in.vUV;
+    output.vUV = _in.vUV * TileColRow;
     
     return output;
 }
@@ -47,15 +54,19 @@ float4 PS_TileMap(VS_OUT _in) : SV_Target
     if(IsAtlasBind)
     {
         // LeftTop 계산
-        int Row = ImgIdx / AtlasMaxCol;
-        int Col = ImgIdx % AtlasMaxCol;
+        // 픽셀쉐이더에서 본인의 타일이 몇번째 타일인지 알아내야한다.
+        // 그 정보로 g_Buffer 에 전달된 각 타일정보중 본인의 정보에 접근해서 ImgIdx 를 알아낸다.
+        // 알아낸 ImgIdx 로 LeftTopUV 값을 계산한다.
         
-
-        float2 vLeftTopUV = float2(Col, Row) * TileSliceUV;
-        
-        // UV 좌표 계산
-        float2 vUV = vLeftTopUV + _in.vUV * TileSliceUV;
-        vOutColor = AtlasTex.Sample(g_sam_1, vUV);
+        //int Row = ImgIdx / AtlasMaxCol;
+        //int Col = ImgIdx % AtlasMaxCol;
+        //
+        //float2 vLeftTopUV = float2(Col, Row) * TileSliceUV;
+        //
+        //
+        //// UV 좌표 계산
+        //float2 vUV = vLeftTopUV + frac(_in.vUV) * TileSliceUV;
+        //vOutColor = AtlasTex.Sample(g_sam_1, vUV);
     }
     else
     {

@@ -145,6 +145,9 @@
     <ClInclude Include="CTileMap.h">
       <Filter>08. Component\RenderComponent\02. TileMap</Filter>
     </ClInclude>
+    <ClInclude Include="CStructuredBuffer.h">
+      <Filter>03. Device\StructuredBuffer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CEngine.cpp">
@@ -269,6 +272,9 @@
     </ClCompile>
     <ClCompile Include="CTileMap.cpp">
       <Filter>08. Component\RenderComponent\02. TileMap</Filter>
+    </ClCompile>
+    <ClCompile Include="CStructuredBuffer.cpp">
+      <Filter>03. Device\StructuredBuffer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -418,6 +424,9 @@
     </Filter>
     <Filter Include="HLSL\02. Render">
       <UniqueIdentifier>{6f314835-5a03-4c91-a83b-7766e21b791b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Device\StructuredBuffer">
+      <UniqueIdentifier>{30c97082-cdca-4d39-b36c-1aca85877f5a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
