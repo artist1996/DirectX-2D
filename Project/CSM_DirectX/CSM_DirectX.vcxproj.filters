@@ -4,6 +4,12 @@
     <Filter Include="Default">
       <UniqueIdentifier>{684032ce-1c0e-40ab-b39b-9fbbc695d6b4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Manager">
+      <UniqueIdentifier>{cc8caefa-188b-456b-b265-dc51c5508034}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EditorGameObject">
+      <UniqueIdentifier>{15d243fd-5418-4cbe-86e4-bb6e8526f04f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -17,6 +23,15 @@
     </ClInclude>
     <ClInclude Include="Resource.h">
       <Filter>Default</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>Default</Filter>
+    </ClInclude>
+    <ClInclude Include="CEditorMgr.h">
+      <Filter>01. Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="CGameObjectEx.h">
+      <Filter>EditorGameObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -34,5 +49,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="pch.cpp">
+      <Filter>Default</Filter>
+    </ClCompile>
+    <ClCompile Include="CEditorMgr.cpp">
+      <Filter>01. Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="CGameObjectEx.cpp">
+      <Filter>EditorGameObject</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

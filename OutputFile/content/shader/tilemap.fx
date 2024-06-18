@@ -58,15 +58,21 @@ float4 PS_TileMap(VS_OUT _in) : SV_Target
         // 그 정보로 g_Buffer 에 전달된 각 타일정보중 본인의 정보에 접근해서 ImgIdx 를 알아낸다.
         // 알아낸 ImgIdx 로 LeftTopUV 값을 계산한다.
         
-        //int Row = ImgIdx / AtlasMaxCol;
-        //int Col = ImgIdx % AtlasMaxCol;
-        //
-        //float2 vLeftTopUV = float2(Col, Row) * TileSliceUV;
-        //
-        //
-        //// UV 좌표 계산
-        //float2 vUV = vLeftTopUV + frac(_in.vUV) * TileSliceUV;
-        //vOutColor = AtlasTex.Sample(g_sam_1, vUV);
+        // 입력으로 들어온 UV 값을 내림한 정수값만 취해준 값이 본인의 행 열이다.
+        float2 CurColRow = floor(_in.vUV);
+                      
+        // 행 열을 1차원 Idx 로 변환 시켜줘야한다. 
+        // 입력으로 들어온 현재 Tile 의 Col, Row 값의 열 값에 현재 내 행을 곱한 뒤 열을 더해준다.
+        int Idx = TileColRow.x * CurColRow.y + CurColRow.x;
+                
+        int Row = g_buffer[Idx].ImgIdx / AtlasMaxCol;
+        int Col = g_buffer[Idx].ImgIdx % AtlasMaxCol;
+        
+        float2 vLeftTopUV = float2(Col, Row) * TileSliceUV;
+                
+        // UV 좌표 계산
+        float2 vUV = vLeftTopUV + frac(_in.vUV) * TileSliceUV;
+        vOutColor = AtlasTex.Sample(g_sam_1, vUV);
     }
     else
     {

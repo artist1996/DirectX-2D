@@ -40,6 +40,9 @@ void CTaskMgr::ExecuteTask()
 			int Layer = (int)m_vecTask[i].Param_0;
 			CGameObject* pObj = (CGameObject*)m_vecTask[i].Param_1;
 			pCurLevel->AddObject(Layer, pObj);
+			
+			if (STOP != pCurLevel->GetState())
+				pObj->Begin();
 		}
 		break;
 		case TASK_TYPE::DELETE_OBJECT:
@@ -55,6 +58,15 @@ void CTaskMgr::ExecuteTask()
 			m_GC.push_back(pObject);
 		}
 		break;
+
+		case TASK_TYPE::CHANGE_LEVELSTATE:
+		{
+			LEVEL_STATE NextState = (LEVEL_STATE)m_vecTask[i].Param_0;
+			CLevel* pCurLevel = CLevelMgr::GetInst()->GetCurrentLevel();
+			pCurLevel->ChangeLevelState(NextState);
+		}
+		break;
+
 		case TASK_TYPE::CHANGE_LEVEL:
 		{
 		}

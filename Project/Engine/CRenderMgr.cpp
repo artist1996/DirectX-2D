@@ -9,14 +9,19 @@
 #include "CMeshRender.h"
 #include "CGameObject.h"
 
+#include "CLevelMgr.h"
+#include "CLevel.h"
+
 CRenderMgr::CRenderMgr()
 	: m_DebugObject(nullptr)
+	, m_EditorCamera(nullptr)
 {}
 
 CRenderMgr::~CRenderMgr()
 {
 	if (nullptr != m_DebugObject)
 		delete m_DebugObject;
+
 }
 
 void CRenderMgr::Init()
@@ -29,12 +34,26 @@ void CRenderMgr::Init()
 
 void CRenderMgr::Tick()
 {
-	for (size_t i = 0; i < m_vecCam.size(); ++i)
-	{
-		if (nullptr == m_vecCam[i])
-			continue;
+	CLevel* pCurLevel = CLevelMgr::GetInst()->GetCurrentLevel();
 
-		m_vecCam[i]->Render();
+	if (nullptr == pCurLevel)
+		return;
+
+	if (PLAY == pCurLevel->GetState())
+	{
+		for (size_t i = 0; i < m_vecCam.size(); ++i)
+		{
+			if (nullptr == m_vecCam[i])
+				continue;
+
+			m_vecCam[i]->Render();
+		}
+	}
+
+	else
+	{
+		if (nullptr != m_EditorCamera)
+			m_EditorCamera->Render();
 	}
 
 	RenderDebugShape();

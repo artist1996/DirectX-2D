@@ -24,6 +24,15 @@ void DeleteObject(CGameObject* _DeleteObject)
 	CTaskMgr::GetInst()->AddTask(Task);
 }
 
+void ChangeLevelState(LEVEL_STATE _State)
+{
+	tTask Task = {};
+	Task.Type = TASK_TYPE::CHANGE_LEVELSTATE;
+	Task.Param_0 = (DWORD_PTR)_State;
+
+	CTaskMgr::GetInst()->AddTask(Task);
+}
+
 bool IsValid(CGameObject*& _Object)
 {
 	if (nullptr == _Object)

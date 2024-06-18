@@ -1,17 +1,9 @@
 ﻿// CSM_DirectX.cpp : 애플리케이션에 대한 진입점을 정의합니다.
 //
-
+#include "pch.h"
 #include "framework.h"
 #include "main.h"
-
-#ifdef _DEBUG
-#pragma comment(lib, "Engine\\Engine_D")
-#else
-#pragma comment(lib, "Engine\\Engine")
-#endif
-
-#include <Engine/global.h>
-#include <Engine/CEngine.h>
+#include "CEditorMgr.h"
 
 #define MAX_LOADSTRING 100
 
@@ -53,6 +45,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         return 0;
     }
 
+    CEditorMgr::GetInst()->Init();
+
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_CSMDIRECTX));
 
     MSG msg = {};
@@ -75,6 +69,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         else
         {
             CEngine::GetInst()->Progress();
+
+            CEditorMgr::GetInst()->Tick();
         }
     }
 

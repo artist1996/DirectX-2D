@@ -4,6 +4,7 @@
 
 CLevel::CLevel()
 	: m_Layer{}
+	, m_State(STOP)
 {
 	for (int i = 0; i < MAX_LAYER; ++i)
 	{
@@ -51,4 +52,24 @@ void CLevel::ClearObject()
 	{
 		m_Layer[i]->ClearObject();
 	}
+}
+
+void CLevel::ChangeLevelState(LEVEL_STATE _NextState)
+{
+	if (m_State == _NextState)
+		return;
+
+	// Stop -> Pause (X)
+	if (STOP == m_State && PAUSE == _NextState)
+		return;
+
+	// Stop -> Play
+	if (STOP == m_State && PLAY == _NextState)
+	{
+		Begin();
+	}
+		
+	m_State = _NextState;
+
+	// Play -> Stop (최초 레벨이 시작되는 시점으로 복구가 가능해야 한다.)
 }

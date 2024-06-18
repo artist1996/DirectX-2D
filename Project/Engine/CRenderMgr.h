@@ -9,6 +9,8 @@ class CRenderMgr
 	SINGLE(CRenderMgr);
 private:
 	vector<CCamera*>		m_vecCam;
+	CCamera*				m_EditorCamera;
+
 	list<tDebugShapeInfo>	m_DebugShapeList;
 
 	CGameObject*			m_DebugObject;
@@ -16,6 +18,7 @@ private:
 public:
 	void AddDebugShapeInfo(tDebugShapeInfo _Info) { m_DebugShapeList.push_back(_Info); }
 	void RegisterCamera(CCamera* _Cam, int _CamPriority);
+	void RegisterEditorCamera(CCamera* _Cam)	  { m_EditorCamera = _Cam; }
 
 private:
 	void RenderDebugShape();

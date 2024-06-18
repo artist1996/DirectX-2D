@@ -29,7 +29,7 @@
       <Filter>04. Manager\01. PathMgr</Filter>
     </ClInclude>
     <ClInclude Include="CTaskMgr.h">
-      <Filter>04. Manager\TaskMgr</Filter>
+      <Filter>04. Manager\08. TaskMgr</Filter>
     </ClInclude>
     <ClInclude Include="CTimeMgr.h">
       <Filter>04. Manager\02. TimeMgr</Filter>
@@ -166,7 +166,7 @@
       <Filter>04. Manager\01. PathMgr</Filter>
     </ClCompile>
     <ClCompile Include="CTaskMgr.cpp">
-      <Filter>04. Manager\TaskMgr</Filter>
+      <Filter>04. Manager\08. TaskMgr</Filter>
     </ClCompile>
     <ClCompile Include="CTimeMgr.cpp">
       <Filter>04. Manager\02. TimeMgr</Filter>
@@ -305,9 +305,6 @@
     <Filter Include="04. Manager\03. KeyMgr">
       <UniqueIdentifier>{8dae6303-387d-4c98-8fe4-8860890cda62}</UniqueIdentifier>
     </Filter>
-    <Filter Include="04. Manager\TaskMgr">
-      <UniqueIdentifier>{03716406-4a2c-475e-8f1e-ccc714f2ecfd}</UniqueIdentifier>
-    </Filter>
     <Filter Include="HLSL">
       <UniqueIdentifier>{b9cd1d4d-0d15-4005-ba51-73b332d62a94}</UniqueIdentifier>
     </Filter>
@@ -427,6 +424,9 @@
     </Filter>
     <Filter Include="03. Device\StructuredBuffer">
       <UniqueIdentifier>{30c97082-cdca-4d39-b36c-1aca85877f5a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Manager\08. TaskMgr">
+      <UniqueIdentifier>{03716406-4a2c-475e-8f1e-ccc714f2ecfd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
