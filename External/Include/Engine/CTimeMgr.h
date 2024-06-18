@@ -26,7 +26,9 @@ public:
 public:
 	float GetDeltaTime()	   { return m_DeltaTime; }
 	float GetTime()			   { return m_Time; }
+
 	float GetEngineDeltaTime() { return m_E_DeltaTime; }
 	float GetEngineTime()	   { return m_E_Time; }
+
 	UINT GetFPS()			   { return m_FPS; }
 };

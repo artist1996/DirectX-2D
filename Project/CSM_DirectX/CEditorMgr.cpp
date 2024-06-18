@@ -1,8 +1,8 @@
 #include "pch.h"
 #include "CEditorMgr.h"
 
-#include <Engine\CRenderMgr.h>
-#include <Engine\components.h>
+#include <Engine/CRenderMgr.h>
+#include <Engine/components.h>
 
 #include "CGameObjectEx.h"
 
@@ -33,9 +33,9 @@ void CEditorMgr::CreateEditorObject()
 {
 	CGameObject* pEditorCamera = new CGameObjectEx;
 	pEditorCamera->SetName(L"EditorCamera");
-	//pEditorCamera->AddComponent(new CEditorCameraScript);
 	pEditorCamera->AddComponent(new CTransform);
 	pEditorCamera->AddComponent(new CCamera);
+	//pEditorCamera->AddComponent(new CEditorCameraScript);
 
 	pEditorCamera->Camera()->SetLayerAll();
 	pEditorCamera->Camera()->SetLayer(31, false);

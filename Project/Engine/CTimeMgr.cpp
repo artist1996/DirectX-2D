@@ -43,7 +43,7 @@ void CTimeMgr::Tick()
 	m_E_DeltaTime = (float)(m_llCurCount.QuadPart - m_llPrevCount.QuadPart) / (float)m_llFrequency.QuadPart;
 
 	// DT 보정
-	if (1.f / 60.f < m_DeltaTime)
+	if (1.f / 60.f < m_E_DeltaTime)
 		m_E_DeltaTime = 1.f / 60.f;
 
 	// 누적시간을 통해서 프로그램이 실행된 이후로 지나간 시간값을 기록
@@ -68,9 +68,9 @@ void CTimeMgr::Tick()
 		m_FPS = 0;
 	}
 
+	// Level DT
 	CLevel* pCurLevel = CLevelMgr::GetInst()->GetCurrentLevel();
-
-	if (nullptr != pCurLevel || PLAY != pCurLevel->GetState())
+	if (nullptr == pCurLevel || pCurLevel->GetState() != LEVEL_STATE::PLAY)
 	{
 		m_DeltaTime = 0.f;
 	}

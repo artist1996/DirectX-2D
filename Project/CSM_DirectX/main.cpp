@@ -3,9 +3,8 @@
 #include "pch.h"
 #include "framework.h"
 #include "main.h"
-#include "CEditorMgr.h"
 
-#define MAX_LOADSTRING 100
+#include "CEditorMgr.h"
 
 // 전역 변수:
 HINSTANCE g_hInst = nullptr;                               // 현재 인스턴스입니다.
@@ -45,7 +44,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         return 0;
     }
 
+#ifdef _DEBUG
     CEditorMgr::GetInst()->Init();
+#endif
 
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_CSMDIRECTX));
 
@@ -69,8 +70,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         else
         {
             CEngine::GetInst()->Progress();
-
+#ifdef _DEBUG
             CEditorMgr::GetInst()->Tick();
+#endif
         }
     }
 

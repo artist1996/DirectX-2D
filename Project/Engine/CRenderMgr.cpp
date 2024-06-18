@@ -21,7 +21,6 @@ CRenderMgr::~CRenderMgr()
 {
 	if (nullptr != m_DebugObject)
 		delete m_DebugObject;
-
 }
 
 void CRenderMgr::Init()
@@ -53,7 +52,9 @@ void CRenderMgr::Tick()
 	else
 	{
 		if (nullptr != m_EditorCamera)
+		{
 			m_EditorCamera->Render();
+		}
 	}
 
 	RenderDebugShape();
@@ -104,11 +105,11 @@ void CRenderMgr::RenderDebugShape()
 			m_DebugObject->MeshRender()->GetMaterial()->GetShader()->SetDSType(DS_TYPE::NO_TEST_NO_WRITE);
 
 		// 렌더링
-		m_DebugObject->Render();
+		m_DebugObject->MeshRender()->Render();
 
 		// 수명이 다한 디버그 정보 삭제
-		(*iter).Age += DT;
-		if ((*iter).LifeTime <= (*iter).Age)
+		(*iter).Age += EngineDT;
+		if ((*iter).LifeTime < (*iter).Age)
 		{
 			iter = m_DebugShapeList.erase(iter);
 		}
