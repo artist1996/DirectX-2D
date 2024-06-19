@@ -12,6 +12,8 @@
 #include "CLevelMgr.h"
 #include "CLevel.h"
 
+#include "CDevice.h"
+
 CRenderMgr::CRenderMgr()
 	: m_DebugObject(nullptr)
 	, m_EditorCamera(nullptr)
@@ -37,6 +39,12 @@ void CRenderMgr::Tick()
 
 	if (nullptr == pCurLevel)
 		return;
+
+	// Output Merge State (출력 병합 단계)
+	
+	Ptr<CTexture> RTTex = CAssetMgr::GetInst()->FindAsset<CTexture>(L"RenderTargetTex");
+	Ptr<CTexture> DSTex = CAssetMgr::GetInst()->FindAsset<CTexture>(L"DepthStencilTex");		
+	CONTEXT->OMSetRenderTargets(1, RTTex->GetRTV().GetAddressOf(), DSTex->GetDSV().Get());
 
 	if (PLAY == pCurLevel->GetState())
 	{

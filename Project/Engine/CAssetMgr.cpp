@@ -34,6 +34,9 @@ Ptr<CTexture> CAssetMgr::CreateTexture(const wstring& _strKey, UINT _Width, UINT
 		MessageBox(nullptr, L"텍스쳐 생성 실패", L"텍스쳐 생성 실패", MB_OK);
 		return nullptr;
 	}
+
+	pTexture->m_Key = _strKey;
+	m_mapAsset[(UINT)ASSET_TYPE::TEXTURE].insert(make_pair(_strKey, pTexture.Get()));
 		
 	return pTexture;
 }
