@@ -1,14 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Default">
-      <UniqueIdentifier>{684032ce-1c0e-40ab-b39b-9fbbc695d6b4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="01. Manager">
       <UniqueIdentifier>{cc8caefa-188b-456b-b265-dc51c5508034}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="EditorGameObject">
-      <UniqueIdentifier>{15d243fd-5418-4cbe-86e4-bb6e8526f04f}</UniqueIdentifier>
     </Filter>
     <Filter Include="Scripts">
       <UniqueIdentifier>{d6043d15-b2a6-4e9f-8321-638fa3a7973b}</UniqueIdentifier>
@@ -16,28 +10,31 @@
     <Filter Include="01. Manager\ImGui">
       <UniqueIdentifier>{f5c862e2-05bf-442d-9ad5-5e6e0eda1514}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03. GameObjectEx">
+      <UniqueIdentifier>{15d243fd-5418-4cbe-86e4-bb6e8526f04f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00. Default">
+      <UniqueIdentifier>{93b1f973-fefb-455a-a379-957cf044016c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. EditorUI">
+      <UniqueIdentifier>{b7015d08-752a-4ec6-ae91-49746e4da0af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. EditorUI\01. Inspector">
+      <UniqueIdentifier>{6b1dbe9b-75f9-4805-b799-930aecd9ce50}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. EditorUI\02. Content">
+      <UniqueIdentifier>{a2f88154-defc-440b-b2c9-27ea05294f4a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. EditorUI\03. Outliner">
+      <UniqueIdentifier>{19c223bd-5886-44ed-838d-d7f075c70675}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="targetver.h">
-      <Filter>Default</Filter>
-    </ClInclude>
-    <ClInclude Include="main.h">
-      <Filter>Default</Filter>
-    </ClInclude>
-    <ClInclude Include="framework.h">
-      <Filter>Default</Filter>
-    </ClInclude>
-    <ClInclude Include="Resource.h">
-      <Filter>Default</Filter>
-    </ClInclude>
-    <ClInclude Include="pch.h">
-      <Filter>Default</Filter>
-    </ClInclude>
     <ClInclude Include="CEditorMgr.h">
       <Filter>01. Manager</Filter>
     </ClInclude>
     <ClInclude Include="CGameObjectEx.h">
-      <Filter>EditorGameObject</Filter>
+      <Filter>03. GameObjectEx</Filter>
     </ClInclude>
     <ClInclude Include="CEditorCameraScript.h">
       <Filter>Scripts</Filter>
@@ -66,30 +63,38 @@
     <ClInclude Include="ImGui\imgui.h">
       <Filter>01. Manager\ImGui</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="small.ico">
-      <Filter>Default</Filter>
-    </Image>
-    <Image Include="CSM_DirectX.ico">
-      <Filter>Default</Filter>
-    </Image>
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="CSM_DirectX.rc">
-      <Filter>Default</Filter>
-    </ResourceCompile>
+    <ClInclude Include="main.h">
+      <Filter>00. Default</Filter>
+    </ClInclude>
+    <ClInclude Include="framework.h">
+      <Filter>00. Default</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>00. Default</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>00. Default</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>00. Default</Filter>
+    </ClInclude>
+    <ClInclude Include="EditorUI.h">
+      <Filter>02. EditorUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Inspector.h">
+      <Filter>02. EditorUI\01. Inspector</Filter>
+    </ClInclude>
+    <ClInclude Include="Content.h">
+      <Filter>02. EditorUI\02. Content</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="pch.cpp">
-      <Filter>Default</Filter>
-    </ClCompile>
     <ClCompile Include="CEditorMgr.cpp">
       <Filter>01. Manager</Filter>
     </ClCompile>
     <ClCompile Include="CGameObjectEx.cpp">
-      <Filter>EditorGameObject</Filter>
+      <Filter>03. GameObjectEx</Filter>
     </ClCompile>
     <ClCompile Include="CEditorCameraScript.cpp">
       <Filter>Scripts</Filter>
@@ -115,10 +120,41 @@
     <ClCompile Include="ImGui\imgui_demo.cpp">
       <Filter>01. Manager\ImGui</Filter>
     </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>00. Default</Filter>
+    </ClCompile>
+    <ClCompile Include="EditorUI.cpp">
+      <Filter>02. EditorUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Inspector.cpp">
+      <Filter>02. EditorUI\01. Inspector</Filter>
+    </ClCompile>
+    <ClCompile Include="Content.cpp">
+      <Filter>02. EditorUI\02. Content</Filter>
+    </ClCompile>
+    <ClCompile Include="CEditorMgr_EditorUI.cpp">
+      <Filter>01. Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="CEditorMgr_EditorObject.cpp">
+      <Filter>01. Manager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ImGui\LICENSE.txt">
       <Filter>01. Manager\ImGui</Filter>
     </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="CSM_DirectX.rc">
+      <Filter>00. Default</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="CSM_DirectX.ico">
+      <Filter>00. Default</Filter>
+    </Image>
+    <Image Include="small.ico">
+      <Filter>00. Default</Filter>
+    </Image>
   </ItemGroup>
 </Project>
