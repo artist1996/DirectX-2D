@@ -11,6 +11,7 @@ private:
 
 public:
 	CLevel* GetCurrentLevel() { return m_CurLevel; }
+	CGameObject* FindObjectByName(const wstring& _strName);
 
 public:
 	void Init();

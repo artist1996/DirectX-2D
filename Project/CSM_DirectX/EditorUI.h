@@ -1,5 +1,7 @@
 #pragma once
 
+#include "ImGui/imgui.h"
+
 class EditorUI
 {
 private:
@@ -13,6 +15,9 @@ private:
 	vector<EditorUI*> m_vecChildren;
 
 	bool			  m_Active;
+	bool			  m_ChildBorder;
+	
+	ImVec2			  m_ChildSize;
 
 public:
 	void AddChild(EditorUI* _UI);
@@ -22,6 +27,8 @@ public:
 	void Deactivate() { m_Active = false; }
 
 	void SetName(const string& _strName);
+	void SetChildBorder(bool _Set)	{ m_ChildBorder = _Set; }
+	void SetChildSize(ImVec2 _Size)	{ m_ChildSize = _Size; }
 
 	const string& GetName()		{ return m_Name; }
 	const string& GetFullName() { return m_FullName; }

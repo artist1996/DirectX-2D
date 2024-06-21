@@ -2,6 +2,8 @@
 #include "CLevel.h"
 #include "CLayer.h"
 
+#include "CGameObject.h"
+
 CLevel::CLevel()
 	: m_Layer{}
 	, m_State(LEVEL_STATE::STOP)
@@ -39,6 +41,39 @@ void CLevel::FinalTick()
 	{
 		m_Layer[i]->FinalTick();
 	}
+}
+
+CGameObject* CLevel::FindObjectByName(const wstring& _strName)
+{
+	
+	for (int i = 0; i < MAX_LAYER; ++i)
+	{
+		const vector<CGameObject*> vecParent = m_Layer[i]->GetParentObjects();
+
+		static list<CGameObject*> queue;
+		for (size_t i = 0; i < vecParent.size(); ++i)
+		{
+			queue.clear();
+			queue.push_back(vecParent[i]);
+
+			while (!queue.empty())
+			{
+				CGameObject* pObject = queue.front();
+				queue.pop_front();
+
+				const vector<CGameObject*> vecChild = pObject->GetChildren();
+				for (size_t i = 0; i < vecChild.size(); ++i)
+				{
+					queue.push_back(vecChild[i]);
+				}
+
+				if (_strName == pObject->GetName())
+					return pObject;
+			}
+		}
+	}
+
+	return nullptr;
 }
 
 void CLevel::AddObject(int _LayerIdx, CGameObject* _Object, bool _bMoveChild)

@@ -17,6 +17,8 @@ public:
     CLayer* GetLayer(int _LayderIdx) { return m_Layer[_LayderIdx]; }
     LEVEL_STATE GetState()           { return m_State; }
 
+    CGameObject* FindObjectByName(const wstring& _strName);
+
     void ClearObject();
     
 private:

@@ -1,14 +1,13 @@
 #include "pch.h"
 #include "EditorUI.h"
 
-#include "ImGui/imgui.h"
-
 UINT EditorUI::m_GlobalID = 0;
 
 EditorUI::EditorUI()
 	: m_ID(m_GlobalID++)
 	, m_Parent(nullptr)
 	, m_Active(true)
+	, m_ChildBorder(false)
 {
 }
 
@@ -30,20 +29,32 @@ void EditorUI::Tick()
 
 		for (size_t i = 0; i < m_vecChildren.size(); ++i)
 		{
+			if (m_vecChildren[i]->m_ChildBorder)
+				ImGui::Separator();
+
 			m_vecChildren[i]->Tick();
+			
+			if (m_vecChildren[i]->m_ChildBorder && i == m_vecChildren.size() - 1)
+				ImGui::Separator();
 		}
 
 		ImGui::End();
 	}
 	else
 	{
-		ImGui::BeginChild(m_Name.c_str());
+		ImGui::BeginChild(m_Name.c_str(), m_ChildSize);
 
 		Update();
 
 		for (size_t i = 0; i < m_vecChildren.size(); ++i)
 		{
+			if (m_vecChildren[i]->m_ChildBorder)
+				ImGui::Separator();
+
 			m_vecChildren[i]->Tick();
+
+			if (m_vecChildren[i]->m_ChildBorder && i == m_vecChildren.size() - 1)
+				ImGui::Separator();
 		}
 
 		ImGui::EndChild();

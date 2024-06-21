@@ -103,9 +103,6 @@
     <ClInclude Include="CRenderMgr.h">
       <Filter>04. Manager\06. RenderMgr</Filter>
     </ClInclude>
-    <ClInclude Include="CLevel.h">
-      <Filter>05. Level</Filter>
-    </ClInclude>
     <ClInclude Include="CScript.h">
       <Filter>08. Component\Script</Filter>
     </ClInclude>
@@ -147,6 +144,9 @@
     </ClInclude>
     <ClInclude Include="CStructuredBuffer.h">
       <Filter>03. Device\StructuredBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="CLevel.h">
+      <Filter>05. Level</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

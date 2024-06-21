@@ -27,6 +27,16 @@ CLevelMgr::~CLevelMgr()
 		delete m_CurLevel;
 }
 
+CGameObject* CLevelMgr::FindObjectByName(const wstring& _strName)
+{
+	if (m_CurLevel)
+	{
+		return m_CurLevel->FindObjectByName(_strName);
+	}
+
+	return nullptr;
+}
+
 void CLevelMgr::Init()
 {
 	// Std2DMtrl
