@@ -29,9 +29,6 @@ void EditorUI::Tick()
 
 		for (size_t i = 0; i < m_vecChildren.size(); ++i)
 		{
-			if (m_vecChildren[i]->m_ChildBorder)
-				ImGui::Separator();
-
 			m_vecChildren[i]->Tick();
 			
 			if (m_vecChildren[i]->m_ChildBorder && i == m_vecChildren.size() - 1)
@@ -42,7 +39,12 @@ void EditorUI::Tick()
 	}
 	else
 	{
-		ImGui::BeginChild(m_Name.c_str(), m_ChildSize);
+		if (m_ChildBorder)
+		{
+			ImGui::Separator();
+		}
+
+		ImGui::BeginChild(m_FullName.c_str(), m_ChildSize);
 
 		Update();
 

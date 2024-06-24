@@ -49,6 +49,7 @@ public:
     PROJ_TYPE GetProjType() { return m_ProjType; }
     float GetFar()          { return m_Far; }
     
+    bool GetLayerCheck(int _LayerIdx) { return m_LayerCheck & (1 << _LayerIdx); }
 
 public:
     virtual void Begin() override;

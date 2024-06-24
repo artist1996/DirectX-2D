@@ -36,7 +36,9 @@ public:
     Vec3 GetRelativeDir(DIR _Dir) { return m_RelativeDir[_Dir]; };
     Vec3 GetWorldDir(DIR _Dir)    { return m_WorldDir[_Dir]; }
     Vec3 GetWorldScale();
-    
+
+    bool IsIndependentScale()   { return m_IndipendentScale; }
+
     Matrix GetWorldMatrix()     { return m_matWorld; }
 
 public:

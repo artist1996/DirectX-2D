@@ -24,7 +24,9 @@ public:
     Vec3 GetWorldPos()             { return m_matColWorld.Translation(); }
     const Matrix& GetWorldMatrix() { return m_matColWorld; }
 
-    int GetOverlapCount() { return m_OverlapCount; }
+    int GetOverlapCount()     { return m_OverlapCount; }
+
+    bool IsIndependentScale() { return m_IndependentScale; }
 
 public:
     void BeginOverlap(CCollider2D* _OtherCollider);

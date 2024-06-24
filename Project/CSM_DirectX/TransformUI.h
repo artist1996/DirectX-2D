@@ -12,4 +12,3 @@ public:
     TransformUI();
     virtual ~TransformUI();
 };
-

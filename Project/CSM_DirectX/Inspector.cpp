@@ -11,6 +11,7 @@
 #include <Engine/CGameObject.h>
 #include "TransformUI.h"
 #include "Collider2DUI.h"
+#include "CameraUI.h"
 
 Inspector::Inspector()
 	: m_TargetObject(nullptr)
@@ -19,7 +20,7 @@ Inspector::Inspector()
 	m_arrComUI[(UINT)COMPONENT_TYPE::TRANSFORM] = new TransformUI;
 	m_arrComUI[(UINT)COMPONENT_TYPE::TRANSFORM]->SetName("TrasnformUI");
 	m_arrComUI[(UINT)COMPONENT_TYPE::TRANSFORM]->SetChildBorder(true);
-	m_arrComUI[(UINT)COMPONENT_TYPE::TRANSFORM]->SetChildSize(ImVec2(0.f, 100.f));
+	m_arrComUI[(UINT)COMPONENT_TYPE::TRANSFORM]->SetChildSize(ImVec2(0.f, 130.f));
 	AddChild(m_arrComUI[(UINT)COMPONENT_TYPE::TRANSFORM]);
 
 	m_arrComUI[(UINT)COMPONENT_TYPE::COLLIDER2D] = new Collider2DUI;
@@ -27,6 +28,12 @@ Inspector::Inspector()
 	m_arrComUI[(UINT)COMPONENT_TYPE::COLLIDER2D]->SetChildBorder(true);
 	m_arrComUI[(UINT)COMPONENT_TYPE::COLLIDER2D]->SetChildSize(ImVec2(0.f, 100.f));
 	AddChild(m_arrComUI[(UINT)COMPONENT_TYPE::COLLIDER2D]);
+
+	m_arrComUI[(UINT)COMPONENT_TYPE::CAMERA] = new CameraUI;
+	m_arrComUI[(UINT)COMPONENT_TYPE::CAMERA]->SetName("CameraUI");
+	m_arrComUI[(UINT)COMPONENT_TYPE::CAMERA]->SetChildBorder(true);
+	m_arrComUI[(UINT)COMPONENT_TYPE::CAMERA]->SetChildSize(ImVec2(0.f, 150.f));
+	AddChild(m_arrComUI[(UINT)COMPONENT_TYPE::CAMERA]);
 }
 
 Inspector::~Inspector()

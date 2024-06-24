@@ -37,6 +37,18 @@
     <Filter Include="02. EditorUI\01. Inspector\ComponentUI\02. Collider2DUI">
       <UniqueIdentifier>{c16be69e-b34b-4550-8409-cd0d60361dcf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. EditorUI\01. Inspector\ComponentUI\03. CameraUI">
+      <UniqueIdentifier>{c0af3a5a-db75-459c-88c6-2734baaab597}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. EditorUI\01. Inspector\ComponentUI\04. FlipBookUI">
+      <UniqueIdentifier>{3119d065-e0e7-469a-8894-15e03d2003f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. EditorUI\01. Inspector\ComponentUI\05. MeshRenderUI">
+      <UniqueIdentifier>{a85e7c3d-6130-4a4a-8338-9df5c46f108e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. EditorUI\01. Inspector\ComponentUI\06. TileMapUI">
+      <UniqueIdentifier>{90266a38-bfbb-4715-aa67-4e422b8c5b7c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CEditorMgr.h">
@@ -108,6 +120,9 @@
     <ClInclude Include="Outliner.h">
       <Filter>02. EditorUI\03. Outliner</Filter>
     </ClInclude>
+    <ClInclude Include="CameraUI.h">
+      <Filter>02. EditorUI\01. Inspector\ComponentUI\03. CameraUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -170,6 +185,9 @@
     </ClCompile>
     <ClCompile Include="Outliner.cpp">
       <Filter>02. EditorUI\03. Outliner</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraUI.cpp">
+      <Filter>02. EditorUI\01. Inspector\ComponentUI\03. CameraUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

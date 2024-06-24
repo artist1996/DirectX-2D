@@ -4,6 +4,7 @@
 #include <Engine/CTransform.h>
 
 TransformUI::TransformUI()
+	: ComponentUI(COMPONENT_TYPE::TRANSFORM)
 {
 }
 
@@ -13,6 +14,8 @@ TransformUI::~TransformUI()
 
 void TransformUI::Update()
 {
+	Title();
+
 	CTransform* pTrans = GetTargetObject()->Transform();
 
 	Vec3 vPos   = pTrans->GetRelativePos();
@@ -34,4 +37,14 @@ void TransformUI::Update()
 	pTrans->SetRelativePos(vPos);
 	pTrans->SetRelativeScale(vScale);
 	pTrans->SetRelativeRotation(vRot);
+
+	bool IS = pTrans->IsIndependentScale();
+
+	// Independent Scale
+	ImGui::Text("Ignore Parent");
+	ImGui::SameLine(100);
+	if (ImGui::Checkbox("##TransIS", &IS))
+	{
+		pTrans->SetIndipendentScale(IS);
+	}
 }
