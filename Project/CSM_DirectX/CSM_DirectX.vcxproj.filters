@@ -4,9 +4,6 @@
     <Filter Include="01. Manager">
       <UniqueIdentifier>{cc8caefa-188b-456b-b265-dc51c5508034}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Scripts">
-      <UniqueIdentifier>{d6043d15-b2a6-4e9f-8321-638fa3a7973b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="01. Manager\ImGui">
       <UniqueIdentifier>{f5c862e2-05bf-442d-9ad5-5e6e0eda1514}</UniqueIdentifier>
     </Filter>
@@ -37,9 +34,6 @@
     <Filter Include="02. EditorUI\01. Inspector\ComponentUI\02. Collider2DUI">
       <UniqueIdentifier>{c16be69e-b34b-4550-8409-cd0d60361dcf}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. EditorUI\01. Inspector\ComponentUI\03. CameraUI">
-      <UniqueIdentifier>{c0af3a5a-db75-459c-88c6-2734baaab597}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. EditorUI\01. Inspector\ComponentUI\04. FlipBookUI">
       <UniqueIdentifier>{3119d065-e0e7-469a-8894-15e03d2003f3}</UniqueIdentifier>
     </Filter>
@@ -48,6 +42,18 @@
     </Filter>
     <Filter Include="02. EditorUI\01. Inspector\ComponentUI\06. TileMapUI">
       <UniqueIdentifier>{90266a38-bfbb-4715-aa67-4e422b8c5b7c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. EditorUI\01. Inspector\ComponentUI\03. CameraUI">
+      <UniqueIdentifier>{c0af3a5a-db75-459c-88c6-2734baaab597}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. GameObjectEx\Scripts">
+      <UniqueIdentifier>{d6043d15-b2a6-4e9f-8321-638fa3a7973b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. EditorUI\01. Inspector\ComponentUI\07. ParticleSystemUI">
+      <UniqueIdentifier>{59058752-9022-46fe-a6f5-0dd5a944ae80}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. EditorUI\04. ListUI">
+      <UniqueIdentifier>{e9975692-551b-4f54-9fb8-ddbbe6db84d5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -58,7 +64,7 @@
       <Filter>03. GameObjectEx</Filter>
     </ClInclude>
     <ClInclude Include="CEditorCameraScript.h">
-      <Filter>Scripts</Filter>
+      <Filter>03. GameObjectEx\Scripts</Filter>
     </ClInclude>
     <ClInclude Include="ImGui\imgui_impl_dx11.h">
       <Filter>01. Manager\ImGui</Filter>
@@ -123,6 +129,21 @@
     <ClInclude Include="CameraUI.h">
       <Filter>02. EditorUI\01. Inspector\ComponentUI\03. CameraUI</Filter>
     </ClInclude>
+    <ClInclude Include="FlipBookComUI.h">
+      <Filter>02. EditorUI\01. Inspector\ComponentUI\04. FlipBookUI</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshRenderUI.h">
+      <Filter>02. EditorUI\01. Inspector\ComponentUI\05. MeshRenderUI</Filter>
+    </ClInclude>
+    <ClInclude Include="TileMapUI.h">
+      <Filter>02. EditorUI\01. Inspector\ComponentUI\06. TileMapUI</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleSystemUI.h">
+      <Filter>02. EditorUI\01. Inspector\ComponentUI\07. ParticleSystemUI</Filter>
+    </ClInclude>
+    <ClInclude Include="ListUI.h">
+      <Filter>02. EditorUI\04. ListUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -133,7 +154,7 @@
       <Filter>03. GameObjectEx</Filter>
     </ClCompile>
     <ClCompile Include="CEditorCameraScript.cpp">
-      <Filter>Scripts</Filter>
+      <Filter>03. GameObjectEx\Scripts</Filter>
     </ClCompile>
     <ClCompile Include="ImGui\imgui_draw.cpp">
       <Filter>01. Manager\ImGui</Filter>
@@ -188,6 +209,21 @@
     </ClCompile>
     <ClCompile Include="CameraUI.cpp">
       <Filter>02. EditorUI\01. Inspector\ComponentUI\03. CameraUI</Filter>
+    </ClCompile>
+    <ClCompile Include="FlipBookComUI.cpp">
+      <Filter>02. EditorUI\01. Inspector\ComponentUI\04. FlipBookUI</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshRenderUI.cpp">
+      <Filter>02. EditorUI\01. Inspector\ComponentUI\05. MeshRenderUI</Filter>
+    </ClCompile>
+    <ClCompile Include="TileMapUI.cpp">
+      <Filter>02. EditorUI\01. Inspector\ComponentUI\06. TileMapUI</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleSystemUI.cpp">
+      <Filter>02. EditorUI\01. Inspector\ComponentUI\07. ParticleSystemUI</Filter>
+    </ClCompile>
+    <ClCompile Include="ListUI.cpp">
+      <Filter>02. EditorUI\04. ListUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -20,19 +20,86 @@ CameraUI::~CameraUI()
 void CameraUI::Update()
 {
     Title();
-    // m_Priority; (보류)
+    // Priority (보류)
     
-    // m_LayerCheck;
+    CCamera* pCam = GetTargetObject()->Camera();
+
+    // LayerCheck;
     LayerCheck();
 
-    // m_ProjType;
+    // Projection;
+    Projection();
     
-    // m_Width;
-    // m_Height;
-    // m_Far;       
-    
-    // m_FOV;       
+    // Info (Width, Height, Far, FOV)
+    float Width = pCam->GetWidth();
+    ImGui::Text("Width");
+    ImGui::SameLine(100);
+    ImGui::InputFloat("##Width", &Width);
+    pCam->SetWidth(Width);
 
+    float Height = pCam->GetHeight();
+    ImGui::Text("Height");
+    ImGui::SameLine(100);
+    ImGui::InputFloat("##Height", &Height);
+    pCam->SetHeight(Height);
+
+    float AR = pCam->GetAspectRatio();
+    ImGui::Text("AspectRatio");
+    ImGui::SameLine(100);
+    ImGui::InputFloat("##AspectRatio", &AR, ImGuiInputTextFlags_::ImGuiInputTextFlags_ReadOnly);
+
+    float Far = pCam->GetFar();
+    ImGui::Text("Far");
+    ImGui::SameLine(100);
+    ImGui::InputFloat("##Far", &Far);
+    pCam->SetFar(Far);
+
+    // Perspective 전용
+    float FOV = pCam->GetFOV();
+    FOV = (FOV / XM_PI) * 180.f;
+
+    if (pCam->GetProjType() != PROJ_TYPE::PERSPECTIVE)
+    {
+        ImGui::BeginDisabled();
+
+        ImGui::Text("FOV");
+        ImGui::SameLine(100);
+        ImGui::InputFloat("##FOV", &FOV);
+
+        ImGui::EndDisabled();
+    }
+    else
+    {
+        ImGui::Text("FOV");
+        ImGui::SameLine(100);
+        ImGui::InputFloat("##FOV", &FOV);
+    }
+
+    FOV = (FOV / 180.f) * XM_PI;
+    pCam->SetFOV(FOV);
+
+
+    // Orthograhpic 전용
+    if (pCam->GetProjType() != PROJ_TYPE::ORTHOGRAPHIC)
+    {
+        ImGui::BeginDisabled();
+
+        float Scale = pCam->GetProjScale();
+        ImGui::Text("Scale");
+        ImGui::SameLine(100);
+        ImGui::InputFloat("##Scale", &Scale);
+        pCam->SetProjScale(Scale);
+
+        ImGui::EndDisabled();
+    }
+    else
+    {
+        float Scale = pCam->GetProjScale();
+        ImGui::Text("Scale");
+        ImGui::SameLine(100);
+        ImGui::InputFloat("##Scale", &Scale);
+        pCam->SetProjScale(Scale);
+    }
 }
 
 void CameraUI::LayerCheck()
@@ -55,6 +122,7 @@ void CameraUI::LayerCheck()
     {
         bLayer[i] = pCam->GetLayerCheck(i);
     }
+
 
     int ChangedIdx = -1;
     if (ImGui::BeginTable("##LayerCheckTable", 2, ImGuiTableFlags_Resizable | ImGuiTableFlags_NoSavedSettings | ImGuiTableFlags_Borders))
@@ -82,4 +150,38 @@ void CameraUI::LayerCheck()
     {
         pCam->SetLayer(ChangedIdx, bLayer[ChangedIdx]);
     }
+}
+
+void CameraUI::Projection()
+{
+    CCamera* pCam = GetTargetObject()->Camera();
+
+    PROJ_TYPE Type = pCam->GetProjType();
+
+    const char* items[] = { "Orthographic", "Perspective" };
+    const char* combo_preview_value = items[Type];
+
+    ImGui::Text("Projection");
+    ImGui::SameLine(100);
+    ImGui::SetNextItemWidth(180);
+
+    if (ImGui::BeginCombo("##ProjectionCombo", combo_preview_value))
+    {
+        for (int i = 0; i < 2; i++)
+        {
+            const bool is_selected = (Type == i);
+
+            if (ImGui::Selectable(items[i], is_selected))
+            {
+                Type = (PROJ_TYPE)i;
+            }
+
+            // Set the initial focus when opening the combo (scrolling + keyboard navigation focus)
+            if (is_selected)
+                ImGui::SetItemDefaultFocus();
+        }
+        ImGui::EndCombo();
+    }
+
+    pCam->SetProjType(Type);
 }

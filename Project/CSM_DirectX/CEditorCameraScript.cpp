@@ -68,7 +68,16 @@ void CEditorCameraScript::OrthoGraphicMove()
 		vPos.x += EngineDT * Speed;
 	}
 
+	float ProjScale = Camera()->GetProjScale();
+
+	if (KEY_PRESSED(KEY::_8))
+		ProjScale += EngineDT;
+		
+	if (KEY_PRESSED(KEY::_9))
+		ProjScale -= EngineDT;
+
 	Transform()->SetRelativePos(vPos);
+	Camera()->SetProjScale(ProjScale);
 }
 
 void CEditorCameraScript::PerspectiveMove()

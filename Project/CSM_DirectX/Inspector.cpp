@@ -12,6 +12,10 @@
 #include "TransformUI.h"
 #include "Collider2DUI.h"
 #include "CameraUI.h"
+#include "FlipBookComUI.h"
+#include "MeshRenderUI.h"
+#include "TileMapUI.h"
+#include "ParticleSystemUI.h"
 
 Inspector::Inspector()
 	: m_TargetObject(nullptr)
@@ -32,8 +36,32 @@ Inspector::Inspector()
 	m_arrComUI[(UINT)COMPONENT_TYPE::CAMERA] = new CameraUI;
 	m_arrComUI[(UINT)COMPONENT_TYPE::CAMERA]->SetName("CameraUI");
 	m_arrComUI[(UINT)COMPONENT_TYPE::CAMERA]->SetChildBorder(true);
-	m_arrComUI[(UINT)COMPONENT_TYPE::CAMERA]->SetChildSize(ImVec2(0.f, 150.f));
+	m_arrComUI[(UINT)COMPONENT_TYPE::CAMERA]->SetChildSize(ImVec2(0.f, 200.f));
 	AddChild(m_arrComUI[(UINT)COMPONENT_TYPE::CAMERA]);
+
+	m_arrComUI[(UINT)COMPONENT_TYPE::FLIPBOOKCOMPONENT] = new FlipBookComUI;
+	m_arrComUI[(UINT)COMPONENT_TYPE::FLIPBOOKCOMPONENT]->SetName("FlipBookComUI");
+	m_arrComUI[(UINT)COMPONENT_TYPE::FLIPBOOKCOMPONENT]->SetChildBorder(true);
+	m_arrComUI[(UINT)COMPONENT_TYPE::FLIPBOOKCOMPONENT]->SetChildSize(ImVec2(0.f, 100.f));
+	AddChild(m_arrComUI[(UINT)COMPONENT_TYPE::FLIPBOOKCOMPONENT]);
+
+	m_arrComUI[(UINT)COMPONENT_TYPE::MESHRENDER] = new MeshRenderUI;
+	m_arrComUI[(UINT)COMPONENT_TYPE::MESHRENDER]->SetName("MeshRenderUI");
+	m_arrComUI[(UINT)COMPONENT_TYPE::MESHRENDER]->SetChildBorder(true);
+	m_arrComUI[(UINT)COMPONENT_TYPE::MESHRENDER]->SetChildSize(ImVec2(0.f, 100.f));
+	AddChild(m_arrComUI[(UINT)COMPONENT_TYPE::MESHRENDER]);
+
+	m_arrComUI[(UINT)COMPONENT_TYPE::TILEMAP] = new TileMapUI;
+	m_arrComUI[(UINT)COMPONENT_TYPE::TILEMAP]->SetName("TileMapUI");
+	m_arrComUI[(UINT)COMPONENT_TYPE::TILEMAP]->SetChildBorder(true);
+	m_arrComUI[(UINT)COMPONENT_TYPE::TILEMAP]->SetChildSize(ImVec2(0.f, 100.f));
+	AddChild(m_arrComUI[(UINT)COMPONENT_TYPE::TILEMAP]);
+
+	m_arrComUI[(UINT)COMPONENT_TYPE::PARTICLE_SYSTEM] = new ParticleSystemUI;
+	m_arrComUI[(UINT)COMPONENT_TYPE::PARTICLE_SYSTEM]->SetName("ParticleSystemUI");
+	m_arrComUI[(UINT)COMPONENT_TYPE::PARTICLE_SYSTEM]->SetChildBorder(true);
+	m_arrComUI[(UINT)COMPONENT_TYPE::PARTICLE_SYSTEM]->SetChildSize(ImVec2(0.f, 100.f));
+	AddChild(m_arrComUI[(UINT)COMPONENT_TYPE::PARTICLE_SYSTEM]);
 }
 
 Inspector::~Inspector()
@@ -45,6 +73,7 @@ void Inspector::Update()
 	if (nullptr == m_TargetObject)
 	{
 		SetTargetObject(CLevelMgr::GetInst()->FindObjectByName(L"Player"));
+		//SetTargetObject(CLevelMgr::GetInst()->FindObjectByName(L"MainCamera"));
 		return;
 	}
 
