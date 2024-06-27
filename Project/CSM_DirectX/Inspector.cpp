@@ -16,6 +16,7 @@
 #include "MeshRenderUI.h"
 #include "TileMapUI.h"
 #include "ParticleSystemUI.h"
+#include "Light2DUI.h"
 
 Inspector::Inspector()
 	: m_TargetObject(nullptr)
@@ -26,6 +27,12 @@ Inspector::Inspector()
 	m_arrComUI[(UINT)COMPONENT_TYPE::TRANSFORM]->SetChildBorder(true);
 	m_arrComUI[(UINT)COMPONENT_TYPE::TRANSFORM]->SetChildSize(ImVec2(0.f, 130.f));
 	AddChild(m_arrComUI[(UINT)COMPONENT_TYPE::TRANSFORM]);
+
+	m_arrComUI[(UINT)COMPONENT_TYPE::LIGHT2D] = new Light2DUI;
+	m_arrComUI[(UINT)COMPONENT_TYPE::LIGHT2D]->SetName("Light2DUI");
+	m_arrComUI[(UINT)COMPONENT_TYPE::LIGHT2D]->SetChildBorder(true);
+	m_arrComUI[(UINT)COMPONENT_TYPE::LIGHT2D]->SetChildSize(ImVec2(0.f, 200.f));
+	AddChild(m_arrComUI[(UINT)COMPONENT_TYPE::LIGHT2D]);
 
 	m_arrComUI[(UINT)COMPONENT_TYPE::COLLIDER2D] = new Collider2DUI;
 	m_arrComUI[(UINT)COMPONENT_TYPE::COLLIDER2D]->SetName("Collider2DUI");
@@ -74,6 +81,7 @@ void Inspector::Update()
 	{
 		SetTargetObject(CLevelMgr::GetInst()->FindObjectByName(L"Player"));
 		//SetTargetObject(CLevelMgr::GetInst()->FindObjectByName(L"MainCamera"));
+		//SetTargetObject(CLevelMgr::GetInst()->FindObjectByName(L"Directional"));
 		return;
 	}
 

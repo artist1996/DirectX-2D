@@ -17,9 +17,9 @@ int CConstBuffer::Create(CB_TYPE _Type, UINT _BufferSize)
 	m_Type = _Type;
 
 	m_Desc.ByteWidth = _BufferSize;
-	m_Desc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
 	m_Desc.Usage = D3D11_USAGE_DYNAMIC;
 	m_Desc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+	m_Desc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
 
 	if (FAILED(DEVICE->CreateBuffer(&m_Desc, nullptr, m_CB.GetAddressOf())))
 	{

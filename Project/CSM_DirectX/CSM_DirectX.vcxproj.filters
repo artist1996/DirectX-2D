@@ -55,6 +55,9 @@
     <Filter Include="02. EditorUI\04. ListUI">
       <UniqueIdentifier>{e9975692-551b-4f54-9fb8-ddbbe6db84d5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. EditorUI\01. Inspector\ComponentUI\08. Light2DUI">
+      <UniqueIdentifier>{8843ba22-6c9b-4c31-99f1-793809c4e5de}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CEditorMgr.h">
@@ -144,6 +147,9 @@
     <ClInclude Include="ListUI.h">
       <Filter>02. EditorUI\04. ListUI</Filter>
     </ClInclude>
+    <ClInclude Include="Light2DUI.h">
+      <Filter>02. EditorUI\01. Inspector\ComponentUI\08. Light2DUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -224,6 +230,9 @@
     </ClCompile>
     <ClCompile Include="ListUI.cpp">
       <Filter>02. EditorUI\04. ListUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Light2DUI.cpp">
+      <Filter>02. EditorUI\01. Inspector\ComponentUI\08. Light2DUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

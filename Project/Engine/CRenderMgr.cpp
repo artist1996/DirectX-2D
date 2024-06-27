@@ -6,6 +6,7 @@
 #include "CAssetMgr.h"
 
 #include "CTransform.h"
+#include "CLight2D.h"
 #include "CMeshRender.h"
 #include "CGameObject.h"
 
@@ -13,16 +14,23 @@
 #include "CLevel.h"
 
 #include "CDevice.h"
+#include "CStructuredBuffer.h"
 
 CRenderMgr::CRenderMgr()
 	: m_DebugObject(nullptr)
 	, m_EditorCamera(nullptr)
-{}
+	, m_Light2DBuffer(nullptr)
+{
+	m_Light2DBuffer = new CStructuredBuffer;
+}
 
 CRenderMgr::~CRenderMgr()
 {
 	if (nullptr != m_DebugObject)
 		delete m_DebugObject;
+
+	if (nullptr != m_Light2DBuffer)
+		delete m_Light2DBuffer;
 }
 
 void CRenderMgr::Init()
@@ -40,11 +48,7 @@ void CRenderMgr::Tick()
 	if (nullptr == pCurLevel)
 		return;
 
-	// Output Merge State (출력 병합 단계)
-	
-	Ptr<CTexture> RTTex = CAssetMgr::GetInst()->FindAsset<CTexture>(L"RenderTargetTex");
-	Ptr<CTexture> DSTex = CAssetMgr::GetInst()->FindAsset<CTexture>(L"DepthStencilTex");		
-	CONTEXT->OMSetRenderTargets(1, RTTex->GetRTV().GetAddressOf(), DSTex->GetDSV().Get());
+	RenderStart();
 
 	if (PLAY == pCurLevel->GetState())
 	{
@@ -66,6 +70,8 @@ void CRenderMgr::Tick()
 	}
 
 	RenderDebugShape();
+
+	Clear();
 }
 
 void CRenderMgr::RegisterCamera(CCamera* _Cam, int _CamPriority)
@@ -127,4 +133,32 @@ void CRenderMgr::RenderDebugShape()
 			++iter;
 		}
 	}
+}
+
+void CRenderMgr::RenderStart()
+{
+	// Output Merge State (출력 병합 단계)
+	Ptr<CTexture> RTTex = CAssetMgr::GetInst()->FindAsset<CTexture>(L"RenderTargetTex");
+	Ptr<CTexture> DSTex = CAssetMgr::GetInst()->FindAsset<CTexture>(L"DepthStencilTex");
+	CONTEXT->OMSetRenderTargets(1, RTTex->GetRTV().GetAddressOf(), DSTex->GetDSV().Get());
+
+	vector<tLightInfo> vecLight2DInfo;
+
+	for (size_t i = 0; i < m_vecLight2D.size(); ++i)
+	{
+		vecLight2DInfo.push_back(m_vecLight2D[i]->GetLightInfo());
+	}
+
+	if (m_Light2DBuffer->GetElementCount() < m_vecLight2D.size())
+	{
+		m_Light2DBuffer->Create(sizeof(tLightInfo), vecLight2DInfo.size());
+	}
+
+	m_Light2DBuffer->SetData(vecLight2DInfo.data());
+	m_Light2DBuffer->Binding(11);
+}
+
+void CRenderMgr::Clear()
+{
+	m_vecLight2D.clear();
 }

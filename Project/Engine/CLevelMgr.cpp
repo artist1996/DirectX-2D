@@ -72,6 +72,14 @@ void CLevelMgr::Init()
 	m_CurLevel->GetLayer(5)->SetName(L"PlayerProjectile");
 	m_CurLevel->GetLayer(6)->SetName(L"MonsterProjectile");
 
+	// Light2D Object
+	CGameObject* pLight2D = new CGameObject;
+	pLight2D->SetName(L"Directional");
+	pLight2D->AddComponent(new CTransform);
+	pLight2D->AddComponent(new CLight2D);
+	pLight2D->Transform()->SetRelativePos(Vec3(0.f, 0.f, 100.f));
+	m_CurLevel->AddObject(0, pLight2D);
+
 	// Player Object
 	CGameObject* pObject = new CGameObject;
 	pObject->SetName(L"Player");

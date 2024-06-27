@@ -76,8 +76,8 @@ int CTexture::Create(UINT _Width, UINT _Height, DXGI_FORMAT _PixelFormat, UINT _
 	m_Desc.Width = _Width;			// DepthStencil 텍스쳐는 렌더타겟 해상도와 반드시 일치해야한다.
 	m_Desc.Height = _Height;
 	m_Desc.Format = _PixelFormat;	// Depth 24bit, Stencil 8bit
-	m_Desc.BindFlags = _Flags;
 	m_Desc.ArraySize = 1;
+	m_Desc.BindFlags = _Flags;
 
 	m_Desc.Usage = _Usage;			// System Memory 와의 연계 설정
 	

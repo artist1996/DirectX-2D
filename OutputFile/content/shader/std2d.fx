@@ -1,5 +1,5 @@
-#ifndef _TEST
-#define _TEST
+#ifndef _STD2D
+#define _STD2D
 
 #include "value.fx"
 #include "func.fx"
@@ -27,11 +27,7 @@ VTX_OUT VS_Std2D(VTX_IN _in)
     // float3 를 float4 로 차수를 맞추어준다.
     // 동차좌표를 1로 설정, 상태행렬 4행에 들어있는 이동을 적용받겠다는 뜻
     
-    float3 vWorldPos = mul(float4(_in.vPos, 1.f), matWorld);
-    float4 vViewPos = mul(float4(vWorldPos, 1.f), matView);
-    float4 vProjPos = mul(vViewPos, matProj);
-    
-    output.vPosition = vProjPos;
+    output.vPosition = mul(float4(_in.vPos, 1.f), matWVP);
     output.vColor    = _in.vColor;
     output.vUV       = _in.vUV;
     
@@ -82,11 +78,11 @@ float4 PS_Std2D(VTX_OUT _in) : SV_Target
     return vColor;
 }
 
-float PS_Std2D_Alpahblend(VTX_OUT _in) : SV_Target
+float4 PS_Std2D_Alphablend(VTX_OUT _in) : SV_Target
 {
     float4 vColor = float4(0.f, 0.f, 0.f, 1.f);
     
-    if(g_btex_0)
+    if (g_btex_0)
     {
         vColor = g_tex_0.Sample(g_sam_1, _in.vUV);
     }
@@ -95,7 +91,6 @@ float PS_Std2D_Alpahblend(VTX_OUT _in) : SV_Target
     {
         vColor = float4(1.f, 0.f, 1.f, 1.f);
     }
-    
     return vColor;
 }
 

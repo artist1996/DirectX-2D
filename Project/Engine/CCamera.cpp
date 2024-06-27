@@ -94,6 +94,11 @@ void CCamera::SortGameObject()
 
 	for (UINT i = 0; i < MAX_LAYER; ++i)
 	{
+		if (false == (m_LayerCheck & (1 << i)))
+		{
+			continue;
+		}
+
 		CLayer* pLayer = pLevel->GetLayer(i);
 
 		const vector<CGameObject*>& vecObjects = pLayer->GetObjects();
@@ -133,10 +138,10 @@ void CCamera::SortGameObject()
 
 void CCamera::Render()
 {
+	SortGameObject();
+
 	g_Trans.matView = m_matView;
 	g_Trans.matProj = m_matProj;
-
-	SortGameObject();
 
 	// Opaque
 	for (size_t i = 0; i < m_vecOpaque.size(); ++i)

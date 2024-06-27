@@ -29,6 +29,7 @@ void MeshRenderUI::Update()
 
 	ImGui::Text("Mesh");
 	ImGui::SameLine(100);
+	ImGui::SetNextItemWidth(150.f);
 	ImGui::InputText("##MeshKey", (char*)strMeshName.c_str(), ImGuiInputTextFlags_ReadOnly);
 	ImGui::SameLine();
 
@@ -51,6 +52,7 @@ void MeshRenderUI::Update()
 
 	ImGui::Text("Material");
 	ImGui::SameLine(100);
+	ImGui::SetNextItemWidth(150.f);
 	ImGui::InputText("##MaterialKey", (char*)strMaterialName.c_str(), ImGuiInputTextFlags_ReadOnly);
 	ImGui::SameLine();
 

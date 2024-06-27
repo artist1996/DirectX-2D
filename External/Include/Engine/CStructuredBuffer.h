@@ -22,7 +22,7 @@ public:
     
 
 public:
-    int Create(UINT _ElementCount, UINT _ElementSize, void* _InitData = nullptr);
+    int Create(UINT _ElementSize, UINT _ElementCount, void* _InitData = nullptr);
 
 
 public:

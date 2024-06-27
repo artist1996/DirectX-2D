@@ -14,14 +14,14 @@ CStructuredBuffer::~CStructuredBuffer()
 {
 }
 
-int CStructuredBuffer::Create(UINT _ElementCount, UINT _ElementSize, void* _InitData)
+int CStructuredBuffer::Create(UINT _ElementSize, UINT _ElementCount, void* _InitData)
 {
 	// ComPtr 특성 상 대입 연산자가 아니면 Release 함수를 호출 하지 않기 때문에 생성 할 때마다 nullptr 대입 해 Release 호출
 	m_SB = nullptr;
 	m_SRV = nullptr;
 
-	m_ElementCount = _ElementCount;
 	m_ElementSize  = _ElementSize;
+	m_ElementCount = _ElementCount;
 
 	// Desc 초기화
 	m_Desc.BindFlags			 = D3D11_BIND_SHADER_RESOURCE;

@@ -209,60 +209,71 @@ void CAssetMgr::CreateEngineSprite()
 	wstring strCotentPath = CPathMgr::GetInst()->GetContentPath();
 	
 	Ptr<CFlipBook> pFlipBook = new CFlipBook;
-	
-	pFlipBook->Load(strCotentPath + L"Animation\\" + L"Link_MoveDown" + L".flip");
+	Load<CFlipBook>(L"Link_MoveDown", L"Animation\\Link_MoveDown.flip");
 
-	AddAsset(L"Link_MoveDown", pFlipBook);
+	//pFlipBook->Load(strCotentPath + L"Animation\\" + L"Link_MoveDown" + L".flip");
+	//
+	//AddAsset(L"Link_MoveDown", pFlipBook);
 }
 
 void CAssetMgr::CreateEngineGraphicShader()
 {
-	// Std2DShader
 	Ptr<CGraphicShader> pShader = nullptr;
+
+	// Std2DShader
 	pShader = new CGraphicShader;
 	pShader->CreateVertexShader(L"shader\\std2d.fx", "VS_Std2D");
 	pShader->CreatePixelShader(L"shader\\std2d.fx", "PS_Std2D");
-	pShader->SetRSType(RS_TYPE::CULL_NONE);
 
-	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_MASKED); 
+	pShader->SetRSType(RS_TYPE::CULL_NONE);
+	pShader->SetDSType(DS_TYPE::LESS);
+	pShader->SetBSType(BS_TYPE::DEFAULT);
+
+	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_MASKED);
 
 	AddAsset(L"Std2DShader", pShader);
+
 
 	// Std2DAlphaBlend
 	pShader = new CGraphicShader;
 	pShader->CreateVertexShader(L"shader\\std2d.fx", "VS_Std2D");
-	pShader->CreatePixelShader(L"shader\\std2d.fx", "PS_Std2D");
-	pShader->SetRSType(RS_TYPE::CULL_NONE);
-	pShader->SetDSType(DS_TYPE::NO_TEST_NO_WRITE); // 투명한것들이 적용 되는 것들은 다 따로 렌더링 방식을
-	pShader->SetBSType(BS_TYPE::ALPHABLEND);	   // 지정 해줘야 하고 렌더링을 뒤로 미뤄야 하기 때문에 깊이값 검사 하지 않음
-	
-	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_TRANSPARENT);	// 알파블렌드 이기 때문에 반투명
+	pShader->CreatePixelShader(L"shader\\std2d.fx", "PS_Std2D_Alphablend");
+
+	pShader->SetRSType(RS_TYPE::CULL_NONE);	
+	pShader->SetDSType(DS_TYPE::NO_TEST_NO_WRITE);
+	pShader->SetBSType(BS_TYPE::ALPHABLEND);
+
+	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_TRANSPARENT);
 
 	AddAsset(L"Std2DAlphaBlendShader", pShader);
+
 
 	// DebugShapeShader
 	pShader = new CGraphicShader;
 	pShader->CreateVertexShader(L"shader\\debug.fx", "VS_DebugShape");
 	pShader->CreatePixelShader(L"shader\\debug.fx", "PS_DebugShape");
+		
+	pShader->SetTopology(D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP);
+
 	pShader->SetRSType(RS_TYPE::CULL_NONE);
-	//pShader->SetRSType(RS_TYPE::WIRE_FRAME);
 	pShader->SetDSType(DS_TYPE::LESS);
 	pShader->SetBSType(BS_TYPE::DEFAULT);
-	pShader->SetTopology(D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP);
 
 	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_DEBUG);
 
 	AddAsset(L"DebugShapeShader", pShader);
 
+
 	// TileMapShader
 	pShader = new CGraphicShader;
+
 	pShader->CreateVertexShader(L"shader\\tilemap.fx", "VS_TileMap");
 	pShader->CreatePixelShader(L"shader\\tilemap.fx", "PS_TileMap");
+	
 	pShader->SetRSType(RS_TYPE::CULL_NONE);
 	pShader->SetDSType(DS_TYPE::LESS);
 	pShader->SetBSType(BS_TYPE::DEFAULT);
-	pShader->SetTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	
+
 	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_MASKED);
 
 	AddAsset(L"TileMapShader", pShader);
