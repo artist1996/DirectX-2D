@@ -22,11 +22,11 @@ void ComponentUI::SetTargetObject(CGameObject* _Target)
 	if (nullptr != m_TargetObject
 		&& nullptr != m_TargetObject->GetComponent(m_Type))
 	{
-		Activate();
+		SetActive(true);
 	}
 	else
 	{
-		Deactivate();
+		SetActive(false);
 	}
 }
 

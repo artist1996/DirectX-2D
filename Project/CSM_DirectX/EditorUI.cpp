@@ -8,35 +8,76 @@ EditorUI::EditorUI()
 	, m_Parent(nullptr)
 	, m_Active(true)
 	, m_ChildBorder(false)
+	, m_Modal(false)
 {
 }
 
 EditorUI::~EditorUI()
 {
-	Delete_Vec(m_vecChildren);
+	Delete_Vec(m_vecChildUI);
 }
 
 void EditorUI::Tick()
 {
 	if (!m_Active)
 		return;
+
+	bool bActive = m_Active;
 		
+
 	if (nullptr == m_Parent)
 	{
-		ImGui::Begin(m_Name.c_str(), &m_Active);
-
-		Update();
-
-		for (size_t i = 0; i < m_vecChildren.size(); ++i)
+		// Modaless
+		if (false == m_Modal)
 		{
-			m_vecChildren[i]->Tick();
-			
-			if (m_vecChildren[i]->m_ChildBorder && i == m_vecChildren.size() - 1)
-				ImGui::Separator();
-		}
+			ImGui::Begin(m_FullName.c_str(), &bActive);
 
-		ImGui::End();
+			if (m_Active != bActive)
+			{
+				SetActive(bActive);
+			}
+
+			Update();
+
+			for (size_t i = 0; i < m_vecChildUI.size(); ++i)
+			{
+				m_vecChildUI[i]->Tick();
+
+				if (m_vecChildUI[i]->m_ChildBorder && i == m_vecChildUI.size() - 1)
+					ImGui::Separator();
+			}
+
+			ImGui::End();
+		}
+		
+		// Modal
+		else
+		{
+			ImGui::OpenPopup(m_FullName.c_str());
+
+			if (ImGui::BeginPopupModal(m_FullName.c_str(), &bActive))
+			{
+				if (m_Active != bActive)
+				{
+					SetActive(bActive);
+				}
+
+				Update();
+
+				for (size_t i = 0; i < m_vecChildUI.size(); ++i)
+				{
+					m_vecChildUI[i]->Tick();
+
+					if (m_vecChildUI[i]->m_ChildBorder && i == m_vecChildUI.size() - 1)
+						ImGui::Separator();
+				}
+
+				ImGui::EndPopup();
+			}
+		}
 	}
+
+	// 자식 타입의 UI인 경우
 	else
 	{
 		if (m_ChildBorder)
@@ -48,14 +89,14 @@ void EditorUI::Tick()
 
 		Update();
 
-		for (size_t i = 0; i < m_vecChildren.size(); ++i)
+		for (size_t i = 0; i < m_vecChildUI.size(); ++i)
 		{
-			if (m_vecChildren[i]->m_ChildBorder)
+			if (m_vecChildUI[i]->m_ChildBorder)
 				ImGui::Separator();
 
-			m_vecChildren[i]->Tick();
+			m_vecChildUI[i]->Tick();
 
-			if (m_vecChildren[i]->m_ChildBorder && i == m_vecChildren.size() - 1)
+			if (m_vecChildUI[i]->m_ChildBorder && i == m_vecChildUI.size() - 1)
 				ImGui::Separator();
 		}
 
@@ -66,7 +107,7 @@ void EditorUI::Tick()
 void EditorUI::AddChild(EditorUI* _UI)
 {
 	_UI->m_Parent = this;
-	m_vecChildren.push_back(_UI);
+	m_vecChildUI.push_back(_UI);
 }
 
 void EditorUI::SetName(const string& _strName)
@@ -78,4 +119,17 @@ void EditorUI::SetName(const string& _strName)
 	char szBuff[50] = {};
 	_itoa_s(m_ID, szBuff, 10);
 	m_FullName = m_FullName + "##" + szBuff;
+}
+
+void EditorUI::SetActive(bool _Active)
+{
+	if (m_Active == _Active)
+		return;
+
+	m_Active = _Active;
+
+	if (m_Active)
+		Activate();
+	else
+		Deactivate();
 }

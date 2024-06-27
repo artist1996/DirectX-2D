@@ -74,8 +74,8 @@ void CEditorMgr::ShortCut()
 		EditorUI* pUI = FindEditorUI("Inspector");
 		
 		if (pUI->IsActive())
-			pUI->Deactivate();
+			pUI->SetActive(false);
 		else
-			pUI->Activate();
+			pUI->SetActive(true);
 	}
 }
