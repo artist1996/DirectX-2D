@@ -78,6 +78,9 @@ void CLevelMgr::Init()
 	pLight2D->AddComponent(new CTransform);
 	pLight2D->AddComponent(new CLight2D);
 	pLight2D->Transform()->SetRelativePos(Vec3(0.f, 0.f, 100.f));
+	pLight2D->Light2D()->SetColor(Vec4(1.f, 1.f, 1.f, 1.f));
+	pLight2D->Light2D()->SetAngle(XM_PI / 2.f);
+	
 	m_CurLevel->AddObject(0, pLight2D);
 
 	// Player Object

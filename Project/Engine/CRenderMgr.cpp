@@ -14,6 +14,7 @@
 #include "CLevel.h"
 
 #include "CDevice.h"
+#include "CConstBuffer.h"
 #include "CStructuredBuffer.h"
 
 CRenderMgr::CRenderMgr()
@@ -142,6 +143,13 @@ void CRenderMgr::RenderStart()
 	Ptr<CTexture> DSTex = CAssetMgr::GetInst()->FindAsset<CTexture>(L"DepthStencilTex");
 	CONTEXT->OMSetRenderTargets(1, RTTex->GetRTV().GetAddressOf(), DSTex->GetDSV().Get());
 
+	float color[4] = { 0.f, 0.f, 0.f, 1.f };
+	CONTEXT->ClearRenderTargetView(RTTex->GetRTV().Get(), color);
+	CONTEXT->ClearDepthStencilView(DSTex->GetDSV().Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.f, 0);
+
+	g_GlobalData.g_Resolution = Vec2((float)RTTex->Width(), (float)RTTex->Height());
+	g_GlobalData.g_Light2DCount = (int)m_vecLight2D.size();
+
 	vector<tLightInfo> vecLight2DInfo;
 
 	for (size_t i = 0; i < m_vecLight2D.size(); ++i)
@@ -156,6 +164,10 @@ void CRenderMgr::RenderStart()
 
 	m_Light2DBuffer->SetData(vecLight2DInfo.data());
 	m_Light2DBuffer->Binding(11);
+
+	static CConstBuffer* pGlobalCB = CDevice::GetInst()->GetConstBuffer(CB_TYPE::GLOBAL);
+	pGlobalCB->SetData(&g_GlobalData);
+	pGlobalCB->Binding();
 }
 
 void CRenderMgr::Clear()

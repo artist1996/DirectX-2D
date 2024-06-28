@@ -15,14 +15,68 @@ void Light2DUI::Update()
 {
 	Title();
 
-	tLight		Info;		 // 광원 색상 정보
-	Vec3		WorldPos;	 // 광원 위치
-	Vec3		WorldDir;	 // 광원이 진행하는 방향
-							 
-	float		Radius;		 // 광원의 반경
-	float		Angle;		 // 광원 범위 각도
-							 
-	LIGHT_TYPE	Type;		 // 광원 종류
+	CLight2D* pLight = GetTargetObject()->Light2D();
 
-	int			Padding[3];	 // 패딩
+	// 광원 종류
+	LIGHT_TYPE Type = pLight->GetLightType();
+
+	const char* szItems[] = { "DIRECTIONAL", "POINT", "SPOT" };
+	const char* combo_preview_items = szItems[(UINT)Type];
+
+	ImGui::Text("Light Type");
+	ImGui::SameLine(100);
+	ImGui::SetNextItemWidth(180);
+
+	if (ImGui::BeginCombo("##LightTypeCombo", combo_preview_items))
+	{
+		for (int i = 0; i < 3; ++i)
+		{
+			const bool is_selected = ((UINT)Type == i);
+
+			if (ImGui::Selectable(szItems[i], is_selected))
+			{
+				Type = (LIGHT_TYPE)i;
+			}
+
+			if (is_selected)
+				ImGui::SetItemDefaultFocus();
+		}
+		ImGui::EndCombo();
+	}
+
+	pLight->SetLightType(Type);
+
+	// 광원 색상 정보
+	const tLightInfo& Info = pLight->GetLightInfo();
+
+	ImGui::Text("Light Color");
+	ImGui::SameLine(100);
+	ImGui::ColorEdit3("##EditColor", Info.Info.Color);
+
+	ImGui::Text("Light Ambient");
+	ImGui::SameLine(100);
+	ImGui::ColorEdit3("##EditAmbient", Info.Info.Ambient);
+
+	// 광원의 반경
+	// POINT, SPOT
+
+	ImGui::BeginDisabled(LIGHT_TYPE::DIRECTIONAL == Type);
+
+	ImGui::Text("Light Radius");
+	ImGui::SameLine(100);
+	ImGui::DragFloat("##DragRadius", (float*)&Info.Radius, 0.1f);
+	ImGui::EndDisabled();
+
+	ImGui::BeginDisabled(LIGHT_TYPE::SPOT != Type);
+	
+	float Angle = Info.Angle;
+	Angle = (Info.Angle / XM_PI) * 180.f;
+
+	ImGui::Text("Light Angle");
+	ImGui::SameLine(100);
+	ImGui::DragFloat("##DragAngle", &Angle, 0.1f);
+
+	Angle = (Angle / 180.f) * XM_PI;
+	pLight->SetAngle(Angle);
+	ImGui::EndDisabled();
 }

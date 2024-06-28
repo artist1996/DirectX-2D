@@ -1,6 +1,8 @@
 #ifndef _VALUE
 #define _VALUE
 
+#define PI 3.1415926535f
+
 #include "struct.fx"
 
 // 4096
@@ -64,6 +66,19 @@ cbuffer SPRITE_INFO : register(b2)
     float2 OffsetUV;
     int    UseFlipBook;
     int3   SpriteInfoPadding;
+}
+
+cbuffer GLOBAL_DATA : register(b3)
+{
+    float   g_DT;            // DT
+    float   g_EngineDT;      // Engine DT
+    float   g_Time;          // Time
+    float   g_EngineTime;    // Engine Time
+    
+    float2  g_Resolution;    // RenderTarget 해상도 정보
+    
+    int     g_Light2DCount;  // 2D 광원 개수
+    int     g_Light3DCount;  // 3D 광원 개수
 }
 
 SamplerState g_sam_0 : register(s0);    // 이방성 필터 샘플러

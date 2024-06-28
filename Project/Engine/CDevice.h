@@ -41,7 +41,6 @@ public:
 	int Init(HWND _hWnd, UINT _Width, UINT _Height);
 	Vec2 GetResolution() { return m_vResolution; }
 
-	void Clear();
 	void Present() { m_SwapChain->Present(0, 0); }
 
 public:				     

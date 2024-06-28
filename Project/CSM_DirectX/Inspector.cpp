@@ -79,9 +79,9 @@ void Inspector::Update()
 {
 	if (nullptr == m_TargetObject)
 	{
-		SetTargetObject(CLevelMgr::GetInst()->FindObjectByName(L"Player"));
+		//SetTargetObject(CLevelMgr::GetInst()->FindObjectByName(L"Player"));
 		//SetTargetObject(CLevelMgr::GetInst()->FindObjectByName(L"MainCamera"));
-		//SetTargetObject(CLevelMgr::GetInst()->FindObjectByName(L"Directional"));
+		SetTargetObject(CLevelMgr::GetInst()->FindObjectByName(L"Directional"));
 		return;
 	}
 

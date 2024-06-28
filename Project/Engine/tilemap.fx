@@ -2,6 +2,7 @@
 #define _TILEMAP
 
 #include "value.fx"
+#include "func.fx"
 
 struct tTileInfo
 {
@@ -30,6 +31,7 @@ struct VS_OUT
 {
     float4 vPosition : SV_Position;
     float2 vUV       : TEXCOORD;
+    float3 vWorldPos : Position;
 };
 
 VS_OUT VS_TileMap(VS_IN _in)
@@ -43,6 +45,7 @@ VS_OUT VS_TileMap(VS_IN _in)
 
     output.vPosition = mul(float4(_in.vPos, 1.f), matWVP);
     output.vUV = _in.vUV * TileColRow;
+    output.vWorldPos = mul(float4(_in.vPos, 1.f), matWorld);
     
     return output;
 }
@@ -78,6 +81,16 @@ float4 PS_TileMap(VS_OUT _in) : SV_Target
     {
         vOutColor = float4(1.f, 0.f, 1.f, 1.f);
     }
+    
+    tLight Light = (tLight) 0.f;
+    
+    for (int i = 0; i < g_Light2DCount; ++i)
+    {
+        CalculateLight2D(i, _in.vWorldPos, Light);
+    }
+    
+    vOutColor.rgb = vOutColor.rgb * Light.Color.rgb 
+                  + vOutColor.rgb * Light.Ambient.rgb;
     
     return vOutColor;
 }

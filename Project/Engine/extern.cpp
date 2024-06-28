@@ -1,6 +1,7 @@
 #include "pch.h"
 
-tTransform g_Trans = {};
+tTransform  g_Trans = {};
+tGlobalData g_GlobalData = {};
 
 const char* ASSET_TYPE_STRING[] =
 {

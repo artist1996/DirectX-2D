@@ -206,6 +206,15 @@ int CDevice::CreateConstBuffer()
 
 	m_arrCB[(UINT)CB_TYPE::SPRITE] = pCB;
 
+	pCB = new CConstBuffer;
+	if (FAILED(pCB->Create(CB_TYPE::GLOBAL, sizeof(tGlobalData))))
+	{
+		MessageBox(nullptr, L"ConstantBuffer 积己 角菩", L"Buffer 积己 角菩", MB_OK);
+		return E_FAIL;
+	}
+
+	m_arrCB[(UINT)CB_TYPE::GLOBAL] = pCB;
+
 	return S_OK;
 }
 
@@ -379,11 +388,4 @@ int CDevice::CreateSamplerState()
 	CONTEXT->CSSetSamplers(1, 1, m_Sampler[1].GetAddressOf());
 
 	return S_OK;
-}
-
-void CDevice::Clear()
-{
-	float color[4] = { 0.4f, 0.4f, 0.4f, 1.f };
-	m_Context->ClearRenderTargetView(m_RTTex->GetRTV().Get(), color);
-	m_Context->ClearDepthStencilView(m_DSTex->GetDSV().Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.f, 0);
 }

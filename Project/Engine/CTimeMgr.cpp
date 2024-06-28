@@ -81,4 +81,9 @@ void CTimeMgr::Tick()
 	}
 
 	m_Time += m_DeltaTime;
+
+	g_GlobalData.g_DT = m_DeltaTime;
+	g_GlobalData.g_Time = m_Time;
+	g_GlobalData.g_EngineDT = m_E_DeltaTime;
+	g_GlobalData.g_EngineTime = m_E_Time;
 }

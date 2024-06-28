@@ -83,3 +83,18 @@ struct tLightInfo
 
 	int			Padding[3];	 // 패딩
 };
+
+struct tGlobalData
+{
+	float   g_DT;            // DT
+	float   g_EngineDT;      // Engine DT
+	float   g_Time;          // Time
+	float   g_EngineTime;    // Engine Time
+
+	Vec2    g_Resolution;    // RenderTarget 해상도 정보
+
+	int     g_Light2DCount;  // 2D 광원 개수
+	int     g_Light3DCount;  // 3D 광원 개수
+};
+
+extern tGlobalData g_GlobalData;
