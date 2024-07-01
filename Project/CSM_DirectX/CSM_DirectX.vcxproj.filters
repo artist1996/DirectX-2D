@@ -58,6 +58,9 @@
     <Filter Include="02. EditorUI\01. Inspector\ComponentUI\08. Light2DUI">
       <UniqueIdentifier>{8843ba22-6c9b-4c31-99f1-793809c4e5de}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. EditorUI\05. TreeUI">
+      <UniqueIdentifier>{be04d7cb-b82c-4694-80eb-2bfb2fc78fd6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CEditorMgr.h">
@@ -150,6 +153,9 @@
     <ClInclude Include="Light2DUI.h">
       <Filter>02. EditorUI\01. Inspector\ComponentUI\08. Light2DUI</Filter>
     </ClInclude>
+    <ClInclude Include="TreeUI.h">
+      <Filter>02. EditorUI\05. TreeUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -233,6 +239,9 @@
     </ClCompile>
     <ClCompile Include="Light2DUI.cpp">
       <Filter>02. EditorUI\01. Inspector\ComponentUI\08. Light2DUI</Filter>
+    </ClCompile>
+    <ClCompile Include="TreeUI.cpp">
+      <Filter>02. EditorUI\05. TreeUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

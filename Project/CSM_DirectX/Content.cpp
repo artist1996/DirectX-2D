@@ -2,8 +2,15 @@
 #include "Content.h"
 #include "ImGui/imgui.h"
 
+#include "TreeUI.h"
+
 Content::Content()
 {
+	TreeUI* pTree = new TreeUI;
+	pTree->SetName("ContentTree");
+	AddChild(pTree);
+
+	pTree->AddNode("Parent");	
 }
 
 Content::~Content()
@@ -13,9 +20,5 @@ Content::~Content()
 
 void Content::Update()
 {
-	Vec4 vData;
 
-	ImGui::Separator();
-	ImGui::DragFloat4("Data", vData);
-	ImGui::Separator();
 }
