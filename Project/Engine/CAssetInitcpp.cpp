@@ -117,8 +117,8 @@ void CAssetMgr::CreateEngineMaterial()
 	Ptr<CMaterial> pMtrl = nullptr;
 
 	// Std2DMtrl
+	//Load<CMaterial>(L"Std2DMtrl", L"material\\std2d.mtrl");
 	pMtrl = new CMaterial;
-
 	pMtrl->SetShader(FindAsset<CGraphicShader>(L"Std2DShader"));
 	AddAsset(L"Std2DMtrl", pMtrl);
 
@@ -136,7 +136,6 @@ void CAssetMgr::CreateEngineMaterial()
 	pMtrl = new CMaterial;
 	pMtrl->SetShader(FindAsset<CGraphicShader>(L"TileMapShader"));
 	AddAsset(L"TileMapMtrl", pMtrl);
-
 }
 
 void CAssetMgr::CreateEngineTexture()
@@ -247,7 +246,7 @@ void CAssetMgr::CreateEngineGraphicShader()
 
 	AddAsset(L"Std2DAlphaBlendShader", pShader);
 
-
+	
 	// DebugShapeShader
 	pShader = new CGraphicShader;
 	pShader->CreateVertexShader(L"shader\\debug.fx", "VS_DebugShape");

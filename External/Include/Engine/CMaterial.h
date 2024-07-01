@@ -12,7 +12,7 @@ private:
     
     tMtrlConst              m_Const;
     Ptr<CTexture>           m_arrTex[TEX_PARAM::END];
-        
+    
 public:
     template<typename T>
     void SetScalarParam(SCALAR_PARAM _Param, const T& _Data);
@@ -26,10 +26,11 @@ public:
     void Binding();
 
 public:
-    virtual int Load(const wstring& _FilePath) { return S_OK; }
-    virtual int Save(const wstring& _FilePath) { return S_OK; }
+    virtual int Save(const wstring& _RelativePath);
+    virtual int Load(const wstring& _FilePath);
 
 public:
+    CLONE(CMaterial);
     CMaterial();
     virtual ~CMaterial();
 };

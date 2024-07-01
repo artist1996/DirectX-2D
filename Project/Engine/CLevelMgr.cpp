@@ -169,7 +169,9 @@ void CLevelMgr::Init()
 	CCollisionMgr::GetInst()->CollisionCheck(3, 4);
 	CCollisionMgr::GetInst()->CollisionCheck(4, 5);
 	
-	m_CurLevel->Begin();
+	//pMtrl->Save(L"material\\std2d.mtrl");
+
+	//m_CurLevel->Begin();
 }
 
 void CLevelMgr::Progress()

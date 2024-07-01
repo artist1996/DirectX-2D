@@ -27,7 +27,7 @@ void CalculateLight2D(int _LightIdx, float3 _WorldPos , inout tLight _Light)
     // Point Light
     else if (1 == Info.Type)
     {
-        float fDist = distance(Info.WorldPos.xy, _WorldPos.xy);
+        float fDist = distance(Info.WorldPos.xy, _WorldPos.xy);     // 두 거리의 차를 스칼라 값으로 반환시켜주는 함수
         //float Pow = saturate(1.f - (fDist / g_Light2DBuffer[0].Radius));
         float Pow2 = saturate(cos(saturate(fDist / Info.Radius) * (PI / 2.f)));
         
@@ -42,25 +42,15 @@ void CalculateLight2D(int _LightIdx, float3 _WorldPos , inout tLight _Light)
         Info.Angle;
         Info.Radius;              
 
-        float2 PixelDir = Info.WorldPos.xy - _WorldPos.xy;          // 픽셀의 월드포스와 광원의 월드포스 차이 벡터
-        float fDist = length(PixelDir);                             // Radius 와 비교할 광원과 Pixel 의 Dist 값
-        
-        if(fDist > Info.Radius)
-        {
-            _Light.Color.rgb = float3(0.f, 0.f, 1.f);
-            return;
-        }
-        
-        float2 Normalize = normalize(PixelDir);                     // 정규화 벡터로 만들어 준 후
-        float Dot = saturate(dot(-Info.WorldDir.xy, Normalize.xy)); // 두 방향 벡터의 내적 값인 cos 세타값을 계산해준다.
        
-        if (Dot > cos(Info.Angle))
+        float2 PixelDir = _WorldPos.xy - Info.WorldPos.xy;         // 픽셀의 월드포스와 광원의 월드포스 차이 벡터
+        float fDist = length(PixelDir);                            // Radius 와 비교할 광원과 Pixel 의 Dist 값
+        float2 Normalize = normalize(PixelDir);                    // 정규화 벡터로 만들어 준 후
+        float Dot = saturate(dot(Info.WorldDir.xy, Normalize.xy)); // 두 방향 벡터의 내적 값인 cos 세타값을 계산해준다.
+              
+        if (Dot > cos(Info.Angle) && fDist < Info.Radius)
         {
             _Light.Color.rgb += Info.Info.Color.rgb;
-        }
-        else
-        {
-            _Light.Color.rgb = float3(0.f, 0.f, 1.f);
         }
     }    
 }

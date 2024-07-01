@@ -32,7 +32,7 @@ void TransformUI::Update()
 
 	ImGui::Text("Rotation");
 	ImGui::SameLine(100);
-	ImGui::DragFloat3("##Rotation", vRot, 0.01);
+	ImGui::DragFloat3("##Rotation", vRot, 0.01f);
 
 	pTrans->SetRelativePos(vPos);
 	pTrans->SetRelativeScale(vScale);
