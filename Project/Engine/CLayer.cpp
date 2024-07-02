@@ -118,6 +118,7 @@ void CLayer::DeregisterObjectAsParent(CGameObject* _Object)
 
 void CLayer::DeregisterObject(CGameObject* _Object)
 {
+	assert(_Object->m_LayerIdx == m_LayerIdx);
 	_Object->m_LayerIdx = -1;
 
 	// 부모가 없다면

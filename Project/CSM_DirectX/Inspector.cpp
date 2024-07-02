@@ -79,9 +79,9 @@ void Inspector::Update()
 {
 	if (nullptr == m_TargetObject)
 	{
-		//SetTargetObject(CLevelMgr::GetInst()->FindObjectByName(L"Player"));
+		SetTargetObject(CLevelMgr::GetInst()->FindObjectByName(L"Player"));
 		//SetTargetObject(CLevelMgr::GetInst()->FindObjectByName(L"MainCamera"));
-		SetTargetObject(CLevelMgr::GetInst()->FindObjectByName(L"Directional"));
+		//SetTargetObject(CLevelMgr::GetInst()->FindObjectByName(L"Directional"));
 		return;
 	}
 
@@ -109,6 +109,22 @@ void Inspector::Update()
 	ImGui::Text("Layer");
 	ImGui::SameLine(100);
 	ImGui::InputText("##LayerName", szBuff, strlen(szBuff), ImGuiInputTextFlags_ReadOnly);
+
+	int Idx = m_TargetObject->GetLayerIdx();
+
+	ImGui::Text("Change Layer");
+	ImGui::SameLine(100);
+
+	if (ImGui::InputInt("##ChangeLayer", &Idx))
+	{
+		if (-1 == Idx)
+			Idx = 0;
+		if (Idx >= 31)
+			Idx = 31;
+
+		m_TargetObject->ChangeLayer(Idx);
+	}
+
 }
 
 void Inspector::SetTargetObject(CGameObject* _Target)

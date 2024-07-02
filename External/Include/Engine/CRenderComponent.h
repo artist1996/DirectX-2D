@@ -28,4 +28,3 @@ public:
     CRenderComponent(COMPONENT_TYPE _Type);
     virtual ~CRenderComponent();
 };
-

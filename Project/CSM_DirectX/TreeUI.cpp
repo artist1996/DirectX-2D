@@ -5,8 +5,13 @@
 // TreeNode
 // ========
 
-TreeNode::TreeNode()
-	: m_ParentNode(nullptr)
+TreeNode::TreeNode(UINT _ID)
+	: m_Owner(nullptr)
+	, m_ParentNode(nullptr)
+	, m_ID(_ID)
+	, m_Data(0)
+	, m_Frame(false)
+	, m_Selected(false)
 {
 }
 
@@ -23,8 +28,32 @@ void TreeNode::AddChildNode(TreeNode* _Node)
 
 void TreeNode::Update()
 {
-	if (ImGui::TreeNodeEx(m_strName.c_str()))
+	UINT Flags = ImGuiTreeNodeFlags_OpenOnDoubleClick
+			   | ImGuiTreeNodeFlags_SpanAvailWidth
+			   | ImGuiTreeNodeFlags_OpenOnArrow;
+	
+	if (m_Frame)	
+		Flags |= ImGuiTreeNodeFlags_Framed;
+	if (m_Selected)
+		Flags |= ImGuiTreeNodeFlags_Selected;
+	
+	char szName[255] = {};
+	
+	if (m_vecChildNode.empty())
 	{
+		Flags |= ImGuiTreeNodeFlags_Leaf;
+		sprintf_s(szName, "   %s##%d", m_strName.c_str(), m_ID);
+	}
+	else
+	{
+		sprintf_s(szName, "%s##%d", m_strName.c_str(), m_ID);
+	}
+
+	if (ImGui::TreeNodeEx(szName, Flags))
+	{
+		if (ImGui::IsItemClicked(ImGuiMouseButton_Left))
+			m_Owner->SetSelectedNode(this);
+
 		for (size_t i = 0; i < m_vecChildNode.size(); ++i)
 		{
 			m_vecChildNode[i]->Update();
@@ -34,18 +63,15 @@ void TreeNode::Update()
 	}
 }
 
-
-
-
-
-
-
 // ======
 // TreeUI
 // ======
 
 TreeUI::TreeUI()
 	: m_Root(nullptr)
+	, m_SelectedNode(nullptr)
+	, m_NodeID(0)
+	, m_ShowRoot(false)
 {
 }
 
@@ -60,17 +86,59 @@ void TreeUI::Update()
 	if (nullptr == m_Root)
 		return;
 
-	m_Root->Update();
+	if(m_ShowRoot)
+		m_Root->Update();
+
+	else
+	{
+		for (size_t i = 0; i < m_Root->m_vecChildNode.size(); ++i)
+		{
+			m_Root->m_vecChildNode[i]->Update();
+		}
+	}
 }
 
-void TreeUI::AddNode(const string& _strName)
+TreeNode* TreeUI::AddNode(TreeNode* _Parent, const string& _strName, DWORD_PTR _Data)
 {
-	TreeNode* pNode = new TreeNode;
-
-	if (nullptr == m_Root)
+	// Node 생성 및 ID, Data 세팅
+	TreeNode* pNode = new TreeNode(m_NodeID++);
+	pNode->m_Owner = this;
+	pNode->SetName(_strName);
+	pNode->m_Data = _Data;
+	
+	// 부모가 지정되지 않으면 Root Node 로 지정
+	if (nullptr == _Parent)
 	{
+		assert(!m_Root);
+
 		m_Root = pNode;
+	}	
+	// 그게 아니라면 해당 부모의 자식으로 연결
+	else
+	{
+		_Parent->AddChildNode(pNode);
 	}
 
-	pNode->SetName(_strName);
+	return pNode;
+}
+
+void TreeUI::SetSelectedNode(TreeNode* _Node)
+{
+	// 기존에 선택 상태였던 Node를 해제
+	if (nullptr != m_SelectedNode)
+		m_SelectedNode->m_Selected = false;
+
+	// 새로운 노드를 선택된 노드로 갱신
+	m_SelectedNode = _Node;
+
+	// 새로운 노드를 선택된 상태로 변경 후 함수포인터 호출
+	if (nullptr != m_SelectedNode)
+	{
+		m_SelectedNode->m_Selected = true;
+
+		if (m_ClickedInst && m_ClickedFunc)
+		{
+			(m_ClickedInst->*m_ClickedFunc)((DWORD_PTR)m_SelectedNode);
+		}
+	}
 }

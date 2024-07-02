@@ -7,11 +7,19 @@ private:
 	T* Asset;
 
 public:
-	T* Get() { return Asset; }
-	T** GetAddressOf() { return &Asset; }
-	T* operator ->() { return Asset; }
+	T* Get() const		     { return Asset; }
+	T** GetAddressOf() const { return &Asset; }
+	T* operator ->() const	 { return Asset; }
 
 public:
+	bool operator ==(Ptr<T> _Other) { return Asset == _Other.Asset; }
+
+	bool operator ==(T* _Other) { return Asset == _Other; }
+
+	bool operator != (Ptr<T> _Other) { return Asset != _Other.Asset; }
+
+	bool operator !=(T* _Other) { return Asset != _Other; }
+
 	bool operator ! () { return !Asset; }
 
 	Ptr& operator = (T* _Other)

@@ -35,6 +35,7 @@ public:
 	Ptr<CTexture> CreateTexutre(const wstring& _Key, ComPtr<ID3D11Texture2D> _Tex2D);
 
 	void GetAssetNames(ASSET_TYPE _Type, vector<string>& _vecOut);
+	const map<wstring, Ptr<CAsset>>& GetAssets(ASSET_TYPE _Type) { return m_mapAsset[(UINT)_Type]; }
 
 private:
 	void CreateEngineMesh();

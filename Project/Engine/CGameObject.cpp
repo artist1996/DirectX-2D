@@ -54,6 +54,36 @@ void CGameObject::AddComponent(CComponent* _Component)
 	}
 }
 
+void CGameObject::ChangeLayer(int _Idx)
+{
+	if (m_Parent)
+	{
+		DeregisterChild();
+
+		CLevel* pLevel = CLevelMgr::GetInst()->GetCurrentLevel();
+		CLayer* pLayer = pLevel->GetLayer(_Idx);
+		m_LayerIdx = _Idx;
+		pLevel->AddObject(_Idx, this);
+		pLayer->RegisterGameObject(this);
+	}
+
+	else
+	{
+		if (-1 != m_LayerIdx)
+		{
+			CLevel* pLevel = CLevelMgr::GetInst()->GetCurrentLevel();
+			CLayer* pLayer = pLevel->GetLayer(m_LayerIdx);
+			DisconnectWithLayer();
+
+			pLevel->AddObject(_Idx, this, true);
+			
+			pLayer = pLevel->GetLayer(_Idx);
+			pLayer->RegisterGameObject(this);
+			m_LayerIdx = _Idx;
+		}
+	}
+}
+
 void CGameObject::AddChild(CGameObject* _ChildObject)
 {
 	// 1. 부모가 Level에 속해있고, AddChild 되는 자식 오브젝트는 레벨에 소속되지 않은 경우

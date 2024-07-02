@@ -52,8 +52,9 @@ VS_OUT VS_TileMap(VS_IN _in)
 
 float4 PS_TileMap(VS_OUT _in) : SV_Target
 {
-    float4 vOutColor = (float4) 0.f;
     
+    float4 vOutColor = (float4) 0.f;
+        
     if(IsAtlasBind)
     {
         // LeftTop °è»ê
