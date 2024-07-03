@@ -2,6 +2,9 @@
 #include "Content.h"
 #include "ImGui/imgui.h"
 
+#include "CEditorMgr.h"
+#include "Inspector.h"
+
 #include "TreeUI.h"
 #include <Engine/CAssetMgr.h>
 #include <Engine/assets.h>
@@ -23,7 +26,6 @@ Content::~Content()
 {
 }
 
-
 void Content::Update()
 {
 
@@ -31,6 +33,10 @@ void Content::Update()
 
 void Content::RenewContent()
 {
+	// 트리의 내용을 전부 제거
+	m_Tree->Clear();
+
+	// 부모노드를 지정하지 않음 == 루트노드 입력
 	TreeNode* pRoot = m_Tree->AddNode(nullptr, "Root");
 	
 	for (UINT i = 0; i < (UINT)ASSET_TYPE::END; ++i)
@@ -50,5 +56,11 @@ void Content::RenewContent()
 void Content::AssetClicked(DWORD_PTR _Param)
 {
 	TreeNode* pNode = (TreeNode*)_Param;
+	if (pNode->IsFrame())
+		return;
+
 	Ptr<CAsset> pAsset = (CAsset*)pNode->GetData();
+	Inspector* pInspector = (Inspector*)CEditorMgr::GetInst()->FindEditorUI("Inspector");
+	pInspector->SetTargetAsset(pAsset);
+	ImGui::SetWindowFocus(nullptr);
 }

@@ -54,17 +54,17 @@ void CGameObject::AddComponent(CComponent* _Component)
 	}
 }
 
-void CGameObject::ChangeLayer(int _Idx)
+void CGameObject::ChangeLayer(CGameObject* _Object, int _Idx)
 {
 	if (m_Parent)
 	{
-		DeregisterChild();
-
 		CLevel* pLevel = CLevelMgr::GetInst()->GetCurrentLevel();
-		CLayer* pLayer = pLevel->GetLayer(_Idx);
+		CLayer* pLayer = pLevel->GetLayer(m_LayerIdx);
+		pLayer->DeregisterObject(_Object);
+		DeregisterChild();
+		pLevel->AddObject(_Idx, _Object);
+		pLayer->RegisterGameObject(_Object);
 		m_LayerIdx = _Idx;
-		pLevel->AddObject(_Idx, this);
-		pLayer->RegisterGameObject(this);
 	}
 
 	else
@@ -75,10 +75,10 @@ void CGameObject::ChangeLayer(int _Idx)
 			CLayer* pLayer = pLevel->GetLayer(m_LayerIdx);
 			DisconnectWithLayer();
 
-			pLevel->AddObject(_Idx, this, true);
+			pLevel->AddObject(_Idx, _Object, true);
 			
 			pLayer = pLevel->GetLayer(_Idx);
-			pLayer->RegisterGameObject(this);
+			pLayer->RegisterGameObject(_Object);
 			m_LayerIdx = _Idx;
 		}
 	}

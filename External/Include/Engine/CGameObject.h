@@ -30,7 +30,7 @@ public:
     const vector<CGameObject*>& GetChildren() { return m_vecChildren; }
     const vector<CScript*>& GetScripts()      { return m_vecScript; }
 
-    void ChangeLayer(int _Idx);
+    void ChangeLayer(CGameObject* _Object, int _Idx);
     int GetLayerIdx() { return m_LayerIdx; }
     void AddChild(CGameObject* _ChildObject);
 

@@ -89,8 +89,10 @@ void CEditorMgr::ImGuiProgress()
 void CEditorMgr::CreateEditorUI()
 {
 	EditorUI* pUI = nullptr;
+
 	pUI = new Inspector;
 	pUI->SetName("Inspector");
+	pUI->Init();
 	m_mapUI.insert(make_pair(pUI->GetName(), pUI));
 
 	EditorUI* pContent = new Content;
