@@ -8,6 +8,7 @@
 
 #include "CEditorMgr.h"
 #include "ListUI.h"
+#include "TreeUI.h"
 
 MeshRenderUI::MeshRenderUI()
 	: ComponentUI(COMPONENT_TYPE::MESHRENDER)
@@ -31,6 +32,25 @@ void MeshRenderUI::Update()
 	ImGui::SameLine(100);
 	ImGui::SetNextItemWidth(150.f);
 	ImGui::InputText("##MeshKey", (char*)strMeshName.c_str(), ImGuiInputTextFlags_ReadOnly);
+
+	if (ImGui::BeginDragDropTarget())
+	{
+		const ImGuiPayload* PayLoad = ImGui::AcceptDragDropPayload("ContentTree");
+
+		if (PayLoad)
+		{
+			TreeNode* pNode = *((TreeNode**)PayLoad->Data);
+			Ptr<CAsset> pAsset = (CAsset*)pNode->GetData();
+
+			if (ASSET_TYPE::MESH == pAsset->GetAssetType())
+			{	
+				pMeshRender->SetMesh((CMesh*)pAsset.Get());
+			}
+		}
+
+		ImGui::EndDragDropTarget();
+	}
+
 	ImGui::SameLine();
 
 	if (ImGui::Button("##MeshBtn", ImVec2(18.f, 18.f)))
@@ -54,6 +74,25 @@ void MeshRenderUI::Update()
 	ImGui::SameLine(100);
 	ImGui::SetNextItemWidth(150.f);
 	ImGui::InputText("##MaterialKey", (char*)strMaterialName.c_str(), ImGuiInputTextFlags_ReadOnly);
+
+	if (ImGui::BeginDragDropTarget())
+	{
+		const ImGuiPayload* PayLoad = ImGui::AcceptDragDropPayload("ContentTree");
+
+		if (PayLoad)
+		{
+			TreeNode* pNode = *((TreeNode**)PayLoad->Data);
+			Ptr<CAsset> pAsset = (CAsset*)pNode->GetData();
+
+			if (ASSET_TYPE::MATERIAL == pAsset->GetAssetType())
+			{
+				pMeshRender->SetMaterial((CMaterial*)pAsset.Get());
+			}
+		}
+
+		ImGui::EndDragDropTarget();
+	}
+
 	ImGui::SameLine();
 
 	if (ImGui::Button("##MaterialBtn", ImVec2(18.f, 18.f)))

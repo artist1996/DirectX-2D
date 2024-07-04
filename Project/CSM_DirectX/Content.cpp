@@ -17,6 +17,7 @@ Content::Content()
 	AddChild(m_Tree);
 
 	m_Tree->SetShowRoot(false);
+	m_Tree->UseDrag(true);
 	m_Tree->AddClickedDelegate(this, (DELEGATE_1)&Content::AssetClicked);
 
 	RenewContent();

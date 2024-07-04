@@ -57,12 +57,44 @@ void TreeNode::Update()
 		if (ImGui::IsItemHovered() && ImGui::IsMouseReleased(ImGuiMouseButton_Left))
 			m_Owner->SetSelectedNode(this);
 
+		DragCheck();
+		DropCheck();
+
 		for (size_t i = 0; i < m_vecChildNode.size(); ++i)
 		{
 			m_vecChildNode[i]->Update();
 		}
 
 		ImGui::TreePop();
+	}
+}
+
+void TreeNode::DragCheck()
+{
+	if (m_Owner->IsDrag())
+	{
+		if (ImGui::BeginDragDropSource())
+		{
+			TreeNode* pDragNode = this;
+			ImGui::SetDragDropPayload(m_Owner->GetName().c_str(), &pDragNode, sizeof(TreeNode*));
+			ImGui::Text(m_strName.c_str());
+			ImGui::EndDragDropSource();
+
+			m_Owner->SetDragedNode(this);
+		}
+	}
+}
+
+void TreeNode::DropCheck()
+{
+	if (!m_Owner->IsDrop())
+		return;
+	
+	if (ImGui::BeginDragDropTarget())
+	{
+		m_Owner->SetDroppedNode(this);
+		
+		ImGui::EndDragDropTarget();
 	}
 }
 
@@ -73,6 +105,14 @@ void TreeNode::Update()
 TreeUI::TreeUI()
 	: m_Root(nullptr)
 	, m_SelectedNode(nullptr)
+	, m_DragedNode(nullptr)
+	, m_DroppedNode(nullptr)
+	, m_ClickedInst(nullptr)
+	, m_ClickedFunc(nullptr)
+	, m_SelfDragDropInst(nullptr)
+	, m_SelfDragDropFunc(nullptr)
+	, m_DropInst(nullptr)
+	, m_DropFunc(nullptr)
 	, m_NodeID(0)
 	, m_ShowRoot(false)
 {
@@ -97,6 +137,12 @@ void TreeUI::Update()
 		{
 			m_Root->m_vecChildNode[i]->Update();
 		}
+	}
+
+	if (ImGui::IsMouseReleased(ImGuiMouseButton_Left))
+	{
+		m_DragedNode = nullptr;
+		m_DroppedNode = nullptr;
 	}
 }
 
@@ -144,6 +190,53 @@ void TreeUI::SetSelectedNode(TreeNode* _Node)
 		}
 	}
 }
+
+void TreeUI::SetDragedNode(TreeNode* _Node)
+{
+	// Draged Node Setting
+	m_DragedNode = _Node;
+}
+void TreeUI::SetDroppedNode(TreeNode* _Node)
+{
+	// Drag 된 Node 가 없는 경우 (외부 데이터가 Tree 안으로 들어올 때)
+	if (nullptr == m_DragedNode)
+	{
+		// PayLoad 조건으로 사용해서 계속 들어오지 않게
+		const ImGuiPayload* PayLoad = ImGui::AcceptDragDropPayload(m_DropPayLoadName.c_str());
+		
+		if (PayLoad)
+		{
+			// DropNode Setting
+			m_DroppedNode = _Node;
+			
+			// Delegate 함수 호출
+			if(m_DropInst && m_DropFunc)
+				(m_DropInst->*m_DropFunc)((DWORD_PTR)PayLoad->Data, (DWORD_PTR)m_DroppedNode);
+		}
+	}
+
+	// Self Drag, Drop 인 경우 (Outliner GameObject AddChild)
+	else
+	{
+		// assert(Drag 된 Node 의 Owner(Tree)가 this가 아니라면 당연히 assert)
+		assert(m_DragedNode->m_Owner == this); 
+
+		const ImGuiPayload* PayLoad = ImGui::AcceptDragDropPayload(m_DropPayLoadName.c_str());
+		if (PayLoad)
+		{
+			m_DroppedNode = _Node;
+			
+			if(m_SelfDragDropInst && m_SelfDragDropFunc)
+				(m_SelfDragDropInst->*m_SelfDragDropFunc)((DWORD_PTR)PayLoad->Data, (DWORD_PTR)m_DroppedNode);
+		}
+	}
+
+	
+
+	m_DroppedNode = _Node;
+}
+
+
 
 void TreeUI::Clear()
 {

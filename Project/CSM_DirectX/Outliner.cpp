@@ -19,7 +19,13 @@ Outliner::Outliner()
 	AddChild(m_Tree);
 
 	m_Tree->SetShowRoot(false);
+	m_Tree->UseDrag(true);
+	m_Tree->UseDrop(true);
 	m_Tree->AddClickedDelegate(this, (DELEGATE_1)&Outliner::GameObjectClicked);
+
+	m_Tree->AddSelfDragDropDelegate(this, (DELEGATE_2)&Outliner::GameObjectAddChild);
+	m_Tree->AddDropDelegate(this, (DELEGATE_2)&Outliner::DroppedFromOuter);
+	m_Tree->SetDropPayLoadName("OutlinerTree");
 
 	RenewLevel();
 }
@@ -81,4 +87,25 @@ void Outliner::AddGameObject(TreeNode* _Node, CGameObject* _Object)
 	{
 		AddGameObject(pObjectNode, vecChild[i]);
 	}
+}
+
+void Outliner::GameObjectAddChild(DWORD_PTR _Param1, DWORD_PTR _Param2)
+{
+	TreeNode* pDragNode = *((TreeNode**)_Param1);
+	TreeNode* pDropNode = (TreeNode*)_Param2;
+	
+	CGameObject* pDragObject = (CGameObject*)pDragNode->GetData();
+	CGameObject* pDropObject = (CGameObject*)pDropNode->GetData();
+
+	pDropObject->AddChild(pDragObject);
+	
+	string strName = string(pDragObject->GetName().begin(), pDragObject->GetName().end());
+
+	m_Tree->AddNode(pDropNode, strName.c_str(), pDragNode->GetData());
+}
+
+void Outliner::DroppedFromOuter(DWORD_PTR _OuterData, DWORD_PTR _DropNode)
+{
+	TreeNode* pContentNode = *((TreeNode**)_OuterData);
+	TreeNode* pDropNode = (TreeNode*)_DropNode;
 }

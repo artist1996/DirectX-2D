@@ -60,6 +60,16 @@ void CGameObject::ChangeLayer(CGameObject* _Object, int _Idx)
 	{
 		CLevel* pLevel = CLevelMgr::GetInst()->GetCurrentLevel();
 		CLayer* pLayer = pLevel->GetLayer(m_LayerIdx);
+
+		if (!m_vecChildren.empty())
+		{
+			for (size_t i = 0; i < m_vecChildren.size(); ++i)
+			{
+				m_vecChildren[i]->m_Parent = nullptr;
+				pLevel->AddObject(m_LayerIdx, m_vecChildren[i]);
+			}
+		}
+
 		pLayer->DeregisterObject(_Object);
 		DeregisterChild();
 		pLevel->AddObject(_Idx, _Object);
@@ -73,6 +83,16 @@ void CGameObject::ChangeLayer(CGameObject* _Object, int _Idx)
 		{
 			CLevel* pLevel = CLevelMgr::GetInst()->GetCurrentLevel();
 			CLayer* pLayer = pLevel->GetLayer(m_LayerIdx);
+
+			if (!m_vecChildren.empty())
+			{
+				for (size_t i = 0; i < m_vecChildren.size(); ++i)
+				{
+					m_vecChildren[i]->m_Parent = nullptr;
+					pLevel->AddObject(m_LayerIdx, m_vecChildren[i]);
+				}
+			}
+
 			DisconnectWithLayer();
 
 			pLevel->AddObject(_Idx, _Object, true);
@@ -107,7 +127,7 @@ void CGameObject::AddChild(CGameObject* _ChildObject)
 			CLevel* pCurLevel = CLevelMgr::GetInst()->GetCurrentLevel();
 			if (nullptr != pCurLevel)
 			{
-				CLayer* pLayer = pCurLevel->GetLayer(m_LayerIdx);
+				CLayer* pLayer = pCurLevel->GetLayer(_ChildObject->m_LayerIdx);
 				pLayer->DeregisterObjectAsParent(_ChildObject);
 			}
 		}

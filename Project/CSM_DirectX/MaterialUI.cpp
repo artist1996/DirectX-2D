@@ -35,6 +35,4 @@ void MaterialUI::Update()
 	ImGui::InputText("##GraphicShaderName", (char*)strShaderName.c_str(), strShaderName.length(), ImGuiInputTextFlags_ReadOnly);
 
 	// Shader Parameter
-	
-
 }
