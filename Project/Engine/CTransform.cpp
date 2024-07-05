@@ -4,18 +4,15 @@
 #include "CDevice.h"
 #include "CConstBuffer.h"
 
-#include "CCamera.h"
-
 CTransform::CTransform()
 	: CComponent(COMPONENT_TYPE::TRANSFORM)
-	, m_IndipendentScale(false)
+	, m_IndependentScale(false)
 {
 }
 
 CTransform::~CTransform()
 {
 }
-
 
 void CTransform::FinalTick()
 {
@@ -55,12 +52,12 @@ void CTransform::FinalTick()
 		// 부모의 월드행렬을 곱해서 최종 월드행렬을 계산함
 		const Matrix& matParentWorldMat = GetOwner()->GetParent()->Transform()->GetWorldMatrix();
 		
-		if (m_IndipendentScale)
+		if (m_IndependentScale)
 		{ 
 			// 부모의 크기 행렬의 역행렬을 구해서 부모의 크기에 상대적인 크기를 갖지 않고 독립적인 크기를 갖게 해준다.
 			Vec3 vParentScale = GetOwner()->GetParent()->Transform()->GetRelativeScale();
-			Matrix matParentMat = XMMatrixScaling(vParentScale.x, vParentScale.y, vParentScale.y);
-			Matrix matParentScaleInv = XMMatrixInverse(nullptr, matParentMat);
+			Matrix matParentScale = XMMatrixScaling(vParentScale.x, vParentScale.y, vParentScale.z);
+			Matrix matParentScaleInv = XMMatrixInverse(nullptr, matParentScale);
 
 			m_matWorld = m_matWorld * matParentScaleInv * matParentWorldMat;
 		}
@@ -95,10 +92,10 @@ Vec3 CTransform::GetWorldScale()
 
 	while (pObject)
 	{
-		vWorldScale = vWorldScale *= pObject->Transform()->GetRelativeScale();
+		vWorldScale *= pObject->Transform()->GetRelativeScale();
 
 		// 만약 독립적인 크기를 가진 Object 라면 break 해줘야한다.
-		if (pObject->Transform()->m_IndipendentScale)
+		if (pObject->Transform()->m_IndependentScale)
 			break;
 
 		pObject = GetOwner()->GetParent();

@@ -41,6 +41,8 @@ void CMaterial::Binding()
 
 int CMaterial::Save(const wstring& _RelativePath)
 {
+	SetRelativePath(_RelativePath);
+
 	FILE* pFile = nullptr;
 
 	wstring FilePath = CPathMgr::GetInst()->GetContentPath();

@@ -45,38 +45,38 @@ void CLayer::FinalTick()
 
 void CLayer::AddObject(CGameObject* _Object, bool _bMoveChild)
 {
-	// 1. 오브젝트가 다른 레이어 소속인 경우
+	// 1. 오브젝트가 다른 레이어 소속인경우
 	if (-1 != _Object->GetLayerIdx())
 	{
 		assert(_Object->GetLayerIdx() != m_LayerIdx);
-	
+
 		// 기존에 소속된 레이어에서 빠져나와야한다.
 		_Object->DisconnectWithLayer();
 	}
-	
+
 	// 2. 최상위 오브젝트인 경우
 	if (nullptr == _Object->GetParent())
 	{
 		m_Parents.push_back(_Object);
 	}
-	
+
+	// 자식들까지 이동시킬지 말지
 	static list<CGameObject*> queue;
 	queue.clear();
 	queue.push_back(_Object);
 	_Object->m_LayerIdx = m_LayerIdx;
-	
+
 	while (!queue.empty())
 	{
 		CGameObject* pObject = queue.front();
 		queue.pop_front();
-		
-		if (_bMoveChild || -1 == pObject->m_LayerIdx)
+
+		if (_bMoveChild || pObject->m_LayerIdx == -1)
 		{
 			pObject->m_LayerIdx = m_LayerIdx;
 		}
-	
+
 		const vector<CGameObject*>& vecChildren = pObject->GetChildren();
-		
 		for (size_t i = 0; i < vecChildren.size(); ++i)
 		{
 			queue.push_back(vecChildren[i]);
@@ -87,7 +87,6 @@ void CLayer::AddObject(CGameObject* _Object, bool _bMoveChild)
 void CLayer::DisconnectWithObject(CGameObject* _Object)
 {
 	vector<CGameObject*>::iterator iter = m_Parents.begin();
-
 	for (; iter != m_Parents.end(); ++iter)
 	{
 		if (_Object == (*iter))

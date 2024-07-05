@@ -147,10 +147,14 @@ enum TASK_TYPE
 
 	// Param_0 : Delete Object Address
 	DELETE_OBJECT,
-
+	
 	// Param_0 : enum Change Level State
 	CHANGE_LEVELSTATE,
+
 	CHANGE_LEVEL,
+
+	ASSET_CHANGED,
+
 	ADD_CHILD,
 	COMPONENT_ACTIVATE,
 	COMPONENT_DEACTIVATE,

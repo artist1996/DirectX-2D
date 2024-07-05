@@ -22,7 +22,10 @@ public:
     void AddChildNode(TreeNode* _Node);
     void Update();
 
+    TreeNode* GetParentNode() { return m_ParentNode; }
+
     void SetFrame(bool _Frame) { m_Frame = _Frame; }
+    void EraseChild(TreeNode* _Node);
     bool IsFrame()             { return m_Frame; }
 
     void DragCheck();
@@ -51,6 +54,7 @@ private:
 
     bool       m_UseDrag;
     bool       m_UseDrop;
+    bool       m_ShowNameOnly;
 
     EditorUI*  m_ClickedInst;
     DELEGATE_1 m_ClickedFunc;
@@ -76,11 +80,13 @@ public:
 
     const string& GetDropPayLoadName() { return m_DropPayLoadName; }
 
-    void UseDrag(bool _Drag) { m_UseDrag = _Drag; }
-    void UseDrop(bool _Drop) { m_UseDrop = _Drop; }
+    void UseDrag(bool _Drag)         { m_UseDrag = _Drag; }
+    void UseDrop(bool _Drop)         { m_UseDrop = _Drop; }
+    void SetShowNameOnly(bool _Name) { m_ShowNameOnly = _Name; }
 
-    bool IsDrag() { return m_UseDrag; }
-    bool IsDrop() { return m_UseDrop; }
+    bool IsDrag()         { return m_UseDrag; }
+    bool IsDrop()         { return m_UseDrop; }
+    bool IsShowNameOnly() { return m_ShowNameOnly; }
 
     void AddClickedDelegate(EditorUI* _Inst, DELEGATE_1 _Func)      { m_ClickedInst = _Inst; m_ClickedFunc = _Func; }
     void AddSelfDragDropDelegate(EditorUI* _Inst, DELEGATE_2 _Func) { m_SelfDragDropInst = _Inst; m_SelfDragDropFunc = _Func; }

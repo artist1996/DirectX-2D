@@ -1,6 +1,7 @@
 #pragma once
 
 #include "CPathMgr.h"
+#include "CTaskMgr.h"
 
 class CAsset;
 class CTexture;
@@ -11,8 +12,10 @@ class CAssetMgr
 	SINGLE(CAssetMgr);
 private:
 	map<wstring, Ptr<CAsset>> m_mapAsset[(UINT)ASSET_TYPE::END];
+	bool				      m_Changed;
 
 public:
+	void Tick();
 	void Init();
 
 public:
@@ -36,6 +39,7 @@ public:
 
 	void GetAssetNames(ASSET_TYPE _Type, vector<string>& _vecOut);
 	const map<wstring, Ptr<CAsset>>& GetAssets(ASSET_TYPE _Type) { return m_mapAsset[(UINT)_Type]; }
+	bool IsChanged() { return m_Changed; }
 
 private:
 	void CreateEngineMesh();
@@ -44,6 +48,8 @@ private:
 	void CreateEngineSprite();
 	void CreateEngineGraphicShader();
 	void CreateEngineComputeShader();
+
+	friend class CTaskMgr;
 };
 
 template<typename T>
@@ -78,6 +84,8 @@ Ptr<T> CAssetMgr::Load(const wstring& _Key, const wstring& _RelativePath)
 	ASSET_TYPE Type = GetAssetType<T>();
 	m_mapAsset[(UINT)Type].insert(make_pair(_Key, Asset.Get()));
 
+	CTaskMgr::GetInst()->AddTask(tTask{ ASSET_CHANGED });
+
 	// 로딩된 에셋 주소 반환
 	return Asset;
 }
@@ -105,6 +113,8 @@ void CAssetMgr::AddAsset(const wstring& _Key, Ptr<T> _Asset)
 	
 	_Asset->SetKey(_Key);
 	m_mapAsset[(UINT)Type].insert(make_pair(_Key, _Asset.Get()));
+
+	CTaskMgr::GetInst()->AddTask(tTask{ ASSET_CHANGED });
 }
 
 template<typename T>

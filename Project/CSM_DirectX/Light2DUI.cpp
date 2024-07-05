@@ -1,6 +1,9 @@
 #include "pch.h"
 #include "Light2DUI.h"
+
+#include <Engine/CGameObject.h>
 #include <Engine/CLight2D.h>
+#include <Engine/CTransform.h>
 
 Light2DUI::Light2DUI()
 	: ComponentUI(COMPONENT_TYPE::LIGHT2D)
@@ -51,11 +54,11 @@ void Light2DUI::Update()
 
 	ImGui::Text("Light Color");
 	ImGui::SameLine(100);
-	ImGui::ColorEdit3("##EditColor", Info.Info.Color);
+	ImGui::ColorEdit3("##LightColor", Info.Info.Color);
 
 	ImGui::Text("Light Ambient");
 	ImGui::SameLine(100);
-	ImGui::ColorEdit3("##EditAmbient", Info.Info.Ambient);
+	ImGui::ColorEdit3("##LightAmbient", Info.Info.Ambient);
 
 	// ±¤¿øÀÇ ¹Ý°æ
 	// POINT, SPOT
@@ -70,7 +73,7 @@ void Light2DUI::Update()
 	ImGui::BeginDisabled(LIGHT_TYPE::SPOT != Type);
 	
 	float Angle = Info.Angle;
-	Angle = (Info.Angle / XM_PI) * 180.f;
+	Angle = (Angle / XM_PI) * 180.f;
 
 	ImGui::Text("Light Angle");
 	ImGui::SameLine(100);

@@ -94,6 +94,9 @@
     <Filter Include="02. EditorUI\01. Inspector\AssetUI\09. GraphicShader">
       <UniqueIdentifier>{a57bc6d5-554e-4b11-824f-ba60052e82bd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. EditorUI\06. MenuUI">
+      <UniqueIdentifier>{6b78fce2-789c-4ce2-95b5-de01e463c1cb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CEditorMgr.h">
@@ -222,6 +225,9 @@
     <ClInclude Include="ComputeShaderUI.h">
       <Filter>02. EditorUI\01. Inspector\AssetUI\10. ComputeShader</Filter>
     </ClInclude>
+    <ClInclude Include="MenuUI.h">
+      <Filter>02. EditorUI\06. MenuUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -344,6 +350,9 @@
     </ClCompile>
     <ClCompile Include="Inspector_Init.cpp">
       <Filter>02. EditorUI\01. Inspector</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuUI.cpp">
+      <Filter>02. EditorUI\06. MenuUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

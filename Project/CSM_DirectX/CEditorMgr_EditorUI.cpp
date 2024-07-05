@@ -9,6 +9,7 @@
 #include "Content.h"
 #include "Outliner.h"
 #include "ListUI.h"
+#include "MenuUI.h"
 
 void CEditorMgr::InitImGui()
 {
@@ -108,6 +109,11 @@ void CEditorMgr::CreateEditorUI()
 	EditorUI* pOutliner = new Outliner;
 	pOutliner->SetName("Outliner");
 	m_mapUI.insert(make_pair(pOutliner->GetName(), pOutliner));
+
+	EditorUI* pMenu = new MenuUI;
+	pMenu->SetName("MainMenu");
+	pMenu->Init();
+	m_mapUI.insert(make_pair(pMenu->GetName(), pMenu));
 }
 
 EditorUI* CEditorMgr::FindEditorUI(const string& _strName)

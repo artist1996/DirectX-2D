@@ -78,8 +78,11 @@ void CLevelMgr::Init()
 	pLight2D->AddComponent(new CTransform);
 	pLight2D->AddComponent(new CLight2D);
 	pLight2D->Transform()->SetRelativePos(Vec3(0.f, 0.f, 100.f));
-	pLight2D->Light2D()->SetColor(Vec4(1.f, 1.f, 1.f, 1.f));
+	pLight2D->Transform()->SetRelativeScale(Vec3(1.f, 1.f, 1.f));
+	pLight2D->Light2D()->SetLightColor(Vec4(1.f, 1.f, 1.f, 1.f));
 	pLight2D->Light2D()->SetAngle(XM_PI / 2.f);
+	pLight2D->Light2D()->SetLightType(LIGHT_TYPE::POINT);
+	pLight2D->Light2D()->SetRadius(500.f);
 	
 	m_CurLevel->AddObject(0, pLight2D);
 
@@ -105,6 +108,8 @@ void CLevelMgr::Init()
 	pPlayer->FlipBookComponent()->AddFlipBook(5, CAssetMgr::GetInst()->FindAsset<CFlipBook>(L"Link_MoveDown"));
 	pPlayer->FlipBookComponent()->Play(5, 10, true);
 
+
+	// TileMap
 	CGameObject* pTileMap = new CGameObject;
 	pTileMap->SetName(L"Tile");
 	pTileMap->AddComponent(new CTransform);
@@ -133,7 +138,7 @@ void CLevelMgr::Init()
 	pChild->AddComponent(new CCollider2D);
 	pChild->AddComponent(new CMeshRender);
 	
-	pChild->Transform()->SetIndipendentScale(true);
+	pChild->Transform()->SetIndependentScale(true);
 	pChild->Transform()->SetRelativePos(50.f, 0.f, 0.f);
 	pChild->Transform()->SetRelativeScale(100.f, 100.f, 1.f);
 	
@@ -144,10 +149,9 @@ void CLevelMgr::Init()
 	pChild->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
 	pChild->MeshRender()->SetMaterial(pMtrl);
 	
+	//pPlayer->AddChild(pLight2D);
 	pPlayer->AddChild(pChild);
 	m_CurLevel->AddObject(3, pPlayer);
-	//m_CurLevel->AddObject(3, pChild);
-
 
 	// Monster Object
 	//CGameObject* pMonster = new CGameObject;

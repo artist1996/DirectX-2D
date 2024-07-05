@@ -21,28 +21,22 @@ void CalculateLight2D(int _LightIdx, float3 _WorldPos , inout tLight _Light)
         
     if (0 == Info.Type)
     {
-        _Light.Color.rgb = Info.Info.Color.rgb
-                         + Info.Info.Ambient.rgb;
+        _Light.Color.rgb += Info.Info.Color.rgb;
+        _Light.Ambient.rgb += Info.Info.Ambient.rgb;
     }
     // Point Light
     else if (1 == Info.Type)
     {
         float fDist = distance(Info.WorldPos.xy, _WorldPos.xy);     // 두 거리의 차를 스칼라 값으로 반환시켜주는 함수
         //float Pow = saturate(1.f - (fDist / g_Light2DBuffer[0].Radius));
-        float Pow2 = saturate(cos(saturate(fDist / Info.Radius) * (PI / 2.f)));
+        float fPow = saturate(cos(saturate(fDist / Info.Radius) * (PI / 2.f)));
         
-        _Light.Color.rgb += Info.Info.Color.rgb * Pow2;
+        _Light.Color.rgb += Info.Info.Color.rgb * fPow;
         _Light.Ambient.rgb += Info.Info.Ambient.rgb;
     }
     // Spot Light
     else
-    {
-        Info.WorldPos;
-        Info.WorldDir;
-        Info.Angle;
-        Info.Radius;              
-
-       
+    {     
         float2 PixelDir = _WorldPos.xy - Info.WorldPos.xy;         // 픽셀의 월드포스와 광원의 월드포스 차이 벡터
         float fDist = length(PixelDir);                            // Radius 와 비교할 광원과 Pixel 의 Dist 값
         float2 Normalize = normalize(PixelDir);                    // 정규화 벡터로 만들어 준 후

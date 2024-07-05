@@ -99,9 +99,8 @@ void Outliner::GameObjectAddChild(DWORD_PTR _Param1, DWORD_PTR _Param2)
 
 	pDropObject->AddChild(pDragObject);
 	
-	string strName = string(pDragObject->GetName().begin(), pDragObject->GetName().end());
-
-	m_Tree->AddNode(pDropNode, strName.c_str(), pDragNode->GetData());
+	m_Tree->Clear();
+	RenewLevel();
 }
 
 void Outliner::DroppedFromOuter(DWORD_PTR _OuterData, DWORD_PTR _DropNode)

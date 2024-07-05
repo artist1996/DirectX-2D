@@ -16,9 +16,14 @@ CLight2D::~CLight2D()
 
 void CLight2D::FinalTick()
 {
-	m_Info.WorldPos = Transform()->GetRelativePos();
-	m_Info.WorldDir = Transform()->GetRelativeDir(DIR::RIGHT);
+	m_Info.WorldPos = Transform()->GetWorldPos();
+	m_Info.WorldDir = Transform()->GetWorldDir(DIR::RIGHT);
 
 	// RenderMgr ¿¡ µî·Ï
 	CRenderMgr::GetInst()->RegisterLight2D(this);
+}
+
+void CLight2D::SetLightType(LIGHT_TYPE _Type)
+{
+	m_Info.Type = _Type;
 }

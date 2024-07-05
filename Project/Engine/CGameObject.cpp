@@ -1,8 +1,8 @@
 #include "pch.h"
 #include "CGameObject.h"
 
-#include "CKeyMgr.h"
 #include "CTimeMgr.h"
+#include "CKeyMgr.h"
 
 #include "CLevelMgr.h"
 #include "CLevel.h"
@@ -65,16 +65,16 @@ void CGameObject::ChangeLayer(CGameObject* _Object, int _Idx)
 		{
 			for (size_t i = 0; i < m_vecChildren.size(); ++i)
 			{
-				m_vecChildren[i]->m_Parent = nullptr;
-				pLevel->AddObject(m_LayerIdx, m_vecChildren[i]);
+				CGameObject* pChild = m_vecChildren[i];
+				pChild->DeregisterChild();
+				pChild->m_LayerIdx = -1;
+				pLevel->AddObject(m_LayerIdx, pChild);
 			}
 		}
 
-		pLayer->DeregisterObject(_Object);
+		pLayer->DeregisterObject(this);
 		DeregisterChild();
-		pLevel->AddObject(_Idx, _Object);
-		pLayer->RegisterGameObject(_Object);
-		m_LayerIdx = _Idx;
+		pLevel->AddObject(_Idx, this);
 	}
 
 	else
@@ -88,38 +88,38 @@ void CGameObject::ChangeLayer(CGameObject* _Object, int _Idx)
 			{
 				for (size_t i = 0; i < m_vecChildren.size(); ++i)
 				{
-					m_vecChildren[i]->m_Parent = nullptr;
-					pLevel->AddObject(m_LayerIdx, m_vecChildren[i]);
+					CGameObject* pChild = m_vecChildren[i];
+					pChild->DeregisterChild();
+					pChild->m_LayerIdx = -1;
+					pLevel->AddObject(m_LayerIdx, pChild);
 				}
 			}
 
 			DisconnectWithLayer();
 
-			pLevel->AddObject(_Idx, _Object, true);
+			pLevel->AddObject(_Idx, this, true);
 			
 			pLayer = pLevel->GetLayer(_Idx);
-			pLayer->RegisterGameObject(_Object);
-			m_LayerIdx = _Idx;
+			pLayer->RegisterGameObject(this);
 		}
 	}
 }
 
 void CGameObject::AddChild(CGameObject* _ChildObject)
 {
-	// 1. 부모가 Level에 속해있고, AddChild 되는 자식 오브젝트는 레벨에 소속되지 않은 경우
+	// 부모 오브젝트는 Level 에 속해있고, AddChild 되는 자식 오브젝트는 레벨에 소속되지 않은 경우
 	if (-1 != m_LayerIdx && -1 == _ChildObject->m_LayerIdx)
 	{
 		assert(nullptr);
 	}
 
-	// 2. 자식으로 들어오는 오브젝트가 이미 부모가 있는 경우
+	// 자식으로 들어오는 오브젝트가 이미 부모가 있는 경우
 	if (_ChildObject->GetParent())
 	{
 		_ChildObject->DeregisterChild();
 	}
 
-	// 3. 들어온 인자가 최상위 부모 인 경우
-	// Layer 에서 최상위 부모 Object 를 관리하는 vector 에서 제외 시켜줘야한다.
+	// 자식으로 들어오는 오브젝트가 최상위 부모 오브젝트인 경우
 	else
 	{
 		if (-1 != _ChildObject->m_LayerIdx)
@@ -155,7 +155,7 @@ void CGameObject::DeregisterChild()
 
 	for (; iter != m_Parent->m_vecChildren.end(); ++iter)
 	{
-		if (this == (*iter))
+		if ((*iter) == this)
 		{
 			m_Parent->m_vecChildren.erase(iter);
 			m_Parent = nullptr;
@@ -216,7 +216,7 @@ void CGameObject::FinalTick()
 			m_arrCom[i]->FinalTick();
 	}
 
-	// Layer 등록
+	// 레이어 등록
 	assert(-1 != m_LayerIdx);
 	CLevel* pLevel = CLevelMgr::GetInst()->GetCurrentLevel();
 	CLayer* pLayer = pLevel->GetLayer(m_LayerIdx);
@@ -224,7 +224,6 @@ void CGameObject::FinalTick()
 
 	// 자식 오브젝트
 	vector<CGameObject*>::iterator iter = m_vecChildren.begin();
-
 	for (; iter != m_vecChildren.end(); )
 	{
 		(*iter)->FinalTick();

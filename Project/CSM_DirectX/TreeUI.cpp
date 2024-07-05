@@ -52,7 +52,16 @@ void TreeNode::Update()
 		sprintf_s(szName, "%s##%d", m_strName.c_str(), m_ID);
 	}
 
-	if (ImGui::TreeNodeEx(szName, Flags))
+	string strName = m_strName;
+
+	// NameOnly
+	if (m_Owner->IsShowNameOnly())
+	{
+		path Path = strName;
+		strName = Path.stem().string();
+	}
+
+	if (ImGui::TreeNodeEx(strName.c_str(), Flags))
 	{
 		if (ImGui::IsItemHovered() && ImGui::IsMouseReleased(ImGuiMouseButton_Left))
 			m_Owner->SetSelectedNode(this);
@@ -66,6 +75,19 @@ void TreeNode::Update()
 		}
 
 		ImGui::TreePop();
+	}
+}
+
+void TreeNode::EraseChild(TreeNode* _Node)
+{
+	vector<TreeNode*>::iterator iter = m_vecChildNode.begin();
+
+	for (; iter != m_vecChildNode.end();)
+	{
+		if ((*iter) == _Node)
+			iter = m_vecChildNode.erase(iter);
+		else
+			++iter;
 	}
 }
 
@@ -114,7 +136,10 @@ TreeUI::TreeUI()
 	, m_DropInst(nullptr)
 	, m_DropFunc(nullptr)
 	, m_NodeID(0)
+	, m_UseDrag(false)
+	, m_UseDrop(false)
 	, m_ShowRoot(false)
+	, m_ShowNameOnly(false)
 {
 }
 
@@ -230,9 +255,7 @@ void TreeUI::SetDroppedNode(TreeNode* _Node)
 				(m_SelfDragDropInst->*m_SelfDragDropFunc)((DWORD_PTR)PayLoad->Data, (DWORD_PTR)m_DroppedNode);
 		}
 	}
-
 	
-
 	m_DroppedNode = _Node;
 }
 
