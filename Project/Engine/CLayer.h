@@ -20,6 +20,8 @@ public:
     void RegisterGameObject(CGameObject* _Object) { m_Objects.push_back(_Object); }
     void ClearObject()                            { m_Objects.clear(); }
 
+    void RegisterAsParent(CGameObject* _Object);
+
     void DisconnectWithObject(CGameObject* _Object);
 
     void DeregisterObjectAsParent(CGameObject* _Object);

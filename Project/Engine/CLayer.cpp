@@ -84,6 +84,14 @@ void CLayer::AddObject(CGameObject* _Object, bool _bMoveChild)
 	}
 }
 
+void CLayer::RegisterAsParent(CGameObject* _Object)
+{
+	assert(m_LayerIdx == _Object->m_LayerIdx);
+
+	m_Parents.push_back(_Object);
+	return;
+}
+
 void CLayer::DisconnectWithObject(CGameObject* _Object)
 {
 	vector<CGameObject*>::iterator iter = m_Parents.begin();

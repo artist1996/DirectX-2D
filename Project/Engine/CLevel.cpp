@@ -81,6 +81,11 @@ void CLevel::AddObject(int _LayerIdx, CGameObject* _Object, bool _bMoveChild)
 	m_Layer[_LayerIdx]->AddObject(_Object, _bMoveChild);
 }
 
+void CLevel::RegisterAsParent(int _LayerIdx, CGameObject* _Object)
+{
+	m_Layer[_LayerIdx]->RegisterAsParent(_Object);
+}
+
 void CLevel::ClearObject()
 {
 	for (UINT i = 0; i < MAX_LAYER; ++i)

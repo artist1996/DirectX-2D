@@ -41,6 +41,8 @@ void Outliner::Update()
 
 void Outliner::RenewLevel()
 {
+	m_Tree->Clear();
+
 	CLevel* pLevel = CLevelMgr::GetInst()->GetCurrentLevel();
 
 	if (nullptr == pLevel)
@@ -91,15 +93,31 @@ void Outliner::AddGameObject(TreeNode* _Node, CGameObject* _Object)
 
 void Outliner::GameObjectAddChild(DWORD_PTR _Param1, DWORD_PTR _Param2)
 {
-	TreeNode* pDragNode = *((TreeNode**)_Param1);
+	TreeNode* pDragNode = (TreeNode*)_Param1;
 	TreeNode* pDropNode = (TreeNode*)_Param2;
-	
-	CGameObject* pDragObject = (CGameObject*)pDragNode->GetData();
-	CGameObject* pDropObject = (CGameObject*)pDropNode->GetData();
 
-	pDropObject->AddChild(pDragObject);
+	CGameObject* pDragObject = (CGameObject*)pDragNode->GetData();
+	CGameObject* pDropObject = nullptr;
 	
-	m_Tree->Clear();
+	if (pDropNode)
+	{
+		pDropObject = (CGameObject*)pDropNode->GetData();
+
+		if (pDropObject->IsAncestor(pDragObject))
+			return;
+		
+		pDropObject->AddChild(pDragObject);
+	}
+	else
+	{
+		if (!pDragObject->GetParent())
+			return;
+		
+		pDragObject->DeregisterChild();
+		
+		CLevelMgr::GetInst()->GetCurrentLevel()->RegisterAsParent(pDragObject->GetLayerIdx(), pDragObject);
+	}
+	
 	RenewLevel();
 }
 

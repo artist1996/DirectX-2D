@@ -41,6 +41,7 @@ public:
     void DeregisterChild();
 
     bool IsDead() { return m_Dead; }
+    bool IsAncestor(CGameObject* _Object);
 
     GET_COMPONENT(Transform, TRANSFORM);
     GET_COMPONENT(MeshRender, MESHRENDER);

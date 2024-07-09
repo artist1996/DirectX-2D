@@ -166,6 +166,14 @@ void TreeUI::Update()
 
 	if (ImGui::IsMouseReleased(ImGuiMouseButton_Left))
 	{
+		if (m_DragedNode && !m_DroppedNode)
+		{
+			if (m_SelfDragDropInst && m_SelfDragDropFunc)
+			{
+				(m_SelfDragDropInst->*m_SelfDragDropFunc)((DWORD_PTR)m_DragedNode, 0);
+			}
+		}
+
 		m_DragedNode = nullptr;
 		m_DroppedNode = nullptr;
 	}
@@ -252,7 +260,7 @@ void TreeUI::SetDroppedNode(TreeNode* _Node)
 			m_DroppedNode = _Node;
 			
 			if(m_SelfDragDropInst && m_SelfDragDropFunc)
-				(m_SelfDragDropInst->*m_SelfDragDropFunc)((DWORD_PTR)PayLoad->Data, (DWORD_PTR)m_DroppedNode);
+				(m_SelfDragDropInst->*m_SelfDragDropFunc)((DWORD_PTR)m_DragedNode, (DWORD_PTR)m_DroppedNode);
 		}
 	}
 	

@@ -36,6 +36,8 @@ CRenderMgr::~CRenderMgr()
 
 void CRenderMgr::Init()
 {
+	m_PostProcessTex = CAssetMgr::GetInst()->FindAsset<CTexture>(L"PostProcessTex");
+
 	m_DebugObject = new CGameObject;
 	m_DebugObject->AddComponent(new CTransform);
 	m_DebugObject->AddComponent(new CMeshRender);
@@ -83,6 +85,12 @@ void CRenderMgr::RegisterCamera(CCamera* _Cam, int _CamPriority)
 
 	// 카메라 우선순위에 맞는 위치에 넣는다.
 	m_vecCam[_CamPriority] = _Cam;
+}
+
+void CRenderMgr::PostProcessCopy()
+{
+	Ptr<CTexture> pRTTex = CAssetMgr::GetInst()->FindAsset<CTexture>(L"RenderTargetTex");
+	CONTEXT->CopyResource(m_PostProcessTex->GetTex2D().Get(), pRTTex->GetTex2D().Get());
 }
 
 void CRenderMgr::RenderDebugShape()

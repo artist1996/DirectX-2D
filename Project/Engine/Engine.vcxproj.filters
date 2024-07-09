@@ -437,6 +437,15 @@
     <Filter Include="08. Component\08. Light2D">
       <UniqueIdentifier>{c4b18fe7-268f-451e-a85b-5cf1cdd5e824}</UniqueIdentifier>
     </Filter>
+    <Filter Include="HLSL\02. Render\01. 2D">
+      <UniqueIdentifier>{65008b77-2500-4bc7-a78c-64efb871fe0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HLSL\02. Render\02. 3D">
+      <UniqueIdentifier>{4113b864-a737-486e-9143-724c4a43c1cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HLSL\02. Render\03. PostProcess">
+      <UniqueIdentifier>{1e562a1d-6dac-4001-9fb0-b5df1dc3409a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="SimpleMath.inl">
@@ -450,17 +459,20 @@
     <FxCompile Include="value.fx">
       <Filter>HLSL\01. Header</Filter>
     </FxCompile>
-    <FxCompile Include="debug.fx">
-      <Filter>HLSL\02. Render</Filter>
-    </FxCompile>
-    <FxCompile Include="std2d.fx">
-      <Filter>HLSL\02. Render</Filter>
-    </FxCompile>
-    <FxCompile Include="tilemap.fx">
-      <Filter>HLSL\02. Render</Filter>
-    </FxCompile>
     <FxCompile Include="struct.fx">
       <Filter>HLSL\01. Header</Filter>
+    </FxCompile>
+    <FxCompile Include="debug.fx">
+      <Filter>HLSL\02. Render\01. 2D</Filter>
+    </FxCompile>
+    <FxCompile Include="std2d.fx">
+      <Filter>HLSL\02. Render\01. 2D</Filter>
+    </FxCompile>
+    <FxCompile Include="tilemap.fx">
+      <Filter>HLSL\02. Render\01. 2D</Filter>
+    </FxCompile>
+    <FxCompile Include="postprocess.fx">
+      <Filter>HLSL\02. Render\03. PostProcess</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

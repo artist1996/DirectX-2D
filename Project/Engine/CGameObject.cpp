@@ -68,7 +68,7 @@ void CGameObject::ChangeLayer(CGameObject* _Object, int _Idx)
 				CGameObject* pChild = m_vecChildren[i];
 				pChild->DeregisterChild();
 				pChild->m_LayerIdx = -1;
-				pLevel->AddObject(m_LayerIdx, pChild);
+				CreateObject(pChild, m_LayerIdx);
 			}
 		}
 
@@ -91,7 +91,7 @@ void CGameObject::ChangeLayer(CGameObject* _Object, int _Idx)
 					CGameObject* pChild = m_vecChildren[i];
 					pChild->DeregisterChild();
 					pChild->m_LayerIdx = -1;
-					pLevel->AddObject(m_LayerIdx, pChild);
+					CreateObject(pChild, m_LayerIdx);
 				}
 			}
 
@@ -164,6 +164,21 @@ void CGameObject::DeregisterChild()
 	}
 
 	assert(nullptr);
+}
+
+bool CGameObject::IsAncestor(CGameObject* _Object)
+{
+	CGameObject* pObject = m_Parent;
+
+	while (pObject)
+	{
+		if (pObject == _Object)
+			return true;
+		else
+			pObject = pObject->GetParent();
+	}
+
+	return false;
 }
 
 void CGameObject::Begin()

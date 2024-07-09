@@ -153,6 +153,15 @@ void CLevelMgr::Init()
 	pPlayer->AddChild(pChild);
 	m_CurLevel->AddObject(3, pPlayer);
 
+	// GrayFilter Object
+	CGameObject* pGrayFilterObj = new CGameObject;
+	pGrayFilterObj->SetName(L"GrayFilter");
+	pGrayFilterObj->AddComponent(new CTransform);
+	pGrayFilterObj->AddComponent(new CMeshRender);
+	pGrayFilterObj->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
+	pGrayFilterObj->MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"GrayFilterMtrl"));
+	m_CurLevel->AddObject(0, pGrayFilterObj);
+
 	// Monster Object
 	//CGameObject* pMonster = new CGameObject;
 	//pMonster->SetName(L"Monster");

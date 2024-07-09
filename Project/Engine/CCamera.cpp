@@ -131,6 +131,10 @@ void CCamera::SortGameObject()
 			case DOMAIN_PARTICLE:
 				m_vecParticles.push_back(vecObjects[j]);
 				break;
+			case DOMAIN_POSTPROCESS:
+				m_vecPostProcess.push_back(vecObjects[j]);
+				break;
+
 			}
 		}
 	}
@@ -167,9 +171,16 @@ void CCamera::Render()
 		m_vecParticles[i]->Render();
 	}
 
+	for (size_t i = 0; i < m_vecPostProcess.size(); ++i)
+	{
+		CRenderMgr::GetInst()->PostProcessCopy();
+		m_vecPostProcess[i]->Render();
+	}
+
 	// Runtime 중 Domain Type이 변경 될 수 있기 때문에 Render 호출 하고 clear 시켜줌
 	m_vecOpaque.clear();
 	m_vecMasked.clear();
 	m_vecTransparent.clear();
 	m_vecParticles.clear();
+	m_vecPostProcess.clear();
 }

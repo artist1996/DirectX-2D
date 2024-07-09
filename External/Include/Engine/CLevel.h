@@ -19,6 +19,7 @@ public:
 
     CGameObject* FindObjectByName(const wstring& _strName);
 
+    void RegisterAsParent(int _LayerIdx, CGameObject* _Object);
     void ClearObject();
     
 private:
