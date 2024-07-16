@@ -8,6 +8,8 @@
 #include <Engine/CDevice.h>
 #include "ImGui/imgui_impl_win32.h"
 
+#include "CTestLevel.h"
+
 // 전역 변수:
 HINSTANCE g_hInst = nullptr;                               // 현재 인스턴스입니다.
 
@@ -45,6 +47,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         MessageBox(nullptr, L"장치 초기화 실패", L"Engine 초기화 실패", MB_OK);
         return 0;
     }
+
+    // Test Level
+    CTestLevel::CreateTestLevel();
 
 #ifdef _DEBUG
     CEditorMgr::GetInst()->Init();

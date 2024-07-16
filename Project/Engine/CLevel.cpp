@@ -106,10 +106,13 @@ void CLevel::ChangeLevelState(LEVEL_STATE _NextState)
 	// Stop -> Play
 	if (STOP == m_State && PLAY == _NextState)
 	{
+		m_State = _NextState;
 		Begin();
+	}		
+	else
+	{
+		m_State = _NextState;
 	}
-		
-	m_State = _NextState;
 
 	// Play -> Stop (최초 레벨이 시작되는 시점으로 복구가 가능해야 한다.)
 }

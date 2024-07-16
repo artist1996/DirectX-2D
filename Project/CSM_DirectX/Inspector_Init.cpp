@@ -68,7 +68,7 @@ void Inspector::CreateComponentUI()
 	m_arrComUI[(UINT)COMPONENT_TYPE::FLIPBOOKCOMPONENT] = new FlipBookComUI;
 	m_arrComUI[(UINT)COMPONENT_TYPE::FLIPBOOKCOMPONENT]->SetName("FlipBookComUI");
 	m_arrComUI[(UINT)COMPONENT_TYPE::FLIPBOOKCOMPONENT]->SetChildBorder(true);
-	m_arrComUI[(UINT)COMPONENT_TYPE::FLIPBOOKCOMPONENT]->SetChildSize(ImVec2(0.f, 100.f));
+	m_arrComUI[(UINT)COMPONENT_TYPE::FLIPBOOKCOMPONENT]->SetChildSize(ImVec2(0.f, 400.f));
 	AddChild(m_arrComUI[(UINT)COMPONENT_TYPE::FLIPBOOKCOMPONENT]);
 
 	m_arrComUI[(UINT)COMPONENT_TYPE::MESHRENDER] = new MeshRenderUI;
@@ -143,6 +143,4 @@ void Inspector::CreateAssetUI()
 	pUI->SetName("ComputeShaderUI");
 	AddChild(pUI);
 	m_arrAssetUI[(UINT)ASSET_TYPE::COMPUTE_SHADER] = pUI;
-
-	int a = 0;
 }

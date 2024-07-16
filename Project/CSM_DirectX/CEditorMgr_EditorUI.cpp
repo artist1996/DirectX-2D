@@ -5,11 +5,14 @@
 #include "ImGui/imgui_impl_win32.h"
 #include <Engine/CDevice.h>
 
+#include "ParamUI.h"
+
 #include "Inspector.h"
 #include "Content.h"
 #include "Outliner.h"
 #include "ListUI.h"
 #include "MenuUI.h"
+#include "AnimationPopup.h"
 
 void CEditorMgr::InitImGui()
 {
@@ -72,6 +75,9 @@ void CEditorMgr::ImGuiProgress()
 	ImGui_ImplWin32_NewFrame();
 	ImGui::NewFrame();
 
+	// ParamUI ID Reset
+	ParamUI::ResetID();
+
 	// ImGui Tick
 	ImGuiTick();
 
@@ -114,6 +120,16 @@ void CEditorMgr::CreateEditorUI()
 	pMenu->SetName("MainMenu");
 	pMenu->Init();
 	m_mapUI.insert(make_pair(pMenu->GetName(), pMenu));
+
+	EditorUI* pPopup = new AnimationPopup;
+	pPopup->SetName("Input Animation Name");
+	pPopup->SetModal(true);
+	m_mapUI.insert(make_pair(pPopup->GetName(), pPopup));
+
+	EditorUI* pAnimationEditor = new AnimationEditor;
+	pAnimationEditor->SetName("Animation Editor");
+	pAnimationEditor->SetActive(false);
+	m_mapUI.insert(make_pair(pAnimationEditor->GetName(), pAnimationEditor));
 }
 
 EditorUI* CEditorMgr::FindEditorUI(const string& _strName)

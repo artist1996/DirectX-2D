@@ -4,7 +4,8 @@
 #include "CMissileScript.h"
 
 CPlayerScript::CPlayerScript()
-	: m_Speed(500.f)
+	: CScript(SCRIPT_TYPE::PLAYERSCRIPT)
+	, m_Speed(500.f)
 {
 }
 

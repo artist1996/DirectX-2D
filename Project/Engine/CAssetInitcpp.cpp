@@ -142,18 +142,33 @@ void CAssetMgr::CreateEngineMaterial()
 	pMtrl = new CMaterial;
 	pMtrl->SetShader(FindAsset<CGraphicShader>(L"GrayFilterShader"));
 	pMtrl->SetTexParam(TEX_0, FindAsset<CTexture>(L"PostProcessTex"));
+	pMtrl->SetTexParam(TEX_1, FindAsset<CTexture>(L"texture\\noise\\noise_01.png"));
+	pMtrl->SetTexParam(TEX_2, FindAsset<CTexture>(L"texture\\noise\\noise_02.png"));
+	pMtrl->SetTexParam(TEX_3, FindAsset<CTexture>(L"texture\\noise\\noise_03.jpg"));
 	AddAsset(L"GrayFilterMtrl", pMtrl);
+
+	// DistortionMtrl
+	pMtrl = new CMaterial;
+	pMtrl->SetShader(FindAsset<CGraphicShader>(L"DistortionShader"));
+	pMtrl->SetTexParam(TEX_0, FindAsset<CTexture>(L"PostProcessTex"));
+	pMtrl->SetTexParam(TEX_1, FindAsset<CTexture>(L"texture\\noise\\noise_01.png"));
+	pMtrl->SetTexParam(TEX_2, FindAsset<CTexture>(L"texture\\noise\\noise_02.png"));
+	pMtrl->SetTexParam(TEX_3, FindAsset<CTexture>(L"texture\\noise\\noise_03.jpg"));
+	AddAsset(L"DistortionMtrl", pMtrl);
 }
 
 void CAssetMgr::CreateEngineTexture()
 {
+	// PostProcess Texture »ý¼º
 	Vec2 vResolution = CDevice::GetInst()->GetResolution();
-
 	Ptr<CTexture> pTexture = CreateTexture(L"PostProcessTex"
 									    , (UINT)vResolution.x, (UINT)vResolution.y
 									    , DXGI_FORMAT_R8G8B8A8_UNORM, D3D11_BIND_SHADER_RESOURCE);
-
-	//AddAsset(L"PostProcessTex", pTexture);
+	
+	// Noise Texture
+	Load<CTexture>(L"texture\\noise\\noise_01.png", L"texture\\noise\\noise_01.png");
+	Load<CTexture>(L"texture\\noise\\noise_02.png", L"texture\\noise\\noise_02.png");
+	Load<CTexture>(L"texture\\noise\\noise_03.jpg", L"texture\\noise\\noise_03.jpg");
 }
 
 void CAssetMgr::CreateEngineSprite()
@@ -244,6 +259,12 @@ void CAssetMgr::CreateEngineGraphicShader()
 
 	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_MASKED);
 
+	//pShader->AddScalarParam(INT_0, "Test Parameter");
+	//pShader->AddScalarParam(FLOAT_1, "Test Parameter");
+	//pShader->AddScalarParam(VEC2_3, "Test Parameter");
+	//pShader->AddScalarParam(VEC4_2, "Test Parameter");
+	pShader->AddTexParam(TEX_0, "OutputTexture");
+
 	AddAsset(L"Std2DShader", pShader);
 
 
@@ -301,8 +322,19 @@ void CAssetMgr::CreateEngineGraphicShader()
 	pShader->SetBSType(BS_TYPE::DEFAULT);
 
 	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_POSTPROCESS);
-
 	AddAsset(L"GrayFilterShader", pShader);
+
+	// Distortion Shader
+	pShader = new CGraphicShader;
+	pShader->CreateVertexShader(L"shader\\postprocess.fx", "VS_Distortion");
+	pShader->CreatePixelShader(L"shader\\postprocess.fx", "PS_Distortion");
+
+	pShader->SetRSType(RS_TYPE::CULL_NONE);
+	pShader->SetDSType(DS_TYPE::NO_TEST_NO_WRITE);
+	pShader->SetBSType(BS_TYPE::DEFAULT);
+
+	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_POSTPROCESS);
+	AddAsset(L"DistortionShader", pShader);
 }
 
 void CAssetMgr::CreateEngineComputeShader()

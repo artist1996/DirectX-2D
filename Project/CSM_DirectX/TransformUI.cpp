@@ -22,6 +22,7 @@ void TransformUI::Update()
 	Vec3 vPos = pTrans->GetRelativePos();
 	Vec3 vScale = pTrans->GetRelativeScale();
 	Vec3 vRot = pTrans->GetRelativeRotation();
+	bool IS = pTrans->IsIndependentScale();
 	vRot = (vRot / XM_PI) * 180.f;
 
 	ImGui::Text("Position");
@@ -43,8 +44,6 @@ void TransformUI::Update()
 	pTrans->SetRelativeRotation(vRot);
 
 	// Independent Scale
-	bool IS = pTrans->IsIndependentScale();
-
 	ImGui::Text("Ignore Parent");
 	ImGui::SameLine(100);
 	if (ImGui::Checkbox("##TransIS", &IS))

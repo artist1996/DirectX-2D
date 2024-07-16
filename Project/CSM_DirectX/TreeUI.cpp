@@ -263,8 +263,6 @@ void TreeUI::SetDroppedNode(TreeNode* _Node)
 				(m_SelfDragDropInst->*m_SelfDragDropFunc)((DWORD_PTR)m_DragedNode, (DWORD_PTR)m_DroppedNode);
 		}
 	}
-	
-	m_DroppedNode = _Node;
 }
 
 

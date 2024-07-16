@@ -8,6 +8,9 @@ private:
 public:
     virtual void Update() override;
 
+private:
+    void AddFrame();
+
 public:
     FlipBookUI();
     virtual ~FlipBookUI();

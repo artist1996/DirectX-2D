@@ -24,6 +24,7 @@ public:
         m_MemFunc = _Func;
     }
 
+    virtual void Activate() override;
     virtual void Deactivate() override;
 
     string GetSelectName() { return m_SelectedName; }

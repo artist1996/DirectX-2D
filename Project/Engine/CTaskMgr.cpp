@@ -70,11 +70,21 @@ void CTaskMgr::ExecuteTask()
 
 		case TASK_TYPE::CHANGE_LEVEL:
 		{
-		}
+			CLevel* pLevel = (CLevel*)m_vecTask[i].Param_0;
+			LEVEL_STATE NextState = (LEVEL_STATE)m_vecTask[i].Param_1;
 
+			CLevelMgr::GetInst()->ChangeLevel(pLevel);
+			pLevel->ChangeLevelState(NextState);
+		}
+		break;
 		case TASK_TYPE::ASSET_CHANGED:
 		{
 			CAssetMgr::GetInst()->m_Changed = true;
+		}
+		break;
+		case TASK_TYPE::LEVEL_CHANGED:
+		{
+			CLevelMgr::GetInst()->m_LevelChanged = true;
 		}
 		break;
 		}

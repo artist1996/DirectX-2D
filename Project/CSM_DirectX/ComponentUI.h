@@ -12,6 +12,7 @@ public:
     void SetTargetObject(CGameObject* _Target);
 
     CGameObject* GetTargetObject() { return m_TargetObject; }
+
     void Title();
 
 public:

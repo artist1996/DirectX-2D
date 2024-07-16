@@ -32,7 +32,8 @@ private:
     vector<CGameObject*> m_vecMasked;       // 투명, 불투명
     vector<CGameObject*> m_vecTransparent;  // 투명, 반투명
     vector<CGameObject*> m_vecParticles;    // 투명, 반투명, 입자
-    vector<CGameObject*> m_vecPostProcess;
+    vector<CGameObject*> m_vecPostProcess;  // 후처리
+    vector<CGameObject*> m_vecUI;
 
 public:
     void SetPriority(int _Priority) { m_Priority = _Priority; }

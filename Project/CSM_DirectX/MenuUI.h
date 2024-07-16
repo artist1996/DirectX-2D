@@ -17,6 +17,8 @@ private:
     void GameObject();
     void Assets();
 
+    void CreateAnimation();
+
     wstring GetAssetKey(ASSET_TYPE _Type, const wstring& _strKey);
 public:
     MenuUI();

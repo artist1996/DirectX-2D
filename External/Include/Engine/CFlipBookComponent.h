@@ -27,10 +27,17 @@ public:
     void Reset();
     void Binding();
 
+    void SetCurFlipBook(Ptr<CFlipBook> _FlipBook) { m_CurFlipBook = _FlipBook; }
+
     static void Clear();
 
 public:
-    Ptr<CSprite> GetCurSprite() { return m_CurFrmSprite; }
+    Ptr<CSprite>   GetCurSprite()               { return m_CurFrmSprite; }
+    Ptr<CFlipBook> GetFlipBookByIndex(int _Idx) { return m_vecFlipBook[_Idx]; }
+    size_t         GetFlipBookSize()            { return m_vecFlipBook.size(); }
+    Ptr<CFlipBook> GetCurFlipBook()             { return m_CurFlipBook; }
+
+    int GetCurFrameIndex() { return m_CurFrmIdx; }
 
 public:
     virtual void FinalTick() override;

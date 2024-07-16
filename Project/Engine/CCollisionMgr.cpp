@@ -60,6 +60,9 @@ void CCollisionMgr::CollisionBtwLayer(UINT _Left, UINT _Right)
 {
 	CLevel* pCurLevel = CLevelMgr::GetInst()->GetCurrentLevel();
 
+	if (nullptr == pCurLevel)
+		return;
+
 	const vector<CGameObject*>& vecLeft = pCurLevel->GetLayer(_Left)->GetObjects();
 	const vector<CGameObject*>& vecRight = pCurLevel->GetLayer(_Right)->GetObjects();
 

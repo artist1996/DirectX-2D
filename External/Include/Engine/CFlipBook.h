@@ -10,9 +10,9 @@ private:
     vector<Ptr<CSprite>> m_vecSprite;
 
 public:
-    void AddSprite(Ptr<CSprite> _Sprite) { m_vecSprite.push_back(_Sprite); }
-    Ptr<CSprite> GetSprite(int _Idx)     { return m_vecSprite[_Idx]; }
-    int GetMaxFrameCount()               { return (int)m_vecSprite.size(); }
+    void AddSprite(Ptr<CSprite> _Sprite)    { m_vecSprite.push_back(_Sprite); }
+    Ptr<CSprite> GetSprite(int _Idx)        { return m_vecSprite[_Idx]; }
+    int GetMaxFrameCount()                  { return (int)m_vecSprite.size(); }
 
 public:
     virtual int Load(const wstring& _FilePath);

@@ -23,8 +23,8 @@ void EditorUI::Tick()
 		return;
 
 	bool bActive = m_Active;
-		
 
+	// 최상위 부모 UI 인 경우
 	if (nullptr == m_Parent)
 	{
 		// Modaless
@@ -49,7 +49,8 @@ void EditorUI::Tick()
 
 			ImGui::End();
 		}
-		
+
+
 		// Modal
 		else
 		{
@@ -69,7 +70,6 @@ void EditorUI::Tick()
 
 				ImGui::EndPopup();
 			}
-
 			else
 			{
 				if (m_Active != bActive)
@@ -80,7 +80,7 @@ void EditorUI::Tick()
 		}
 	}
 
-	// 자식 타입의 UI인 경우
+	// 자식 타입 UI 인 경우
 	else
 	{
 		if (m_ChildBorder)

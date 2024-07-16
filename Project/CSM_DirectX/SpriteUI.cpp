@@ -53,5 +53,16 @@ void SpriteUI::Update()
 	ImGui::SameLine(100);
 	ImGui::InputFloat2("##Offset", (float*)&vOffset);
 
-	
+	// Background
+	Vec2 vBackgroundUV = pSprite->GetBackgroundUV();
+	Vec2 vBackground = vResolution * vBackgroundUV;
+
+	ImGui::Text("Background");
+	ImGui::SameLine(100);
+	ImGui::InputFloat2("##Background", (float*)&vBackground);
+
+	pSprite->SetLeftTopUV(vLeftTop);
+	pSprite->SetSliceUV(vSlice);
+	pSprite->SetOffsetUV(vOffset);
+	pSprite->SetBackgroundUV(vBackground);
 }

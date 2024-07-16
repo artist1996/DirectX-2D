@@ -145,6 +145,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AnimationEditor.h" />
+    <ClInclude Include="AnimationPopup.h" />
     <ClInclude Include="AssetUI.h" />
     <ClInclude Include="CameraUI.h" />
     <ClInclude Include="CEditorCameraScript.h" />
@@ -154,6 +156,7 @@
     <ClInclude Include="ComponentUI.h" />
     <ClInclude Include="ComputeShaderUI.h" />
     <ClInclude Include="Content.h" />
+    <ClInclude Include="CTestLevel.h" />
     <ClInclude Include="EditorUI.h" />
     <ClInclude Include="FlipBookComUI.h" />
     <ClInclude Include="FlipBookUI.h" />
@@ -177,6 +180,7 @@
     <ClInclude Include="MeshRenderUI.h" />
     <ClInclude Include="MeshUI.h" />
     <ClInclude Include="Outliner.h" />
+    <ClInclude Include="ParamUI.h" />
     <ClInclude Include="ParticleSystemUI.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="PrefabUI.h" />
@@ -190,6 +194,8 @@
     <ClInclude Include="TreeUI.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AnimationEditor.cpp" />
+    <ClCompile Include="AnimationPopup.cpp" />
     <ClCompile Include="AssetUI.cpp" />
     <ClCompile Include="CameraUI.cpp" />
     <ClCompile Include="CEditorCameraScript.cpp" />
@@ -201,6 +207,7 @@
     <ClCompile Include="ComponentUI.cpp" />
     <ClCompile Include="ComputeShaderUI.cpp" />
     <ClCompile Include="Content.cpp" />
+    <ClCompile Include="CTestLevel.cpp" />
     <ClCompile Include="EditorUI.cpp" />
     <ClCompile Include="FlipBookComUI.cpp" />
     <ClCompile Include="FlipBookUI.cpp" />
@@ -223,6 +230,7 @@
     <ClCompile Include="MeshRenderUI.cpp" />
     <ClCompile Include="MeshUI.cpp" />
     <ClCompile Include="Outliner.cpp" />
+    <ClCompile Include="ParamUI.cpp" />
     <ClCompile Include="ParticleSystemUI.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

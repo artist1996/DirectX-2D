@@ -67,6 +67,7 @@ int CTexture::Load(const wstring& _FilePath)
 
 	// Texture 2D 에서 Desc 정보 가져오기
 	m_Tex2D->GetDesc(&m_Desc);
+	SetKey(_FilePath);
 
 	return S_OK;
 }

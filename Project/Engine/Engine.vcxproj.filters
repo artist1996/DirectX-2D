@@ -106,12 +106,6 @@
     <ClInclude Include="CScript.h">
       <Filter>08. Component\Script</Filter>
     </ClInclude>
-    <ClInclude Include="CPlayerScript.h">
-      <Filter>Scripts</Filter>
-    </ClInclude>
-    <ClInclude Include="CCameraMoveScript.h">
-      <Filter>Scripts</Filter>
-    </ClInclude>
     <ClInclude Include="CTexture.h">
       <Filter>06. Asset\05. Texture</Filter>
     </ClInclude>
@@ -126,9 +120,6 @@
     </ClInclude>
     <ClInclude Include="CCollisionMgr.h">
       <Filter>04. Manager\07. CollisionMgr</Filter>
-    </ClInclude>
-    <ClInclude Include="CMissileScript.h">
-      <Filter>Scripts</Filter>
     </ClInclude>
     <ClInclude Include="CFlipBookComponent.h">
       <Filter>08. Component\04. FlipBookComponent</Filter>
@@ -237,12 +228,6 @@
     <ClCompile Include="CScript.cpp">
       <Filter>08. Component\Script</Filter>
     </ClCompile>
-    <ClCompile Include="CPlayerScript.cpp">
-      <Filter>Scripts</Filter>
-    </ClCompile>
-    <ClCompile Include="CCameraMoveScript.cpp">
-      <Filter>Scripts</Filter>
-    </ClCompile>
     <ClCompile Include="CTexture.cpp">
       <Filter>06. Asset\05. Texture</Filter>
     </ClCompile>
@@ -260,9 +245,6 @@
     </ClCompile>
     <ClCompile Include="CCollisionMgr.cpp">
       <Filter>04. Manager\07. CollisionMgr</Filter>
-    </ClCompile>
-    <ClCompile Include="CMissileScript.cpp">
-      <Filter>Scripts</Filter>
     </ClCompile>
     <ClCompile Include="CFlipBookComponent.cpp">
       <Filter>08. Component\04. FlipBookComponent</Filter>
@@ -295,9 +277,6 @@
     </Filter>
     <Filter Include="03. Device">
       <UniqueIdentifier>{184a3517-692c-4690-aa54-512293867645}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Module">
-      <UniqueIdentifier>{9f2f76aa-c5b1-4508-9b1d-84ae6b0a6f34}</UniqueIdentifier>
     </Filter>
     <Filter Include="04. Manager">
       <UniqueIdentifier>{de87a75a-7d47-4e8d-9305-301ea2e740b1}</UniqueIdentifier>
@@ -445,6 +424,9 @@
     </Filter>
     <Filter Include="HLSL\02. Render\03. PostProcess">
       <UniqueIdentifier>{1e562a1d-6dac-4001-9fb0-b5df1dc3409a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Module">
+      <UniqueIdentifier>{9f2f76aa-c5b1-4508-9b1d-84ae6b0a6f34}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

@@ -4,6 +4,8 @@
 #include <Engine/CGameObject.h>
 #include <Engine/CComponent.h>
 
+#include <Engine/CAssetMgr.h>
+
 ComponentUI::ComponentUI(COMPONENT_TYPE _Type)
 	: m_TargetObject(nullptr)
 	, m_Type(_Type)

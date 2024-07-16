@@ -4,6 +4,8 @@
 #include <Engine/CAssetMgr.h>
 #include <Engine/assets.h>
 
+#include "CEditorMgr.h"
+
 MenuUI::MenuUI()
 {
 }
@@ -113,8 +115,26 @@ void MenuUI::Assets()
 			pMtrl->Save(Key);
 		}
 
+		if (ImGui::MenuItem("Create Empty Sprite"))
+		{
+			Ptr<CSprite> pSprite = new CSprite;
+			wstring Key = GetAssetKey(ASSET_TYPE::SPRITE, L"Default Sprite");
+			CAssetMgr::GetInst()->AddAsset(Key, pSprite);			
+			pSprite->Save(Key);
+		}
+
+		if (ImGui::MenuItem("Create Animation"))
+		{
+			CreateAnimation();
+		}
+
 		ImGui::EndMenu();
 	}
+}
+
+void MenuUI::CreateAnimation()
+{
+	CEditorMgr::GetInst()->FindEditorUI("Input Animation Name")->SetActive(true);
 }
 
 wstring MenuUI::GetAssetKey(ASSET_TYPE _Type, const wstring& _strKey)
@@ -148,7 +168,7 @@ wstring MenuUI::GetAssetKey(ASSET_TYPE _Type, const wstring& _strKey)
 	for (UINT i = 0; i < 0xffffffff; ++i)
 	{
 		swprintf_s(szKey, 255, strKey.c_str(), i);
-
+		
 		if (false == std::filesystem::exists(FilePath + szKey))
 		{
 			break;
