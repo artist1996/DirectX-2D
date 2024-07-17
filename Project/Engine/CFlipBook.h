@@ -18,6 +18,7 @@ public:
     virtual int Load(const wstring& _FilePath);
     virtual int Save(const wstring& _FilePath);
 
+
 public:
     CFlipBook();
     virtual ~CFlipBook();

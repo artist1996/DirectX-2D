@@ -115,6 +115,9 @@
     <Filter Include="02. EditorUI\08. Module">
       <UniqueIdentifier>{9b52670b-82ac-4e28-85b1-9cd5629b7ef3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. EditorUI\01. Inspector\ComponentUI\09. ScriptUI">
+      <UniqueIdentifier>{f358d56f-0a80-4be6-8734-8f1edbc930d6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CGameObjectEx.h">
@@ -249,14 +252,17 @@
     <ClInclude Include="CTestLevel.h">
       <Filter>01. Manager\02. TestLevel</Filter>
     </ClInclude>
-    <ClInclude Include="AnimationEditor.h">
-      <Filter>02. EditorUI\07. Animation Editor</Filter>
-    </ClInclude>
     <ClInclude Include="AnimationPopup.h">
       <Filter>02. EditorUI\07. Animation Editor\01. Popup</Filter>
     </ClInclude>
     <ClInclude Include="ParamUI.h">
       <Filter>02. EditorUI\08. Module</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationEditor.h">
+      <Filter>02. EditorUI\07. Animation Editor\02. Sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="ScriptUI.h">
+      <Filter>02. EditorUI\01. Inspector\ComponentUI\09. ScriptUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -387,14 +393,17 @@
     <ClCompile Include="CTestLevel.cpp">
       <Filter>01. Manager\02. TestLevel</Filter>
     </ClCompile>
-    <ClCompile Include="AnimationEditor.cpp">
-      <Filter>02. EditorUI\07. Animation Editor</Filter>
-    </ClCompile>
     <ClCompile Include="AnimationPopup.cpp">
       <Filter>02. EditorUI\07. Animation Editor\01. Popup</Filter>
     </ClCompile>
     <ClCompile Include="ParamUI.cpp">
       <Filter>02. EditorUI\08. Module</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationEditor.cpp">
+      <Filter>02. EditorUI\07. Animation Editor\02. Sprite</Filter>
+    </ClCompile>
+    <ClCompile Include="ScriptUI.cpp">
+      <Filter>02. EditorUI\01. Inspector\ComponentUI\09. ScriptUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

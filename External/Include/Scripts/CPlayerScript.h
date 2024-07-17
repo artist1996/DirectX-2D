@@ -5,7 +5,8 @@ class CPlayerScript :
     public CScript
 {
 private:
-    float m_Speed;
+    float         m_Speed;
+    Ptr<CTexture> m_Texture;
 
 public:
     virtual void Tick() override;

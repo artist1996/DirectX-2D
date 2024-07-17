@@ -11,7 +11,8 @@ private:
 public:
     void SetTargetObject(CGameObject* _Target);
 
-    CGameObject* GetTargetObject() { return m_TargetObject; }
+    CGameObject* GetTargetObject()      { return m_TargetObject; }
+    COMPONENT_TYPE GetComponentUIType() { return m_Type; }
 
     void Title();
 

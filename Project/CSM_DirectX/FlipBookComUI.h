@@ -4,6 +4,8 @@ class FlipBookComUI :
     public ComponentUI
 {
 private:
+    UINT m_UIHeight;
+    int  m_Idx;
 
 public:
     virtual void Update() override;

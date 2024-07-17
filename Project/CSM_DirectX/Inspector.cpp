@@ -11,6 +11,7 @@
 #include <Engine/CGameObject.h>
 
 #include "AssetUI.h"
+#include "ScriptUI.h"
 
 Inspector::Inspector()
 	: m_TargetObject(nullptr)
@@ -28,6 +29,8 @@ void Inspector::Update()
 {
 	if (nullptr == m_TargetObject)
 		return;
+
+	SetTargetObject(m_TargetObject);
 
 	// Target Object Name
 	string strObjectName = string(m_TargetObject->GetName().begin(), m_TargetObject->GetName().end());
@@ -83,6 +86,32 @@ void Inspector::SetTargetObject(CGameObject* _Target)
 		m_arrComUI[i]->SetTargetObject(_Target);
 	}
 
+	if (nullptr == m_TargetObject)
+	{
+		for (size_t i = 0; i < m_vecScriptUI.size(); ++i)
+		{
+			m_vecScriptUI[i]->SetTargetScript(nullptr);
+		}
+	}
+	else
+	{
+		const vector<CScript*>& vecScripts = m_TargetObject->GetScripts();
+
+		if (m_vecScriptUI.size() < vecScripts.size())
+		{
+			CreateScriptUI(UINT(vecScripts.size() - m_vecScriptUI.size()));
+		}
+
+		for (size_t i = 0; i < m_vecScriptUI.size(); ++i)
+		{
+			if (i < vecScripts.size())
+				m_vecScriptUI[i]->SetTargetScript(vecScripts[i]);
+			else
+				m_vecScriptUI[i]->SetTargetScript(nullptr);
+		}
+	}
+
+	// AssetUI 비활성화
 	m_TargetAsset = nullptr;
 
 	for (UINT i = 0; i < (UINT)ASSET_TYPE::END; ++i)

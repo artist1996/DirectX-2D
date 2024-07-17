@@ -69,13 +69,13 @@ void CEditorMgr::ImGuiTick()
 
 void CEditorMgr::ShortCut()
 {
-	if (KEY_TAP(KEY::I))
-	{
-		EditorUI* pUI = FindEditorUI("Inspector");
-		
-		if (pUI->IsActive())
-			pUI->SetActive(false);
-		else
-			pUI->SetActive(true);
-	}
+	//if (KEY_TAP(KEY::I))
+	//{
+	//	EditorUI* pUI = FindEditorUI("Inspector");
+	//	
+	//	if (pUI->IsActive())
+	//		pUI->SetActive(false);
+	//	else
+	//		pUI->SetActive(true);
+	//}
 }

@@ -25,6 +25,8 @@
 #include "GraphicShaderUI.h"
 #include "ComputeShaderUI.h"
 
+#include "ScriptUI.h"
+
 void Inspector::Init()
 {
 	CreateComponentUI();
@@ -143,4 +145,19 @@ void Inspector::CreateAssetUI()
 	pUI->SetName("ComputeShaderUI");
 	AddChild(pUI);
 	m_arrAssetUI[(UINT)ASSET_TYPE::COMPUTE_SHADER] = pUI;
+}
+
+void Inspector::CreateScriptUI(UINT _Count)
+{
+	for (UINT i = 0; i < _Count; ++i)
+	{
+		ScriptUI* pScriptUI = new ScriptUI;
+		
+		char szScriprtUIName[255] = {};
+		sprintf_s(szScriprtUIName, 255, "ScriptUI##%d", (int)m_vecScriptUI.size());
+		pScriptUI->SetName(szScriprtUIName);
+
+		AddChild(pScriptUI);
+		m_vecScriptUI.push_back(pScriptUI);
+	}
 }

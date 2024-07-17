@@ -91,7 +91,7 @@ void AnimationEditor::ShowTextureImage()
 	ImVec2 Image_RB = ImGui::GetItemRectMax();
 
 	ImDrawList* Draw_List = ImGui::GetWindowDrawList();
-
+	ImVec2 window_scroll = ImVec2(ImGui::GetScrollX(), ImGui::GetScrollY());
 	if (ImGui::IsItemHovered())
 	{
 		ImVec2 CurMousePos = ImGui::GetMousePos();
@@ -100,7 +100,7 @@ void AnimationEditor::ShowTextureImage()
 		{
 			m_StartPos = CurMousePos;
 		}
-
+	
 		if (ImGui::IsMouseDown(ImGuiMouseButton_Right))
 		{
 			m_LT.x = m_StartPos.x - Image_LT.x;
@@ -113,9 +113,9 @@ void AnimationEditor::ShowTextureImage()
 
 			m_LeftTopPos = ImVec2(Image_LT.x + m_LT.x, Image_LT.y + m_LT.y);
 			m_SlicePos = ImVec2(Image_LT.x + m_RB.x, Image_LT.y + m_RB.y);
-			Draw_List->AddRect(m_LeftTopPos, m_SlicePos, IM_COL32(0, 255, 0, 255));
+			Draw_List->AddRect(m_LeftTopPos, m_SlicePos, IM_COL32(0, 255, 0, 255), 0.f, 0, 2.f);
 		}
-
+		
 		if (ImGui::IsMouseReleased(ImGuiMouseButton_Right))
 		{
 			Vec2 SliceSize = Vec2(m_RB.x - m_LT.x, m_RB.y - m_LT.y);
@@ -124,7 +124,7 @@ void AnimationEditor::ShowTextureImage()
 		}
 	}
 
-	Draw_List->AddRect(m_LeftTopPos, m_SlicePos, IM_COL32(0, 255, 0, 255));
+	Draw_List->AddRect(m_LeftTopPos, m_SlicePos, IM_COL32(0, 255, 0, 255), 0.f, 0, 2.f);
 }
 
 void AnimationEditor::OpenLoadTexture()
@@ -168,19 +168,30 @@ void AnimationEditor::OpenLoadTexture()
 
 void AnimationEditor::EditSprite()
 {
-	if (ImGui::Button("Edit", ImVec2(50.f, 40.f)))
+	if (ImGui::Button("Add", ImVec2(50.f, 40.f)))
 	{
-		if (nullptr == m_TargetSprite->GetAtlasTexture())
+		if (nullptr == m_TargetSprite->GetAtlasTexture()
+			|| m_strSpriteName.empty())
 			return;
 
 		CAssetMgr::GetInst()->AddAsset(wstring(m_strSpriteName.begin(), m_strSpriteName.end()), m_TargetSprite);
 		m_Animation->AddSprite(m_TargetSprite);
 		Deactivate();
 	}
+
+	ImGui::SameLine(65);
+
+	if (ImGui::Button("Cancel", ImVec2(50.f, 40.f)))
+	{
+		Deactivate();
+	}
 }
 
 void AnimationEditor::InputSpriteName()
 {
+	if (nullptr == m_Texture)
+		return;
+
 	char szName[255] = {};
 	ImGui::Text("Input Name");
 	ImGui::SameLine();
@@ -193,7 +204,8 @@ void AnimationEditor::InputSpriteName()
 
 void AnimationEditor::SpriteInfo()
 {
-	if (nullptr == m_TargetSprite->GetAtlasTexture())
+	if (nullptr == m_TargetSprite
+		|| nullptr == m_TargetSprite->GetAtlasTexture())
 		return;
 
 	Vec2 vResolution = Vec2((float)m_TargetSprite->GetAtlasTexture()->Width(), (float)m_TargetSprite->GetAtlasTexture()->Height());

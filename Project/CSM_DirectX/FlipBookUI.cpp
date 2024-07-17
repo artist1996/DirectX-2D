@@ -1,8 +1,11 @@
 #include "pch.h"
 #include "FlipBookUI.h"
 
+#include <Engine/CPathMgr.h>
+
 #include "CEditorMgr.h"
 #include "AnimationEditor.h"
+
 
 FlipBookUI::FlipBookUI()
 	: AssetUI(ASSET_TYPE::FLIPBOOK)
@@ -29,13 +32,17 @@ void FlipBookUI::Update()
 
 		Ptr<CSprite> pSprite = pAnimation->GetSprite(Idx);
 
+		Vec2 vResolution = Vec2((float)pSprite->GetAtlasTexture()->Width(), (float)pSprite->GetAtlasTexture()->Height());
+		Vec2 vBackgroundUV = pSprite->GetBackgroundUV();
+		Vec2 vBackground = vResolution * vBackgroundUV;
+
 		ImVec2 uv_min = ImVec2(pSprite->GetLeftTopUV().x, pSprite->GetLeftTopUV().y);
 		ImVec2 uv_max = ImVec2(uv_min.x + pSprite->GetSliceUV().x, uv_min.y + pSprite->GetSliceUV().y);
 
 		ImVec4 tint_col = ImVec4(1.0f, 1.0f, 1.0f, 1.0f);
 		ImVec4 border_col = ImVec4(0.7f, 0.7f, 0.7f, 1.0f);
 
-		ImGui::Image(pSprite->GetAtlasTexture()->GetSRV().Get(), ImVec2(150.f, 150.f), uv_min, uv_max, tint_col, border_col);
+		ImGui::Image(pSprite->GetAtlasTexture()->GetSRV().Get(), ImVec2(vBackground.x, vBackground.y), uv_min, uv_max, tint_col, border_col);
 
 		// Name
 		ImGui::Text("Name");
@@ -52,12 +59,11 @@ void FlipBookUI::Update()
 
 		// LeftTop
 		Vec2 vLeftTopUV = pSprite->GetLeftTopUV();
-		Vec2 vResolution = Vec2((float)pSprite->GetAtlasTexture()->Width(), (float)pSprite->GetAtlasTexture()->Height());
 		Vec2 vLeftTop = vResolution * vLeftTopUV;
 
 		ImGui::Text("LeftTop");
 		ImGui::SameLine(100);
-		ImGui::InputFloat2("##LeftTop", (float*)&vLeftTop);
+		ImGui::DragFloat2("##LeftTop", (float*)&vLeftTop);
 
 		// Slice
 		Vec2 vSliceUV = pSprite->GetSliceUV();
@@ -65,7 +71,7 @@ void FlipBookUI::Update()
 
 		ImGui::Text("Slice");
 		ImGui::SameLine(100);
-		ImGui::InputFloat2("##Slice", (float*)&vSlice);
+		ImGui::DragFloat2("##Slice", (float*)&vSlice);
 
 		// Offset
 		Vec2 vOffsetUV = pSprite->GetOffsetUV();
@@ -73,15 +79,12 @@ void FlipBookUI::Update()
 
 		ImGui::Text("Offset");
 		ImGui::SameLine(100);
-		ImGui::InputFloat2("##Offset", (float*)&vOffset);
+		ImGui::DragFloat2("##Offset", (float*)&vOffset);
 
 		// Background
-		Vec2 vBackgroundUV = pSprite->GetBackgroundUV();
-		Vec2 vBackground = vResolution * vBackgroundUV;
-
 		ImGui::Text("Background");
 		ImGui::SameLine(100);
-		ImGui::InputFloat2("##Background", (float*)&vBackground);
+		ImGui::DragFloat2("##Background", (float*)&vBackground);
 
 		pSprite->SetLeftTopUV(vLeftTop);
 		pSprite->SetSliceUV(vSlice);
@@ -113,6 +116,8 @@ void FlipBookUI::Update()
 
 		AddFrame();
 	}
+
+	Save();
 }
 
 void FlipBookUI::AddFrame()
@@ -126,5 +131,74 @@ void FlipBookUI::AddFrame()
 		pEditor->SetAnimation((CFlipBook*)GetAsset().Get());
 
 		pEditor->SetActive(true);
+	}
+}
+
+void FlipBookUI::Save()
+{
+	ImGui::SameLine(100);
+
+	Ptr<CFlipBook> pAnimation = (CFlipBook*)GetAsset().Get();
+
+	if (0 == pAnimation->GetMaxFrameCount())
+		return;
+
+	if (ImGui::Button("Save", ImVec2(50.f, 20.f)))
+	{
+		wchar_t szSelect[256] = {};
+		wchar_t szFileTitle[256] = {};
+
+		OPENFILENAME ofn = {};
+		ofn.lStructSize = sizeof(ofn);
+		ofn.hwndOwner = nullptr;
+		ofn.lpstrFile = szSelect;
+		ofn.lpstrFile[0] = '\0';
+		ofn.nMaxFile = sizeof(szSelect);
+		ofn.lpstrFilter = L"FLIP\0*.flip";
+		ofn.nFilterIndex = 0;
+		ofn.lpstrFileTitle = NULL;
+		ofn.nMaxFileTitle = 0;
+
+		// 탐색창 초기 위치 지정
+		wstring strInitPath = CPathMgr::GetInst()->GetContentPath();
+		strInitPath += L"Animation\\";
+		ofn.lpstrInitialDir = strInitPath.c_str();
+
+		ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
+
+		if (GetSaveFileName(&ofn))
+		{
+			UINT SpriteCount = pAnimation->GetMaxFrameCount();
+
+			for (UINT i = 0; i < SpriteCount; ++i)
+			{
+				wchar_t szKey[255] = {};
+				swprintf_s(szKey, 255, L"%s%d.sprite", pAnimation->GetKey().c_str(), i);
+				
+				wstring FilePath = CPathMgr::GetInst()->GetContentPath();
+
+				std::filesystem::path RelativePath = std::filesystem::relative(szSelect, FilePath);
+				wstring strRelativePath = RelativePath;
+
+				wchar_t szBuff[255] = {};
+				swprintf_s(szBuff, 255, L"%s", strRelativePath.c_str());
+
+				for (size_t i = strRelativePath.length() - 1; 0 < i; --i)
+				{
+					if (L'\\' == szBuff[i])
+					{
+						szBuff[i] = L'\0';
+						break;
+					}
+				}
+
+				wstring strFinalPath = szBuff + wstring(L"\\") + szKey;
+				
+				pAnimation->GetSprite(i)->SetRelativePath(strFinalPath);
+				pAnimation->GetSprite(i)->Save(FilePath + strFinalPath);
+			}
+
+			pAnimation->Save(szSelect);
+		}
 	}
 }

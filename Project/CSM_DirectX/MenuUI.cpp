@@ -3,7 +3,12 @@
 
 #include <Engine/CAssetMgr.h>
 #include <Engine/assets.h>
+#include <Engine/CGameObject.h>
+#include <Engine/CScript.h>
 
+#include <Scripts/CScriptMgr.h>
+
+#include "Inspector.h"
 #include "CEditorMgr.h"
 
 MenuUI::MenuUI()
@@ -99,6 +104,8 @@ void MenuUI::GameObject()
 			ImGui::EndMenu();
 		}
 
+		AddScript();
+
 		ImGui::EndMenu();
 	}
 }
@@ -126,6 +133,33 @@ void MenuUI::Assets()
 		if (ImGui::MenuItem("Create Animation"))
 		{
 			CreateAnimation();
+		}
+
+		ImGui::EndMenu();
+	}
+}
+
+void MenuUI::AddScript()
+{
+	if (ImGui::BeginMenu("Add Script"))
+	{
+		vector<wstring> vecScriptsName;
+		CScriptMgr::GetScriptInfo(vecScriptsName);
+
+		for (size_t i = 0; i < vecScriptsName.size(); ++i)
+		{
+			if (ImGui::MenuItem(string(vecScriptsName[i].begin(), vecScriptsName[i].end()).c_str()))
+			{
+				Inspector* pInspector = (Inspector*)CEditorMgr::GetInst()->FindEditorUI("Inspector");
+
+				CGameObject* pObject = pInspector->GetTargetObject();
+
+				if (nullptr != pObject)
+				{
+					CScript* pScript = CScriptMgr::GetScript(vecScriptsName[i]);
+					pObject->AddComponent(pScript);
+				}
+			}	
 		}
 
 		ImGui::EndMenu();

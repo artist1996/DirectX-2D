@@ -10,6 +10,7 @@ public:
 
 private:
     void AddFrame();
+    void Save();
 
 public:
     FlipBookUI();

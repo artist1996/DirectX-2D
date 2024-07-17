@@ -237,8 +237,8 @@ void CAssetMgr::CreateEngineSprite()
 	wstring strCotentPath = CPathMgr::GetInst()->GetContentPath();
 	
 	Ptr<CFlipBook> pFlipBook = new CFlipBook;
-	Load<CFlipBook>(L"Link_MoveDown", L"Animation\\Link_MoveDown.flip");
-
+	Load<CFlipBook>(L"Link_MoveDown", L"Animation\\player\\Link_MoveDown.flip");
+	Load<CFlipBook>(L"Link_MoveRight", L"Animation\\player\\Link_MoveRight.flip");
 	//pFlipBook->Load(strCotentPath + L"Animation\\" + L"Link_MoveDown" + L".flip");
 	//
 	//AddAsset(L"Link_MoveDown", pFlipBook);
