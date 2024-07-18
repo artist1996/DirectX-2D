@@ -28,7 +28,7 @@ void CTestLevel::CreateTestLevel()
 	pAlphaBlendMtrl->SetTexParam(TEX_0, pTexture);
 
 	CLevel* pLevel = new CLevel;
-	ChangeLevel(pLevel, PLAY);
+	ChangeLevel(pLevel, STOP);
 
 	CGameObject* CamObj = new CGameObject;
 	CamObj->SetName(L"MainCamera");

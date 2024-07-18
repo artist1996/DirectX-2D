@@ -169,33 +169,22 @@ void FlipBookUI::Save()
 		if (GetSaveFileName(&ofn))
 		{
 			UINT SpriteCount = pAnimation->GetMaxFrameCount();
+			wstring FilePath = CPathMgr::GetInst()->GetContentPath();
 
 			for (UINT i = 0; i < SpriteCount; ++i)
 			{
 				wchar_t szKey[255] = {};
 				swprintf_s(szKey, 255, L"%s%d.sprite", pAnimation->GetKey().c_str(), i);
-				
-				wstring FilePath = CPathMgr::GetInst()->GetContentPath();
 
-				std::filesystem::path RelativePath = std::filesystem::relative(szSelect, FilePath);
-				wstring strRelativePath = RelativePath;
+				// 상대 경로 계산
+				std::filesystem::path FullPath(szSelect);
+				std::filesystem::path BaseDir(FilePath);
+				std::filesystem::path RelativePath = std::filesystem::relative(FullPath, BaseDir);
 
-				wchar_t szBuff[255] = {};
-				swprintf_s(szBuff, 255, L"%s", strRelativePath.c_str());
+				// 새로운 파일명 생성
+				RelativePath.replace_filename(szKey);
 
-				for (size_t i = strRelativePath.length() - 1; 0 < i; --i)
-				{
-					if (L'\\' == szBuff[i])
-					{
-						szBuff[i] = L'\0';
-						break;
-					}
-				}
-
-				wstring strFinalPath = szBuff + wstring(L"\\") + szKey;
-				
-				pAnimation->GetSprite(i)->SetRelativePath(strFinalPath);
-				pAnimation->GetSprite(i)->Save(FilePath + strFinalPath);
+				pAnimation->GetSprite(i)->Save(RelativePath.wstring());
 			}
 
 			pAnimation->Save(szSelect);

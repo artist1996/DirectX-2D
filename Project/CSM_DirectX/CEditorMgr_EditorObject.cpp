@@ -19,6 +19,9 @@ void CEditorMgr::CreateEditorObject()
 	pEditorCamera->Camera()->SetFar(100000.f);
 	pEditorCamera->Camera()->SetProjType(ORTHOGRAPHIC);
 
+	//CGameObject* pCloneEditorCamera = pEditorCamera->Clone();
+	//delete pEditorCamera;
+
 	m_vecEditorObject.push_back(pEditorCamera);
 	CRenderMgr::GetInst()->RegisterEditorCamera(pEditorCamera->Camera());
 }

@@ -57,6 +57,7 @@ void FlipBookComUI::Update()
 		pList->AddDelegate(this, (DELEGATE_1)&FlipBookComUI::SelectFlipBook);
 
 		// AssetMgr 로 부터 Mesh Key 값 들고오기
+		
 		vector<string> vecFlipBookNames;
 		CAssetMgr::GetInst()->GetAssetNames(ASSET_TYPE::FLIPBOOK, vecFlipBookNames);
 		pList->AddList(vecFlipBookNames);

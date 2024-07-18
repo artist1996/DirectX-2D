@@ -28,7 +28,7 @@ public:
 
 public:
     virtual int Load(const wstring& _FilePath) override;
-    virtual int Save(const wstring& _FilePath) override;
+    virtual int Save(const wstring& _strRelativePath) override;
 
 public:
     CSprite();

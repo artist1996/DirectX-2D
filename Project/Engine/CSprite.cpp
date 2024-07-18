@@ -48,12 +48,17 @@ void CSprite::Create(Ptr<CTexture> _Atlas, Vec2 _LeftTopPixel, Vec2 _SlicePixel)
 	m_SliceUV = Vec2(_SlicePixel.x / (float)Width, _SlicePixel.y / (float)Height);
 }
 
-int CSprite::Save(const wstring& _FilePath)
+int CSprite::Save(const wstring& _strRelativePath)
 {
+	SetRelativePath(_strRelativePath);
+
 	// 파일 개방
 	FILE* pFile = nullptr;
 
-	_wfopen_s(&pFile, _FilePath.c_str(), L"wb");
+	wstring strFilePath = CPathMgr::GetInst()->GetContentPath();
+	strFilePath += _strRelativePath;
+
+	_wfopen_s(&pFile, strFilePath.c_str(), L"wb");
 
 	if (nullptr == pFile)
 		return E_FAIL;

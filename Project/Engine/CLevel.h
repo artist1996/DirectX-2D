@@ -33,6 +33,7 @@ public:
 public:
     virtual CLevel* Clone() { return new CLevel(*this); }
     CLevel();
+    CLevel(const CLevel& _Origin);
     virtual ~CLevel();
 
     friend class CTaskMgr;

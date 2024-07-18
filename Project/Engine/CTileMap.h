@@ -46,6 +46,7 @@ public:
 public:
     CLONE(CTileMap);
     CTileMap();
+    CTileMap(const CTileMap& _Origin);
     virtual ~CTileMap();
 };
 

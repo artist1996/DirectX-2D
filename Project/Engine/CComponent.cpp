@@ -7,6 +7,13 @@ CComponent::CComponent(COMPONENT_TYPE _Type)
 {
 }
 
+CComponent::CComponent(const CComponent& _Origin)
+	: CEntity(_Origin)
+	, m_Owner(nullptr)
+	, m_Type(_Origin.m_Type)
+{
+}
+
 CComponent::~CComponent()
 {
 }

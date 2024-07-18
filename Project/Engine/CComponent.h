@@ -34,6 +34,7 @@ private:
 public:
     virtual CComponent* Clone() PURE;
     CComponent(COMPONENT_TYPE _Type);
+    CComponent(const CComponent& _Origin);
     virtual ~CComponent();
 
     friend class CGameObject;

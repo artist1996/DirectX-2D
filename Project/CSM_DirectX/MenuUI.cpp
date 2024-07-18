@@ -126,7 +126,7 @@ void MenuUI::Assets()
 		{
 			Ptr<CSprite> pSprite = new CSprite;
 			wstring Key = GetAssetKey(ASSET_TYPE::SPRITE, L"Default Sprite");
-			CAssetMgr::GetInst()->AddAsset(Key, pSprite);			
+			CAssetMgr::GetInst()->AddAsset(Key, pSprite);
 			pSprite->Save(Key);
 		}
 

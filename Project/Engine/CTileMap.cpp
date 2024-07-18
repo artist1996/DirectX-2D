@@ -21,6 +21,25 @@ CTileMap::CTileMap()
 	m_Buffer = new CStructuredBuffer;
 }
 
+CTileMap::CTileMap(const CTileMap& _Origin)
+	: CRenderComponent(_Origin)
+	, m_Row(_Origin.m_Row)
+	, m_Col(_Origin.m_Col)
+	, m_TileSize(_Origin.m_TileSize)
+	, m_TileAtlas(_Origin.m_TileAtlas)
+	, m_AtlasResolution(_Origin.m_AtlasResolution)
+	, m_AtlasTileSize(_Origin.m_AtlasTileSize)
+	, m_AtlasSliceUV(_Origin.m_AtlasSliceUV)
+	, m_AtlasMaxRow(_Origin.m_AtlasMaxRow)
+	, m_AtlasMaxCol(_Origin.m_AtlasMaxCol)
+	, m_vecTileInfo(_Origin.m_vecTileInfo)
+	, m_Buffer(nullptr)
+{
+	m_Buffer = new CStructuredBuffer;
+
+	SetRowCol(m_Row, m_Col);
+}
+
 CTileMap::~CTileMap()
 {
 	delete m_Buffer;

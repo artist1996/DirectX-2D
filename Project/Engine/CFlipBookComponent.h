@@ -26,7 +26,7 @@ public:
     void Play(int _FlipBookIdx, float _FPS, bool _Repeat);
     void Reset();
     void Binding();
-
+    
     void SetCurFlipBook(Ptr<CFlipBook> _FlipBook) { m_CurFlipBook = _FlipBook; }
 
     static void Clear();
@@ -36,6 +36,7 @@ public:
     Ptr<CFlipBook> GetFlipBookByIndex(int _Idx) { return m_vecFlipBook[_Idx]; }
     size_t         GetFlipBookSize()            { return m_vecFlipBook.size(); }
     Ptr<CFlipBook> GetCurFlipBook()             { return m_CurFlipBook; }
+    const vector<Ptr<CFlipBook>> GetFlipBook() { return m_vecFlipBook; }
 
     int GetCurFrameIndex() { return m_CurFrmIdx; }
 
@@ -45,6 +46,7 @@ public:
 public:
     CLONE(CFlipBookComponent);
     CFlipBookComponent();
+    CFlipBookComponent(const CFlipBookComponent& _Origin);
     virtual ~CFlipBookComponent();
 };
 
