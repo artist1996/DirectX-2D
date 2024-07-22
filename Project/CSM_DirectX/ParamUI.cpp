@@ -205,3 +205,68 @@ bool ParamUI::InputTexture(Ptr<CTexture>& _CurTex, const string& _Desc, EditorUI
 
 	return false;
 }
+
+bool ParamUI::InputPrefab(Ptr<CPrefab>& _CurPref, const string& _Desc, EditorUI* _Inst, DELEGATE_1 _MemFunc)
+{
+	Ptr<CPrefab> CurPrefab = _CurPref;
+
+	ImGui::Text(_Desc.c_str());
+	ImGui::SameLine(120);
+
+	string PrefabName;
+
+	if (CurPrefab.Get())
+		PrefabName = string(CurPrefab->GetKey().begin(), CurPrefab->GetKey().end());
+
+	char szID[255] = {};
+	sprintf_s(szID, 255, "##PrefabKey%d", g_ID++);
+
+	ImGui::SetNextItemWidth(150.f);
+	ImGui::InputText(szID, (char*)PrefabName.c_str(), ImGuiInputTextFlags_ReadOnly);
+
+	if (ImGui::BeginDragDropTarget())
+	{
+		const ImGuiPayload* Payload = ImGui::AcceptDragDropPayload("ContentTree");
+		if (Payload)
+		{
+			TreeNode** ppNode = (TreeNode**)Payload->Data;
+			TreeNode* pNode = *ppNode;
+
+			Ptr<CAsset> pAsset = (CAsset*)pNode->GetData();
+			if (ASSET_TYPE::PREFAB == pAsset->GetAssetType())
+			{
+				_CurPref = ((CPrefab*)pAsset.Get());
+			}
+		}
+
+		ImGui::EndDragDropTarget();
+	}
+
+	// DragDrop 으로 원본 텍스쳐가 바뀐경우
+	if (CurPrefab != _CurPref)
+		return true;
+
+	// List Button
+	if (nullptr == _Inst && nullptr == _MemFunc)
+		return false;
+
+	sprintf_s(szID, 255, "##InputBtn%d", g_ID++);
+
+	ImGui::SameLine();
+
+	if (ImGui::Button(szID, ImVec2(18.f, 18.f)))
+	{
+		ListUI* pListUI = (ListUI*)CEditorMgr::GetInst()->FindEditorUI("List");
+		pListUI->SetName("Prefab");
+		vector<string> vecPrefabNames;
+		CAssetMgr::GetInst()->GetAssetNames(ASSET_TYPE::PREFAB, vecPrefabNames);
+		pListUI->AddList(vecPrefabNames);
+		pListUI->AddDelegate(_Inst, (DELEGATE_1)_MemFunc);
+		pListUI->SetActive(true);
+
+		return true;
+	}
+
+
+	return false;
+}

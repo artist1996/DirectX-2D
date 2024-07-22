@@ -7,12 +7,20 @@ CPlayerScript::CPlayerScript()
 	: CScript(SCRIPT_TYPE::PLAYERSCRIPT)
 	, m_Speed(500.f)
 	, m_Texture(nullptr)
+	, m_MissilePref(nullptr)
 {
-	AddScriptParam(SCRIPT_PARAM::FLOAT, &m_Speed, "PlayerSpeed");
+	AddScriptParam(SCRIPT_PARAM::FLOAT,"PlayerSpeed", &m_Speed);
+	AddScriptParam(SCRIPT_PARAM::PREFAB, "Missile", &m_MissilePref);
 }
 
 CPlayerScript::~CPlayerScript()
 {
+}
+
+void CPlayerScript::Begin()
+{
+	MeshRender()->GetDynamicMaterial();
+	//m_MissilePref = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"MissilePref");
 }
 
 void CPlayerScript::Tick()
@@ -29,25 +37,10 @@ void CPlayerScript::Tick()
 		vPos.y -= m_Speed * DT;
 	if (KEY_TAP(KEY::SPACE))
 	{
-		//DrawDebugCircle(Transform()->GetRelativePos(), 100.f, Vec4(0.f, 1.f, 0.f, 1.f), 3.f, false);
-		//DrawDebugRect(Transform()->GetWorldMatrix(), Vec4(0.f, 1.f, 0.f, 1.f), 3.f, true);
-
-		CGameObject* pMissile = new CGameObject;
-		pMissile->AddComponent(new CTransform);
-		pMissile->AddComponent(new CMeshRender);
-		pMissile->AddComponent(new CCollider2D);
-		pMissile->AddComponent(new CMissileScript);
-
-		Vec3 vMissilePos = Transform()->GetRelativePos();
-		vMissilePos.y += Transform()->GetRelativeScale().y / 2.f;
-
-		pMissile->Transform()->SetRelativePos(vMissilePos);
-		pMissile->Transform()->SetRelativeScale(Vec3(50.f, 50.f, 1.f));
-
-		pMissile->Collider2D()->SetScale(Vec3(1.f, 1.f, 1.f));
-
-		CreateObject(pMissile, 5);
+		if (nullptr != m_MissilePref)
+			Instantiate(m_MissilePref, 5, Transform()->GetWorldPos(), L"Missile");
 	}
+
 	if (KEY_PRESSED(KEY::Z))
 	{
 		//MeshRender()->GetMaterial()->SetScalarParam(INT_0, 1);
@@ -60,6 +53,11 @@ void CPlayerScript::Tick()
 	else
 	{
 		MeshRender()->GetMaterial()->SetScalarParam(INT_0, 0);
+	}
+
+	if (KEY_TAP(KEY::C))
+	{
+		Rigidbody()->Jump();
 	}
 
 	Transform()->SetRelativePos(vPos);

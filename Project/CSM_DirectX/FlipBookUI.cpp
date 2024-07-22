@@ -28,6 +28,9 @@ void FlipBookUI::Update()
 	// Cur Sprite Image
 	if (0 != pAnimation->GetMaxFrameCount())
 	{
+		if (Idx >= pAnimation->GetMaxFrameCount())
+			Idx = 0;
+
 		ImGui::Text("Sprite");
 
 		Ptr<CSprite> pSprite = pAnimation->GetSprite(Idx);

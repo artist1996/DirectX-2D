@@ -7,7 +7,7 @@
 //#include "CCollider3D.h"
 #include "CFlipBookComponent.h"
 //#include "CAnimator3D.h"
-//#include "CRigidBody.h"
+#include "CRigidbody.h"
 #include "CCamera.h"
 //#include "CStateMachine.h"
 

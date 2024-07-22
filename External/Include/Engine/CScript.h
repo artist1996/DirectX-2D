@@ -14,13 +14,14 @@ enum class SCRIPT_PARAM
     VEC3,
     VEC4,
     TEXTURE,
+    PREFAB,
 };
 
 struct tScriptParam
 {
     SCRIPT_PARAM Type;
-    void*        pData;
     string       strDesc;
+    void*        pData;
     DWORD_PTR    Param0;
     DWORD_PTR    Param1;
 };
@@ -33,16 +34,18 @@ private:
     vector<tScriptParam> m_vecScriptParam;
 
 protected:
-    void AddScriptParam(SCRIPT_PARAM _Type, void* _pData, const string& _strDesc, DWORD_PTR _Param0 = 0, DWORD_PTR _Param1 = 0)
+    void AddScriptParam(SCRIPT_PARAM _Type, const string& _strDesc, void* _pData, DWORD_PTR _Param0 = 0, DWORD_PTR _Param1 = 0)
     {
-        m_vecScriptParam.push_back(tScriptParam{ _Type, _pData, _strDesc, _Param0, _Param1 });
+        m_vecScriptParam.push_back(tScriptParam{ _Type, _strDesc, _pData, _Param0, _Param1 });
     }
 
 public:
     const vector<tScriptParam>& GetScriptParam() { return m_vecScriptParam; }
     
+    void Instantiate(Ptr<CPrefab> _Pref, int _LayerIdx, Vec3 _WorldPos, const wstring& _strName = L"");
 
 public:
+    virtual void Begin() {}
     virtual void Tick() PURE;
     virtual void FinalTick() final override {}
 

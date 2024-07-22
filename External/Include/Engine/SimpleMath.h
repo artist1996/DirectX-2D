@@ -154,6 +154,7 @@ namespace DirectX
 
             // Vector operations
             bool InBounds(const Vector2& Bounds) const;
+            bool IsZero() { return x == 0.f && y == 0.f; }
 
             float Length() const;
             float LengthSquared() const;
@@ -253,6 +254,7 @@ namespace DirectX
             typedef float(&f3)[3];
             operator f3() const { return (f3)x; }
 
+            bool IsZero() { return x == 0.f && y == 0.f && z == 0.f; }
 
             // Comparison operators
             bool operator == (const Vector3& V) const;

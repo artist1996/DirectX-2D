@@ -9,11 +9,13 @@
 #include <Engine/CFlipBookComponent.h>
 
 #include "ListUI.h"
+#include "TreeUI.h"
 
 FlipBookComUI::FlipBookComUI()
 	: ComponentUI(COMPONENT_TYPE::FLIPBOOKCOMPONENT)
 	, m_UIHeight(0)
 	, m_Idx(0)
+	, m_AddIdx(0)
 {
 }
 
@@ -49,6 +51,34 @@ void FlipBookComUI::Update()
 	ImGui::SameLine();
 	m_UIHeight += (int)ImGui::GetItemRectSize().y;
 	
+	if (ImGui::BeginDragDropTarget())
+	{
+		const ImGuiPayload* Payload = ImGui::AcceptDragDropPayload("ContentTree");
+
+		if (Payload)
+		{
+			TreeNode* pNode = *((TreeNode**)Payload->Data);
+			Ptr<CAsset> pAsset = (CAsset*)pNode->GetData();
+
+			if (ASSET_TYPE::FLIPBOOK == pAsset->GetAssetType())
+			{
+				vector<Ptr<CFlipBook>> pAnimation = pFlipBookCom->GetFlipBook();
+				for (size_t i = 0; i < pAnimation.size(); ++i)
+				{
+					if (nullptr != pAnimation[i])
+						continue;
+					else
+					{
+						pFlipBookCom->AddFlipBook(i, (CFlipBook*)pAsset.Get());
+						break;
+					}
+				}
+			}
+		}
+
+		ImGui::EndDragDropTarget();
+	}
+
 	if (ImGui::Button("##CurFlipBookBtn", ImVec2(20.f,20.f)))
 	{
 		// ListUI 활성화
@@ -59,10 +89,19 @@ void FlipBookComUI::Update()
 		// AssetMgr 로 부터 Mesh Key 값 들고오기
 		
 		vector<string> vecFlipBookNames;
-		CAssetMgr::GetInst()->GetAssetNames(ASSET_TYPE::FLIPBOOK, vecFlipBookNames);
+
+		for (size_t i = 0; i < pFlipBookCom->GetFlipBook().size(); ++i)
+		{
+			if (nullptr == pFlipBookCom->GetFlipBook()[i])
+				continue;
+
+			vecFlipBookNames.push_back(string(pFlipBookCom->GetFlipBook()[i]->GetKey().begin(), pFlipBookCom->GetFlipBook()[i]->GetKey().end()));
+		}
+		
 		pList->AddList(vecFlipBookNames);
 		pList->SetActive(true);
 	}
+
 	m_UIHeight += (int)ImGui::GetItemRectSize().y;
 
 	// Cur Sprite

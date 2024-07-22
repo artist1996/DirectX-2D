@@ -36,8 +36,6 @@ CTileMap::CTileMap(const CTileMap& _Origin)
 	, m_Buffer(nullptr)
 {
 	m_Buffer = new CStructuredBuffer;
-
-	SetRowCol(m_Row, m_Col);
 }
 
 CTileMap::~CTileMap()
@@ -63,6 +61,11 @@ void CTileMap::Render()
 	GetMaterial()->Binding();
 	Transform()->Binding();
 	GetMesh()->Render();
+}
+
+void CTileMap::Init()
+{
+	SetRowCol(m_Row, m_Col);
 }
 
 void CTileMap::SetRowCol(UINT _Row, UINT _Col)

@@ -24,6 +24,7 @@
 #include "SoundUI.h"
 #include "GraphicShaderUI.h"
 #include "ComputeShaderUI.h"
+#include "RigidbodyUI.h"
 
 #include "ScriptUI.h"
 
@@ -90,6 +91,11 @@ void Inspector::CreateComponentUI()
 	m_arrComUI[(UINT)COMPONENT_TYPE::PARTICLE_SYSTEM]->SetChildBorder(true);
 	m_arrComUI[(UINT)COMPONENT_TYPE::PARTICLE_SYSTEM]->SetChildSize(ImVec2(0.f, 100.f));
 	AddChild(m_arrComUI[(UINT)COMPONENT_TYPE::PARTICLE_SYSTEM]);
+
+	m_arrComUI[(UINT)COMPONENT_TYPE::RIGIDBODY] = new RigidbodyUI;
+	m_arrComUI[(UINT)COMPONENT_TYPE::RIGIDBODY]->SetName("RigidbodyUI");
+	m_arrComUI[(UINT)COMPONENT_TYPE::RIGIDBODY]->SetChildBorder(true);
+	AddChild(m_arrComUI[(UINT)COMPONENT_TYPE::RIGIDBODY]);
 }
 
 void Inspector::CreateAssetUI()

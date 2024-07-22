@@ -15,6 +15,7 @@
 #include <Scripts/CPlayerScript.h>
 #include <Scripts/CMissileScript.h>
 #include <Scripts/CCameraMoveScript.h>
+#include <Scripts/CPlatformScript.h>;
 
 
 void CTestLevel::CreateTestLevel()
@@ -27,8 +28,10 @@ void CTestLevel::CreateTestLevel()
 	Ptr<CTexture> pTexture = CAssetMgr::GetInst()->Load<CTexture>(L"PlayerTex", L"texture\\Character.png");
 	pAlphaBlendMtrl->SetTexParam(TEX_0, pTexture);
 
+	CreatePrefab();
+
 	CLevel* pLevel = new CLevel;
-	ChangeLevel(pLevel, STOP);
+	ChangeLevel(pLevel, PLAY);
 
 	CGameObject* CamObj = new CGameObject;
 	CamObj->SetName(L"MainCamera");
@@ -75,6 +78,7 @@ void CTestLevel::CreateTestLevel()
 	pPlayer->AddComponent(new CFlipBookComponent);
 	pPlayer->AddComponent(new CMeshRender);
 	pPlayer->AddComponent(new CPlayerScript);
+	pPlayer->AddComponent(new CRigidbody);
 
 	pPlayer->Transform()->SetRelativePos(0.f, 0.f, 100.f);
 	pPlayer->Transform()->SetRelativeScale(200.f, 200.f, 1.f);
@@ -88,7 +92,9 @@ void CTestLevel::CreateTestLevel()
 
 	pPlayer->FlipBookComponent()->AddFlipBook(5, CAssetMgr::GetInst()->FindAsset<CFlipBook>(L"Link_MoveDown"));
 	pPlayer->FlipBookComponent()->Play(5, 10, true);
+	pPlayer->Rigidbody()->UseGravity(true);
 
+	pLevel->AddObject(3, pPlayer);
 
 	// TileMap
 	CGameObject* pTileMap = new CGameObject;
@@ -107,32 +113,50 @@ void CTestLevel::CreateTestLevel()
 
 	pLevel->AddObject(2, pTileMap);
 
+	// Platform
+	CGameObject* pPlatform = new CGameObject;
+	pPlatform->SetName(L"Platform");
+	pPlatform->AddComponent(new CTransform);
+	pPlatform->AddComponent(new CMeshRender);
+	pPlatform->AddComponent(new CCollider2D);
+	pPlatform->AddComponent(new CPlatformScript);
+
+	pPlatform->Transform()->SetRelativePos(Vec3(0.f, -300.f, 100.f));
+	pPlatform->Transform()->SetRelativeScale(Vec3(300.f, 100.f, 1.f));
+	
+	pPlatform->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
+	pPlatform->MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"Std2DMtrl"));
+
+	pPlatform->Collider2D()->SetScale(Vec3(1.f, 1.f, 1.f));
+	
+	pLevel->AddObject(4, pPlatform);
+
 	//pObject->MeshRender()->GetMaterial()->SetScalarParam(INT_1, 0);
 	//pObject->MeshRender()->GetMaterial()->SetScalarParam(FLOAT_0, 0.01f);
 	//pObject->MeshRender()->GetMaterial()->SetScalarParam(VEC4_0, Vec4(0.f, 1.f, 0.f, 1.f));
 
 	// Child Object
-	CGameObject* pChild = new CGameObject;
-	pChild->SetName(L"Child");
-
-	pChild->AddComponent(new CTransform);
-	pChild->AddComponent(new CCollider2D);
-	pChild->AddComponent(new CMeshRender);
-
-	pChild->Transform()->SetIndependentScale(true);
-	pChild->Transform()->SetRelativePos(50.f, 0.f, 0.f);
-	pChild->Transform()->SetRelativeScale(100.f, 100.f, 1.f);
-
-	pChild->Collider2D()->SetIndependentScale(true);
-	pChild->Collider2D()->SetOffset(Vec3(0.f, 0.f, 0.f));
-	pChild->Collider2D()->SetScale(Vec3(100.f, 100.f, 1.f));
-
-	pChild->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
-	pChild->MeshRender()->SetMaterial(pMtrl);
-
-	//pPlayer->AddChild(pLight2D);
-	pPlayer->AddChild(pChild);
-	pLevel->AddObject(3, pPlayer);
+	//CGameObject* pChild = new CGameObject;
+	//pChild->SetName(L"Child");
+	//
+	//pChild->AddComponent(new CTransform);
+	//pChild->AddComponent(new CCollider2D);
+	//pChild->AddComponent(new CMeshRender);
+	//
+	//pChild->Transform()->SetIndependentScale(true);
+	//pChild->Transform()->SetRelativePos(50.f, 0.f, 0.f);
+	//pChild->Transform()->SetRelativeScale(100.f, 100.f, 1.f);
+	//
+	//pChild->Collider2D()->SetIndependentScale(true);
+	//pChild->Collider2D()->SetOffset(Vec3(0.f, 0.f, 0.f));
+	//pChild->Collider2D()->SetScale(Vec3(100.f, 100.f, 1.f));
+	//
+	//pChild->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
+	//pChild->MeshRender()->SetMaterial(pMtrl);
+	//
+	////pPlayer->AddChild(pLight2D);
+	//pPlayer->AddChild(pChild);
+	//pLevel->AddObject(3, pPlayer);
 
 	// GrayFilter Object
 	//CGameObject* pGrayFilterObj = new CGameObject;
@@ -166,4 +190,19 @@ void CTestLevel::CreateTestLevel()
 	CCollisionMgr::GetInst()->CollisionCheck(4, 5);
 
 	//pMtrl->Save(L"material\\std2d.mtrl");
+}
+
+void CTestLevel::CreatePrefab()
+{
+	CGameObject* pObject = new CGameObject;
+	pObject->AddComponent(new CTransform);
+	pObject->AddComponent(new CMeshRender);
+	pObject->AddComponent(new CMissileScript);
+
+	pObject->Transform()->SetRelativeScale(100.f, 100.f, 1.f);
+	pObject->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
+	pObject->MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"Std2DMtrl"));
+	Ptr<CPrefab> pPrefab = new CPrefab;
+	pPrefab->SetProtoObject(pObject);
+	CAssetMgr::GetInst()->AddAsset<CPrefab>(L"MissilePref", pPrefab);
 }

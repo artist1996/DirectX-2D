@@ -30,6 +30,9 @@
     <ClInclude Include="CScriptMgr.h">
       <Filter>Manager</Filter>
     </ClInclude>
+    <ClInclude Include="CPlatformScript.h">
+      <Filter>Scripts</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -49,6 +52,9 @@
     </ClCompile>
     <ClCompile Include="CScriptMgr.cpp">
       <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlatformScript.cpp">
+      <Filter>Scripts</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

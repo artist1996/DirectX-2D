@@ -118,6 +118,9 @@
     <Filter Include="02. EditorUI\01. Inspector\ComponentUI\09. ScriptUI">
       <UniqueIdentifier>{f358d56f-0a80-4be6-8734-8f1edbc930d6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. EditorUI\01. Inspector\ComponentUI\10. RigidbodyUI">
+      <UniqueIdentifier>{861dfe01-291d-47df-8cd3-7f3c093b5f72}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CGameObjectEx.h">
@@ -264,6 +267,9 @@
     <ClInclude Include="ScriptUI.h">
       <Filter>02. EditorUI\01. Inspector\ComponentUI\09. ScriptUI</Filter>
     </ClInclude>
+    <ClInclude Include="RigidbodyUI.h">
+      <Filter>02. EditorUI\01. Inspector\ComponentUI\10. RigidbodyUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -404,6 +410,9 @@
     </ClCompile>
     <ClCompile Include="ScriptUI.cpp">
       <Filter>02. EditorUI\01. Inspector\ComponentUI\09. ScriptUI</Filter>
+    </ClCompile>
+    <ClCompile Include="RigidbodyUI.cpp">
+      <Filter>02. EditorUI\01. Inspector\ComponentUI\10. RigidbodyUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

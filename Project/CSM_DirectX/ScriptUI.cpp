@@ -5,10 +5,12 @@
 #include <Engine/CScript.h>
 
 #include "ParamUI.h"
+#include "ListUI.h"
 
 ScriptUI::ScriptUI()
 	: ComponentUI(COMPONENT_TYPE::SCRIPT)
 	, m_Script(nullptr)
+	, m_SelectedPrefab(nullptr)
 	, m_UIHeight(0)
 {
 }
@@ -62,6 +64,16 @@ void ScriptUI::Update()
 			m_UIHeight += 10;
 		}
 			break;
+		case SCRIPT_PARAM::PREFAB:
+		{
+			Ptr<CPrefab>& pPrefab = *((Ptr<CPrefab>*)vecParam[i].pData);
+			if (ParamUI::InputPrefab(pPrefab, vecParam[i].strDesc, this, (DELEGATE_1)&ScriptUI::SelectPrefab))
+			{
+				m_SelectedPrefab = &pPrefab;
+			}
+			m_UIHeight += 10;
+		}
+			break;
 		}
 
 		m_UIHeight += (int)ImGui::GetItemRectSize().y;
@@ -78,4 +90,23 @@ void ScriptUI::SetTargetScript(CScript* _Script)
 		SetActive(true);
 	else
 		SetActive(false);
+}
+
+void ScriptUI::SelectPrefab(DWORD_PTR _Param)
+{
+	ListUI* pList = (ListUI*)_Param;
+	string strName = pList->GetSelectName();
+
+	if ("None" == strName)
+	{
+		*m_SelectedPrefab = nullptr;
+		return;
+	}
+
+	wstring strAssetName = wstring(strName.begin(), strName.end());
+	Ptr<CPrefab> pPrefab = CAssetMgr::GetInst()->FindAsset<CPrefab>(strAssetName);
+	
+	assert(pPrefab.Get());
+
+	*m_SelectedPrefab = pPrefab;
 }

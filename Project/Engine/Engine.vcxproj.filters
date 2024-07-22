@@ -142,6 +142,12 @@
     <ClInclude Include="CLight2D.h">
       <Filter>08. Component\08. Light2D</Filter>
     </ClInclude>
+    <ClInclude Include="CPrefab.h">
+      <Filter>06. Asset\04. Prefab</Filter>
+    </ClInclude>
+    <ClInclude Include="CRigidbody.h">
+      <Filter>08. Component\06. RigidBody</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CEngine.cpp">
@@ -264,6 +270,12 @@
     <ClCompile Include="CLight2D.cpp">
       <Filter>08. Component\08. Light2D</Filter>
     </ClCompile>
+    <ClCompile Include="CPrefab.cpp">
+      <Filter>06. Asset\04. Prefab</Filter>
+    </ClCompile>
+    <ClCompile Include="CRigidbody.cpp">
+      <Filter>08. Component\06. RigidBody</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Default">
@@ -385,9 +397,6 @@
     </Filter>
     <Filter Include="08. Component\Script">
       <UniqueIdentifier>{3cb56d09-9b2f-4ce2-9c14-49c7fcfd79f0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Scripts">
-      <UniqueIdentifier>{7d23adb1-c34e-4ba4-b5a8-d5f55c3ab535}</UniqueIdentifier>
     </Filter>
     <Filter Include="04. Manager\07. CollisionMgr">
       <UniqueIdentifier>{7956ea5b-5cfc-444d-a3e8-b3f26a1e7df8}</UniqueIdentifier>

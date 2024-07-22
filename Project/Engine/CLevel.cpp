@@ -1,7 +1,8 @@
 #include "pch.h"
 #include "CLevel.h"
-#include "CLayer.h"
+#include "CLevelMgr.h"
 
+#include "CLayer.h"
 #include "CGameObject.h"
 
 CLevel::CLevel()
@@ -34,7 +35,7 @@ void CLevel::Begin()
 {
 	for (int i = 0; i < MAX_LAYER; ++i)
 	{
-		m_Layer[0]->Begin();
+		m_Layer[i]->Begin();
 	}
 }
 
@@ -90,6 +91,7 @@ CGameObject* CLevel::FindObjectByName(const wstring& _strName)
 void CLevel::AddObject(int _LayerIdx, CGameObject* _Object, bool _bMoveChild)
 {
 	m_Layer[_LayerIdx]->AddObject(_Object, _bMoveChild);
+	CLevelMgr::GetInst()->LevelChanged();
 }
 
 void CLevel::RegisterAsParent(int _LayerIdx, CGameObject* _Object)

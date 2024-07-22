@@ -8,14 +8,15 @@ class CComponent :
     public CEntity
 {
 private:
-    CGameObject*         m_Owner;
+    CGameObject* m_Owner;
     const COMPONENT_TYPE m_Type;
-    
+
 public:
     COMPONENT_TYPE GetComponentType() { return m_Type; }
     CGameObject* GetOwner() { return m_Owner; }
 
 public:
+    virtual void Init() {}
     virtual void Begin();
     virtual void Tick();
     virtual void FinalTick() PURE;
@@ -27,6 +28,7 @@ public:
     GET_OTHER_COMPONENT(FlipBookComponent);
     GET_OTHER_COMPONENT(TileMap);
     GET_OTHER_COMPONENT(Light2D);
+    GET_OTHER_COMPONENT(Rigidbody);
 
 private:
     void SetOwner(CGameObject* _Object) { m_Owner = _Object; }

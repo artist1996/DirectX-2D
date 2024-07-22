@@ -31,6 +31,8 @@ private:
 
 
 public:
+    virtual void Init() override;
+
     void SetRowCol(UINT _Row, UINT _Col);
     void SetTileSize(Vec2 _Size);
     void SetAtlasTexture(Ptr<CTexture> _Atlas);

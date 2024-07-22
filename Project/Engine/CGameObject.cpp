@@ -24,7 +24,7 @@ CGameObject::CGameObject(const CGameObject& _Origin)
 	, m_arrCom{}
 	, m_RenderCom(nullptr)
 	, m_Parent(nullptr)
-	, m_LayerIdx(_Origin.m_LayerIdx)
+	, m_LayerIdx(-1)
 	, m_Dead(false)
 {
 	// Component 복사
@@ -33,7 +33,9 @@ CGameObject::CGameObject(const CGameObject& _Origin)
 		if (nullptr == _Origin.m_arrCom[i])
 			continue;
 
-		AddComponent(_Origin.m_arrCom[i]->Clone());
+		CComponent* pComponent = _Origin.m_arrCom[i]->Clone();
+		AddComponent(pComponent);
+		pComponent->Init();
 	}
 
 	// Script 복사
