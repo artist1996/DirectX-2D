@@ -110,6 +110,7 @@ public:
     }
 
     bool IsGround()            { return m_Ground; }
+    bool UseGravity()          { return m_UseGravity; }
     float GetJumpSpeed()       { return m_JumpSpeed; }
     float GetMaxGravitySpeed() { return m_MaxGravitySpeed; }
 

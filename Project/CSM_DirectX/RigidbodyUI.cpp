@@ -24,6 +24,7 @@ void RigidbodyUI::Update()
     float JumpSpeed= pRB->GetJumpSpeed();
     float MaxGravitySpeed = pRB->GetMaxGravitySpeed();
     bool  bGround = pRB->IsGround();
+    bool  bUseGravity = pRB->UseGravity();
 
     ImGui::Text("Mass");
     ImGui::SameLine(100);
@@ -52,6 +53,16 @@ void RigidbodyUI::Update()
     m_UIHeight += (UINT)ImGui::GetItemRectSize().y;
     m_UIHeight += (UINT)ImGui::GetItemRectSize().y;
     
+    ImGui::Text("Use Gravity");
+    ImGui::SameLine(100);
+    if (ImGui::Checkbox("##Rigidbody UseGravity?", &bUseGravity))
+    {
+        pRB->UseGravity(bUseGravity);
+    }
+
+    m_UIHeight += (UINT)ImGui::GetItemRectSize().y;
+    m_UIHeight += (UINT)ImGui::GetItemRectSize().y;
+
     pRB->SetMass(Mass);
     pRB->SetJumpSpeed(JumpSpeed);
     pRB->SetMaxGravitySpeed(MaxGravitySpeed);

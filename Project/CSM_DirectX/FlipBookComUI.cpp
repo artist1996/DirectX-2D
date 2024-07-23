@@ -25,8 +25,8 @@ FlipBookComUI::~FlipBookComUI()
 
 void FlipBookComUI::Update()
 {
-	m_UIHeight = 0;
 	Title();
+	m_UIHeight = 0;
 
 	m_UIHeight += (int)ImGui::GetItemRectSize().y;
 	CGameObject* pObject = GetTargetObject();
@@ -52,10 +52,9 @@ void FlipBookComUI::Update()
 		strName = "";
 
 	ImGui::SetNextItemWidth(200.f);
-	ImGui::InputText("##CurFlipBookName", (char*)strName.c_str(), strName.length(), ImGuiInputTextFlags_ReadOnly);
+	ImGui::InputText("##CurAnimationName", (char*)strName.c_str(), strName.length(), ImGuiInputTextFlags_ReadOnly);
 	ImGui::SameLine();
-	m_UIHeight += (int)ImGui::GetItemRectSize().y;
-	
+
 	if (ImGui::BeginDragDropTarget())
 	{
 		const ImGuiPayload* Payload = ImGui::AcceptDragDropPayload("ContentTree");
@@ -93,11 +92,12 @@ void FlipBookComUI::Update()
 		ImGui::EndDragDropTarget();
 	}
 
-	if (ImGui::Button("##CurFlipBookBtn", ImVec2(20.f,20.f)))
+
+	if (ImGui::Button("##CurAnimationBtn", ImVec2(20.f,20.f)))
 	{
 		// ListUI 활성화
 		ListUI* pList = (ListUI*)CEditorMgr::GetInst()->FindEditorUI("List");
-		pList->SetName("FlipBook");
+		pList->SetName("Animation");
 		pList->AddDelegate(this, (DELEGATE_1)&FlipBookComUI::SelectFlipBook);
 
 		// AssetMgr 로 부터 Mesh Key 값 들고오기
@@ -122,7 +122,10 @@ void FlipBookComUI::Update()
 	Ptr<CSprite> pSprite = pAnimator2D->GetCurSprite();
 
 	if (nullptr == pSprite)
+	{
+		SetChildSize(ImVec2(0.f, (float)m_UIHeight + 10.f));
 		return;
+	}
 
 	ImGui::Text("Cur Sprite");
 	ImGui::SameLine(100);
