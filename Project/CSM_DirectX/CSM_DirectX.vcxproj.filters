@@ -76,9 +76,6 @@
     <Filter Include="02. EditorUI\01. Inspector\AssetUI\06. Sprite">
       <UniqueIdentifier>{786eeafe-4d21-4187-8aa5-3bb1fa270548}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. EditorUI\01. Inspector\AssetUI\07. FlipBook">
-      <UniqueIdentifier>{85404e41-c984-4354-a8f6-07835d8bf1e8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. EditorUI\01. Inspector\AssetUI\08. Sound">
       <UniqueIdentifier>{05dff5d4-61a2-4759-9f5b-90951189948a}</UniqueIdentifier>
     </Filter>
@@ -87,9 +84,6 @@
     </Filter>
     <Filter Include="02. EditorUI\01. Inspector\AssetUI\09. GraphicShader">
       <UniqueIdentifier>{a57bc6d5-554e-4b11-824f-ba60052e82bd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. EditorUI\06. MenuUI">
-      <UniqueIdentifier>{6b78fce2-789c-4ce2-95b5-de01e463c1cb}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. EditorUI\03. Outliner">
       <UniqueIdentifier>{19c223bd-5886-44ed-838d-d7f075c70675}</UniqueIdentifier>
@@ -123,6 +117,12 @@
     </Filter>
     <Filter Include="01. Manager\03. LevelSaveLoad">
       <UniqueIdentifier>{2546eeea-f8f2-4dfa-82e8-3b8e7168d3d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. EditorUI\01. Inspector\AssetUI\07. Animation">
+      <UniqueIdentifier>{85404e41-c984-4354-a8f6-07835d8bf1e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. EditorUI\06. MenuUI">
+      <UniqueIdentifier>{6b78fce2-789c-4ce2-95b5-de01e463c1cb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -238,7 +238,7 @@
       <Filter>02. EditorUI\01. Inspector\AssetUI\06. Sprite</Filter>
     </ClInclude>
     <ClInclude Include="FlipBookUI.h">
-      <Filter>02. EditorUI\01. Inspector\AssetUI\07. FlipBook</Filter>
+      <Filter>02. EditorUI\01. Inspector\AssetUI\07. Animation</Filter>
     </ClInclude>
     <ClInclude Include="SoundUI.h">
       <Filter>02. EditorUI\01. Inspector\AssetUI\08. Sound</Filter>
@@ -376,7 +376,7 @@
       <Filter>02. EditorUI\01. Inspector\AssetUI\06. Sprite</Filter>
     </ClCompile>
     <ClCompile Include="FlipBookUI.cpp">
-      <Filter>02. EditorUI\01. Inspector\AssetUI\07. FlipBook</Filter>
+      <Filter>02. EditorUI\01. Inspector\AssetUI\07. Animation</Filter>
     </ClCompile>
     <ClCompile Include="SoundUI.cpp">
       <Filter>02. EditorUI\01. Inspector\AssetUI\08. Sound</Filter>

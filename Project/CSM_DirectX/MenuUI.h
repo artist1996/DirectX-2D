@@ -17,6 +17,7 @@ private:
     void GameObject();
     void Assets();
 
+    void AddComponent();
     void AddScript();
     void CreateAnimation();
 

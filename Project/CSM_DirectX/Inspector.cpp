@@ -10,8 +10,10 @@
 
 #include <Engine/CGameObject.h>
 
+#include "CEditorMgr.h"
 #include "AssetUI.h"
 #include "ScriptUI.h"
+#include "ListUI.h"
 
 Inspector::Inspector()
 	: m_TargetObject(nullptr)
@@ -71,7 +73,6 @@ void Inspector::Update()
 
 		m_TargetObject->ChangeLayer(m_TargetObject, Idx);
 	}
-
 }
 
 void Inspector::SetTargetObject(CGameObject* _Target)

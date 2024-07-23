@@ -4,6 +4,7 @@
 #include <Engine/CAssetMgr.h>
 #include <Engine/assets.h>
 #include <Engine/CGameObject.h>
+#include <Engine/components.h>
 #include <Engine/CScript.h>
 
 #include <Scripts/CScriptMgr.h>
@@ -69,17 +70,17 @@ void MenuUI::Level()
 	{
 		if (ImGui::MenuItem("Play"))
 		{
-
+			ChangeLevelState(PLAY);
 		}
 
 		if (ImGui::MenuItem("Pause"))
 		{
-
+			ChangeLevelState(PAUSE);
 		}
 
 		if (ImGui::MenuItem("Stop"))
 		{
-
+			ChangeLevelState(STOP);
 		}
 
 		ImGui::EndMenu();
@@ -92,17 +93,10 @@ void MenuUI::GameObject()
 	{
 		if (ImGui::MenuItem("Create Empty Object"))
 		{
-
+		
 		}
 
-		if (ImGui::BeginMenu("Add Component"))
-		{
-			ImGui::MenuItem("MeshRender");
-			ImGui::MenuItem("Collider2D");
-			ImGui::MenuItem("Camera");
-
-			ImGui::EndMenu();
-		}
+		AddComponent();
 
 		AddScript();
 
@@ -133,6 +127,126 @@ void MenuUI::Assets()
 		if (ImGui::MenuItem("Create Animation"))
 		{
 			CreateAnimation();
+		}
+
+		ImGui::EndMenu();
+	}
+}
+
+void MenuUI::AddComponent()
+{
+	if (ImGui::BeginMenu("Add Component"))
+	{
+		if (ImGui::MenuItem("Transform"))
+		{
+			Inspector* pInspector = (Inspector*)CEditorMgr::GetInst()->FindEditorUI("Inspector");
+			CGameObject* pObject = pInspector->GetTargetObject();
+
+			if (nullptr == pObject)
+			{
+				ImGui::EndMenu();
+				return;
+			}
+
+			pObject->AddComponent(new CTransform);
+		}
+
+		if (ImGui::MenuItem("Collider2D"))
+		{
+			Inspector* pInspector = (Inspector*)CEditorMgr::GetInst()->FindEditorUI("Inspector");
+			CGameObject* pObject = pInspector->GetTargetObject();
+
+			if (nullptr == pObject)
+			{
+				ImGui::EndMenu();
+				return;
+			}
+
+			pObject->AddComponent(new CCollider2D);
+		}
+
+		if (ImGui::MenuItem("Animator2D"))
+		{
+			Inspector* pInspector = (Inspector*)CEditorMgr::GetInst()->FindEditorUI("Inspector");
+			CGameObject* pObject = pInspector->GetTargetObject();
+
+			if (nullptr == pObject)
+			{
+				ImGui::EndMenu();
+				return;
+			}
+
+			pObject->AddComponent(new CAnimator2D);
+		}
+
+		if (ImGui::MenuItem("Rigidbody"))
+		{
+			Inspector* pInspector = (Inspector*)CEditorMgr::GetInst()->FindEditorUI("Inspector");
+			CGameObject* pObject = pInspector->GetTargetObject();
+
+			if (nullptr == pObject)
+			{
+				ImGui::EndMenu();
+				return;
+			}
+
+			pObject->AddComponent(new CRigidbody);
+		}
+
+		if (ImGui::MenuItem("Camera"))
+		{
+			Inspector* pInspector = (Inspector*)CEditorMgr::GetInst()->FindEditorUI("Inspector");
+			CGameObject* pObject = pInspector->GetTargetObject();
+
+			if (nullptr == pObject)
+			{
+				ImGui::EndMenu();
+				return;
+			}
+
+			pObject->AddComponent(new CCamera);
+		}
+
+		if (ImGui::MenuItem("Light2D"))
+		{
+			Inspector* pInspector = (Inspector*)CEditorMgr::GetInst()->FindEditorUI("Inspector");
+			CGameObject* pObject = pInspector->GetTargetObject();
+
+			if (nullptr == pObject)
+			{
+				ImGui::EndMenu();
+				return;
+			}
+
+			pObject->AddComponent(new CLight2D);
+		}
+
+		if (ImGui::MenuItem("MeshRender"))
+		{
+			Inspector* pInspector = (Inspector*)CEditorMgr::GetInst()->FindEditorUI("Inspector");
+			CGameObject* pObject = pInspector->GetTargetObject();
+
+			if (nullptr == pObject)
+			{
+				ImGui::EndMenu();
+				return;
+			}
+
+			pObject->AddComponent(new CMeshRender);
+		}
+
+		if (ImGui::MenuItem("TileMap"))
+		{
+			Inspector* pInspector = (Inspector*)CEditorMgr::GetInst()->FindEditorUI("Inspector");
+			CGameObject* pObject = pInspector->GetTargetObject();
+
+			if (nullptr == pObject)
+			{
+				ImGui::EndMenu();
+				return;
+			}
+
+			pObject->AddComponent(new CTileMap);
 		}
 
 		ImGui::EndMenu();
