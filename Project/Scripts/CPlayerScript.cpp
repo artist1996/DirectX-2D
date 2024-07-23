@@ -27,14 +27,47 @@ void CPlayerScript::Tick()
 {
 	Vec3 vPos = Transform()->GetRelativePos();
 
-	if (KEY_PRESSED(KEY::RIGHT))
+	if (KEY_TAP(KEY::RIGHT))
+	{
+		Vec3 vRot = Transform()->GetRelativeRotation();
+		vRot = Vec3(0.f, 0.f, 0.f);
+		Transform()->SetRelativeRotation(vRot);	
+		Animator2D()->Play(1, 10, true);
+	}
+
+	else if (KEY_PRESSED(KEY::RIGHT))
 		vPos.x += m_Speed * DT;
-	if (KEY_PRESSED(KEY::LEFT))
+	else if(KEY_RELEASED(KEY::RIGHT))
+		Animator2D()->Play(0, 3, true);
+
+	if (KEY_TAP(KEY::LEFT))
+	{
+		Vec3 vRot = Transform()->GetRelativeRotation();
+		vRot.x = XM_PI;
+		vRot.z = XM_PI;
+		Transform()->SetRelativeRotation(vRot);
+		Animator2D()->Play(1, 10, true);
+	}
+
+	else if (KEY_PRESSED(KEY::LEFT))
 		vPos.x -= m_Speed * DT;
-	if (KEY_PRESSED(KEY::UP))
+	else if (KEY_RELEASED(KEY::LEFT))
+		Animator2D()->Play(0, 3, true);
+	
+	if (KEY_TAP(KEY::UP))
+		Animator2D()->Play(1, 10, true);
+	else if (KEY_PRESSED(KEY::UP))
 		vPos.y += m_Speed * DT;
-	if (KEY_PRESSED(KEY::DOWN))
+	else if (KEY_RELEASED(KEY::UP))
+		Animator2D()->Play(0, 3, true);
+	
+	if (KEY_TAP(KEY::DOWN))
+		Animator2D()->Play(1, 10, true);
+	else if (KEY_PRESSED(KEY::DOWN))
 		vPos.y -= m_Speed * DT;
+	else if (KEY_RELEASED(KEY::DOWN))
+		Animator2D()->Play(0, 3, true);
+
 	if (KEY_TAP(KEY::SPACE))
 	{
 		if (nullptr != m_MissilePref)
@@ -61,6 +94,16 @@ void CPlayerScript::Tick()
 	}
 
 	Transform()->SetRelativePos(vPos);
+}
+
+void CPlayerScript::SaveToFile(FILE* _pFile)
+{
+	fwrite(&m_Speed, sizeof(float), 1, _pFile);
+}
+
+void CPlayerScript::LoadFromFile(FILE* _pFile)
+{
+	fread(&m_Speed, sizeof(float), 1, _pFile);
 }
 
 void CPlayerScript::BeginOverlap(CCollider2D* _OwnCollider, CGameObject* _OtherObj, CCollider2D* _OtherCollider)

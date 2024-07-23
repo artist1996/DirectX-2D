@@ -3,7 +3,7 @@
 #include "CAssetMgr.h"
 #include "CTransform.h"
 
-#include "CFlipBookComponent.h"
+#include "CAnimator2D.h"
 #include "CSprite.h"
 
 CMeshRender::CMeshRender()
@@ -24,13 +24,23 @@ void CMeshRender::Render()
 	if (!GetMesh() || !GetMaterial() || !GetMaterial()->GetShader())
 		return;
 
-	if (FlipBookComponent())
-		FlipBookComponent()->Binding();
+	if (Animator2D())
+		Animator2D()->Binding();
 	else
-		CFlipBookComponent::Clear();
+		CAnimator2D::Clear();
 	
 
 	Transform()->Binding();
 	GetMaterial()->Binding();
 	GetMesh()->Render();
+}
+
+void CMeshRender::SaveToFile(FILE* _pFile)
+{
+	SaveDataToFile(_pFile);
+}
+
+void CMeshRender::LoadFromFile(FILE* _pFile)
+{
+	LoadDataFromFile(_pFile);
 }

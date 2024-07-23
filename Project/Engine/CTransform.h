@@ -45,6 +45,10 @@ public:
 public:
     virtual void FinalTick() override;
     void Binding();
+
+public:
+    virtual void SaveToFile(FILE* _pFile) override;
+    virtual void LoadFromFile(FILE* _pFile) override;
    
 public:
     CLONE(CTransform)

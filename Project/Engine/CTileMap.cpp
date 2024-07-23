@@ -80,18 +80,14 @@ void CTileMap::SetRowCol(UINT _Row, UINT _Col)
 	UINT TileCount = m_Row * m_Col;
 
 	// 타일 정보를 저장하는 벡터 사이즈가 타일 카운트보다 사이즈가 작다면 resize 해준다.
-	if (m_vecTileInfo.size() < TileCount)
+	if (m_vecTileInfo.size() != TileCount)
 	{
+		m_vecTileInfo.clear();
 		m_vecTileInfo.resize(TileCount);
-
-		for (size_t i = 0; i < m_vecTileInfo.size(); ++i)
-		{
-			m_vecTileInfo[i].ImgIdx = 0;
-		}
 	}
 
 	// 타일 정보를 전달받아서 t 레지스터에 전달시킬 구조화 버퍼가 타일 전체 데이터 사이즈 보다 작으면 리사이즈
-	if (m_Buffer->GetElementSize() < sizeof(tTileInfo) * TileCount)
+	if (m_Buffer->GetElementCount() < TileCount)
 	{
 		m_Buffer->Create(sizeof(tTileInfo), TileCount);
 	}
@@ -129,5 +125,47 @@ void CTileMap::SetAtlasTileSize(Vec2 _TileSize)
 
 		m_AtlasMaxCol = m_AtlasResolution.x / m_AtlasTileSize.x;
 		m_AtlasMaxRow = m_AtlasResolution.y / m_AtlasTileSize.y;
+	}
+}
+
+void CTileMap::SaveToFile(FILE* _pFile)
+{
+	SaveDataToFile(_pFile);
+	
+	fwrite(&m_Row, sizeof(int), 1, _pFile);
+	fwrite(&m_Col, sizeof(int), 1, _pFile);
+
+	fwrite(&m_TileSize, sizeof(Vec2), 1, _pFile);
+	fwrite(&m_AtlasTileSize, sizeof(Vec2), 1, _pFile);
+
+	for (size_t i = 0; i < m_vecTileInfo.size(); ++i)
+	{
+		fwrite(&m_vecTileInfo[i], sizeof(tTileInfo), 1, _pFile);
+	}
+
+	// Atlas Texture
+	SaveAssetRef(m_TileAtlas, _pFile);
+}
+
+void CTileMap::LoadFromFile(FILE* _pFile)
+{
+	LoadDataFromFile(_pFile);
+
+	fread(&m_Row, sizeof(int), 1, _pFile);
+	fread(&m_Col, sizeof(int), 1, _pFile);
+
+	SetRowCol(m_Row, m_Col);
+
+	for (size_t i = 0; i < m_vecTileInfo.size(); ++i)
+	{
+		fread(&m_vecTileInfo[i], sizeof(tTileInfo), 1, _pFile);
+	}
+
+	// Atlas Texture
+	LoadAssetRef(m_TileAtlas, _pFile);
+
+	if (nullptr != m_TileAtlas)
+	{
+		SetAtlasTexture(m_TileAtlas);
 	}
 }

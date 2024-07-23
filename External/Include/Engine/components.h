@@ -5,7 +5,7 @@
 //#include "CLight3D.h"
 #include "CCollider2D.h"
 //#include "CCollider3D.h"
-#include "CFlipBookComponent.h"
+#include "CAnimator2D.h"
 //#include "CAnimator3D.h"
 #include "CRigidbody.h"
 #include "CCamera.h"

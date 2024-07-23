@@ -15,6 +15,10 @@ public:
     virtual void Tick() override;
 
 public:
+    virtual void SaveToFile(FILE* _pFile) override;
+    virtual void LoadFromFile(FILE* _pFile) override;
+
+public:
     CLONE(CCameraMoveScript);
     CCameraMoveScript();
     virtual ~CCameraMoveScript();

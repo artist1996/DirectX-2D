@@ -113,6 +113,10 @@ public:
     float GetJumpSpeed()       { return m_JumpSpeed; }
     float GetMaxGravitySpeed() { return m_MaxGravitySpeed; }
 
+ public:
+    virtual void SaveToFile(FILE* _pFile) override;
+    virtual void LoadFromFile(FILE* _pFile) override;
+
 public:
     virtual void FinalTick() override;
 

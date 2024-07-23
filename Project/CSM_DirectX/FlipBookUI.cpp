@@ -8,7 +8,7 @@
 
 
 FlipBookUI::FlipBookUI()
-	: AssetUI(ASSET_TYPE::FLIPBOOK)
+	: AssetUI(ASSET_TYPE::ANIMATION)
 {
 }
 
@@ -20,7 +20,7 @@ void FlipBookUI::Update()
 {
 	Title();
 
-	Ptr<CFlipBook> pAnimation = (CFlipBook*)GetAsset().Get();
+	Ptr<CAnimation> pAnimation = (CAnimation*)GetAsset().Get();
 
 	int maxIdx = pAnimation->GetMaxFrameCount() - 1;
 	static int Idx = 0;
@@ -131,7 +131,7 @@ void FlipBookUI::AddFrame()
 		
 		Ptr<CSprite> pSprite = new CSprite;
 		pEditor->SetTargetSprite(pSprite);
-		pEditor->SetAnimation((CFlipBook*)GetAsset().Get());
+		pEditor->SetAnimation((CAnimation*)GetAsset().Get());
 
 		pEditor->SetActive(true);
 	}
@@ -141,7 +141,7 @@ void FlipBookUI::Save()
 {
 	ImGui::SameLine(100);
 
-	Ptr<CFlipBook> pAnimation = (CFlipBook*)GetAsset().Get();
+	Ptr<CAnimation> pAnimation = (CAnimation*)GetAsset().Get();
 
 	if (0 == pAnimation->GetMaxFrameCount())
 		return;

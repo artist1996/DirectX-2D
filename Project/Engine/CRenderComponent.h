@@ -25,6 +25,10 @@ public:
     virtual CRenderComponent* Clone() PURE;
 
 public:
+    void SaveDataToFile(FILE* _pFile);
+    void LoadDataFromFile(FILE* _pFile);
+
+public:
     CRenderComponent(COMPONENT_TYPE _Type);
     CRenderComponent(const CRenderComponent& _Origin);
     virtual ~CRenderComponent();

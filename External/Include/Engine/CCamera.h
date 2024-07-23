@@ -65,6 +65,10 @@ public:
     bool GetLayerCheck(int _LayerIdx) { return m_LayerCheck & (1 << _LayerIdx); }
 
 public:
+    virtual void SaveToFile(FILE* _pFile) override;
+    virtual void LoadFromFile(FILE* _pFile) override;
+
+public:
     virtual void Begin() override;
     virtual void FinalTick() override;
 

@@ -6,7 +6,7 @@ class AnimationEditor :
 {
 private:
     Ptr<CTexture>  m_Texture;
-    Ptr<CFlipBook> m_Animation;
+    Ptr<CAnimation> m_Animation;
     Ptr<CSprite>   m_TargetSprite;
 
     string         m_strTexName;
@@ -24,7 +24,7 @@ private:
 
 public:
     void SetTargetSprite(Ptr<CSprite> _Sprite)   { m_TargetSprite = _Sprite; }
-    void SetAnimation(Ptr<CFlipBook> _Animation) { m_Animation = _Animation; }
+    void SetAnimation(Ptr<CAnimation> _Animation) { m_Animation = _Animation; }
 
 
     Ptr<CSprite> GetTargetSprite()               { return m_TargetSprite; }

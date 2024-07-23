@@ -3,7 +3,7 @@
 
 #include "CSprite.h"
 
-class CFlipBook :
+class CAnimation :
     public CAsset
 {
 private:
@@ -20,6 +20,6 @@ public:
 
 
 public:
-    CFlipBook();
-    virtual ~CFlipBook();
+    CAnimation();
+    virtual ~CAnimation();
 };

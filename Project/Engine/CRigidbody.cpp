@@ -55,6 +55,30 @@ void CRigidbody::Jump()
 	SetGround(false);
 }
 
+void CRigidbody::SaveToFile(FILE* _pFile)
+{
+	fwrite(&m_Mass, sizeof(float), 1, _pFile);
+	fwrite(&m_InitWalkSpeed, sizeof(float), 1, _pFile);
+	fwrite(&m_MaxWalkSpeed, sizeof(float), 1, _pFile);   
+	fwrite(&m_MaxGravitySpeed, sizeof(float), 1, _pFile);
+	fwrite(&m_Friction, sizeof(float), 1, _pFile);       
+	fwrite(&m_GravityAccel, sizeof(float), 1, _pFile);
+	fwrite(&m_UseGravity, sizeof(float), 1, _pFile);
+	fwrite(&m_JumpSpeed, sizeof(float), 1, _pFile);
+}
+
+void CRigidbody::LoadFromFile(FILE* _pFile)
+{
+	fread(&m_Mass, sizeof(float), 1, _pFile);
+	fread(&m_InitWalkSpeed, sizeof(float), 1, _pFile);
+	fread(&m_MaxWalkSpeed, sizeof(float), 1, _pFile);
+	fread(&m_MaxGravitySpeed, sizeof(float), 1, _pFile);
+	fread(&m_Friction, sizeof(float), 1, _pFile);
+	fread(&m_GravityAccel, sizeof(float), 1, _pFile);
+	fread(&m_UseGravity, sizeof(float), 1, _pFile);
+	fread(&m_JumpSpeed, sizeof(float), 1, _pFile);
+}
+
 void CRigidbody::FinalTick()
 {
 	Vec3 vObjPos = Transform()->GetRelativePos();

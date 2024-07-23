@@ -9,4 +9,4 @@
 //#include "CSound.h"
 #include "CPrefab.h"
 #include "CSprite.h"
-#include "CFlipBook.h"
+#include "CAnimation.h"

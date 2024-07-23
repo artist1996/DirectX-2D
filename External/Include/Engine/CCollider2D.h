@@ -29,6 +29,10 @@ public:
     bool IsIndependentScale() { return m_IndependentScale; }
 
 public:
+    virtual void SaveToFile(FILE* _pFile) override;
+    virtual void LoadFromFile(FILE* _pFile) override;
+
+public:
     void BeginOverlap(CCollider2D* _OtherCollider);
     void Overlap(CCollider2D* _OtherCollider);
     void EndOverlap(CCollider2D* _OtherCollider);

@@ -13,7 +13,8 @@ private:
 
 public:
     virtual void Tick() override;
-
+    virtual void SaveToFile(FILE* pFile) override    {}
+    virtual void LoadFromFile(FILE* _pFile) override {}
 
 public:
     CLONE(CEditorCameraScript);

@@ -176,7 +176,7 @@ void AnimationEditor::EditSprite()
 
 		CAssetMgr::GetInst()->AddAsset(wstring(m_strSpriteName.begin(), m_strSpriteName.end()), m_TargetSprite);
 		m_Animation->AddSprite(m_TargetSprite);
-		Deactivate();
+		//Deactivate();
 	}
 
 	ImGui::SameLine(65);

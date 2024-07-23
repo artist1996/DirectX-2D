@@ -27,3 +27,13 @@ void CLight2D::SetLightType(LIGHT_TYPE _Type)
 {
 	m_Info.Type = _Type;
 }
+
+void CLight2D::SaveToFile(FILE* _pFile)
+{
+	fwrite(&m_Info, sizeof(tLightInfo), 1, _pFile);
+}
+
+void CLight2D::LoadFromFile(FILE* _pFile)
+{
+	fread(&m_Info, sizeof(tLightInfo), 1, _pFile);
+}

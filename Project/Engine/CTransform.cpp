@@ -114,3 +114,19 @@ void CTransform::Binding()
 	pTransformCB->SetData(&g_Trans);
 	pTransformCB->Binding();
 }
+
+void CTransform::SaveToFile(FILE* _pFile)
+{	
+	fwrite(&m_RelativePos, sizeof(Vec3), 1, _pFile);
+	fwrite(&m_RelativeScale, sizeof(Vec3), 1, _pFile);
+	fwrite(&m_RelativeRotation, sizeof(Vec3), 1, _pFile);
+	fwrite(&m_IndependentScale, sizeof(bool), 1, _pFile);
+}
+
+void CTransform::LoadFromFile(FILE* _pFile)
+{
+	fread(&m_RelativePos, sizeof(Vec3), 1, _pFile);
+	fread(&m_RelativeScale, sizeof(Vec3), 1, _pFile);
+	fread(&m_RelativeRotation, sizeof(Vec3), 1, _pFile);
+	fread(&m_IndependentScale, sizeof(bool), 1, _pFile);
+}

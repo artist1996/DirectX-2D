@@ -35,3 +35,14 @@ void CMissileScript::Overlap(CCollider2D* _OwnCollider, CGameObject* _OtherObj, 
 void CMissileScript::EndOverlap(CCollider2D* _OwnCollider, CGameObject* _OtherObj, CCollider2D* _OtherCollider)
 {
 }
+
+void CMissileScript::SaveToFile(FILE* _pFile)
+{
+	fwrite(&m_Speed, sizeof(float), 1, _pFile);
+}
+
+void CMissileScript::LoadFromFile(FILE* _pFile)
+{
+	fread(&m_Speed, sizeof(float), 1, _pFile);
+}
+

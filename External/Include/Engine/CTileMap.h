@@ -42,6 +42,10 @@ private:
     void ChangeTileMapSize();
 
 public:
+    virtual void SaveToFile(FILE* _pFile) override;
+    virtual void LoadFromFile(FILE* _pFile) override;
+
+public:
     virtual void FinalTick() override;
     virtual void Render() override;
 

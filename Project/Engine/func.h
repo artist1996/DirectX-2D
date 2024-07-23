@@ -83,6 +83,6 @@ ASSET_TYPE GetAssetType()
 	if constexpr (std::is_same_v<T, CSprite>)
 		return ASSET_TYPE::SPRITE;
 
-	if constexpr (std::is_same_v<T, CFlipBook>)
-		return ASSET_TYPE::FLIPBOOK;
+	if constexpr (std::is_same_v<T, CAnimation>)
+		return ASSET_TYPE::ANIMATION;
 }

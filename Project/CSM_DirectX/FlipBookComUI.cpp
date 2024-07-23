@@ -5,14 +5,14 @@
 #include <Engine/CGameObject.h>
 #include <Engine/CAssetMgr.h>
 #include <Engine/CSprite.h>
-#include <Engine/CFlipBook.h>
-#include <Engine/CFlipBookComponent.h>
+#include <Engine/CAnimation.h>
+#include <Engine/CAnimator2D.h>
 
 #include "ListUI.h"
 #include "TreeUI.h"
 
 FlipBookComUI::FlipBookComUI()
-	: ComponentUI(COMPONENT_TYPE::FLIPBOOKCOMPONENT)
+	: ComponentUI(COMPONENT_TYPE::ANIMATOR2D)
 	, m_UIHeight(0)
 	, m_Idx(0)
 	, m_AddIdx(0)
@@ -31,21 +31,26 @@ void FlipBookComUI::Update()
 	m_UIHeight += (int)ImGui::GetItemRectSize().y;
 	CGameObject* pObject = GetTargetObject();
 
-	CFlipBookComponent* pFlipBookCom = pObject->FlipBookComponent();
+	CAnimator2D* pAnimator2D = pObject->Animator2D();
 		
-	if ((int)pFlipBookCom->GetFlipBookSize() <= m_Idx)
+	if ((int)pAnimator2D->GetAnimationsSize() <= m_Idx)
 	{
-		m_Idx = (int)pFlipBookCom->GetFlipBookSize() - 1;
+		m_Idx = (int)pAnimator2D->GetAnimationsSize() - 1;
 	}
 
 	if (m_Idx <= 0)
 		m_Idx = 0;
 
-	Ptr<CFlipBook> pFlipBook = pFlipBookCom->GetCurFlipBook();
-		
-	ImGui::Text("Cur FlipBook");
+	Ptr<CAnimation> pAnimation = pAnimator2D->GetCurAnimation();
+
+	ImGui::Text("Cur Animation");
 	ImGui::SameLine(100);
-	string strName = string(pFlipBook->GetKey().begin(), pFlipBook->GetKey().end());
+	string strName;
+	if (nullptr != pAnimation)
+		strName = string(pAnimation->GetKey().begin(), pAnimation->GetKey().end());
+	else
+		strName = "";
+
 	ImGui::SetNextItemWidth(200.f);
 	ImGui::InputText("##CurFlipBookName", (char*)strName.c_str(), strName.length(), ImGuiInputTextFlags_ReadOnly);
 	ImGui::SameLine();
@@ -60,18 +65,27 @@ void FlipBookComUI::Update()
 			TreeNode* pNode = *((TreeNode**)Payload->Data);
 			Ptr<CAsset> pAsset = (CAsset*)pNode->GetData();
 
-			if (ASSET_TYPE::FLIPBOOK == pAsset->GetAssetType())
+			if (ASSET_TYPE::ANIMATION == pAsset->GetAssetType())
 			{
-				vector<Ptr<CFlipBook>> pAnimation = pFlipBookCom->GetFlipBook();
-				for (size_t i = 0; i < pAnimation.size(); ++i)
+				vector<Ptr<CAnimation>> pAnimation = pAnimator2D->GetAnimations();
+
+				if (0 == pAnimation.size())
 				{
-					if (nullptr != pAnimation[i])
-						continue;
-					else
-					{
-						pFlipBookCom->AddFlipBook(i, (CFlipBook*)pAsset.Get());
-						break;
-					}
+					pAnimator2D->AddAnimation(0, (CAnimation*)pAsset.Get());
+				}
+				else
+				{
+					//for (size_t i = 0; i < pAnimation.size(); ++i)
+					//{
+					//	if (nullptr != pAnimation[i])
+					//		continue;
+					//	else
+					//	{
+					//		pFlipBookCom->AddFlipBook(i + 1, (CFlipBook*)pAsset.Get());
+					//		break;
+					//	}
+					//}
+					pAnimator2D->AddAnimation(pAnimation.size(), (CAnimation*)pAsset.Get());
 				}
 			}
 		}
@@ -88,24 +102,28 @@ void FlipBookComUI::Update()
 
 		// AssetMgr 로 부터 Mesh Key 값 들고오기
 		
-		vector<string> vecFlipBookNames;
+		vector<string> vecAnimationNames;
 
-		for (size_t i = 0; i < pFlipBookCom->GetFlipBook().size(); ++i)
+		for (size_t i = 0; i < pAnimator2D->GetAnimations().size(); ++i)
 		{
-			if (nullptr == pFlipBookCom->GetFlipBook()[i])
+			if (nullptr == pAnimator2D->GetAnimations()[i])
 				continue;
 
-			vecFlipBookNames.push_back(string(pFlipBookCom->GetFlipBook()[i]->GetKey().begin(), pFlipBookCom->GetFlipBook()[i]->GetKey().end()));
+			vecAnimationNames.push_back(string(pAnimator2D->GetAnimations()[i]->GetKey().begin(), pAnimator2D->GetAnimations()[i]->GetKey().end()));
 		}
 		
-		pList->AddList(vecFlipBookNames);
+		pList->AddList(vecAnimationNames);
 		pList->SetActive(true);
 	}
 
 	m_UIHeight += (int)ImGui::GetItemRectSize().y;
 
 	// Cur Sprite
-	Ptr<CSprite> pSprite = pFlipBookCom->GetCurSprite();
+	Ptr<CSprite> pSprite = pAnimator2D->GetCurSprite();
+
+	if (nullptr == pSprite)
+		return;
+
 	ImGui::Text("Cur Sprite");
 	ImGui::SameLine(100);
 	m_UIHeight += (int)ImGui::GetItemRectSize().y;
@@ -125,12 +143,22 @@ void FlipBookComUI::Update()
 	ImGui::Image(pSprite->GetAtlasTexture()->GetSRV().Get(), ImVec2(150.f, 150.f), uv_min, uv_max, tint_col, border_col);
 	m_UIHeight += (int)ImGui::GetItemRectSize().y;
 	// Cur Frame Index
-	int CurIndex = pFlipBookCom->GetCurFrameIndex();
+	int CurIndex = pAnimator2D->GetCurFrameIndex();
 	
 	ImGui::Text("Frame Index");
 	ImGui::SameLine(100);
 	ImGui::DragInt("##FrameIndex", &CurIndex);
 	m_UIHeight += (int)ImGui::GetItemRectSize().y;
+
+	float FPS = pAnimator2D->GetFPS();
+
+	ImGui::Text("FPS");
+	ImGui::SameLine(100);
+	ImGui::DragFloat("##Animation FPS", &FPS);
+	m_UIHeight += (int)ImGui::GetItemRectSize().y;
+
+	pAnimator2D->SetFPS(FPS);
+
 
 	SetChildSize(ImVec2(0.f, (float)m_UIHeight));
 }
@@ -140,10 +168,10 @@ void FlipBookComUI::SelectFlipBook(DWORD_PTR _ListUI)
 	ListUI* pList = (ListUI*)_ListUI;
 	string strName = pList->GetSelectName();
 	wstring strFlipBookName = wstring(strName.begin(), strName.end());
-	Ptr<CFlipBook> pFlipBook = CAssetMgr::GetInst()->FindAsset<CFlipBook>(strFlipBookName);
+	Ptr<CAnimation> pFlipBook = CAssetMgr::GetInst()->FindAsset<CAnimation>(strFlipBookName);
 
 	assert(pFlipBook.Get());
-	CFlipBookComponent* pFlipBookCom = GetTargetObject()->FlipBookComponent();
-	pFlipBookCom->SetCurFlipBook(pFlipBook);
+	CAnimator2D* pFlipBookCom = GetTargetObject()->Animator2D();
+	pFlipBookCom->SetCurAnimation(pFlipBook);
 	pFlipBookCom->Reset();
 }

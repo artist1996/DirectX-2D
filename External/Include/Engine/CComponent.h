@@ -21,11 +21,14 @@ public:
     virtual void Tick();
     virtual void FinalTick() PURE;
 
+    virtual void SaveToFile(FILE* _pFile) PURE;
+    virtual void LoadFromFile(FILE* _pFile) PURE;
+
     GET_OTHER_COMPONENT(Transform);
     GET_OTHER_COMPONENT(MeshRender);
     GET_OTHER_COMPONENT(Camera);
     GET_OTHER_COMPONENT(Collider2D);
-    GET_OTHER_COMPONENT(FlipBookComponent);
+    GET_OTHER_COMPONENT(Animator2D);
     GET_OTHER_COMPONENT(TileMap);
     GET_OTHER_COMPONENT(Light2D);
     GET_OTHER_COMPONENT(Rigidbody);

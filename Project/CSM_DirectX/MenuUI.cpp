@@ -188,7 +188,7 @@ wstring MenuUI::GetAssetKey(ASSET_TYPE _Type, const wstring& _strKey)
 	case ASSET_TYPE::SPRITE:
 		strKey = wstring(L"sprite\\" + _strKey + L" %d.sprite");
 		break;
-	case ASSET_TYPE::FLIPBOOK:
+	case ASSET_TYPE::ANIMATION:
 		strKey = wstring(L"flipbook\\" + _strKey + L" %d.flip");
 		break;
 	default:

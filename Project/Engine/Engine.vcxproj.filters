@@ -121,11 +121,11 @@
     <ClInclude Include="CCollisionMgr.h">
       <Filter>04. Manager\07. CollisionMgr</Filter>
     </ClInclude>
-    <ClInclude Include="CFlipBookComponent.h">
-      <Filter>08. Component\04. FlipBookComponent</Filter>
+    <ClInclude Include="CAnimator2D.h">
+      <Filter>08. Component\04. Animator2D</Filter>
     </ClInclude>
-    <ClInclude Include="CFlipBook.h">
-      <Filter>06. Asset\09. FlipBook</Filter>
+    <ClInclude Include="CAnimation.h">
+      <Filter>06. Asset\09. Animation</Filter>
     </ClInclude>
     <ClInclude Include="CSprite.h">
       <Filter>06. Asset\08. Sprite</Filter>
@@ -252,11 +252,11 @@
     <ClCompile Include="CCollisionMgr.cpp">
       <Filter>04. Manager\07. CollisionMgr</Filter>
     </ClCompile>
-    <ClCompile Include="CFlipBookComponent.cpp">
-      <Filter>08. Component\04. FlipBookComponent</Filter>
+    <ClCompile Include="CAnimator2D.cpp">
+      <Filter>08. Component\04. Animator2D</Filter>
     </ClCompile>
-    <ClCompile Include="CFlipBook.cpp">
-      <Filter>06. Asset\09. FlipBook</Filter>
+    <ClCompile Include="CAnimation.cpp">
+      <Filter>06. Asset\09. Animation</Filter>
     </ClCompile>
     <ClCompile Include="CSprite.cpp">
       <Filter>06. Asset\08. Sprite</Filter>
@@ -404,12 +404,6 @@
     <Filter Include="06. Asset\08. Sprite">
       <UniqueIdentifier>{4ba25bbd-1299-44b2-a16e-db2a061d0fcb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="06. Asset\09. FlipBook">
-      <UniqueIdentifier>{a8a048e3-14d2-4232-ae19-8931005e6324}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="08. Component\04. FlipBookComponent">
-      <UniqueIdentifier>{b7a1db6f-9204-44c4-823f-cf626f35356b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="HLSL\01. Header">
       <UniqueIdentifier>{f64c447e-0990-49ce-b3c7-9a1d159a2e14}</UniqueIdentifier>
     </Filter>
@@ -436,6 +430,12 @@
     </Filter>
     <Filter Include="Module">
       <UniqueIdentifier>{9f2f76aa-c5b1-4508-9b1d-84ae6b0a6f34}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="08. Component\04. Animator2D">
+      <UniqueIdentifier>{b7a1db6f-9204-44c4-823f-cf626f35356b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06. Asset\09. Animation">
+      <UniqueIdentifier>{a8a048e3-14d2-4232-ae19-8931005e6324}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

@@ -192,3 +192,29 @@ void CCamera::Render()
 	m_vecPostProcess.clear();
 	m_vecUI.clear();
 }
+
+void CCamera::SaveToFile(FILE* _pFile)
+{
+	fwrite(&m_Priority, sizeof(int), 1, _pFile);
+	fwrite(&m_LayerCheck, sizeof(UINT), 1, _pFile);
+	fwrite(&m_ProjType, sizeof(PROJ_TYPE), 1, _pFile);
+	fwrite(&m_Width, sizeof(float), 1, _pFile);
+	fwrite(&m_Height, sizeof(float), 1, _pFile);
+	fwrite(&m_Far, sizeof(float), 1, _pFile);
+	fwrite(&m_AspectRatio, sizeof(float), 1, _pFile);
+	fwrite(&m_FOV, sizeof(float), 1, _pFile);
+	fwrite(&m_ProjectionScale, sizeof(float), 1, _pFile);
+}
+
+void CCamera::LoadFromFile(FILE* _pFile)
+{
+	fread(&m_Priority, sizeof(int), 1, _pFile);
+	fread(&m_LayerCheck, sizeof(UINT), 1, _pFile);
+	fread(&m_ProjType, sizeof(PROJ_TYPE), 1, _pFile);
+	fread(&m_Width, sizeof(float), 1, _pFile);
+	fread(&m_Height, sizeof(float), 1, _pFile);
+	fread(&m_Far, sizeof(float), 1, _pFile);
+	fread(&m_AspectRatio, sizeof(float), 1, _pFile);
+	fread(&m_FOV, sizeof(float), 1, _pFile);
+	fread(&m_ProjectionScale, sizeof(float), 1, _pFile);
+}

@@ -84,3 +84,17 @@ void CCollider2D::EndOverlap(CCollider2D* _OtherCollider)
 		vecScripts[i]->EndOverlap(this, _OtherCollider->GetOwner(), _OtherCollider);
 	}
 }
+
+void CCollider2D::SaveToFile(FILE* _pFile)
+{
+	fwrite(&m_Offset, sizeof(Vec3), 1, _pFile);
+	fwrite(&m_Scale, sizeof(Vec3), 1, _pFile);
+	fwrite(&m_IndependentScale, sizeof(bool), 1, _pFile);
+}
+
+void CCollider2D::LoadFromFile(FILE* _pFile)
+{
+	fread(&m_Offset, sizeof(Vec3), 1, _pFile);
+	fread(&m_Scale, sizeof(Vec3), 1, _pFile);
+	fread(&m_IndependentScale, sizeof(bool), 1, _pFile);
+}

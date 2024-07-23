@@ -24,6 +24,10 @@ public:
     const tLightInfo& GetLightInfo() { return m_Info; }
 
 public:
+    virtual void SaveToFile(FILE* _pFile) override;
+    virtual void LoadFromFile(FILE* _pFile) override;
+
+public:
     virtual void FinalTick() override;
 
 public:

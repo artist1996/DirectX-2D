@@ -161,7 +161,7 @@ call EngineHeaderCopy.bat</Command>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="assets.h" />
-    <ClInclude Include="CFlipBookComponent.h" />
+    <ClInclude Include="CAnimator2D.h" />
     <ClInclude Include="CAsset.h" />
     <ClInclude Include="CAssetMgr.h" />
     <ClInclude Include="CCamera.h" />
@@ -173,7 +173,7 @@ call EngineHeaderCopy.bat</Command>
     <ClInclude Include="CDevice.h" />
     <ClInclude Include="CEngine.h" />
     <ClInclude Include="CEntity.h" />
-    <ClInclude Include="CFlipBook.h" />
+    <ClInclude Include="CAnimation.h" />
     <ClInclude Include="CGameObject.h" />
     <ClInclude Include="CGraphicShader.h" />
     <ClInclude Include="CKeyMgr.h" />
@@ -214,7 +214,7 @@ call EngineHeaderCopy.bat</Command>
     <ClInclude Include="struct.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CFlipBookComponent.cpp" />
+    <ClCompile Include="CAnimator2D.cpp" />
     <ClCompile Include="CAsset.cpp" />
     <ClCompile Include="CAssetInitcpp.cpp" />
     <ClCompile Include="CAssetMgr.cpp" />
@@ -227,7 +227,7 @@ call EngineHeaderCopy.bat</Command>
     <ClCompile Include="CDevice.cpp" />
     <ClCompile Include="CEngine.cpp" />
     <ClCompile Include="CEntity.cpp" />
-    <ClCompile Include="CFlipBook.cpp" />
+    <ClCompile Include="CAnimation.cpp" />
     <ClCompile Include="CGameObject.cpp" />
     <ClCompile Include="CGraphicShader.cpp" />
     <ClCompile Include="CKeyMgr.cpp" />

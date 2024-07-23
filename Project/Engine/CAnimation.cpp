@@ -1,18 +1,18 @@
 #include "pch.h"
-#include "CFlipBook.h"
+#include "CAnimation.h"
 
 #include "CAssetMgr.h"
 
-CFlipBook::CFlipBook()
-	: CAsset(ASSET_TYPE::FLIPBOOK)
+CAnimation::CAnimation()
+	: CAsset(ASSET_TYPE::ANIMATION)
 {
 }
 
-CFlipBook::~CFlipBook()
+CAnimation::~CAnimation()
 {
 }
 
-int CFlipBook::Save(const wstring& _FilePath)
+int CAnimation::Save(const wstring& _FilePath)
 {
 	// 颇老 俺规
 	FILE* pFile = nullptr;
@@ -35,7 +35,7 @@ int CFlipBook::Save(const wstring& _FilePath)
 	return S_OK;
 }
 
-int CFlipBook::Load(const wstring& _FilePath)
+int CAnimation::Load(const wstring& _FilePath)
 {
 	// 颇老 俺规
 	FILE* pFile = nullptr;

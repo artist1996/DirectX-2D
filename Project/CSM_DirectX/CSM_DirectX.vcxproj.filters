@@ -31,9 +31,6 @@
     <Filter Include="02. EditorUI\01. Inspector\ComponentUI\02. Collider2DUI">
       <UniqueIdentifier>{c16be69e-b34b-4550-8409-cd0d60361dcf}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. EditorUI\01. Inspector\ComponentUI\04. FlipBookUI">
-      <UniqueIdentifier>{3119d065-e0e7-469a-8894-15e03d2003f3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. EditorUI\01. Inspector\ComponentUI\05. MeshRenderUI">
       <UniqueIdentifier>{a85e7c3d-6130-4a4a-8338-9df5c46f108e}</UniqueIdentifier>
     </Filter>
@@ -121,6 +118,12 @@
     <Filter Include="02. EditorUI\01. Inspector\ComponentUI\10. RigidbodyUI">
       <UniqueIdentifier>{861dfe01-291d-47df-8cd3-7f3c093b5f72}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. EditorUI\01. Inspector\ComponentUI\04. Animator2DUI">
+      <UniqueIdentifier>{3119d065-e0e7-469a-8894-15e03d2003f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Manager\03. LevelSaveLoad">
+      <UniqueIdentifier>{2546eeea-f8f2-4dfa-82e8-3b8e7168d3d9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CGameObjectEx.h">
@@ -193,7 +196,7 @@
       <Filter>02. EditorUI\01. Inspector\ComponentUI\03. CameraUI</Filter>
     </ClInclude>
     <ClInclude Include="FlipBookComUI.h">
-      <Filter>02. EditorUI\01. Inspector\ComponentUI\04. FlipBookUI</Filter>
+      <Filter>02. EditorUI\01. Inspector\ComponentUI\04. Animator2DUI</Filter>
     </ClInclude>
     <ClInclude Include="MeshRenderUI.h">
       <Filter>02. EditorUI\01. Inspector\ComponentUI\05. MeshRenderUI</Filter>
@@ -270,6 +273,9 @@
     <ClInclude Include="RigidbodyUI.h">
       <Filter>02. EditorUI\01. Inspector\ComponentUI\10. RigidbodyUI</Filter>
     </ClInclude>
+    <ClInclude Include="CLevelSaveLoad.h">
+      <Filter>01. Manager\03. LevelSaveLoad</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -328,7 +334,7 @@
       <Filter>02. EditorUI\01. Inspector\ComponentUI\03. CameraUI</Filter>
     </ClCompile>
     <ClCompile Include="FlipBookComUI.cpp">
-      <Filter>02. EditorUI\01. Inspector\ComponentUI\04. FlipBookUI</Filter>
+      <Filter>02. EditorUI\01. Inspector\ComponentUI\04. Animator2DUI</Filter>
     </ClCompile>
     <ClCompile Include="MeshRenderUI.cpp">
       <Filter>02. EditorUI\01. Inspector\ComponentUI\05. MeshRenderUI</Filter>
@@ -413,6 +419,9 @@
     </ClCompile>
     <ClCompile Include="RigidbodyUI.cpp">
       <Filter>02. EditorUI\01. Inspector\ComponentUI\10. RigidbodyUI</Filter>
+    </ClCompile>
+    <ClCompile Include="CLevelSaveLoad.cpp">
+      <Filter>01. Manager\03. LevelSaveLoad</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

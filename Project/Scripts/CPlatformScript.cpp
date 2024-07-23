@@ -19,3 +19,11 @@ void CPlatformScript::BeginOverlap(CCollider2D* _OwnCollider, CGameObject* _Othe
 	if (L"Player" == _OtherObj->GetName())
 		_OtherObj->Rigidbody()->SetGround(true);
 }
+
+void CPlatformScript::SaveToFile(FILE* _pFile)
+{
+}
+
+void CPlatformScript::LoadFromFile(FILE* _pFile)
+{
+}

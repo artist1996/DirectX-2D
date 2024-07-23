@@ -48,8 +48,11 @@ public:
     virtual void Begin() {}
     virtual void Tick() PURE;
     virtual void FinalTick() final override {}
-
     UINT GetScriptType() { return m_ScriptType; }
+
+public:
+    virtual void SaveToFile(FILE* _pFile)   PURE;
+    virtual void LoadFromFile(FILE* _pFile) PURE;
 
 public:
     virtual void BeginOverlap(CCollider2D* _OwnCollider, CGameObject* _OtherObj, CCollider2D* _OtherCollider) {}

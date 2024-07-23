@@ -1,8 +1,10 @@
 #include "pch.h"
 #include "CRenderComponent.h"
 
+#include "CAssetMgr.h"
 #include "CLevelMgr.h"
 #include "CLevel.h"
+
 
 CRenderComponent::CRenderComponent(COMPONENT_TYPE _Type)
 	: CComponent(_Type)
@@ -56,4 +58,18 @@ Ptr<CMaterial> CRenderComponent::GetDynamicMaterial()
 	m_Mtrl = m_DynamicMtrl = m_SharedMtrl->Clone();
 
 	return m_Mtrl;
+}
+
+void CRenderComponent::SaveDataToFile(FILE* _pFile)
+{
+	SaveAssetRef(m_Mesh, _pFile);
+	SaveAssetRef(m_Mtrl, _pFile);
+	SaveAssetRef(m_SharedMtrl, _pFile);
+}
+
+void CRenderComponent::LoadDataFromFile(FILE* _pFile)
+{
+	LoadAssetRef(m_Mesh, _pFile);
+	LoadAssetRef(m_Mtrl, _pFile);
+	LoadAssetRef(m_SharedMtrl, _pFile);
 }

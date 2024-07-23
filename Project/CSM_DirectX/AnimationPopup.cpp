@@ -34,7 +34,7 @@ void AnimationPopup::Update()
 	{
 		m_strKey = wstring(m_strName.begin(), m_strName.end());
 
-		Ptr<CFlipBook> pFlipBook = new CFlipBook;
+		Ptr<CAnimation> pFlipBook = new CAnimation;
 
 		CAssetMgr::GetInst()->AddAsset(m_strKey.c_str(), pFlipBook);
 
@@ -49,6 +49,7 @@ void AnimationPopup::Update()
 		AnimationEditor* pEditor = (AnimationEditor*)CEditorMgr::GetInst()->FindEditorUI("Animation Editor");
 		pEditor->ClearEditor();
 		pEditor->SetActive(false);
+		SetActive(false);
 	}
 	
 }

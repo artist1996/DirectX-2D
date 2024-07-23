@@ -68,11 +68,11 @@ void Inspector::CreateComponentUI()
 	m_arrComUI[(UINT)COMPONENT_TYPE::CAMERA]->SetChildSize(ImVec2(0.f, 200.f));
 	AddChild(m_arrComUI[(UINT)COMPONENT_TYPE::CAMERA]);
 
-	m_arrComUI[(UINT)COMPONENT_TYPE::FLIPBOOKCOMPONENT] = new FlipBookComUI;
-	m_arrComUI[(UINT)COMPONENT_TYPE::FLIPBOOKCOMPONENT]->SetName("FlipBookComUI");
-	m_arrComUI[(UINT)COMPONENT_TYPE::FLIPBOOKCOMPONENT]->SetChildBorder(true);
-	m_arrComUI[(UINT)COMPONENT_TYPE::FLIPBOOKCOMPONENT]->SetChildSize(ImVec2(0.f, 400.f));
-	AddChild(m_arrComUI[(UINT)COMPONENT_TYPE::FLIPBOOKCOMPONENT]);
+	m_arrComUI[(UINT)COMPONENT_TYPE::ANIMATOR2D] = new FlipBookComUI;
+	m_arrComUI[(UINT)COMPONENT_TYPE::ANIMATOR2D]->SetName("FlipBookComUI");
+	m_arrComUI[(UINT)COMPONENT_TYPE::ANIMATOR2D]->SetChildBorder(true);
+	m_arrComUI[(UINT)COMPONENT_TYPE::ANIMATOR2D]->SetChildSize(ImVec2(0.f, 400.f));
+	AddChild(m_arrComUI[(UINT)COMPONENT_TYPE::ANIMATOR2D]);
 
 	m_arrComUI[(UINT)COMPONENT_TYPE::MESHRENDER] = new MeshRenderUI;
 	m_arrComUI[(UINT)COMPONENT_TYPE::MESHRENDER]->SetName("MeshRenderUI");
@@ -135,7 +135,7 @@ void Inspector::CreateAssetUI()
 	pUI = new FlipBookUI;
 	pUI->SetName("FlipBookUI");
 	AddChild(pUI);
-	m_arrAssetUI[(UINT)ASSET_TYPE::FLIPBOOK] = pUI;
+	m_arrAssetUI[(UINT)ASSET_TYPE::ANIMATION] = pUI;
 
 	pUI = new SoundUI;
 	pUI->SetName("SoundUI");
