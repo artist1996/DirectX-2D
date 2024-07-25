@@ -94,15 +94,6 @@
     <Filter Include="01. Manager\02. TestLevel">
       <UniqueIdentifier>{745e090a-985a-4297-936f-8f1a15fe445e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. EditorUI\07. Animation Editor">
-      <UniqueIdentifier>{e381682c-9909-4573-9ce6-b3ab6ed935ff}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. EditorUI\07. Animation Editor\01. Popup">
-      <UniqueIdentifier>{50634419-3870-4a9b-80b7-4122ffd0885e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. EditorUI\07. Animation Editor\02. Sprite">
-      <UniqueIdentifier>{1bb334c0-a90c-4334-bcc8-99ad7ee6c001}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. EditorUI\08. Module">
       <UniqueIdentifier>{9b52670b-82ac-4e28-85b1-9cd5629b7ef3}</UniqueIdentifier>
     </Filter>
@@ -123,6 +114,15 @@
     </Filter>
     <Filter Include="02. EditorUI\06. MenuUI">
       <UniqueIdentifier>{6b78fce2-789c-4ce2-95b5-de01e463c1cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. EditorUI\07. Sprite Editor">
+      <UniqueIdentifier>{e381682c-9909-4573-9ce6-b3ab6ed935ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. EditorUI\07. Sprite Editor\01. Popup">
+      <UniqueIdentifier>{50634419-3870-4a9b-80b7-4122ffd0885e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. EditorUI\07. Sprite Editor\02. Sprite">
+      <UniqueIdentifier>{1bb334c0-a90c-4334-bcc8-99ad7ee6c001}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -259,13 +259,13 @@
       <Filter>01. Manager\02. TestLevel</Filter>
     </ClInclude>
     <ClInclude Include="AnimationPopup.h">
-      <Filter>02. EditorUI\07. Animation Editor\01. Popup</Filter>
+      <Filter>02. EditorUI\07. Sprite Editor\01. Popup</Filter>
     </ClInclude>
     <ClInclude Include="ParamUI.h">
       <Filter>02. EditorUI\08. Module</Filter>
     </ClInclude>
     <ClInclude Include="AnimationEditor.h">
-      <Filter>02. EditorUI\07. Animation Editor\02. Sprite</Filter>
+      <Filter>02. EditorUI\07. Sprite Editor\02. Sprite</Filter>
     </ClInclude>
     <ClInclude Include="ScriptUI.h">
       <Filter>02. EditorUI\01. Inspector\ComponentUI\09. ScriptUI</Filter>
@@ -406,13 +406,13 @@
       <Filter>01. Manager\02. TestLevel</Filter>
     </ClCompile>
     <ClCompile Include="AnimationPopup.cpp">
-      <Filter>02. EditorUI\07. Animation Editor\01. Popup</Filter>
+      <Filter>02. EditorUI\07. Sprite Editor\01. Popup</Filter>
     </ClCompile>
     <ClCompile Include="ParamUI.cpp">
       <Filter>02. EditorUI\08. Module</Filter>
     </ClCompile>
     <ClCompile Include="AnimationEditor.cpp">
-      <Filter>02. EditorUI\07. Animation Editor\02. Sprite</Filter>
+      <Filter>02. EditorUI\07. Sprite Editor\02. Sprite</Filter>
     </ClCompile>
     <ClCompile Include="ScriptUI.cpp">
       <Filter>02. EditorUI\01. Inspector\ComponentUI\09. ScriptUI</Filter>

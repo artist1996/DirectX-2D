@@ -16,10 +16,13 @@ private:
     void Level();
     void GameObject();
     void Assets();
-
+    
     void AddComponent();
     void AddScript();
     void CreateAnimation();
+
+    void SaveLevel();
+    void LoadLevel();
 
     wstring GetAssetKey(ASSET_TYPE _Type, const wstring& _strKey);
 public:

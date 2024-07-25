@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "MenuUI.h"
 
+#include <Engine/CLevelMgr.h>
+#include <Engine/CLevel.h>
 #include <Engine/CAssetMgr.h>
 #include <Engine/assets.h>
 #include <Engine/CGameObject.h>
@@ -11,6 +13,8 @@
 
 #include "Inspector.h"
 #include "CEditorMgr.h"
+
+#include "CLevelSaveLoad.h"
 
 MenuUI::MenuUI()
 {
@@ -52,12 +56,12 @@ void MenuUI::File()
 	{
 		if (ImGui::MenuItem("Level Save"))
 		{
-
+			SaveLevel();
 		}
 
 		if (ImGui::MenuItem("Level Load"))
 		{
-
+			LoadLevel();
 		}
 
 		ImGui::EndMenu();
@@ -66,25 +70,59 @@ void MenuUI::File()
 
 void MenuUI::Level()
 {
+	CLevel* pCurLevel = CLevelMgr::GetInst()->GetCurrentLevel();
+
+	ImGui::BeginDisabled(!pCurLevel);
+
 	if (ImGui::BeginMenu("Level"))
 	{
+		LEVEL_STATE State = LEVEL_STATE::STOP;
+
+		if (nullptr != pCurLevel)
+			State = pCurLevel->GetState();
+
+		ImGui::BeginDisabled(LEVEL_STATE::PLAY == State);
 		if (ImGui::MenuItem("Play"))
 		{
-			ChangeLevelState(PLAY);
+			if (LEVEL_STATE::STOP == State)
+			{
+				wstring strLevelPath = CPathMgr::GetInst()->GetContentPath();
+				strLevelPath += L"level\\Temp.lv";
+				CLevelSaveLoad::SaveLevel(strLevelPath, pCurLevel);
+			}
+
+			ChangeLevelState(LEVEL_STATE::PLAY);
 		}
 
+		ImGui::EndDisabled();
+
+
+		ImGui::BeginDisabled(LEVEL_STATE::PLAY != State);
 		if (ImGui::MenuItem("Pause"))
 		{
 			ChangeLevelState(PAUSE);
 		}
+		ImGui::EndDisabled();
 
+		ImGui::BeginDisabled(LEVEL_STATE::STOP == State);
 		if (ImGui::MenuItem("Stop"))
 		{
-			ChangeLevelState(STOP);
+			wstring strLevelLoadPath = CPathMgr::GetInst()->GetContentPath();
+			strLevelLoadPath += L"level\\Temp.lv";
+			CLevel* pLoadedLevel = CLevelSaveLoad::LoadLevel(strLevelLoadPath);
+			ChangeLevel(pLoadedLevel, LEVEL_STATE::STOP);
+			
+			// Inspector Clear (이전 Object 정보를 보여줄 수 있기 때문에)
+			Inspector* pInspector = (Inspector*)CEditorMgr::GetInst()->FindEditorUI("Inspector");
+			pInspector->SetTargetObject(nullptr);
+			pInspector->SetTargetAsset(nullptr);
 		}
+		ImGui::EndDisabled();
 
 		ImGui::EndMenu();
 	}
+
+	ImGui::EndDisabled();
 }
 
 void MenuUI::GameObject()
@@ -324,4 +362,70 @@ wstring MenuUI::GetAssetKey(ASSET_TYPE _Type, const wstring& _strKey)
 	}
 
 	return szKey;
+}
+
+void MenuUI::SaveLevel()
+{
+	wchar_t szSelect[256] = {};
+	wchar_t szRelativePath[256] = {};
+
+	OPENFILENAME ofn = {};
+
+	ofn.lStructSize = sizeof(ofn);
+	ofn.hwndOwner = nullptr;
+	ofn.lpstrFile = szSelect;
+	ofn.lpstrFile[0] = '\0';
+	ofn.nMaxFile = sizeof(szSelect);
+	ofn.lpstrFilter = L"모든 파일\0*.*\0Level\0*.lv";
+	ofn.nFilterIndex = 0;
+	ofn.lpstrFileTitle = NULL;
+	ofn.nMaxFileTitle = 0;
+
+	// 탐색창 초기 위치 지정
+	wstring strInitPath = CPathMgr::GetInst()->GetContentPath();
+	strInitPath += L"level\\";
+	ofn.lpstrInitialDir = strInitPath.c_str();
+
+	ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
+
+	if (GetSaveFileName(&ofn))
+	{
+		CLevel* pCurLevel = CLevelMgr::GetInst()->GetCurrentLevel();
+
+		if (LEVEL_STATE::STOP != pCurLevel->GetState() || nullptr == pCurLevel)
+			return;
+
+		CLevelSaveLoad::SaveLevel(szSelect, pCurLevel);
+	}
+}
+
+void MenuUI::LoadLevel()
+{
+	wchar_t szSelect[256] = {};
+	wchar_t szRelativePath[256] = {};
+
+	OPENFILENAME ofn = {};
+
+	ofn.lStructSize = sizeof(ofn);
+	ofn.hwndOwner = nullptr;
+	ofn.lpstrFile = szSelect;
+	ofn.lpstrFile[0] = '\0';
+	ofn.nMaxFile = sizeof(szSelect);
+	ofn.lpstrFilter = L"모든 파일\0*.*\0Level\0*.lv";
+	ofn.nFilterIndex = 0;
+	ofn.lpstrFileTitle = NULL;
+	ofn.nMaxFileTitle = 0;
+
+	// 탐색창 초기 위치 지정
+	wstring strInitPath = CPathMgr::GetInst()->GetContentPath();
+	strInitPath += L"level\\";
+	ofn.lpstrInitialDir = strInitPath.c_str();
+
+	ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
+
+	if (GetOpenFileName(&ofn))
+	{
+		CLevel* pLevel = CLevelSaveLoad::LoadLevel(szSelect);
+		ChangeLevel(pLevel, LEVEL_STATE::STOP);
+	}
 }

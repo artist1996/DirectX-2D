@@ -106,7 +106,7 @@ void AnimationEditor::ShowTextureImage()
 			m_LT.x = m_StartPos.x - Image_LT.x;
 			m_LT.y = m_StartPos.y - Image_LT.y;
 
-			m_RB.x = abs(CurMousePos.x - Image_LT.x); // Update the right-bottom corner
+			m_RB.x = abs(CurMousePos.x - Image_LT.x);
 			m_RB.y = abs(CurMousePos.y - Image_LT.y);
 
 			m_DrawingRect = true;

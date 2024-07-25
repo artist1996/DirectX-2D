@@ -17,6 +17,7 @@
 #include <Scripts/CCameraMoveScript.h>
 #include <Scripts/CPlatformScript.h>;
 
+#include "CLevelSaveLoad.h"
 
 void CTestLevel::CreateTestLevel()
 {
@@ -29,6 +30,17 @@ void CTestLevel::CreateTestLevel()
 	pAlphaBlendMtrl->SetTexParam(TEX_0, pTexture);
 
 	CreatePrefab();
+
+	wstring strLoadLevelPath = CPathMgr::GetInst()->GetContentPath();
+	strLoadLevelPath += L"level\\Temp.lv";
+	CLevel* pLoadedLevel = CLevelSaveLoad::LoadLevel(strLoadLevelPath);
+	
+	ChangeLevel(pLoadedLevel, LEVEL_STATE::PLAY);
+
+	CCollisionMgr::GetInst()->CollisionCheck(3, 4);
+	CCollisionMgr::GetInst()->CollisionCheck(4, 5);
+	
+	return;
 
 	CLevel* pLevel = new CLevel;
 	ChangeLevel(pLevel, PLAY);
@@ -186,8 +198,12 @@ void CTestLevel::CreateTestLevel()
 	//
 	//pLevel->AddObject(4, pMonster);
 
-	CCollisionMgr::GetInst()->CollisionCheck(3, 4);
-	CCollisionMgr::GetInst()->CollisionCheck(4, 5);
+	//
+	wstring strLevelPath = CPathMgr::GetInst()->GetContentPath();
+	strLevelPath += L"level\\Temp.lv";
+	CLevelSaveLoad::SaveLevel(strLevelPath, pLevel);
+	
+	ChangeLevel(pLevel, LEVEL_STATE::PLAY);
 
 	//pMtrl->Save(L"material\\std2d.mtrl");
 }

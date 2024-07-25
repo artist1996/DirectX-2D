@@ -3,10 +3,11 @@
 class CLevelSaveLoad
 {
 public:
-	static void LevelSave(const wstring& _FilePath, CLevel* _pLevel);
+	static void SaveLevel(const wstring& _FilePath, CLevel* _pLevel);
 	static void SaveGameObject(FILE* _pFile, CGameObject* _Object);
 
-	static CLevel* LevelLoad(const wstring& _FilePath);
-	static CGameObject* LoadGameObject(FILE* _pFile);
+	static class CLevel* LoadLevel(const wstring& _FilePath);
+	static class CGameObject* LoadGameObject(FILE* _pFile);
+	static class CComponent* GetComponent(COMPONENT_TYPE _Type);
 };
 
