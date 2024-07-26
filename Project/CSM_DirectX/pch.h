@@ -15,3 +15,6 @@
 
 #include <Engine/global.h>
 #include <Engine/CEngine.h>
+
+#include <set>
+using std::set;

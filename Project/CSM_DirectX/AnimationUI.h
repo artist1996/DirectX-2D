@@ -1,25 +1,19 @@
 #pragma once
-#include "EditorUI.h"
-
+#include "AssetUI.h"
 class AnimationUI :
-    public EditorUI
+    public AssetUI
 {
 private:
-    Ptr<CFlipBook>                   m_FlipBook;
-    Ptr<CSprite>                     m_TargetSprite;
 
-    class AnimationEditor*           m_arrChild[2];
-    
-    string                           m_strName;
-    
 public:
     virtual void Update() override;
-    void SetDefaultFlipBook(Ptr<CFlipBook> _FlipBook) { m_FlipBook = _FlipBook; }
 
-    virtual void Init() override;
-    Ptr<CFlipBook> GetTargetFlipBook() { return m_FlipBook; }
+private:
+    void AddFrame();
+    void Save();
 
 public:
     AnimationUI();
     virtual ~AnimationUI();
 };
+

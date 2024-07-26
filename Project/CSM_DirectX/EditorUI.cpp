@@ -9,6 +9,8 @@ EditorUI::EditorUI()
 	, m_Active(true)
 	, m_ChildBorder(false)
 	, m_Modal(false)
+	, m_UseMenuBar(false)
+	, m_Move(true)
 {
 }
 
@@ -24,13 +26,20 @@ void EditorUI::Tick()
 
 	bool bActive = m_Active;
 
+	UINT Flag = ImGuiWindowFlags_HorizontalScrollbar;
+
+	if (m_UseMenuBar)
+		Flag = ImGuiWindowFlags_MenuBar;
+	if (!m_Move)
+		Flag |= ImGuiWindowFlags_NoMove;
+
 	// 최상위 부모 UI 인 경우
 	if (nullptr == m_Parent)
 	{
 		// Modaless
 		if (false == m_Modal)
 		{
-			ImGui::Begin(m_FullName.c_str(), &bActive);
+			ImGui::Begin(m_FullName.c_str(), &bActive, Flag);
 
 			if (m_Active != bActive)
 			{

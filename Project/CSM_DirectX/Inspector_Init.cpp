@@ -8,7 +8,7 @@
 #include "TransformUI.h"
 #include "Collider2DUI.h"
 #include "CameraUI.h"
-#include "FlipBookComUI.h"
+#include "Animator2DUI.h"
 #include "MeshRenderUI.h"
 #include "TileMapUI.h"
 #include "ParticleSystemUI.h"
@@ -20,7 +20,7 @@
 #include "PrefabUI.h"
 #include "TextureUI.h"
 #include "SpriteUI.h"
-#include "FlipBookUI.h"
+#include "AnimationUI.h"
 #include "SoundUI.h"
 #include "GraphicShaderUI.h"
 #include "ComputeShaderUI.h"
@@ -68,8 +68,8 @@ void Inspector::CreateComponentUI()
 	m_arrComUI[(UINT)COMPONENT_TYPE::CAMERA]->SetChildSize(ImVec2(0.f, 200.f));
 	AddChild(m_arrComUI[(UINT)COMPONENT_TYPE::CAMERA]);
 
-	m_arrComUI[(UINT)COMPONENT_TYPE::ANIMATOR2D] = new FlipBookComUI;
-	m_arrComUI[(UINT)COMPONENT_TYPE::ANIMATOR2D]->SetName("FlipBookComUI");
+	m_arrComUI[(UINT)COMPONENT_TYPE::ANIMATOR2D] = new Animator2DUI;
+	m_arrComUI[(UINT)COMPONENT_TYPE::ANIMATOR2D]->SetName("Animator2DUI");
 	m_arrComUI[(UINT)COMPONENT_TYPE::ANIMATOR2D]->SetChildBorder(true);
 	m_arrComUI[(UINT)COMPONENT_TYPE::ANIMATOR2D]->SetChildSize(ImVec2(0.f, 400.f));
 	AddChild(m_arrComUI[(UINT)COMPONENT_TYPE::ANIMATOR2D]);
@@ -132,8 +132,8 @@ void Inspector::CreateAssetUI()
 	AddChild(pUI);
 	m_arrAssetUI[(UINT)ASSET_TYPE::SPRITE] = pUI;
 
-	pUI = new FlipBookUI;
-	pUI->SetName("FlipBookUI");
+	pUI = new AnimationUI;
+	pUI->SetName("AnimationUI");
 	AddChild(pUI);
 	m_arrAssetUI[(UINT)ASSET_TYPE::ANIMATION] = pUI;
 

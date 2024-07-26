@@ -80,7 +80,6 @@ void CAnimator2D::FinalTick()
 
 		m_CurFrmSprite = m_CurAnimation->GetSprite(m_CurFrmIdx);
 	}
-	
 }
 
 void CAnimator2D::AddAnimation(int _Idx, Ptr<CAnimation> _FlipBook)

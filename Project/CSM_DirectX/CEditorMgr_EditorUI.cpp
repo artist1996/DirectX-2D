@@ -12,7 +12,16 @@
 #include "Outliner.h"
 #include "ListUI.h"
 #include "MenuUI.h"
-#include "AnimationPopup.h"
+
+#include "SpriteEditor.h"
+#include "SE_TextureView.h"
+#include "SE_Info.h"
+#include "SE_Create.h"
+
+#include "AnimationEditor.h"
+#include "AE_Preview.h"
+#include "AE_Detail.h"
+#include "AE_Create.h"
 
 void CEditorMgr::InitImGui()
 {
@@ -32,8 +41,71 @@ void CEditorMgr::InitImGui()
 	//io.ConfigFlags |= ImGuiConfigFlags_DpiEnableScaleFonts;     // FIXME-DPI: Experimental. THIS CURRENTLY DOESN'T WORK AS EXPECTED. DON'T USE IN USER APP!
 	//io.ConfigFlags |= ImGuiConfigFlags_DpiEnableScaleViewports; // FIXME-DPI: Experimental.
 
+	ImGui::GetStyle();
+
 	// Setup Dear ImGui style
-	ImGui::StyleColorsDark();
+	//ImGui::StyleColorsDark();
+
+	auto& colors = ImGui::GetStyle().Colors;
+	colors[ImGuiCol_WindowBg] = ImVec4{ 0.1f, 0.1f, 0.13f, 1.0f };
+	colors[ImGuiCol_MenuBarBg] = ImVec4{ 0.16f, 0.16f, 0.21f, 1.0f };
+
+	// Border
+	colors[ImGuiCol_Border] = ImVec4{ 0.44f, 0.37f, 0.61f, 0.29f };
+	colors[ImGuiCol_BorderShadow] = ImVec4{ 0.0f, 0.0f, 0.0f, 0.24f };
+
+	// Text
+	colors[ImGuiCol_Text] = ImVec4{ 1.0f, 1.0f, 1.0f, 1.0f };
+	colors[ImGuiCol_TextDisabled] = ImVec4{ 0.5f, 0.5f, 0.5f, 1.0f };
+
+	// Headers
+	colors[ImGuiCol_Header] = ImVec4{ 0.13f, 0.13f, 0.17, 1.0f };
+	colors[ImGuiCol_HeaderHovered] = ImVec4{ 0.19f, 0.2f, 0.25f, 1.0f };
+	colors[ImGuiCol_HeaderActive] = ImVec4{ 0.16f, 0.16f, 0.21f, 1.0f };
+
+	// Buttons
+	colors[ImGuiCol_Button] = ImVec4{ 0.13f, 0.13f, 0.17, 1.0f };
+	colors[ImGuiCol_ButtonHovered] = ImVec4{ 0.19f, 0.2f, 0.25f, 1.0f };
+	colors[ImGuiCol_ButtonActive] = ImVec4{ 0.16f, 0.16f, 0.21f, 1.0f };
+	colors[ImGuiCol_CheckMark] = ImVec4{ 0.74f, 0.58f, 0.98f, 1.0f };
+
+	// Popups
+	colors[ImGuiCol_PopupBg] = ImVec4{ 0.1f, 0.1f, 0.13f, 0.92f };
+
+	// Slider
+	colors[ImGuiCol_SliderGrab] = ImVec4{ 0.44f, 0.37f, 0.61f, 0.54f };
+	colors[ImGuiCol_SliderGrabActive] = ImVec4{ 0.74f, 0.58f, 0.98f, 0.54f };
+
+	// Frame BG
+	colors[ImGuiCol_FrameBg] = ImVec4{ 0.13f, 0.13, 0.17, 1.0f };
+	colors[ImGuiCol_FrameBgHovered] = ImVec4{ 0.19f, 0.2f, 0.25f, 1.0f };
+	colors[ImGuiCol_FrameBgActive] = ImVec4{ 0.16f, 0.16f, 0.21f, 1.0f };
+
+	// Tabs
+	colors[ImGuiCol_Tab] = ImVec4{ 0.16f, 0.16f, 0.21f, 1.0f };
+	colors[ImGuiCol_TabHovered] = ImVec4{ 0.24, 0.24f, 0.32f, 1.0f };
+	colors[ImGuiCol_TabActive] = ImVec4{ 0.2f, 0.22f, 0.27f, 1.0f };
+	colors[ImGuiCol_TabUnfocused] = ImVec4{ 0.16f, 0.16f, 0.21f, 1.0f };
+	colors[ImGuiCol_TabUnfocusedActive] = ImVec4{ 0.16f, 0.16f, 0.21f, 1.0f };
+
+	// Title
+	colors[ImGuiCol_TitleBg] = ImVec4{ 0.16f, 0.16f, 0.21f, 1.0f };
+	colors[ImGuiCol_TitleBgActive] = ImVec4{ 0.16f, 0.16f, 0.21f, 1.0f };
+	colors[ImGuiCol_TitleBgCollapsed] = ImVec4{ 0.16f, 0.16f, 0.21f, 1.0f };
+
+	// Scrollbar
+	colors[ImGuiCol_ScrollbarBg] = ImVec4{ 0.1f, 0.1f, 0.13f, 1.0f };
+
+	// Seperator
+	colors[ImGuiCol_Separator] = ImVec4{ 0.44f, 0.37f, 0.61f, 1.0f };
+	//colors[ImGuiCol_SeparatorHovered] = ImVec4{ 0.74f, 0.58f, 0.98f, 1.0f };
+	//colors[ImGuiCol_SeparatorActive] = ImVec4{ 0.84f, 0.58f, 1.0f, 1.0f };
+	
+	// Resize Grip
+	colors[ImGuiCol_ResizeGrip] = ImVec4{ 0.44f, 0.37f, 0.61f, 0.29f };
+	colors[ImGuiCol_ResizeGripHovered] = ImVec4{ 0.74f, 0.58f, 0.98f, 0.29f };
+	colors[ImGuiCol_ResizeGripActive] = ImVec4{ 0.84f, 0.58f, 1.0f, 0.29f };
+
 	//ImGui::StyleColorsLight();
 
 	// When viewports are enabled we tweak WindowRounding/WindowBg so platform windows can look identical to regular ones.
@@ -121,14 +193,44 @@ void CEditorMgr::CreateEditorUI()
 	pMenu->Init();
 	m_mapUI.insert(make_pair(pMenu->GetName(), pMenu));
 
-	EditorUI* pPopup = new AnimationPopup;
-	pPopup->SetName("Input Animation Name");
-	pPopup->SetModal(true);
-	m_mapUI.insert(make_pair(pPopup->GetName(), pPopup));
+	EditorUI* pTextureView = new SE_TextureView;
+	pTextureView->Init();
+	pTextureView->SetName("SE_TextureView");
+	m_mapUI.insert(make_pair(pTextureView->GetName(), pTextureView));
+
+	EditorUI* pSpriteInfo = new SE_Info;
+	pSpriteInfo->Init();
+	pSpriteInfo->SetName("SE_Info");
+	m_mapUI.insert(make_pair(pSpriteInfo->GetName(), pSpriteInfo));
+
+	EditorUI* pCreateSprite = new SE_Create;
+	pCreateSprite->Init();
+	pCreateSprite->SetName("SE_Create");
+	pCreateSprite->SetModal(true);
+	m_mapUI.insert(make_pair(pCreateSprite->GetName(), pCreateSprite));
+
+	EditorUI* pSpriteEditor = new SpriteEditor;
+	pSpriteEditor->Init();
+	pSpriteEditor->SetName("Sprite Editor");
+	m_mapUI.insert(make_pair(pSpriteEditor->GetName(), pSpriteEditor));
+
+	EditorUI* pPreview = new AE_Preview;
+	pPreview->Init();
+	pPreview->SetName("AE_Preview");
+	m_mapUI.insert(make_pair(pPreview->GetName(), pPreview));
+
+	EditorUI* pAEDetail = new AE_Detail;
+	pAEDetail->Init();
+	pAEDetail->SetName("AE_Detail");
+	m_mapUI.insert(make_pair(pAEDetail->GetName(), pAEDetail));
+
+	EditorUI* pAECreate = new AE_Create;
+	pAECreate->SetName("AE_Create");
+	m_mapUI.insert(make_pair(pAECreate->GetName(), pAECreate));
 
 	EditorUI* pAnimationEditor = new AnimationEditor;
+	pAnimationEditor->Init();
 	pAnimationEditor->SetName("Animation Editor");
-	pAnimationEditor->SetActive(false);
 	m_mapUI.insert(make_pair(pAnimationEditor->GetName(), pAnimationEditor));
 }
 

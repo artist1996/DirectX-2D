@@ -3,131 +3,92 @@
 
 #include <Engine/CPathMgr.h>
 #include <Engine/CAssetMgr.h>
-#include <Engine/CTexture.h>
 
+#include "CEditorMgr.h"
+#include "AE_Preview.h"
+#include "AE_Detail.h"
+#include "AE_Create.h"
 
 AnimationEditor::AnimationEditor()
-	: m_Animation(nullptr)
-	, m_TargetSprite(nullptr)
-	, m_strTexName{}
-	, m_strSpriteName{}
-	, m_DrawingRect(false)
 {
+	UseMenuBar(true);
 }
 
 AnimationEditor::~AnimationEditor()
 {
 }
 
+void AnimationEditor::Init()
+{
+	m_Preview = (AE_Preview*)CEditorMgr::GetInst()->FindEditorUI("AE_Preview");
+	m_Detail = (AE_Detail*)CEditorMgr::GetInst()->FindEditorUI("AE_Detail");
+	m_Create = (AE_Create*)CEditorMgr::GetInst()->FindEditorUI("AE_Create");
+
+	m_Preview->SetMove(false);
+	m_Detail->SetMove(false);
+
+	m_Preview->m_Owner = this;
+	m_Detail->m_Owner = this;
+	m_Create->m_Owner = this;
+
+	SetActive(false);
+}
+
 void AnimationEditor::Update()
 {
-	LoadTexture();
-
-	ShowTextureImage();
-
-	InputSpriteName();
-
-	SpriteInfo();
-
-	EditSprite();
-}
-
-void AnimationEditor::ClearEditor()
-{
-	m_Texture = nullptr;
-	m_Animation = nullptr;
-	m_TargetSprite = nullptr;
-	m_strTexName.clear();	
-	m_strSpriteName.clear();
-
-	m_LT = ImVec2(0.f,0.f);
-	m_RB = ImVec2(0.f, 0.f);
-	m_StartPos = ImVec2(0.f, 0.f);
-	m_LeftTopPos = ImVec2(0.f, 0.f);
-	m_SlicePos = ImVec2(0.f, 0.f);
-	m_DrawingRect = false;
-}
-
-void AnimationEditor::Deactivate()
-{
-	SetActive(false);
-	ClearEditor();
-}
-
-void AnimationEditor::LoadTexture()
-{
-	ImGui::Text("Texture");
-	ImGui::SameLine(100);
-	ImGui::SetNextItemWidth(180.f);
-	ImGui::InputText("##LoadTextureName", (char*)m_strTexName.c_str(), 255, ImGuiInputTextFlags_ReadOnly);
-
-	ImGui::SameLine(300);
-	if (ImGui::Button("Load Texture", ImVec2(100.f, 20.f)))
-	{
-		OpenLoadTexture();
-	}
-}
-
-void AnimationEditor::ShowTextureImage()
-{
-	if (nullptr == m_Texture)
+	if (!IsActive())
 		return;
-	
-	// Texture Image
-	ImVec2 uv_min = ImVec2(0.0f, 0.0f);
-	ImVec2 uv_max = ImVec2(1.0f, 1.0f);
 
-	ImVec4 tint_col = ImVec4(1.0f, 1.0f, 1.0f, 1.0f);
-	ImVec4 border_col = ImVec4(0.7f, 0.7f, 0.7f, 1.0f);
-
-	ImTextureID TexID = nullptr;
-
-	if (nullptr != m_Texture->GetSRV())
-		TexID = m_Texture->GetSRV().Get();
-
-	ImGui::Image(TexID, ImVec2(m_Texture->Width(), m_Texture->Height()), uv_min, uv_max, tint_col, border_col);
-
-	ImVec2 Image_LT = ImGui::GetItemRectMin();
-	ImVec2 Image_RB = ImGui::GetItemRectMax();
-
-	ImDrawList* Draw_List = ImGui::GetWindowDrawList();
-	ImVec2 window_scroll = ImVec2(ImGui::GetScrollX(), ImGui::GetScrollY());
-	if (ImGui::IsItemHovered())
+	if (ImGui::BeginMenuBar())
 	{
-		ImVec2 CurMousePos = ImGui::GetMousePos();
-
-		if (ImGui::IsMouseClicked(ImGuiMouseButton_Right))
+		if (ImGui::BeginMenu("Window"))
 		{
-			m_StartPos = CurMousePos;
+			bool AtlasView = m_Preview->IsActive();
+			bool Detail = m_Detail->IsActive();
+
+			if (ImGui::MenuItem("Preview", nullptr, &AtlasView))
+			{
+				m_Preview->SetActive(AtlasView);
+			}
+
+			if (ImGui::MenuItem("Detail", nullptr, &Detail))
+			{
+				m_Detail->SetActive(Detail);
+			}
+
+			ImGui::EndMenu();
 		}
-	
-		if (ImGui::IsMouseDown(ImGuiMouseButton_Right))
+
+		if (ImGui::BeginMenu("File"))
 		{
-			m_LT.x = m_StartPos.x - Image_LT.x;
-			m_LT.y = m_StartPos.y - Image_LT.y;
+			if (ImGui::MenuItem("Load"))
+			{
+				LoadAnimation();
+			}
 
-			m_RB.x = abs(CurMousePos.x - Image_LT.x);
-			m_RB.y = abs(CurMousePos.y - Image_LT.y);
+			if (ImGui::MenuItem("Save"))
+			{
+				SaveAnimation();
+			}
 
-			m_DrawingRect = true;
-
-			m_LeftTopPos = ImVec2(Image_LT.x + m_LT.x, Image_LT.y + m_LT.y);
-			m_SlicePos = ImVec2(Image_LT.x + m_RB.x, Image_LT.y + m_RB.y);
-			Draw_List->AddRect(m_LeftTopPos, m_SlicePos, IM_COL32(0, 255, 0, 255), 0.f, 0, 2.f);
+			ImGui::EndMenu();
 		}
-		
-		if (ImGui::IsMouseReleased(ImGuiMouseButton_Right))
+
+
+		if (ImGui::BeginMenu("Create"))
 		{
-			Vec2 SliceSize = Vec2(m_RB.x - m_LT.x, m_RB.y - m_LT.y);
-			m_TargetSprite->SetLeftTopUV(Vec2(m_LT.x, m_LT.y));
-			m_TargetSprite->SetSliceUV(SliceSize);
+			if (ImGui::MenuItem("Create Empty Animation"))
+			{
+				m_Create->SetActive(true);
+			}
+			ImGui::EndMenu();
 		}
+
+		ImGui::EndMenuBar();
 	}
-
-	Draw_List->AddRect(m_LeftTopPos, m_SlicePos, IM_COL32(0, 255, 0, 255), 0.f, 0, 2.f);
 }
 
-void AnimationEditor::OpenLoadTexture()
+void AnimationEditor::SaveAnimation()
 {
 	wchar_t szSelect[256] = {};
 	wchar_t szRelativePath[256] = {};
@@ -139,88 +100,95 @@ void AnimationEditor::OpenLoadTexture()
 	ofn.lpstrFile = szSelect;
 	ofn.lpstrFile[0] = '\0';
 	ofn.nMaxFile = sizeof(szSelect);
-	ofn.lpstrFilter = L"";
+	ofn.lpstrFilter = L"모든 파일\0";
 	ofn.nFilterIndex = 0;
 	ofn.lpstrFileTitle = NULL;
 	ofn.nMaxFileTitle = 0;
 
 	// 탐색창 초기 위치 지정
 	wstring strInitPath = CPathMgr::GetInst()->GetContentPath();
-	strInitPath += L"\\content\\texture";
+	strInitPath += L"Animation\\";
+	ofn.lpstrInitialDir = strInitPath.c_str();
+
+	ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
+
+	if (GetSaveFileName(&ofn))
+	{
+		if (nullptr == m_Detail->GetAnimation())
+			return;
+		else
+		{
+			for (size_t i = 0; i < m_Detail->GetAnimation()->GetMaxFrameCount(); ++i)
+			{
+				wchar_t szKey[255] = {};
+				swprintf_s(szKey, 255, L"%s%d.sprite", m_Detail->GetAnimation()->GetKey().c_str(), i);
+
+				path ContentPath = CPathMgr::GetInst()->GetContentPath();
+				path RelativePath = std::filesystem::relative(szSelect, ContentPath);
+
+
+				Ptr<CSprite> pSprite = m_Detail->GetAnimation()->GetSprite(i);
+				
+				RelativePath.replace_filename(szKey);
+
+				pSprite->Save(RelativePath.wstring());
+			}
+			
+			m_Detail->GetAnimation()->Save(szSelect);
+		}
+	}
+
+
+}
+
+int AnimationEditor::LoadAnimation()
+{
+	wchar_t szSelect[256] = {};
+	wchar_t szRelativePath[256] = {};
+
+	OPENFILENAME ofn = {};
+
+	ofn.lStructSize = sizeof(ofn);
+	ofn.hwndOwner = nullptr;
+	ofn.lpstrFile = szSelect;
+	ofn.lpstrFile[0] = '\0';
+	ofn.nMaxFile = sizeof(szSelect);
+	ofn.lpstrFilter = L"모든 파일\0";
+	ofn.nFilterIndex = 0;
+	ofn.lpstrFileTitle = NULL;
+	ofn.nMaxFileTitle = 0;
+
+	// 탐색창 초기 위치 지정
+	wstring strInitPath = CPathMgr::GetInst()->GetContentPath();
+	strInitPath += L"Animation\\";
 	ofn.lpstrInitialDir = strInitPath.c_str();
 
 	ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
 
 	if (GetOpenFileName(&ofn))
-	{	
-		wstring FilePath = CPathMgr::GetInst()->GetContentPath();
+	{
+		wstring strConentPath = CPathMgr::GetInst()->GetContentPath();
+		path RelativePath = std::filesystem::relative(szSelect, strConentPath);
+		Ptr<CAnimation> pAnimation = CAssetMgr::GetInst()->Load<CAnimation>(RelativePath, RelativePath.wstring());
 
-		std::filesystem::path RelativePath = std::filesystem::relative(szSelect, FilePath);
-
-		if (m_Texture.Get())
-			m_Texture = nullptr;
-
-		m_Texture = CAssetMgr::GetInst()->Load<CTexture>(RelativePath.c_str(), RelativePath.c_str());
-		m_strTexName = string(m_Texture->GetKey().begin(), m_Texture->GetKey().end());
-		m_TargetSprite->Create(m_Texture, Vec2(0.f, 0.f), Vec2(m_Texture->Width(), m_Texture->Height()));
+		if (nullptr == pAnimation)
+			return E_FAIL;
+		 
+		m_Detail->SetAnimation(pAnimation);
+		m_Preview->SetAnimation(pAnimation);
 	}
+
+	return S_OK;
 }
 
-void AnimationEditor::EditSprite()
+void AnimationEditor::Activate()
 {
-	if (ImGui::Button("Add", ImVec2(50.f, 40.f)))
-	{
-		if (nullptr == m_TargetSprite->GetAtlasTexture()
-			|| m_strSpriteName.empty())
-			return;
-
-		CAssetMgr::GetInst()->AddAsset(wstring(m_strSpriteName.begin(), m_strSpriteName.end()), m_TargetSprite);
-		m_Animation->AddSprite(m_TargetSprite);
-		//Deactivate();
-	}
-
-	ImGui::SameLine(65);
-
-	if (ImGui::Button("Cancel", ImVec2(50.f, 40.f)))
-	{
-		Deactivate();
-	}
+	m_Preview->SetActive(true);
+	m_Detail->SetActive(true);
 }
 
-void AnimationEditor::InputSpriteName()
+void AnimationEditor::Deactivate()
 {
-	if (nullptr == m_Texture)
-		return;
-
-	char szName[255] = {};
-	ImGui::Text("Input Name");
-	ImGui::SameLine();
-	ImGui::SetNextItemWidth(200.f);
-	if (ImGui::InputText("##InputSpriteName", szName, 255))
-	{
-		m_strSpriteName = szName;
-	}
-}
-
-void AnimationEditor::SpriteInfo()
-{
-	if (nullptr == m_TargetSprite
-		|| nullptr == m_TargetSprite->GetAtlasTexture())
-		return;
-
-	Vec2 vResolution = Vec2((float)m_TargetSprite->GetAtlasTexture()->Width(), (float)m_TargetSprite->GetAtlasTexture()->Height());
-	Vec2 vLeftTop = vResolution * m_TargetSprite->GetLeftTopUV();
-	Vec2 vSliceSize;
-	if (Vec2(1.f, 1.f) == m_TargetSprite->GetSliceUV())
-		vSliceSize = Vec2(0.f, 0.f);
-	else
-	    vSliceSize = vResolution * m_TargetSprite->GetSliceUV();
-
-	ImGui::Text("LT");
-	ImGui::SameLine(86);
-	ImGui::DragFloat2("##SpriteLeftTopPos", vLeftTop);
-
-	ImGui::Text("Slice Size");
-	ImGui::SameLine();
-	ImGui::DragFloat2("##SpriteSliceSize", vSliceSize);
+	m_Preview->SetActive(false);
+	m_Detail->SetActive(false);
 }

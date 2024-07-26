@@ -154,17 +154,20 @@ void MenuUI::Assets()
 			pMtrl->Save(Key);
 		}
 
-		if (ImGui::MenuItem("Create Empty Sprite"))
+		EditorUI* pSpriteEditor = CEditorMgr::GetInst()->FindEditorUI("Sprite Editor");
+		bool IsActive = pSpriteEditor->IsActive();
+
+		if (ImGui::MenuItem("Sprite Editor", nullptr, &IsActive))
 		{
-			Ptr<CSprite> pSprite = new CSprite;
-			wstring Key = GetAssetKey(ASSET_TYPE::SPRITE, L"Default Sprite");
-			CAssetMgr::GetInst()->AddAsset(Key, pSprite);
-			pSprite->Save(Key);
+			CEditorMgr::GetInst()->FindEditorUI("Sprite Editor")->SetActive(IsActive);
 		}
 
-		if (ImGui::MenuItem("Create Animation"))
+		EditorUI* pAnimationEditor = CEditorMgr::GetInst()->FindEditorUI("Animation Editor");
+		bool IsAEActive = pAnimationEditor->IsActive();
+
+		if (ImGui::MenuItem("Animation Editor", nullptr, &IsAEActive))
 		{
-			CreateAnimation();
+			CEditorMgr::GetInst()->FindEditorUI("Animation Editor")->SetActive(IsAEActive);
 		}
 
 		ImGui::EndMenu();

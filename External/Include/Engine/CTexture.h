@@ -21,8 +21,10 @@ public:
     ComPtr<ID3D11ShaderResourceView>    GetSRV()   { return m_SRV; }
     ComPtr<ID3D11UnorderedAccessView>   GetUAV()   { return m_UAV; }
 
-    UINT Width()  { return m_Desc.Width; }
-    UINT Height() { return m_Desc.Height; }
+    UINT Width()        { return m_Desc.Width; }
+    UINT Height()       { return m_Desc.Height; }
+
+    tPixel* GetPixels() { return (tPixel*)m_Image.GetPixels(); }
 
 public:
     // Flags = D3D11_BIND_FLAG

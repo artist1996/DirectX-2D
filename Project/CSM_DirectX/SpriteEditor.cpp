@@ -2,79 +2,73 @@
 #include "SpriteEditor.h"
 
 #include "CEditorMgr.h"
-#include "TreeUI.h"
+#include "SE_TextureVIew.h"
+#include "SE_Info.h"
+#include "SE_Create.h"
 
 SpriteEditor::SpriteEditor()
-	: m_Tree(nullptr)
-	, m_Active(false)
+	: m_TextureView(nullptr)
+	, m_SpriteInfo(nullptr)
+	, m_Create(nullptr)
 {
-	SetActive(true);
-
-	m_Tree = new TreeUI;
-	m_Tree->SetName("Sprite Tree");
-	AddChild(m_Tree);
-
-	m_Tree->SetChildSize(ImVec2(150.f, 500.f));
-	m_Tree->SetShowRoot(false);
-	m_Tree->UseDrag(true);
-	m_Tree->SetShowNameOnly(true);
+	UseMenuBar(true);
 }
 
 SpriteEditor::~SpriteEditor()
 {
 }
 
+void SpriteEditor::Init()
+{
+	m_TextureView = (SE_TextureView*)CEditorMgr::GetInst()->FindEditorUI("SE_TextureView");
+	m_SpriteInfo = (SE_Info*)CEditorMgr::GetInst()->FindEditorUI("SE_Info");
+	m_Create = (SE_Create*)CEditorMgr::GetInst()->FindEditorUI("SE_Create");
+
+	m_TextureView->SetMove(true);
+	m_SpriteInfo->SetMove(true);
+
+	m_TextureView->m_Owner = this;
+	m_SpriteInfo->m_Owner = this;
+	m_Create->m_Owner = this;
+
+	SetActive(false);
+	Deactivate();
+}
+
 void SpriteEditor::Update()
 {
-	Title();
-	// Texture Load
-	
-	// Sprite Add
-	ImGui::Text("Input Name");
-	ImGui::SameLine(91);
-	ImGui::SetNextItemWidth(150.f);
-
-	static char szBuff[255] = {};
-	if (ImGui::InputText("##Input Name", szBuff, sizeof(szBuff)))
+	if (ImGui::BeginMenuBar())
 	{
-		m_strName = szBuff;
-	}
+		if (ImGui::BeginMenu("Window"))
+		{
+			bool AtlasView = m_TextureView->IsActive();
+			bool Detail = m_SpriteInfo->IsActive();
 
-	ImGui::SameLine(270);
+			if (ImGui::MenuItem("AtlasView", nullptr, &AtlasView))
+			{
+				m_TextureView->SetActive(AtlasView);
+			}
 
-	if (ImGui::Button("Add Frame", ImVec2(80.f, 20.f)))
-	{
-		Ptr<CSprite> pSprite = new CSprite;
-		pSprite->SetName(wstring(m_strName.begin(), m_strName.end()));
-		AnimationUI* pUI = (AnimationUI*)CEditorMgr::GetInst()->FindEditorUI("Animation Editor");
-		Ptr<CFlipBook> pFlipBook = pUI->GetTargetFlipBook();
+			if (ImGui::MenuItem("Detail", nullptr, &Detail))
+			{
+				m_SpriteInfo->SetActive(Detail);
+			}
 
-		if (nullptr == pFlipBook)
-			return;
+			ImGui::EndMenu();
+		}
 
-		pFlipBook->AddSprite(pSprite);
-		SetTargetSprite(pSprite);
-		m_Active = true;
-		RenewTree();
+		ImGui::EndMenuBar();
 	}
 }
 
-void SpriteEditor::RenewTree()
+void SpriteEditor::Activate()
 {
-	m_Tree->Clear();
-	TreeNode* pRoot = m_Tree->AddNode(nullptr, "Root");
+	m_TextureView->SetActive(true);
+	m_SpriteInfo->SetActive(true);
+}
 
-	AnimationUI* pUI = (AnimationUI*)CEditorMgr::GetInst()->FindEditorUI("Animation Editor");
-
-	Ptr<CFlipBook> pFlipBook = pUI->GetTargetFlipBook();
-
-	if (nullptr == pFlipBook)
-		return;
-
-	for (size_t i = 0; i < pFlipBook->GetSize(); ++i)
-	{
-		Ptr<CSprite> pSprite = pFlipBook->GetSprite(i);
-		string strName = string(pSprite->GetName().begin(), pSprite->GetName().end());
-		TreeNode* pNode = m_Tree->AddNode(pRoot, strName, (DWORD_PTR)pSprite.Get());
-	}	
+void SpriteEditor::Deactivate()
+{
+	m_TextureView->SetActive(false);
+	m_SpriteInfo->SetActive(false);
 }

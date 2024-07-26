@@ -94,9 +94,6 @@
     <Filter Include="01. Manager\02. TestLevel">
       <UniqueIdentifier>{745e090a-985a-4297-936f-8f1a15fe445e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. EditorUI\08. Module">
-      <UniqueIdentifier>{9b52670b-82ac-4e28-85b1-9cd5629b7ef3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. EditorUI\01. Inspector\ComponentUI\09. ScriptUI">
       <UniqueIdentifier>{f358d56f-0a80-4be6-8734-8f1edbc930d6}</UniqueIdentifier>
     </Filter>
@@ -118,11 +115,35 @@
     <Filter Include="02. EditorUI\07. Sprite Editor">
       <UniqueIdentifier>{e381682c-9909-4573-9ce6-b3ab6ed935ff}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. EditorUI\07. Sprite Editor\01. Popup">
-      <UniqueIdentifier>{50634419-3870-4a9b-80b7-4122ffd0885e}</UniqueIdentifier>
+    <Filter Include="02. EditorUI\07. Sprite Editor\SE_Sub">
+      <UniqueIdentifier>{4bbd7da6-9563-4553-8321-946f6b92fbac}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. EditorUI\07. Sprite Editor\02. Sprite">
-      <UniqueIdentifier>{1bb334c0-a90c-4334-bcc8-99ad7ee6c001}</UniqueIdentifier>
+    <Filter Include="02. EditorUI\07. Sprite Editor\SE_Sub\01. SE_TextureView">
+      <UniqueIdentifier>{8bc31993-20bc-4332-9a96-f505d69c742d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. EditorUI\07. Sprite Editor\SE_Sub\02. SE_Info">
+      <UniqueIdentifier>{a130cb5f-e2a7-4c7e-ac3f-0e1569367da5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. EditorUI\08. Animation Editor">
+      <UniqueIdentifier>{0ffce9b8-0619-4f03-8da9-041be8892197}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. EditorUI\09. Module">
+      <UniqueIdentifier>{9b52670b-82ac-4e28-85b1-9cd5629b7ef3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. EditorUI\08. Animation Editor\01. AE_Sub">
+      <UniqueIdentifier>{f541e413-bfb3-48d0-b6a7-970c22c033a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. EditorUI\08. Animation Editor\01. AE_Sub\01. AE_Detail">
+      <UniqueIdentifier>{f9261cca-ea9c-410c-b690-091bb3bbe531}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. EditorUI\08. Animation Editor\01. AE_Sub\02. AE_Preview">
+      <UniqueIdentifier>{ddb374ac-cffe-4f1c-b5f6-2a48cfe17411}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. EditorUI\07. Sprite Editor\SE_Sub\03. SE_Create">
+      <UniqueIdentifier>{eb735b45-6acb-4a31-9ed8-bb43e7fe3da8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. EditorUI\08. Animation Editor\01. AE_Sub\03. AE_Create">
+      <UniqueIdentifier>{6ce386db-0f70-4f35-9d0e-facf686c5b6c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -195,7 +216,7 @@
     <ClInclude Include="CameraUI.h">
       <Filter>02. EditorUI\01. Inspector\ComponentUI\03. CameraUI</Filter>
     </ClInclude>
-    <ClInclude Include="FlipBookComUI.h">
+    <ClInclude Include="Animator2DUI.h">
       <Filter>02. EditorUI\01. Inspector\ComponentUI\04. Animator2DUI</Filter>
     </ClInclude>
     <ClInclude Include="MeshRenderUI.h">
@@ -237,7 +258,7 @@
     <ClInclude Include="SpriteUI.h">
       <Filter>02. EditorUI\01. Inspector\AssetUI\06. Sprite</Filter>
     </ClInclude>
-    <ClInclude Include="FlipBookUI.h">
+    <ClInclude Include="AnimationUI.h">
       <Filter>02. EditorUI\01. Inspector\AssetUI\07. Animation</Filter>
     </ClInclude>
     <ClInclude Include="SoundUI.h">
@@ -258,14 +279,8 @@
     <ClInclude Include="CTestLevel.h">
       <Filter>01. Manager\02. TestLevel</Filter>
     </ClInclude>
-    <ClInclude Include="AnimationPopup.h">
-      <Filter>02. EditorUI\07. Sprite Editor\01. Popup</Filter>
-    </ClInclude>
     <ClInclude Include="ParamUI.h">
-      <Filter>02. EditorUI\08. Module</Filter>
-    </ClInclude>
-    <ClInclude Include="AnimationEditor.h">
-      <Filter>02. EditorUI\07. Sprite Editor\02. Sprite</Filter>
+      <Filter>02. EditorUI\09. Module</Filter>
     </ClInclude>
     <ClInclude Include="ScriptUI.h">
       <Filter>02. EditorUI\01. Inspector\ComponentUI\09. ScriptUI</Filter>
@@ -275,6 +290,36 @@
     </ClInclude>
     <ClInclude Include="CLevelSaveLoad.h">
       <Filter>01. Manager\03. LevelSaveLoad</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteEditor.h">
+      <Filter>02. EditorUI\07. Sprite Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="SE_Sub.h">
+      <Filter>02. EditorUI\07. Sprite Editor\SE_Sub</Filter>
+    </ClInclude>
+    <ClInclude Include="SE_Info.h">
+      <Filter>02. EditorUI\07. Sprite Editor\SE_Sub\02. SE_Info</Filter>
+    </ClInclude>
+    <ClInclude Include="SE_TextureView.h">
+      <Filter>02. EditorUI\07. Sprite Editor\SE_Sub\01. SE_TextureView</Filter>
+    </ClInclude>
+    <ClInclude Include="SE_Create.h">
+      <Filter>02. EditorUI\07. Sprite Editor\SE_Sub\03. SE_Create</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationEditor.h">
+      <Filter>02. EditorUI\08. Animation Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="AE_Sub.h">
+      <Filter>02. EditorUI\08. Animation Editor\01. AE_Sub</Filter>
+    </ClInclude>
+    <ClInclude Include="AE_Detail.h">
+      <Filter>02. EditorUI\08. Animation Editor\01. AE_Sub\01. AE_Detail</Filter>
+    </ClInclude>
+    <ClInclude Include="AE_Preview.h">
+      <Filter>02. EditorUI\08. Animation Editor\01. AE_Sub\02. AE_Preview</Filter>
+    </ClInclude>
+    <ClInclude Include="AE_Create.h">
+      <Filter>02. EditorUI\08. Animation Editor\01. AE_Sub\03. AE_Create</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -333,7 +378,7 @@
     <ClCompile Include="CameraUI.cpp">
       <Filter>02. EditorUI\01. Inspector\ComponentUI\03. CameraUI</Filter>
     </ClCompile>
-    <ClCompile Include="FlipBookComUI.cpp">
+    <ClCompile Include="Animator2DUI.cpp">
       <Filter>02. EditorUI\01. Inspector\ComponentUI\04. Animator2DUI</Filter>
     </ClCompile>
     <ClCompile Include="MeshRenderUI.cpp">
@@ -375,7 +420,7 @@
     <ClCompile Include="SpriteUI.cpp">
       <Filter>02. EditorUI\01. Inspector\AssetUI\06. Sprite</Filter>
     </ClCompile>
-    <ClCompile Include="FlipBookUI.cpp">
+    <ClCompile Include="AnimationUI.cpp">
       <Filter>02. EditorUI\01. Inspector\AssetUI\07. Animation</Filter>
     </ClCompile>
     <ClCompile Include="SoundUI.cpp">
@@ -405,14 +450,8 @@
     <ClCompile Include="CTestLevel.cpp">
       <Filter>01. Manager\02. TestLevel</Filter>
     </ClCompile>
-    <ClCompile Include="AnimationPopup.cpp">
-      <Filter>02. EditorUI\07. Sprite Editor\01. Popup</Filter>
-    </ClCompile>
     <ClCompile Include="ParamUI.cpp">
-      <Filter>02. EditorUI\08. Module</Filter>
-    </ClCompile>
-    <ClCompile Include="AnimationEditor.cpp">
-      <Filter>02. EditorUI\07. Sprite Editor\02. Sprite</Filter>
+      <Filter>02. EditorUI\09. Module</Filter>
     </ClCompile>
     <ClCompile Include="ScriptUI.cpp">
       <Filter>02. EditorUI\01. Inspector\ComponentUI\09. ScriptUI</Filter>
@@ -422,6 +461,36 @@
     </ClCompile>
     <ClCompile Include="CLevelSaveLoad.cpp">
       <Filter>01. Manager\03. LevelSaveLoad</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteEditor.cpp">
+      <Filter>02. EditorUI\07. Sprite Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="SE_Sub.cpp">
+      <Filter>02. EditorUI\07. Sprite Editor\SE_Sub</Filter>
+    </ClCompile>
+    <ClCompile Include="SE_Info.cpp">
+      <Filter>02. EditorUI\07. Sprite Editor\SE_Sub\02. SE_Info</Filter>
+    </ClCompile>
+    <ClCompile Include="SE_TextureView.cpp">
+      <Filter>02. EditorUI\07. Sprite Editor\SE_Sub\01. SE_TextureView</Filter>
+    </ClCompile>
+    <ClCompile Include="SE_Create.cpp">
+      <Filter>02. EditorUI\07. Sprite Editor\SE_Sub\03. SE_Create</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationEditor.cpp">
+      <Filter>02. EditorUI\08. Animation Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="AE_Sub.cpp">
+      <Filter>02. EditorUI\08. Animation Editor\01. AE_Sub</Filter>
+    </ClCompile>
+    <ClCompile Include="AE_Detail.cpp">
+      <Filter>02. EditorUI\08. Animation Editor\01. AE_Sub\01. AE_Detail</Filter>
+    </ClCompile>
+    <ClCompile Include="AE_Preview.cpp">
+      <Filter>02. EditorUI\08. Animation Editor\01. AE_Sub\02. AE_Preview</Filter>
+    </ClCompile>
+    <ClCompile Include="AE_Create.cpp">
+      <Filter>02. EditorUI\08. Animation Editor\01. AE_Sub\03. AE_Create</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

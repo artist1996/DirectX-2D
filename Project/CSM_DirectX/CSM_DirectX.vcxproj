@@ -145,8 +145,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AE_Create.h" />
+    <ClInclude Include="AE_Detail.h" />
+    <ClInclude Include="AE_Preview.h" />
+    <ClInclude Include="AE_Sub.h" />
     <ClInclude Include="AnimationEditor.h" />
-    <ClInclude Include="AnimationPopup.h" />
     <ClInclude Include="AssetUI.h" />
     <ClInclude Include="CameraUI.h" />
     <ClInclude Include="CEditorCameraScript.h" />
@@ -159,8 +162,8 @@
     <ClInclude Include="Content.h" />
     <ClInclude Include="CTestLevel.h" />
     <ClInclude Include="EditorUI.h" />
-    <ClInclude Include="FlipBookComUI.h" />
-    <ClInclude Include="FlipBookUI.h" />
+    <ClInclude Include="Animator2DUI.h" />
+    <ClInclude Include="AnimationUI.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="GraphicShaderUI.h" />
     <ClInclude Include="ImGui\imconfig.h" />
@@ -188,7 +191,12 @@
     <ClInclude Include="Resource.h" />
     <ClInclude Include="RigidbodyUI.h" />
     <ClInclude Include="ScriptUI.h" />
+    <ClInclude Include="SE_Create.h" />
+    <ClInclude Include="SE_Info.h" />
+    <ClInclude Include="SE_Sub.h" />
+    <ClInclude Include="SE_TextureView.h" />
     <ClInclude Include="SoundUI.h" />
+    <ClInclude Include="SpriteEditor.h" />
     <ClInclude Include="SpriteUI.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="TextureUI.h" />
@@ -197,8 +205,11 @@
     <ClInclude Include="TreeUI.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AE_Create.cpp" />
+    <ClCompile Include="AE_Detail.cpp" />
+    <ClCompile Include="AE_Preview.cpp" />
+    <ClCompile Include="AE_Sub.cpp" />
     <ClCompile Include="AnimationEditor.cpp" />
-    <ClCompile Include="AnimationPopup.cpp" />
     <ClCompile Include="AssetUI.cpp" />
     <ClCompile Include="CameraUI.cpp" />
     <ClCompile Include="CEditorCameraScript.cpp" />
@@ -213,8 +224,8 @@
     <ClCompile Include="Content.cpp" />
     <ClCompile Include="CTestLevel.cpp" />
     <ClCompile Include="EditorUI.cpp" />
-    <ClCompile Include="FlipBookComUI.cpp" />
-    <ClCompile Include="FlipBookUI.cpp" />
+    <ClCompile Include="Animator2DUI.cpp" />
+    <ClCompile Include="AnimationUI.cpp" />
     <ClCompile Include="GraphicShaderUI.cpp" />
     <ClCompile Include="ImGui\imgui.cpp" />
     <ClCompile Include="ImGui\imgui_demo.cpp" />
@@ -245,7 +256,12 @@
     <ClCompile Include="PrefabUI.cpp" />
     <ClCompile Include="RigidbodyUI.cpp" />
     <ClCompile Include="ScriptUI.cpp" />
+    <ClCompile Include="SE_Create.cpp" />
+    <ClCompile Include="SE_Info.cpp" />
+    <ClCompile Include="SE_Sub.cpp" />
+    <ClCompile Include="SE_TextureView.cpp" />
     <ClCompile Include="SoundUI.cpp" />
+    <ClCompile Include="SpriteEditor.cpp" />
     <ClCompile Include="SpriteUI.cpp" />
     <ClCompile Include="TextureUI.cpp" />
     <ClCompile Include="TileMapUI.cpp" />

@@ -1,22 +1,25 @@
 #pragma once
-#include "AnimationEditor.h"
+#include "EditorUI.h"
 
 class SpriteEditor :
-    public AnimationEditor
+    public EditorUI
 {
 private:
-    class TreeUI* m_Tree;
-
-    string        m_strName;
-
-    bool          m_Active;
+    class SE_TextureView* m_TextureView;
+    class SE_Info*        m_SpriteInfo;
+    class SE_Create*      m_Create;
 
 public:
-    virtual void Update() override;
-    
-    void RenewTree();
+    SE_TextureView* GetTextureView() { return m_TextureView; }
+    SE_Info* GetInfo()               { return m_SpriteInfo; }
+    SE_Create* GetCreate()           { return m_Create; }
 
-    
+public:
+    virtual void Init() override;
+    virtual void Update() override;
+
+    virtual void Activate() override;
+    virtual void Deactivate() override;
 
 public:
     SpriteEditor();

@@ -35,6 +35,39 @@ int CAnimation::Save(const wstring& _FilePath)
 	return S_OK;
 }
 
+void CAnimation::Insert(Ptr<CSprite> _Sprite, Ptr<CSprite> m_InsertSprite)
+{
+	vector<Ptr<CSprite>>::iterator iter = m_vecSprite.begin();
+
+
+	for (iter; iter != m_vecSprite.end(); ++iter)
+	{
+		if (_Sprite == (*iter))
+		{
+			m_vecSprite.insert(iter, m_InsertSprite);
+			break;
+		}
+	}
+}
+
+Ptr<CSprite> CAnimation::erase(Ptr<CSprite> _Sprite)
+{
+	vector<Ptr<CSprite>>::iterator iter = m_vecSprite.begin();
+
+	for (iter; iter != m_vecSprite.end(); ++iter)
+	{
+		if ((*iter) == _Sprite)
+		{
+			iter = m_vecSprite.erase(iter);
+
+			if (iter != m_vecSprite.end())
+				return (*iter);
+			else
+				return nullptr;
+		}
+	}
+}
+
 int CAnimation::Load(const wstring& _FilePath)
 {
 	// 파일 개방
