@@ -2,6 +2,8 @@
 #include "AE_Create.h"
 
 #include <Engine/CAssetMgr.h>
+#include "AE_Detail.h"
+#include "AE_Preview.h"
 
 AE_Create::AE_Create()
 {
@@ -38,6 +40,8 @@ void AE_Create::Update()
 		Ptr<CAnimation> pAnimation = new CAnimation;
 			
 		CAssetMgr::GetInst()->AddAsset(Key, pAnimation);
+		GetDetail()->SetAnimation(pAnimation);
+		GetPreview()->SetAnimation(pAnimation);
 		SetActive(false);
 	}
 	ImGui::SetItemDefaultFocus();
@@ -52,6 +56,7 @@ void AE_Create::Update()
 
 void AE_Create::Activate()
 {
+	m_strName.clear();
 }
 
 void AE_Create::Deactivate()

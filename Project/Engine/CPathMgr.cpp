@@ -42,3 +42,16 @@ void CPathMgr::GetParentPath(_Inout_ wchar_t* _Buffer)
 		}
 	}
 }
+
+wstring CPathMgr::GetRelativePath(const wstring& _FilePath)
+{
+	// Content Path 의 Pos 를 찾아온다.
+	size_t FindPos = _FilePath.find(m_Content);
+
+	if (FindPos == wstring::npos)
+		return L"";
+
+	// 찾아온 FindPos 의 Pos가 맨 뒤의 Pos를 반환 하는게 아닌 맨 앞의 Pos를
+	// 반환하기 때문에 Content Path와 더 해준 후 _FilePath의 length 를 넣어준다.
+	return _FilePath.substr(FindPos + m_Content.length(), _FilePath.length());
+}

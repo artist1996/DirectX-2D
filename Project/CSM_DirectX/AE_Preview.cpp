@@ -60,6 +60,12 @@ void AE_Preview::Update()
 	Preview();
 }
 
+void AE_Preview::Deactivate()
+{
+	m_Sprite = nullptr;
+	Reset();
+}
+
 void AE_Preview::Reset()
 {
 	m_CurFrmIdx = 0;
@@ -72,6 +78,8 @@ void AE_Preview::Preview()
 	if (nullptr == m_Sprite)
 		return;
 
+	Ptr<CTexture> pTexture = m_Sprite->GetAtlasTexture();
+
 	// ÀÌ¹ÌÁö	
 	ImVec2 uv_min = ImVec2(0.0f, 0.0f);
 	ImVec2 uv_max = ImVec2(1.0f, 1.0f);
@@ -79,6 +87,12 @@ void AE_Preview::Preview()
 	ImVec4 tint_col = ImVec4(1.0f, 1.0f, 1.0f, 1.0f);
 	ImVec4 border_col = ImVec4(0.7f, 0.7f, 0.7f, 1.0f);
 
-	ImGui::Image(m_Sprite->GetAtlasTexture()->GetSRV().Get(), ImVec2(300.f, 300.f)
-			   , uv_min, uv_max, tint_col, border_col);
+	Vec2 vResolution = Vec2((float)pTexture->Width(), (float)pTexture->Height());
+
+	ImVec2 BackGroundSize = ImVec2(m_Sprite->GetBackgroundUV().x * vResolution.x, m_Sprite->GetBackgroundUV().y * vResolution.y);
+	ImVec2 Offset = ImVec2(m_Sprite->GetOffsetUV().x, m_Sprite->GetOffsetUV().y);
+	ImGui::Image(pTexture->GetSRV().Get(), BackGroundSize
+		, ImVec2(uv_min.x - Offset.x, uv_min.x - Offset.y)
+		, ImVec2(uv_max.x - Offset.x, uv_max.y - Offset.y)
+		, tint_col, border_col);
 }

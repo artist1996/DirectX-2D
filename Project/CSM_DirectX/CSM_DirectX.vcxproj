@@ -148,6 +148,7 @@
     <ClInclude Include="AE_Create.h" />
     <ClInclude Include="AE_Detail.h" />
     <ClInclude Include="AE_Preview.h" />
+    <ClInclude Include="AE_SpriteView.h" />
     <ClInclude Include="AE_Sub.h" />
     <ClInclude Include="AnimationEditor.h" />
     <ClInclude Include="AssetUI.h" />
@@ -200,6 +201,11 @@
     <ClInclude Include="SpriteUI.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="TextureUI.h" />
+    <ClInclude Include="TE_Detail.h" />
+    <ClInclude Include="TE_Renderer.h" />
+    <ClInclude Include="TE_Sub.h" />
+    <ClInclude Include="TE_TextureView.h" />
+    <ClInclude Include="TileMapEditor.h" />
     <ClInclude Include="TileMapUI.h" />
     <ClInclude Include="TransformUI.h" />
     <ClInclude Include="TreeUI.h" />
@@ -208,6 +214,7 @@
     <ClCompile Include="AE_Create.cpp" />
     <ClCompile Include="AE_Detail.cpp" />
     <ClCompile Include="AE_Preview.cpp" />
+    <ClCompile Include="AE_SpriteView.cpp" />
     <ClCompile Include="AE_Sub.cpp" />
     <ClCompile Include="AnimationEditor.cpp" />
     <ClCompile Include="AssetUI.cpp" />
@@ -264,6 +271,11 @@
     <ClCompile Include="SpriteEditor.cpp" />
     <ClCompile Include="SpriteUI.cpp" />
     <ClCompile Include="TextureUI.cpp" />
+    <ClCompile Include="TE_Detail.cpp" />
+    <ClCompile Include="TE_Renderer.cpp" />
+    <ClCompile Include="TE_Sub.cpp" />
+    <ClCompile Include="TE_TextureView.cpp" />
+    <ClCompile Include="TileMapEditor.cpp" />
     <ClCompile Include="TileMapUI.cpp" />
     <ClCompile Include="TransformUI.cpp" />
     <ClCompile Include="TreeUI.cpp" />

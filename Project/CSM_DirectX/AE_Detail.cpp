@@ -4,6 +4,7 @@
 
 #include "CEditorMgr.h"
 #include "AE_Preview.h"
+#include "AE_SpriteView.h"
 #include "ListUI.h"
 #include "TreeUI.h"
 
@@ -33,6 +34,7 @@ void AE_Detail::Update()
 
 	SpriteList();
 }
+
 
 void AE_Detail::ShowInfo()
 {
@@ -169,6 +171,7 @@ void AE_Detail::SpriteList()
 				{
 					m_Sprite = CAssetMgr::GetInst()->FindAsset<CSprite>(vecSprites[i]->GetKey());
 					m_CurFrameIdx = i;
+					GetSV()->SetSprite(vecSprites[m_CurFrameIdx]);
 					ImGui::SetItemDefaultFocus();
 				}
 			}
@@ -208,11 +211,6 @@ void AE_Detail::SpriteList()
 	ImGui::EndGroup();
 }
 
-void AE_Detail::ShowImage()
-{
-
-}
-
 void AE_Detail::SelectSprite(DWORD_PTR _Param)
 {
 	ListUI* pListUI = (ListUI*)_Param;
@@ -232,4 +230,9 @@ void AE_Detail::SelectSprite(DWORD_PTR _Param)
 	
 	m_Sprite = pSprite;
 	GetAnimation()->AddSprite(m_Sprite);
+}
+
+void AE_Detail::Deactivate()
+{
+	m_Sprite = nullptr;
 }

@@ -26,7 +26,7 @@ void CTestLevel::CreateTestLevel()
 	Ptr<CMaterial> pAlphaBlendMtrl = CAssetMgr::GetInst()->FindAsset<CMaterial>(L"Std2DAlphaBlendMtrl");
 	Ptr<CMaterial> pDebugShapeMtrl = CAssetMgr::GetInst()->FindAsset<CMaterial>(L"DebugShapeMtrl");
 
-	Ptr<CTexture> pTexture = CAssetMgr::GetInst()->Load<CTexture>(L"PlayerTex", L"texture\\Character.png");
+	Ptr<CTexture> pTexture = CAssetMgr::GetInst()->FindAsset<CTexture>(L"texture\\Character.png");
 	pAlphaBlendMtrl->SetTexParam(TEX_0, pTexture);
 
 	CreatePrefab();
@@ -119,7 +119,7 @@ void CTestLevel::CreateTestLevel()
 	pTileMap->TileMap()->SetRowCol(4, 4);
 	pTileMap->TileMap()->SetTileSize(Vec2(64.f, 64.f));
 
-	Ptr<CTexture> pTileAtlas = CAssetMgr::GetInst()->Load<CTexture>(L"TileAtlasTex", L"texture\\TILE.bmp");
+	Ptr<CTexture> pTileAtlas = CAssetMgr::GetInst()->FindAsset<CTexture>(L"texture\\TILE.bmp");
 	pTileMap->TileMap()->SetAtlasTexture(pTileAtlas);
 	pTileMap->TileMap()->SetAtlasTileSize(Vec2(64.f, 64.f));
 

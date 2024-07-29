@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "CTileMap.h"
 
+#include "CKeyMgr.h"
 #include "CAssetMgr.h"
 #include "CTransform.h"
 
@@ -110,7 +111,11 @@ void CTileMap::ChangeTileMapSize()
 void CTileMap::SetAtlasTexture(Ptr<CTexture> _Atlas)
 {
 	m_TileAtlas = _Atlas;
-	m_AtlasResolution = Vec2((float)m_TileAtlas->Width(), (float)m_TileAtlas->Height());
+
+	if (nullptr == m_TileAtlas)
+		m_AtlasResolution = Vec2(0.f, 0.f);
+	else
+		m_AtlasResolution = Vec2((float)m_TileAtlas->Width(), (float)m_TileAtlas->Height());
 
 	SetAtlasTileSize(m_AtlasTileSize);
 }

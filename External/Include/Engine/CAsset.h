@@ -14,7 +14,7 @@ public:
     const wstring& GetKey()          { return m_Key; }
     const wstring& GetRelativePath() { return m_RelativePath; }
     ASSET_TYPE GetAssetType()        { return m_Type; }
-    
+    UINT GetRefCount()               { return m_RefCount; }
 
 protected:
     void SetKey(const wstring& _Key)          { m_Key = _Key; }

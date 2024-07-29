@@ -5,8 +5,6 @@ class AE_Detail :
 {
 private:
     Ptr<CSprite>    m_Sprite;
-    vector<CSprite> m_vecSprite;
-    
     
     int             m_CurFrameIdx;
 
@@ -14,7 +12,6 @@ private:
 
 private:
     void ShowInfo();
-    void ShowImage();
     void PlayOrStop();
     void SpriteList();
     void AddSprite();
@@ -27,6 +24,8 @@ public:
 public:
     virtual void Init() override;
     virtual void Update() override;
+
+    virtual void Deactivate() override;
 
 public:
     AE_Detail();

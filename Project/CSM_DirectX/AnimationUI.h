@@ -9,8 +9,7 @@ public:
     virtual void Update() override;
 
 private:
-    void AddFrame();
-    void Save();
+    virtual void SetAllInfo();
 
 public:
     AnimationUI();

@@ -27,6 +27,8 @@ public:
     virtual void Init() override;
     virtual void Update() override;
 
+    virtual void Deactivate() override;
+
 public:
     AE_Preview();
     virtual ~AE_Preview();

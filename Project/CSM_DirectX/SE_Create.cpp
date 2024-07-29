@@ -43,6 +43,8 @@ void SE_Create::Update()
 		Ptr<CSprite> pSprite = new CSprite;
 		
 		pSprite->Create(m_Texture, m_LT, m_Slice);
+		pSprite->SetOffsetUV(m_Offset);
+		pSprite->SetBackgroundUV(m_BackGround);
 		CAssetMgr::GetInst()->AddAsset(Key, pSprite);
 		Deactivate();
 	}
@@ -66,6 +68,8 @@ void SE_Create::Deactivate()
 	m_Texture = nullptr;
 	m_LT = Vec2(0.f, 0.f);
 	m_Slice = Vec2(0.f, 0.f);
+	m_Offset = Vec2(0.f, 0.f);
+	m_BackGround = Vec2(0.f, 0.f);
 	m_strName.clear();
 	SetActive(false);
 }

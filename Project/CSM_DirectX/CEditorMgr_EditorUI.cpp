@@ -22,6 +22,12 @@
 #include "AE_Preview.h"
 #include "AE_Detail.h"
 #include "AE_Create.h"
+#include "AE_SpriteView.h"
+
+#include "TileMapEditor.h"
+#include "TE_Detail.h"
+#include "TE_TextureView.h"
+#include "TE_Renderer.h"
 
 void CEditorMgr::InitImGui()
 {
@@ -176,6 +182,7 @@ void CEditorMgr::CreateEditorUI()
 
 	EditorUI* pContent = new Content;
 	pContent->SetName("Content");
+	pContent->Init();
 	m_mapUI.insert(make_pair(pContent->GetName(), pContent));
 
 	EditorUI* pList = new ListUI;
@@ -228,10 +235,31 @@ void CEditorMgr::CreateEditorUI()
 	pAECreate->SetName("AE_Create");
 	m_mapUI.insert(make_pair(pAECreate->GetName(), pAECreate));
 
+	EditorUI* pSV = new AE_SpriteView;
+	pSV->SetName("AE_SpriteView");
+	m_mapUI.insert(make_pair(pSV->GetName(), pSV));
+
 	EditorUI* pAnimationEditor = new AnimationEditor;
 	pAnimationEditor->Init();
 	pAnimationEditor->SetName("Animation Editor");
 	m_mapUI.insert(make_pair(pAnimationEditor->GetName(), pAnimationEditor));
+
+	EditorUI* pTileDetail = new TE_Detail;
+	pTileDetail->SetName("TE_Detail");
+	m_mapUI.insert(make_pair(pTileDetail->GetName(), pTileDetail));
+
+	EditorUI* pTETextureView = new TE_TextureView;
+	pTETextureView->SetName("TE_TextureView");
+	m_mapUI.insert(make_pair(pTETextureView->GetName(), pTETextureView));
+
+	EditorUI* pTERenderer = new TE_Renderer;
+	pTERenderer->SetName("TE_Renderer");
+	m_mapUI.insert(make_pair(pTERenderer->GetName(), pTERenderer));
+
+	EditorUI* pTileMapEditor = new TileMapEditor;
+	pTileMapEditor->SetName("TileMap Editor");
+	pTileMapEditor->Init();
+	m_mapUI.insert(make_pair(pTileMapEditor->GetName(), pTileMapEditor));
 }
 
 EditorUI* CEditorMgr::FindEditorUI(const string& _strName)

@@ -42,6 +42,9 @@ public:
 	bool IsChanged() { return m_Changed; }
 
 private:
+	void DeleteAsset(ASSET_TYPE _Type, const wstring& _Key);
+
+private:
 	void CreateEngineMesh();
 	void CreateEngineMaterial();
 	void CreateEngineTexture();

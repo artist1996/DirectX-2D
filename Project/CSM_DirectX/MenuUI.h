@@ -16,6 +16,7 @@ private:
     void Level();
     void GameObject();
     void Assets();
+    void Editor();
     
     void AddComponent();
     void AddScript();

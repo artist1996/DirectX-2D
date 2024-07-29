@@ -128,15 +128,11 @@ void SE_Info::SpriteInfo()
 
 	ImGui::Text("OFFSET");
 	ImGui::SameLine(100);
-
-	float fOffset[] = { m_Info.Offset.x, m_Info.Offset.y };
-	ImGui::InputFloat2("##SpriteInfoOffset", fOffset, nullptr, ImGuiInputTextFlags_ReadOnly);
+	ImGui::InputFloat2("##SpriteInfoOffset", (float*)&m_Info.Offset);
 
 	ImGui::Text("BACKGROUND");
 	ImGui::SameLine(100);
-
-	float fBackground[] = { m_Info.BackGround.x, m_Info.BackGround.y };
-	ImGui::InputFloat2("##SpriteInfoBackground", fBackground, nullptr, ImGuiInputTextFlags_ReadOnly);
+	ImGui::InputFloat2("##SpriteInfoBackground", (float*)&m_Info.BackGround);
 }
 
 void SE_Info::CreateSprite()
@@ -147,7 +143,8 @@ void SE_Info::CreateSprite()
 	if (ImGui::Button("Create", ImVec2(50.f, 20.f)))
 	{
 		GetCreate()->SetTexture(m_Texture);
-		GetCreate()->SetInfo(m_Info.LT, m_Info.Slice);
+		GetCreate()->SetInfo(m_Info.LT, m_Info.Slice, m_Info.Offset, m_Info.BackGround);
+		
 		GetCreate()->Activate();
 	}
 }

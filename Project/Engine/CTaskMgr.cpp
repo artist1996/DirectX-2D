@@ -60,6 +60,15 @@ void CTaskMgr::ExecuteTask()
 		}
 		break;
 
+		case TASK_TYPE::DELETE_ASSET:
+		{
+			CAsset* pAsset = (CAsset*)m_vecTask[i].Param_0;
+		 	ASSET_TYPE Type = pAsset->GetAssetType();
+
+			CAssetMgr::GetInst()->DeleteAsset(Type, pAsset->GetKey());
+		}
+		break;
+
 		case TASK_TYPE::CHANGE_LEVELSTATE:
 		{
 			LEVEL_STATE NextState = (LEVEL_STATE)m_vecTask[i].Param_0;

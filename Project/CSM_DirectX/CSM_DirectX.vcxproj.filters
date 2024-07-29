@@ -127,9 +127,6 @@
     <Filter Include="02. EditorUI\08. Animation Editor">
       <UniqueIdentifier>{0ffce9b8-0619-4f03-8da9-041be8892197}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. EditorUI\09. Module">
-      <UniqueIdentifier>{9b52670b-82ac-4e28-85b1-9cd5629b7ef3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. EditorUI\08. Animation Editor\01. AE_Sub">
       <UniqueIdentifier>{f541e413-bfb3-48d0-b6a7-970c22c033a2}</UniqueIdentifier>
     </Filter>
@@ -142,8 +139,29 @@
     <Filter Include="02. EditorUI\07. Sprite Editor\SE_Sub\03. SE_Create">
       <UniqueIdentifier>{eb735b45-6acb-4a31-9ed8-bb43e7fe3da8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. EditorUI\08. Animation Editor\01. AE_Sub\03. AE_Create">
+    <Filter Include="02. EditorUI\08. Animation Editor\01. AE_Sub\04. AE_Create">
       <UniqueIdentifier>{6ce386db-0f70-4f35-9d0e-facf686c5b6c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. EditorUI\08. Animation Editor\01. AE_Sub\03. AE_SpriteView">
+      <UniqueIdentifier>{0f748941-bbed-4c60-9549-a6a9e667f15d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. EditorUI\10. Module">
+      <UniqueIdentifier>{9b52670b-82ac-4e28-85b1-9cd5629b7ef3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. EditorUI\09. TileMap Editor">
+      <UniqueIdentifier>{f4397fdf-7ba4-4e49-bd1b-9b71ee84c9e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. EditorUI\09. TileMap Editor\01. TE_Sub">
+      <UniqueIdentifier>{59638b2d-e43f-4b45-baed-e37c2849d5e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. EditorUI\09. TileMap Editor\01. TE_Sub\01. TE_Detail">
+      <UniqueIdentifier>{6e0fd921-67ab-4a8e-a900-9e8e6327bf72}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. EditorUI\09. TileMap Editor\01. TE_Sub\02. TE_TextureView">
+      <UniqueIdentifier>{2ee386a9-a304-42a4-8d35-835410a7b39c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. EditorUI\09. TileMap Editor\01. TE_Sub\03. TE_Renderer">
+      <UniqueIdentifier>{b7396462-4b25-4565-b017-cbb4f24f4a83}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -280,7 +298,7 @@
       <Filter>01. Manager\02. TestLevel</Filter>
     </ClInclude>
     <ClInclude Include="ParamUI.h">
-      <Filter>02. EditorUI\09. Module</Filter>
+      <Filter>02. EditorUI\10. Module</Filter>
     </ClInclude>
     <ClInclude Include="ScriptUI.h">
       <Filter>02. EditorUI\01. Inspector\ComponentUI\09. ScriptUI</Filter>
@@ -319,7 +337,25 @@
       <Filter>02. EditorUI\08. Animation Editor\01. AE_Sub\02. AE_Preview</Filter>
     </ClInclude>
     <ClInclude Include="AE_Create.h">
-      <Filter>02. EditorUI\08. Animation Editor\01. AE_Sub\03. AE_Create</Filter>
+      <Filter>02. EditorUI\08. Animation Editor\01. AE_Sub\04. AE_Create</Filter>
+    </ClInclude>
+    <ClInclude Include="AE_SpriteView.h">
+      <Filter>02. EditorUI\08. Animation Editor\01. AE_Sub\03. AE_SpriteView</Filter>
+    </ClInclude>
+    <ClInclude Include="TileMapEditor.h">
+      <Filter>02. EditorUI\09. TileMap Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="TE_Sub.h">
+      <Filter>02. EditorUI\09. TileMap Editor\01. TE_Sub</Filter>
+    </ClInclude>
+    <ClInclude Include="TE_Detail.h">
+      <Filter>02. EditorUI\09. TileMap Editor\01. TE_Sub\01. TE_Detail</Filter>
+    </ClInclude>
+    <ClInclude Include="TE_TextureView.h">
+      <Filter>02. EditorUI\09. TileMap Editor\01. TE_Sub\02. TE_TextureView</Filter>
+    </ClInclude>
+    <ClInclude Include="TE_Renderer.h">
+      <Filter>02. EditorUI\09. TileMap Editor\01. TE_Sub\03. TE_Renderer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -451,7 +487,7 @@
       <Filter>01. Manager\02. TestLevel</Filter>
     </ClCompile>
     <ClCompile Include="ParamUI.cpp">
-      <Filter>02. EditorUI\09. Module</Filter>
+      <Filter>02. EditorUI\10. Module</Filter>
     </ClCompile>
     <ClCompile Include="ScriptUI.cpp">
       <Filter>02. EditorUI\01. Inspector\ComponentUI\09. ScriptUI</Filter>
@@ -490,7 +526,25 @@
       <Filter>02. EditorUI\08. Animation Editor\01. AE_Sub\02. AE_Preview</Filter>
     </ClCompile>
     <ClCompile Include="AE_Create.cpp">
-      <Filter>02. EditorUI\08. Animation Editor\01. AE_Sub\03. AE_Create</Filter>
+      <Filter>02. EditorUI\08. Animation Editor\01. AE_Sub\04. AE_Create</Filter>
+    </ClCompile>
+    <ClCompile Include="AE_SpriteView.cpp">
+      <Filter>02. EditorUI\08. Animation Editor\01. AE_Sub\03. AE_SpriteView</Filter>
+    </ClCompile>
+    <ClCompile Include="TileMapEditor.cpp">
+      <Filter>02. EditorUI\09. TileMap Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="TE_Sub.cpp">
+      <Filter>02. EditorUI\09. TileMap Editor\01. TE_Sub</Filter>
+    </ClCompile>
+    <ClCompile Include="TE_Detail.cpp">
+      <Filter>02. EditorUI\09. TileMap Editor\01. TE_Sub\01. TE_Detail</Filter>
+    </ClCompile>
+    <ClCompile Include="TE_TextureView.cpp">
+      <Filter>02. EditorUI\09. TileMap Editor\01. TE_Sub\02. TE_TextureView</Filter>
+    </ClCompile>
+    <ClCompile Include="TE_Renderer.cpp">
+      <Filter>02. EditorUI\09. TileMap Editor\01. TE_Sub\03. TE_Renderer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

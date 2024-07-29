@@ -48,6 +48,8 @@ void MenuUI::Update()
 	GameObject();
 
 	Assets();
+
+	Editor();
 }
 
 void MenuUI::File()
@@ -154,6 +156,14 @@ void MenuUI::Assets()
 			pMtrl->Save(Key);
 		}
 
+		ImGui::EndMenu();
+	}
+}
+
+void MenuUI::Editor()
+{
+	if (ImGui::BeginMenu("Editor"))
+	{
 		EditorUI* pSpriteEditor = CEditorMgr::GetInst()->FindEditorUI("Sprite Editor");
 		bool IsActive = pSpriteEditor->IsActive();
 
@@ -168,6 +178,14 @@ void MenuUI::Assets()
 		if (ImGui::MenuItem("Animation Editor", nullptr, &IsAEActive))
 		{
 			CEditorMgr::GetInst()->FindEditorUI("Animation Editor")->SetActive(IsAEActive);
+		}
+
+		EditorUI* pTileMapEditor = CEditorMgr::GetInst()->FindEditorUI("TileMap Editor");
+		bool IsTEActive = pTileMapEditor->IsActive();
+
+		if (ImGui::MenuItem("TileMap Editor", nullptr, &IsTEActive))
+		{
+			CEditorMgr::GetInst()->FindEditorUI("TileMap Editor")->SetActive(IsTEActive);
 		}
 
 		ImGui::EndMenu();

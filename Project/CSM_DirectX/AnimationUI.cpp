@@ -91,8 +91,6 @@ void AnimationUI::Update()
 		pSprite->SetSliceUV(vSlice);
 		pSprite->SetOffsetUV(vOffset);
 		pSprite->SetBackgroundUV(vBackground);
-
-		AddFrame();
 	}
 
 	else
@@ -114,81 +112,10 @@ void AnimationUI::Update()
 		ImGui::SameLine(100);
 		string strName = string(pAnimation->GetKey().begin(), pAnimation->GetKey().end());
 		ImGui::InputText("##FlipBookName", (char*)strName.c_str(), strName.length(), ImGuiInputTextFlags_ReadOnly);
-
-		AddFrame();
 	}
 
-	Save();
 }
 
-void AnimationUI::AddFrame()
+void AnimationUI::SetAllInfo()
 {
-	//if (ImGui::Button("Add Frame", ImVec2(80.f, 20.f)))
-	//{
-	//	AnimationEditor* pEditor = (AnimationEditor*)CEditorMgr::GetInst()->FindEditorUI("Animation Editor");
-	//	
-	//	Ptr<CSprite> pSprite = new CSprite;
-	//	pEditor->SetTargetSprite(pSprite);
-	//	pEditor->SetAnimation((CAnimation*)GetAsset().Get());
-	//
-	//	pEditor->SetActive(true);
-	//}
-}
-
-void AnimationUI::Save()
-{
-	ImGui::SameLine(100);
-
-	Ptr<CAnimation> pAnimation = (CAnimation*)GetAsset().Get();
-
-	if (0 == pAnimation->GetMaxFrameCount())
-		return;
-
-	if (ImGui::Button("Save", ImVec2(50.f, 20.f)))
-	{
-		wchar_t szSelect[256] = {};
-		wchar_t szFileTitle[256] = {};
-
-		OPENFILENAME ofn = {};
-		ofn.lStructSize = sizeof(ofn);
-		ofn.hwndOwner = nullptr;
-		ofn.lpstrFile = szSelect;
-		ofn.lpstrFile[0] = '\0';
-		ofn.nMaxFile = sizeof(szSelect);
-		ofn.lpstrFilter = L"FLIP\0*.flip";
-		ofn.nFilterIndex = 0;
-		ofn.lpstrFileTitle = NULL;
-		ofn.nMaxFileTitle = 0;
-
-		// 탐색창 초기 위치 지정
-		wstring strInitPath = CPathMgr::GetInst()->GetContentPath();
-		strInitPath += L"Animation\\";
-		ofn.lpstrInitialDir = strInitPath.c_str();
-
-		ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
-
-		if (GetSaveFileName(&ofn))
-		{
-			UINT SpriteCount = pAnimation->GetMaxFrameCount();
-			wstring FilePath = CPathMgr::GetInst()->GetContentPath();
-
-			for (UINT i = 0; i < SpriteCount; ++i)
-			{
-				wchar_t szKey[255] = {};
-				swprintf_s(szKey, 255, L"%s%d.sprite", pAnimation->GetKey().c_str(), i);
-
-				// 상대 경로 계산
-				std::filesystem::path FullPath(szSelect);
-				std::filesystem::path BaseDir(FilePath);
-				std::filesystem::path RelativePath = std::filesystem::relative(FullPath, BaseDir);
-
-				// 새로운 파일명 생성
-				RelativePath.replace_filename(szKey);
-
-				pAnimation->GetSprite(i)->Save(RelativePath.wstring());
-			}
-
-			pAnimation->Save(szSelect);
-		}
-	}
 }

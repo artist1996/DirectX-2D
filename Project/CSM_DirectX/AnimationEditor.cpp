@@ -8,8 +8,13 @@
 #include "AE_Preview.h"
 #include "AE_Detail.h"
 #include "AE_Create.h"
+#include "AE_SpriteView.h"
 
 AnimationEditor::AnimationEditor()
+	: m_Preview(nullptr)
+	, m_Detail(nullptr)
+	, m_Create(nullptr)
+	, m_SV(nullptr)
 {
 	UseMenuBar(true);
 }
@@ -23,13 +28,16 @@ void AnimationEditor::Init()
 	m_Preview = (AE_Preview*)CEditorMgr::GetInst()->FindEditorUI("AE_Preview");
 	m_Detail = (AE_Detail*)CEditorMgr::GetInst()->FindEditorUI("AE_Detail");
 	m_Create = (AE_Create*)CEditorMgr::GetInst()->FindEditorUI("AE_Create");
+	m_SV = (AE_SpriteView*)CEditorMgr::GetInst()->FindEditorUI("AE_SpriteView");
 
-	m_Preview->SetMove(false);
-	m_Detail->SetMove(false);
+	m_Preview->SetMove(true);
+	m_Detail->SetMove(true);
+	m_SV->SetMove(true);
 
 	m_Preview->m_Owner = this;
 	m_Detail->m_Owner = this;
 	m_Create->m_Owner = this;
+	m_SV->m_Owner = this;
 
 	SetActive(false);
 }
@@ -45,6 +53,7 @@ void AnimationEditor::Update()
 		{
 			bool AtlasView = m_Preview->IsActive();
 			bool Detail = m_Detail->IsActive();
+			bool SV = m_SV->IsActive();
 
 			if (ImGui::MenuItem("Preview", nullptr, &AtlasView))
 			{
@@ -54,6 +63,11 @@ void AnimationEditor::Update()
 			if (ImGui::MenuItem("Detail", nullptr, &Detail))
 			{
 				m_Detail->SetActive(Detail);
+			}
+
+			if (ImGui::MenuItem("SV", nullptr, &SV))
+			{
+				m_SV->SetActive(SV);
 			}
 
 			ImGui::EndMenu();
@@ -185,10 +199,13 @@ void AnimationEditor::Activate()
 {
 	m_Preview->SetActive(true);
 	m_Detail->SetActive(true);
+	m_SV->SetActive(true);
 }
 
 void AnimationEditor::Deactivate()
 {
-	m_Preview->SetActive(false);
+    m_Preview->SetActive(false);
 	m_Detail->SetActive(false);
+	m_SV->SetActive(false);
+	m_Create->SetActive(false);
 }

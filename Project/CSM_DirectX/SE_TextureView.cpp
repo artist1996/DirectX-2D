@@ -86,6 +86,23 @@ void SE_TextureView::SelectCheck()
 			CalcSpriteSize(vPixelPos);
 		}
 	}
+
+	// Mouse RBTN Check
+	if (KEY_TAP(KEY::RBTN))
+	{
+		Vec2 vPixelPos = Vec2(ImGui::GetMousePos().x, ImGui::GetMousePos().y);
+		ImVec2 vDiff = ImVec2(vPixelPos.x - m_ImageRectMin.x, vPixelPos.y - m_ImageRectMin.y);
+		m_MouseLT = ImVec2(vDiff.x / m_Ratio, vDiff.y / m_Ratio);
+
+
+	}
+
+	if (KEY_PRESSED(KEY::RBTN))
+	{
+		Vec2 vPixelPos = Vec2(ImGui::GetMousePos().x, ImGui::GetMousePos().y);
+		ImVec2 vDiff = ImVec2(vPixelPos.x - m_ImageRectMin.x, vPixelPos.y - m_ImageRectMin.y);
+		m_MouseRB = ImVec2(vDiff.x / m_Ratio, vDiff.y / m_Ratio);
+	}
 }
 
 void SE_TextureView::DrawRect()

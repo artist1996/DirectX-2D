@@ -76,3 +76,14 @@ void CAssetMgr::GetAssetNames(ASSET_TYPE _Type, vector<string>& _vecOut)
 		_vecOut.push_back(string(pair.first.begin(), pair.first.end()));
 	}
 }
+
+void CAssetMgr::DeleteAsset(ASSET_TYPE _Type, const wstring& _Key)
+{
+	// 혹시 다른 곳에서 참조중 일 수 있으니 AssetMgr 에서만 erase
+	map<wstring, Ptr<CAsset>>::iterator iter = m_mapAsset[(UINT)_Type].find(_Key);
+	assert(iter != m_mapAsset[(UINT)_Type].end());
+	m_mapAsset[(UINT)_Type].erase(iter);
+
+	// Asset 변경 알림
+	CTaskMgr::GetInst()->AddTask(tTask{ TASK_TYPE::ASSET_CHANGED });
+}

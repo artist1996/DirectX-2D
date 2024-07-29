@@ -49,11 +49,12 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     }
 
     // Test Level
-    CTestLevel::CreateTestLevel();
 
 #ifdef _DEBUG
     CEditorMgr::GetInst()->Init();
 #endif
+
+    CTestLevel::CreateTestLevel();
 
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_CSMDIRECTX));
 

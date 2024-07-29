@@ -18,6 +18,7 @@ void CAssetMgr::Init()
 	CreateEngineMaterial();
 }
 
+
 void CAssetMgr::CreateEngineMesh()
 {
 	// Vertex Buffer 생성	(삼각형 그릴 것 정점 3개)
@@ -166,9 +167,9 @@ void CAssetMgr::CreateEngineTexture()
 									    , DXGI_FORMAT_R8G8B8A8_UNORM, D3D11_BIND_SHADER_RESOURCE);
 	
 	// Noise Texture
-	Load<CTexture>(L"texture\\noise\\noise_01.png", L"texture\\noise\\noise_01.png");
-	Load<CTexture>(L"texture\\noise\\noise_02.png", L"texture\\noise\\noise_02.png");
-	Load<CTexture>(L"texture\\noise\\noise_03.jpg", L"texture\\noise\\noise_03.jpg");
+	//Load<CTexture>(L"texture\\noise\\noise_01.png", L"texture\\noise\\noise_01.png");
+	//Load<CTexture>(L"texture\\noise\\noise_02.png", L"texture\\noise\\noise_02.png");
+	//Load<CTexture>(L"texture\\noise\\noise_03.jpg", L"texture\\noise\\noise_03.jpg");
 }
 
 void CAssetMgr::CreateEngineSprite()
@@ -234,13 +235,13 @@ void CAssetMgr::CreateEngineSprite()
 	//
 	//AddAsset(L"Link_MoveDown", pFilpBook);
 	//pFilpBook->Save(strContentPath + L"Animation\\" + L"Link_MoveDown" + L".flip");
-	wstring strCotentPath = CPathMgr::GetInst()->GetContentPath();
+	//wstring strCotentPath = CPathMgr::GetInst()->GetContentPath();
 	
-	Ptr<CAnimation> pFlipBook = new CAnimation;
-	Load<CAnimation>(L"Link_MoveDown", L"Animation\\player\\Link_MoveDown.flip");
-	Load<CAnimation>(L"Link_MoveRight", L"Animation\\player\\Link_MoveRight.flip");
-	Load<CAnimation>(L"MOVE_RIGHT", L"Animation\\player\\MOVE_RIGHT.flip");
-	Load<CAnimation>(L"IDLE", L"Animation\\player\\IDLE.flip");
+	//Ptr<CAnimation> pFlipBook = new CAnimation;
+	//Load<CAnimation>(L"Link_MoveDown", L"Animation\\player\\Link_MoveDown.flip");
+	//Load<CAnimation>(L"Link_MoveRight", L"Animation\\player\\Link_MoveRight.flip");
+	//Load<CAnimation>(L"MOVE_RIGHT", L"Animation\\player\\MOVE_RIGHT.flip");
+	//Load<CAnimation>(L"IDLE", L"Animation\\player\\IDLE.flip");
 	//pFlipBook->Load(strCotentPath + L"Animation\\" + L"Link_MoveDown" + L".flip");
 	//
 	//AddAsset(L"Link_MoveDown", pFlipBook);

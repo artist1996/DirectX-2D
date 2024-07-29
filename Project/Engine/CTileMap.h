@@ -38,6 +38,14 @@ public:
     void SetAtlasTexture(Ptr<CTexture> _Atlas);
     void SetAtlasTileSize(Vec2 _TileSize);
 
+public:
+    Ptr<CTexture> GetTexture() { return m_TileAtlas; }
+    int GetRow()               { return m_Row; }
+    int GetCol()               { return m_Col; }
+    int GetTileMaxIdx()        { return (m_AtlasMaxRow * m_AtlasMaxCol) - 1; }
+    Vec2 GetTileSize()         { return m_TileSize; }
+    Vec2 GetTextureTileSize()  { return m_AtlasTileSize; }
+
 private:
     void ChangeTileMapSize();
 
