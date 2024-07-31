@@ -19,9 +19,6 @@
     <Filter Include="02. EditorUI\01. Inspector">
       <UniqueIdentifier>{6b1dbe9b-75f9-4805-b799-930aecd9ce50}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. EditorUI\02. Content">
-      <UniqueIdentifier>{a2f88154-defc-440b-b2c9-27ea05294f4a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. EditorUI\01. Inspector\ComponentUI">
       <UniqueIdentifier>{2ab495c2-9b80-46ca-b726-f5ae270c673f}</UniqueIdentifier>
     </Filter>
@@ -139,9 +136,6 @@
     <Filter Include="02. EditorUI\07. Sprite Editor\SE_Sub\03. SE_Create">
       <UniqueIdentifier>{eb735b45-6acb-4a31-9ed8-bb43e7fe3da8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. EditorUI\08. Animation Editor\01. AE_Sub\04. AE_Create">
-      <UniqueIdentifier>{6ce386db-0f70-4f35-9d0e-facf686c5b6c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. EditorUI\08. Animation Editor\01. AE_Sub\03. AE_SpriteView">
       <UniqueIdentifier>{0f748941-bbed-4c60-9549-a6a9e667f15d}</UniqueIdentifier>
     </Filter>
@@ -162,6 +156,12 @@
     </Filter>
     <Filter Include="02. EditorUI\09. TileMap Editor\01. TE_Sub\03. TE_Renderer">
       <UniqueIdentifier>{b7396462-4b25-4565-b017-cbb4f24f4a83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. EditorUI\08. Animation Editor\01. AE_Sub\04. AE_Create">
+      <UniqueIdentifier>{6ce386db-0f70-4f35-9d0e-facf686c5b6c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. EditorUI\02. Content">
+      <UniqueIdentifier>{a2f88154-defc-440b-b2c9-27ea05294f4a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

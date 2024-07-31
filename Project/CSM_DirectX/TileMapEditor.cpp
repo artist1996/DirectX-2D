@@ -25,6 +25,11 @@ void TileMapEditor::Init()
 	m_TextureView = (TE_TextureView*)CEditorMgr::GetInst()->FindEditorUI("TE_TextureView");
 	m_Renderer = (TE_Renderer*)CEditorMgr::GetInst()->FindEditorUI("TE_Renderer");
 
+	m_Detail->SetMove(false);
+	m_TextureView->SetMove(false);
+	m_Renderer->SetMove(false);
+
+
 	m_Detail->m_Owner = this;
 	m_TextureView->m_Owner = this;
 	m_Renderer->m_Owner = this;

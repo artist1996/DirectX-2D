@@ -4,19 +4,19 @@ class TE_Renderer :
     public TE_Sub
 {
 private:
-    vector<class CGameObject*> m_vecTiles;
-
-    ImVec2                     m_TileSize;
-   
     int                        m_TileIdx;
-
     bool                       m_UseGrid;
+    int                        m_TileImgIdx;
     
+    ImVec2                     TilePos;
+
 private:
-    void Render();
+    void RenderGrid();
+    void RenderTileMap();
 
 public:
-    void UseGrid(bool _Use) { m_UseGrid = _Use; }
+    void UseGrid(bool _Use)  { m_UseGrid = _Use; }
+    void SetImgIdx(int _Idx) { m_TileImgIdx = _Idx; }
 
 public:
     virtual void Init() override;

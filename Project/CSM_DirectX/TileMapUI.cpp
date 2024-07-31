@@ -4,6 +4,8 @@
 #include <Engine/CGameObject.h>
 #include <Engine/CTileMap.h>
 
+#include "TreeUI.h"
+
 TileMapUI::TileMapUI()
 	: ComponentUI(COMPONENT_TYPE::TILEMAP)
 	, m_UIHeight(0)
@@ -23,19 +25,31 @@ void TileMapUI::Update()
 
 	CTileMap* pTileMap = GetTargetObject()->TileMap();
 
+	string strTexKey = string(pTileMap->GetTexture()->GetKey().begin(), pTileMap->GetTexture()->GetKey().end());
+
 	ImGui::Text("Texture");
+	ImGui::SameLine();
+	ImGui::InputText("##TileMapTexKey", (char*)strTexKey.c_str(), strTexKey.length(), ImGuiInputTextFlags_ReadOnly);
+
+	if (ImGui::BeginDragDropTarget())
+	{
+		const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ContentTree");
+		if (payload)
+		{
+			TreeNode** ppNode = (TreeNode**)payload->Data;
+			TreeNode* pNode = *ppNode;
+	
+			Ptr<CAsset> pAsset = (CAsset*)pNode->GetData();
+			if (ASSET_TYPE::TEXTURE == pAsset->GetAssetType())
+			{
+				pTileMap->SetAtlasTexture((CTexture*)pAsset.Get());
+			}
+		}
+	
+		ImGui::EndDragDropTarget();
+	}
 
 	m_UIHeight += (UINT)ImGui::GetItemRectSize().y;
-
-	ImTextureID TexID = nullptr;
-
-	if (nullptr != pTileMap->GetTexture())
-		TexID = pTileMap->GetTexture()->GetSRV().Get();
-
-
-	ImVec2 ImageSize = ImVec2((float)pTileMap->GetTexture()->Width(), (float)pTileMap->GetTexture()->Height());
-
-	ImGui::Image(TexID, ImageSize, ImVec2(0.f, 0.f), ImVec2(1.f, 1.f));
 
 	m_UIHeight += (UINT)ImGui::GetItemRectSize().y + 20.f;
 	
@@ -50,6 +64,7 @@ void TileMapUI::Update()
 	ImGui::Text("TileSize");
 	ImGui::SameLine();
 	ImGui::InputFloat2("##TileSize", (float*)&TileSize);
+	pTileMap->SetTileSize(TileSize);
 	m_UIHeight += (UINT)ImGui::GetItemRectSize().y;
 
 	int Row = pTileMap->GetRow();
@@ -64,6 +79,8 @@ void TileMapUI::Update()
 	ImGui::SameLine();
 	ImGui::InputInt("##TileMapRow", &Col);
 	m_UIHeight += (UINT)ImGui::GetItemRectSize().y;
+
+	pTileMap->SetRowCol(Row, Col);
 
 	SetChildSize(ImVec2(0.f, (float)m_UIHeight + 10.f));
 }

@@ -7,8 +7,8 @@ class TE_Sub :
     public EditorUI
 {
 private:
-    TileMapEditor* m_Owner;
-    Ptr<CTexture>  m_Texture;
+    TileMapEditor*     m_Owner;
+    class CGameObject* m_TargetObject;
     
 public:
     class TE_Detail* GetDetail()           { return m_Owner->GetDetail(); }
@@ -16,8 +16,8 @@ public:
     class TE_Renderer* GetRenderer()       { return m_Owner->GetRenderer(); }
 
 public:
-    void SetTexture(Ptr<CTexture> _Texture) { m_Texture = _Texture; }
-    Ptr<CTexture> GetTexture()              { return m_Texture; }
+    void SetTargetObject(CGameObject* _Object) { m_TargetObject = _Object; }
+    CGameObject* GetTargetObject()             { return m_TargetObject; }
 
 public:
     virtual void Init() override;

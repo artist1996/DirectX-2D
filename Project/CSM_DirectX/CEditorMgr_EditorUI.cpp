@@ -145,6 +145,22 @@ void CEditorMgr::InitImGui()
 	CreateEditorUI();
 }
 
+void CEditorMgr::ObserveContent()
+{
+	// 지정된 상황이 발생 했는지 확인
+	DWORD dwState = WaitForSingleObject(m_hNotifyHandle, 0);
+
+	if (WAIT_OBJECT_0 == dwState)
+	{
+		// Content 폴더 내에 있는 모든 Asset과 메모리에 로딩 되어 있는 Asset 동기화
+		Content* pContent = (Content*)FindEditorUI("Content");
+		pContent->Reload();
+		
+		// 다시 Content 폴더에 변경점이 발생되는지 확인
+		FindNextChangeNotification(m_hNotifyHandle);
+	}
+}
+
 
 void CEditorMgr::ImGuiProgress()
 {

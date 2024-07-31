@@ -99,6 +99,9 @@ void Content::Reload()
 
 		for (const auto pair : mapAssets)
 		{
+			if (pair.second->IsEngineAsset())
+				continue;
+
 			wstring strRelativePath = pair.second->GetKey();
 
 			// 절대경로로 Asset File이 존재 하는지 확인한다.
@@ -108,11 +111,15 @@ void Content::Reload()
 				// 바로 삭제하지 않는다.
 				if (1 >= pair.second->GetRefCount())
 				{
-					CTaskMgr::GetInst()->AddTask(tTask{ TASK_TYPE::DELETE_ASSET, (DWORD_PTR)pair.second.Get() });
+					CTaskMgr::GetInst()->AddTask(tTask{ TASK_TYPE::DELETE_ASSET, (DWORD_PTR)pair.second.Get(), });
 				}
 				else
 				{
-					MessageBox(nullptr, L"다른 곳에서 참조중 일 수 있는 Asset", L"Error", MB_OK);
+					int ret = MessageBox(nullptr, L"다른 곳에서 참조되고 있을 수 있습니다.%n 그래도 삭제 하시겠습니까?", L"Error", MB_YESNO);
+					if (ret == IDYES)
+					{
+						CTaskMgr::GetInst()->AddTask(tTask{ TASK_TYPE::DELETE_ASSET, (DWORD_PTR)pair.second.Get(), });
+					}
 				}
 			}
 		}

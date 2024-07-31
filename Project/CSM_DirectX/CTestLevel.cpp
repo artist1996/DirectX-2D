@@ -40,7 +40,7 @@ void CTestLevel::CreateTestLevel()
 	CCollisionMgr::GetInst()->CollisionCheck(3, 4);
 	CCollisionMgr::GetInst()->CollisionCheck(4, 5);
 	
-	return;
+	//return;
 
 	CLevel* pLevel = new CLevel;
 	ChangeLevel(pLevel, PLAY);
@@ -117,11 +117,11 @@ void CTestLevel::CreateTestLevel()
 	pTileMap->Transform()->SetRelativePos(Vec3(-500.f, 250.f, 500.f));
 
 	pTileMap->TileMap()->SetRowCol(4, 4);
-	pTileMap->TileMap()->SetTileSize(Vec2(64.f, 64.f));
+	pTileMap->TileMap()->SetTileSize(Vec2(224.f, 120.f));
 
-	Ptr<CTexture> pTileAtlas = CAssetMgr::GetInst()->FindAsset<CTexture>(L"texture\\TILE.bmp");
+	Ptr<CTexture> pTileAtlas = CAssetMgr::GetInst()->FindAsset<CTexture>(L"texture\\tile\\isys_fake\\isys_fake.png");
 	pTileMap->TileMap()->SetAtlasTexture(pTileAtlas);
-	pTileMap->TileMap()->SetAtlasTileSize(Vec2(64.f, 64.f));
+	pTileMap->TileMap()->SetAtlasTileSize(Vec2(224.f,120.f));
 
 	pLevel->AddObject(2, pTileMap);
 

@@ -49,6 +49,7 @@ void CAssetMgr::CreateEngineMesh()
 	Ptr<CMesh> pMesh = nullptr;
 	pMesh = new CMesh;
 	pMesh->Create(arrVtx, 4, arrIdx, 6);
+	pMesh->SetEngineAsset();
 	AddAsset(L"RectMesh", pMesh);
 
 	// Debug RectMesh
@@ -56,6 +57,7 @@ void CAssetMgr::CreateEngineMesh()
 	
 	pMesh = new CMesh;
 	pMesh->Create(arrVtx, 4, arrIdx, 5);
+	pMesh->SetEngineAsset();
 	AddAsset(L"RectMesh_Debug", pMesh);
 
 	// Circle Mesh
@@ -100,6 +102,7 @@ void CAssetMgr::CreateEngineMesh()
 	// Mesh 생성	
 	pMesh = new CMesh;
 	pMesh->Create(vecVtx.data(), (UINT)vecVtx.size(), vecIdx.data(), (UINT)vecIdx.size());	// 배열의 첫번째 주소와, 정점의 개수 전달
+	pMesh->SetEngineAsset();
 	AddAsset(L"CircleMesh", pMesh);
 
 	// Debug Circle Mesh
@@ -112,6 +115,7 @@ void CAssetMgr::CreateEngineMesh()
 
 	pMesh = new CMesh;
 	pMesh->Create(vecVtx.data(), (UINT)vecVtx.size(), vecIdx.data(), (UINT)vecIdx.size());
+	pMesh->SetEngineAsset();
 	AddAsset(L"CircleMesh_Debug", pMesh);
 }
 
@@ -121,26 +125,26 @@ void CAssetMgr::CreateEngineMaterial()
 
 	// Std2DMtrl
 	//Load<CMaterial>(L"Std2DMtrl", L"material\\std2d.mtrl");
-	pMtrl = new CMaterial;
+	pMtrl = new CMaterial(true);
 	pMtrl->SetShader(FindAsset<CGraphicShader>(L"Std2DShader"));
 	AddAsset(L"Std2DMtrl", pMtrl);
 
 	// Std2DAlphaBlendMtrl
-	pMtrl = new CMaterial;
+	pMtrl = new CMaterial(true);
 	pMtrl->SetShader(FindAsset<CGraphicShader>(L"Std2DAlphaBlendShader"));
 	AddAsset(L"Std2DAlphaBlendMtrl", pMtrl);
 
 	// DebugShapeMtrl
-	pMtrl = new CMaterial;
+	pMtrl = new CMaterial(true);
 	pMtrl->SetShader(FindAsset<CGraphicShader>(L"DebugShapeShader"));
 	AddAsset(L"DebugShapeMtrl", pMtrl);
 
 	// TileMapMtrl
-	pMtrl = new CMaterial;
+	pMtrl = new CMaterial(true);
 	pMtrl->SetShader(FindAsset<CGraphicShader>(L"TileMapShader"));
 	AddAsset(L"TileMapMtrl", pMtrl);
 
-	pMtrl = new CMaterial;
+	pMtrl = new CMaterial(true);
 	pMtrl->SetShader(FindAsset<CGraphicShader>(L"GrayFilterShader"));
 	pMtrl->SetTexParam(TEX_0, FindAsset<CTexture>(L"PostProcessTex"));
 	pMtrl->SetTexParam(TEX_1, FindAsset<CTexture>(L"texture\\noise\\noise_01.png"));
@@ -149,7 +153,7 @@ void CAssetMgr::CreateEngineMaterial()
 	AddAsset(L"GrayFilterMtrl", pMtrl);
 
 	// DistortionMtrl
-	pMtrl = new CMaterial;
+	pMtrl = new CMaterial(true);
 	pMtrl->SetShader(FindAsset<CGraphicShader>(L"DistortionShader"));
 	pMtrl->SetTexParam(TEX_0, FindAsset<CTexture>(L"PostProcessTex"));
 	pMtrl->SetTexParam(TEX_1, FindAsset<CTexture>(L"texture\\noise\\noise_01.png"));
