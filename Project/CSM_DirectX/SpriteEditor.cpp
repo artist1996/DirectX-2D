@@ -24,8 +24,8 @@ void SpriteEditor::Init()
 	m_SpriteInfo = (SE_Info*)CEditorMgr::GetInst()->FindEditorUI("SE_Info");
 	m_Create = (SE_Create*)CEditorMgr::GetInst()->FindEditorUI("SE_Create");
 
-	m_TextureView->SetMove(true);
-	m_SpriteInfo->SetMove(true);
+	m_TextureView->SetMove(false);
+	m_SpriteInfo->SetMove(false);
 
 	m_TextureView->m_Owner = this;
 	m_SpriteInfo->m_Owner = this;

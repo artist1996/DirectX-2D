@@ -92,6 +92,16 @@ struct tLightInfo
 	int			Padding[3];	 // ÆÐµù
 };
 
+struct tParticle
+{
+	Vec3  vLocalPos;
+	Vec3  vWorldPos;
+	Vec4  vColor;
+
+	int   Active;
+	float Mass;
+};
+
 struct tGlobalData
 {
 	float   g_DT;            // DT

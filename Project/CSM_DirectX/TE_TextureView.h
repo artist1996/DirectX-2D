@@ -5,9 +5,19 @@ class TE_TextureView :
 {
 private:
     ImVec2  m_ImageRectMin;
+    ImVec2  m_vDiff;
+
+    float   m_WheelScale;
+    float   m_Ratio;
+    float   m_WidthSize;
+
+    int     m_ClickCol;
+    int     m_ClickRow;
 
 private:
+    void WheelCheck();
     void ClickedCheck();
+    void DrawRect();
 
 public:
     virtual void Init() override;

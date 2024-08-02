@@ -32,6 +32,7 @@ public:
     GET_OTHER_COMPONENT(TileMap);
     GET_OTHER_COMPONENT(Light2D);
     GET_OTHER_COMPONENT(Rigidbody);
+    GET_OTHER_COMPONENT(ParticleSystem);
 
 private:
     void SetOwner(CGameObject* _Object) { m_Owner = _Object; }

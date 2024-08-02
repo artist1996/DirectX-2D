@@ -11,6 +11,7 @@ EditorUI::EditorUI()
 	, m_Modal(false)
 	, m_UseMenuBar(false)
 	, m_Move(true)
+	, m_HorizontalScrollbar(true)
 {
 }
 
@@ -26,10 +27,12 @@ void EditorUI::Tick()
 
 	bool bActive = m_Active;
 
-	UINT Flag = ImGuiWindowFlags_HorizontalScrollbar;
+	UINT Flag = 0;
+	if(m_HorizontalScrollbar)
+		Flag |= ImGuiWindowFlags_HorizontalScrollbar;
 
 	if (m_UseMenuBar)
-		Flag = ImGuiWindowFlags_MenuBar;
+		Flag |= ImGuiWindowFlags_MenuBar;
 	if (!m_Move)
 		Flag |= ImGuiWindowFlags_NoMove;
 

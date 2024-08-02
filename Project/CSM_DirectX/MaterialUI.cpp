@@ -73,6 +73,10 @@ void MaterialUI::Update()
 	// Shader Parameter
 	ParameterTitle();
 	ShaderParameter();
+
+	ImGui::Separator();
+	if(!pMtrl->IsEngineAsset())
+		Save();
 }
 
 void MaterialUI::ShaderParameter()
@@ -220,4 +224,22 @@ void MaterialUI::ParameterTitle()
 
 	ImGui::PopStyleColor(3);
 	ImGui::PopID();
+}
+
+void MaterialUI::Save()
+{
+	if (ImGui::Button("SAVE", ImVec2(40.f,18.f)))
+	{
+		SaveMaterialToFile();
+	}
+}
+
+void MaterialUI::SaveMaterialToFile()
+{
+	Ptr<CMaterial> pMtrl = (CMaterial*)GetAsset().Get();
+
+	if (!pMtrl->IsEngineAsset())
+	{
+		pMtrl->Save(pMtrl->GetRelativePath());
+	}
 }

@@ -53,6 +53,24 @@ void SE_TextureView::Update()
 	DrawRect();
 }
 
+void SE_TextureView::Deactivate()
+{
+	m_Texture = nullptr;
+
+	m_ImageRectMin = {}; // Image 위젯 좌상단 Pos
+
+	m_MousePos = {};     // 현재 Mouse Pos
+
+	m_MouseLT = {};      // 마우스 위치에 해당하는 Texture 의 좌상단 픽셀 좌표
+	m_MouseRB = {};      // 마우스 위치에 해당하는 Texture 의 우하단 픽셀 좌표
+
+	m_PixelID.clear();      // 등록된 적이 있는 픽셀인지 확인하는 용도
+
+	m_WidthSize = 0.f;
+	m_WheelScale = 1.f;   // Mouse Wheel
+	m_Ratio = 0.f;        // 실제 해상도 대비 출력 이미지의 비율
+}
+
 void SE_TextureView::WheelCheck()
 {
 	if (0 < ImGui::GetIO().MouseWheel)

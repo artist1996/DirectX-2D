@@ -32,13 +32,14 @@ void CPlayerScript::Tick()
 		Vec3 vRot = Transform()->GetRelativeRotation();
 		vRot = Vec3(0.f, 0.f, 0.f);
 		Transform()->SetRelativeRotation(vRot);	
-		Animator2D()->Play(1, 10, true);
 	}
 
 	else if (KEY_PRESSED(KEY::RIGHT))
 		vPos.x += m_Speed * DT;
-	else if(KEY_RELEASED(KEY::RIGHT))
-		Animator2D()->Play(0, 3, true);
+	else if (KEY_RELEASED(KEY::RIGHT))
+	{
+
+	}
 
 	if (KEY_TAP(KEY::LEFT))
 	{
@@ -46,23 +47,30 @@ void CPlayerScript::Tick()
 		vRot.x = XM_PI;
 		vRot.z = XM_PI;
 		Transform()->SetRelativeRotation(vRot);
-		Animator2D()->Play(1, 10, true);
+		//Animator2D()->Play(1, 10, true);
 	}
 
 	else if (KEY_PRESSED(KEY::LEFT))
 		vPos.x -= m_Speed * DT;
 	else if (KEY_RELEASED(KEY::LEFT))
-		Animator2D()->Play(0, 3, true);
+	{
+
+	}
+		//Animator2D()->Play(0, 3, true);
 	
 	if (KEY_TAP(KEY::UP))
-		Animator2D()->Play(1, 10, true);
+	{
+		//Animator2D()->Play(1, 10, true);
+	}
 	else if (KEY_PRESSED(KEY::UP))
 		vPos.y += m_Speed * DT;
 	else if (KEY_RELEASED(KEY::UP))
 		Animator2D()->Play(0, 3, true);
 	
 	if (KEY_TAP(KEY::DOWN))
-		Animator2D()->Play(1, 10, true);
+	{
+		//Animator2D()->Play(1, 10, true);
+	}
 	else if (KEY_PRESSED(KEY::DOWN))
 		vPos.y -= m_Speed * DT;
 	else if (KEY_RELEASED(KEY::DOWN))

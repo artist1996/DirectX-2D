@@ -4,17 +4,27 @@ class TE_Renderer :
     public TE_Sub
 {
 private:
-    int                        m_TileIdx;
-    bool                       m_UseGrid;
-    int                        m_TileImgIdx;
-    
-    ImVec2                     TilePos;
+    ImVec2   m_TilePos;
+
+    ImVec2   m_uvMin;
+    ImVec2   m_uvMax;
+
+    int      m_TileIdx;
+    int      m_TileImgIdx;
+
+    float    m_WheelScale;
+    float    m_Ratio;
+
+    bool     m_UseGrid;
 
 private:
+    void WheelCheck();
     void RenderGrid();
     void RenderTileMap();
 
 public:
+    bool IsGrid()            { return m_UseGrid; }
+
     void UseGrid(bool _Use)  { m_UseGrid = _Use; }
     void SetImgIdx(int _Idx) { m_TileImgIdx = _Idx; }
 

@@ -29,7 +29,6 @@ void TileMapEditor::Init()
 	m_TextureView->SetMove(false);
 	m_Renderer->SetMove(false);
 
-
 	m_Detail->m_Owner = this;
 	m_TextureView->m_Owner = this;
 	m_Renderer->m_Owner = this;

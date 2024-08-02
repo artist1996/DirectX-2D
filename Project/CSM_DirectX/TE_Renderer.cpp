@@ -8,8 +8,9 @@
 TE_Renderer::TE_Renderer()
 	: m_TileIdx(0)
 	, m_TileImgIdx(0)
-	, m_UseGrid(false)
-
+	, m_WheelScale(1.5f)
+	, m_Ratio(1.f)
+	, m_UseGrid(true)
 {
 }
 
@@ -26,9 +27,26 @@ void TE_Renderer::Update()
 	if (!IsActive() || !GetTargetObject())
 		return;
 
-	//CTileMap* pTileMap = GetTargetObject()->TileMap();
-	
+	CTileMap* pTileMap = GetTargetObject()->TileMap();
+
+	m_Ratio = (pTileMap->GetTexture()->Width() * m_WheelScale) / pTileMap->GetTexture()->Width();
+
+	if (ImGui::IsWindowFocused())
+		WheelCheck();
+
 	RenderTileMap();
+}
+
+void TE_Renderer::WheelCheck()
+{
+	if (0 < ImGui::GetIO().MouseWheel)
+		m_WheelScale += 0.1f;
+	if (0 > ImGui::GetIO().MouseWheel)
+		m_WheelScale -= 0.1f;
+	if (500.f < m_WheelScale)
+		m_WheelScale = 500.f;
+	if (0.1f > m_WheelScale)
+		m_WheelScale = 0.1f;
 }
 
 void TE_Renderer::RenderGrid()
@@ -40,16 +58,23 @@ void TE_Renderer::RenderTileMap()
 {
 	CTileMap* pTileMap = GetTargetObject()->TileMap();
 	
-
+	// Row, Col
 	int Row = pTileMap->GetRow();
 	int Col = pTileMap->GetCol();
 	int TexMaxRow = pTileMap->GetTextureMaxRow();
 	int TexMaxCol = pTileMap->GetTextureMaxCol();
+
+	// TileMap Texture
 	Ptr<CTexture> pTexture = pTileMap->GetTexture();
-	Vec2 TileSize = pTileMap->GetTileSize();
+
+	// TileSize
+	Vec2 TileSize = pTileMap->GetTileSize() / m_Ratio;
+
+	// Texture TileSize, Slice UV
 	Vec2 TexTileSize = pTileMap->GetTextureTileSize();
 	Vec2 SliceUV = pTileMap->GetSliceUV();
 
+	// Texture Width, Height
 	UINT Width = pTexture->Width();
 	UINT Height = pTexture->Height();
 	Vec2 TileMapSize = Vec2(Row, Col) * TileSize;
@@ -68,19 +93,44 @@ void TE_Renderer::RenderTileMap()
 
 			if (-1 != ImgIdx)
 			{
-				TilePos = ImVec2(canvasPos.x + j * TileSize.x, canvasPos.y + i * TileSize.y);
-
+				m_TilePos = ImVec2(canvasPos.x + j * TileSize.x, canvasPos.y + i * TileSize.y);
+			 	
 				UINT TileImgRow = ImgIdx / TexMaxCol;
 				UINT TileImgCol = ImgIdx % TexMaxCol;
 
 				Vec2 vCurColRow = Vec2(TileImgCol, TileImgRow);
 
 				// 타일의 UV 좌표 계산
-				ImVec2 uv0 = ImVec2(vCurColRow.x * SliceUV.x, vCurColRow.y * SliceUV.y);
-				ImVec2 uv1 = ImVec2(uv0.x + TileSize.x / pTexture->Width(), uv0.y + TileSize.y / pTexture->Height());
+				m_uvMin = ImVec2(vCurColRow.x * SliceUV.x, vCurColRow.y * SliceUV.y);
+				m_uvMax = ImVec2(m_uvMin.x + SliceUV.x, m_uvMin.y + SliceUV.y);
 
-				//ImGui::Image(pTexture->GetSRV().Get(), ImVec2(pTexture->Width(), pTexture->Height()), uv0, uv1);
-				drawList->AddImage(pTexture->GetSRV().Get(), TilePos, ImVec2(TilePos.x + TileSize.x, TilePos.y + TileSize.y), uv0, uv1);
+				drawList->AddImage(pTexture->GetSRV().Get(), m_TilePos, ImVec2(m_TilePos.x + TileSize.x, m_TilePos.y + TileSize.y), m_uvMin, m_uvMax);
+
+				if (m_UseGrid)
+				{
+					drawList->AddLine(m_TilePos,
+									  ImVec2(m_TilePos.x + TileSize.x, m_TilePos.y),
+									  ImGui::GetColorU32(ImVec4(0.f, 1.f, 0.f, 1.f)), 1.f);
+					drawList->AddLine(m_TilePos,
+									  ImVec2(m_TilePos.x, m_TilePos.y + TileSize.y),
+									  ImGui::GetColorU32(ImVec4(0.f, 1.f, 0.f, 1.f)), 1.f);
+
+					// 마지막 열의 오른쪽 경계선
+					if (j == Col - 1)
+					{
+						drawList->AddLine(ImVec2(m_TilePos.x + TileSize.x, m_TilePos.y),
+							ImVec2(m_TilePos.x + TileSize.x, m_TilePos.y + TileSize.y),
+							ImGui::GetColorU32(ImVec4(0.f, 1.f, 0.f, 1.f)), 1.f);
+					}
+
+					// 마지막 줄의 아래쪽 경계선
+					if (i == Row - 1)
+					{
+						drawList->AddLine(ImVec2(m_TilePos.x, m_TilePos.y + TileSize.y),
+							ImVec2(m_TilePos.x + TileSize.x, m_TilePos.y + TileSize.y),
+							ImGui::GetColorU32(ImVec4(0.f, 1.f, 0.f, 1.f)), 1.f);
+					}
+				}			
 			}
 		}
 	}
@@ -91,8 +141,8 @@ void TE_Renderer::RenderTileMap()
 		ImVec2 vDiff = ImVec2(MousePos.x - canvasPos.x, MousePos.y - canvasPos.y);
 		if (vDiff.x >= 0 && vDiff.y >= 0 && vDiff.x < Col * TileSize.x && vDiff.y < Row * TileSize.y)
 		{
-			int ClickCol = static_cast<int>(vDiff.x / TileSize.x);
-			int ClickRow = static_cast<int>(vDiff.y / TileSize.y);
+			int ClickCol = (int)(vDiff.x / TileSize.x);
+			int ClickRow = (int)(vDiff.y / TileSize.y);
 
 			m_TileIdx = Col * ClickRow + ClickCol;
 

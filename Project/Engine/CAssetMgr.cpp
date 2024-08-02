@@ -9,6 +9,7 @@ CAssetMgr::CAssetMgr()
 
 CAssetMgr::~CAssetMgr()
 {
+	
 }
 
 void CAssetMgr::Tick()

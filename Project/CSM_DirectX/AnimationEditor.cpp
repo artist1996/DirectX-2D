@@ -124,7 +124,7 @@ void AnimationEditor::SaveAnimation()
 	strInitPath += L"Animation\\";
 	ofn.lpstrInitialDir = strInitPath.c_str();
 
-	ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
+	ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST | OFN_OVERWRITEPROMPT | OFN_ALLOWMULTISELECT | OFN_EXPLORER;
 
 	if (GetSaveFileName(&ofn))
 	{
@@ -134,16 +134,16 @@ void AnimationEditor::SaveAnimation()
 		{
 			for (size_t i = 0; i < m_Detail->GetAnimation()->GetMaxFrameCount(); ++i)
 			{
-				wchar_t szKey[255] = {};
-				swprintf_s(szKey, 255, L"%s%d.sprite", m_Detail->GetAnimation()->GetKey().c_str(), i);
-
 				path ContentPath = CPathMgr::GetInst()->GetContentPath();
 				path RelativePath = std::filesystem::relative(szSelect, ContentPath);
-
-
+								
+				RelativePath = RelativePath.remove_filename();
 				Ptr<CSprite> pSprite = m_Detail->GetAnimation()->GetSprite(i);
-				
-				RelativePath.replace_filename(szKey);
+				path strKey = pSprite->GetKey();
+
+				strKey = strKey.stem();
+
+				RelativePath += strKey.wstring() + L".sprite";
 
 				pSprite->Save(RelativePath.wstring());
 			}
@@ -151,8 +151,6 @@ void AnimationEditor::SaveAnimation()
 			m_Detail->GetAnimation()->Save(szSelect);
 		}
 	}
-
-
 }
 
 int AnimationEditor::LoadAnimation()

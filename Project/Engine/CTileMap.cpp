@@ -90,7 +90,7 @@ void CTileMap::SetRowCol(UINT _Row, UINT _Col)
 	// 타일 정보를 전달받아서 t 레지스터에 전달시킬 구조화 버퍼가 타일 전체 데이터 사이즈 보다 작으면 리사이즈
 	if (m_Buffer->GetElementCount() < TileCount)
 	{
-		m_Buffer->Create(sizeof(tTileInfo), TileCount);
+		m_Buffer->Create(sizeof(tTileInfo), TileCount, SB_TYPE::SRV_ONLY);
 	}
 }
 
@@ -128,8 +128,8 @@ void CTileMap::SetAtlasTileSize(Vec2 _TileSize)
 	{
 		m_AtlasSliceUV = m_AtlasTileSize / m_AtlasResolution;
 
-		m_AtlasMaxCol = m_AtlasResolution.x / m_AtlasTileSize.x;
-		m_AtlasMaxRow = m_AtlasResolution.y / m_AtlasTileSize.y;
+		m_AtlasMaxCol = int(m_AtlasResolution.x / m_AtlasTileSize.x);
+		m_AtlasMaxRow = int(m_AtlasResolution.y / m_AtlasTileSize.y);
 	}
 }
 

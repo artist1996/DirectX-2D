@@ -14,6 +14,8 @@ CConstBuffer::~CConstBuffer()
 
 int CConstBuffer::Create(CB_TYPE _Type, UINT _BufferSize)
 {
+	assert(0 == (_BufferSize % 16));
+
 	m_Type = _Type;
 
 	m_Desc.ByteWidth = _BufferSize;
@@ -44,5 +46,9 @@ void CConstBuffer::Binding()
 	CONTEXT->DSSetConstantBuffers((UINT)m_Type, 1, m_CB.GetAddressOf());
 	CONTEXT->GSSetConstantBuffers((UINT)m_Type, 1, m_CB.GetAddressOf());
 	CONTEXT->PSSetConstantBuffers((UINT)m_Type, 1, m_CB.GetAddressOf());
+}
+
+void CConstBuffer::Binding_CS()
+{
 	CONTEXT->CSSetConstantBuffers((UINT)m_Type, 1, m_CB.GetAddressOf());
 }

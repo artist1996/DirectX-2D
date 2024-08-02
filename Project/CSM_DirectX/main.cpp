@@ -8,6 +8,7 @@
 #include <Engine/CDevice.h>
 #include "ImGui/imgui_impl_win32.h"
 
+#include "CLevelSaveLoad.h"
 #include "CTestLevel.h"
 
 // 전역 변수:
@@ -24,7 +25,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                      _In_ int       nCmdShow)
 {
     _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-    //_CrtSetBreakAlloc(1620);
+    //_CrtSetBreakAlloc(320);
 
     MyRegisterClass(hInstance);
 
@@ -42,7 +43,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     UpdateWindow(hWnd);
 
     // CEngine 객체 초기화
-    if (FAILED(CEngine::GetInst()->Init(hWnd, POINT{ 1280,768 })))
+    if (FAILED(CEngine::GetInst()->Init( hWnd, POINT{ 1280,768 }
+                                       , (OBJECT_SAVE)&CLevelSaveLoad::SaveGameObject
+                                       , (OBJECT_LOAD)&CLevelSaveLoad::LoadGameObject)))
     {
         MessageBox(nullptr, L"장치 초기화 실패", L"Engine 초기화 실패", MB_OK);
         return 0;

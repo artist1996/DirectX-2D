@@ -22,7 +22,7 @@ void SE_Create::Update()
 	if (nullptr == m_Texture || !IsActive())
 		return;
 		
-	ImGui::SetWindowFocus();
+	//ImGui::SetWindowFocus();
 
 	ImGui::Text("Sprite Name");
 	ImGui::SameLine();

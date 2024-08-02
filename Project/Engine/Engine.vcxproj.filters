@@ -148,6 +148,12 @@
     <ClInclude Include="CRigidbody.h">
       <Filter>08. Component\06. RigidBody</Filter>
     </ClInclude>
+    <ClInclude Include="CSetColorCS.h">
+      <Filter>HLSL\03. Compute Shader\01. SetColorShader</Filter>
+    </ClInclude>
+    <ClInclude Include="CParticleSystem.h">
+      <Filter>08. Component\RenderComponent\03. ParticleSystem</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CEngine.cpp">
@@ -275,6 +281,12 @@
     </ClCompile>
     <ClCompile Include="CRigidbody.cpp">
       <Filter>08. Component\06. RigidBody</Filter>
+    </ClCompile>
+    <ClCompile Include="CSetColorCS.cpp">
+      <Filter>HLSL\03. Compute Shader\01. SetColorShader</Filter>
+    </ClCompile>
+    <ClCompile Include="CParticleSystem.cpp">
+      <Filter>08. Component\RenderComponent\03. ParticleSystem</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -437,6 +449,12 @@
     <Filter Include="06. Asset\09. Animation">
       <UniqueIdentifier>{a8a048e3-14d2-4232-ae19-8931005e6324}</UniqueIdentifier>
     </Filter>
+    <Filter Include="HLSL\03. Compute Shader">
+      <UniqueIdentifier>{bad071b3-c471-4fb2-b85b-c61e804a78c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HLSL\03. Compute Shader\01. SetColorShader">
+      <UniqueIdentifier>{8d6edd16-5df3-4fe7-9849-4e83ca647b9d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="SimpleMath.inl">
@@ -464,6 +482,9 @@
     </FxCompile>
     <FxCompile Include="postprocess.fx">
       <Filter>HLSL\02. Render\03. PostProcess</Filter>
+    </FxCompile>
+    <FxCompile Include="setcolor.fx">
+      <Filter>HLSL\03. Compute Shader\01. SetColorShader</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

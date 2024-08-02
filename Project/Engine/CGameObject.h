@@ -51,6 +51,7 @@ public:
     GET_COMPONENT(TileMap, TILEMAP);
     GET_COMPONENT(Light2D, LIGHT2D);
     GET_COMPONENT(Rigidbody, RIGIDBODY);
+    GET_COMPONENT(ParticleSystem, PARTICLESYSTEM);
 
 public:
     void Begin();

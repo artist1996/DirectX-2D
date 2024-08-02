@@ -35,6 +35,9 @@ public:
     virtual void Update() override;
 
 public:
+    virtual void Deactivate() override;
+
+public:
     SE_Info();
     virtual ~SE_Info();
 };

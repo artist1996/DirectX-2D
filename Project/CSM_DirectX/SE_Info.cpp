@@ -37,6 +37,12 @@ void SE_Info::Update()
 	CreateSprite();
 }
 
+void SE_Info::Deactivate()
+{
+	m_Texture = nullptr;
+	m_Info = {};
+}
+
 void SE_Info::Texture()
 {
 	string TexName;
@@ -61,6 +67,7 @@ void SE_Info::Texture()
 			if (ASSET_TYPE::TEXTURE == pAsset->GetAssetType())
 			{
 				SetTexture((CTexture*)pAsset.Get());
+				m_Texture = (CTexture*)pAsset.Get();
 			}
 		}
 

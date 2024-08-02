@@ -51,6 +51,7 @@ void CSprite::Create(Ptr<CTexture> _Atlas, Vec2 _LeftTopPixel, Vec2 _SlicePixel)
 int CSprite::Save(const wstring& _strRelativePath)
 {
 	SetRelativePath(_strRelativePath);
+	SetKey(_strRelativePath);
 
 	// 파일 개방
 	FILE* pFile = nullptr;

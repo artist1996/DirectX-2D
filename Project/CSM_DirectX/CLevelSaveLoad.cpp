@@ -139,53 +139,59 @@ CGameObject* CLevelSaveLoad::LoadGameObject(FILE* _pFile)
 {
 	CGameObject* pObject = new CGameObject;
 
-	wstring strName;
-	LoadWString(strName, _pFile);
-	pObject->SetName(strName);
-	
-	// Load Component Info
+	// GameObject 의 이름 로드
+	wstring Name;
+	LoadWString(Name, _pFile);
+	pObject->SetName(Name);
+
+	// Component 정보 로드	
 	COMPONENT_TYPE Type = COMPONENT_TYPE::END;
-	
-	// 저장 되어있는 Type 값을 반복문을 돌며 확인한다
 	while (true)
 	{
+		// 저장되어있는 정보가 어떤 컴포넌트인지 확인
 		fread(&Type, sizeof(COMPONENT_TYPE), 1, _pFile);
 
+		// 읽은 타입 정보가 END 인 경우, 저장된 컴포넌트 정보의 끝이다.
 		if (COMPONENT_TYPE::END == Type)
 			break;
 
+		// 저장된 타입에 맞는 컴포넌트를 생성 시키고, 저장할때랑 동일한 순서로 데이터를 읽는다.
 		CComponent* pComponent = GetComponent(Type);
 
+		// 생성된 컴포넌트를 오브젝트에 넣어준다.
 		pObject->AddComponent(pComponent);
 
+		// 저장당시의 정보를 읽어와서 복수한다.
 		pComponent->LoadFromFile(_pFile);
 	}
 
-	// Load Script
+	// Script 정보 로드	
 	size_t ScriptCount = 0;
 	fread(&ScriptCount, sizeof(size_t), 1, _pFile);
 
 	for (size_t i = 0; i < ScriptCount; ++i)
 	{
-		// Load Script Name
-		wstring strScriptName;
-		LoadWString(strScriptName, _pFile);
+		// Script 의 이름 읽기
+		wstring ScriptName;
+		LoadWString(ScriptName, _pFile);
 
-		CScript* pScript = CScriptMgr::GetScript(strScriptName);
+		// 읽은 Script 이름으로 이름에 해당하는 Script 생성
+		CScript* pScript = CScriptMgr::GetScript(ScriptName);
 		pScript->LoadFromFile(_pFile);
+
 		pObject->AddComponent(pScript);
 	}
 
-	// Load Child Object
+	// Child 정보 로드
 	size_t ChildCount = 0;
 	fread(&ChildCount, sizeof(size_t), 1, _pFile);
 
 	for (size_t i = 0; i < ChildCount; ++i)
 	{
-		CGameObject* pChildObject =	LoadGameObject(_pFile);
+		CGameObject* pChildObject = LoadGameObject(_pFile);
 		pObject->AddChild(pChildObject);
 	}
-	
+
 	return pObject;
 }
 
@@ -195,29 +201,37 @@ CComponent* CLevelSaveLoad::GetComponent(COMPONENT_TYPE _Type)
 	{
 	case COMPONENT_TYPE::TRANSFORM:
 		return new CTransform;
+		break;
 	case COMPONENT_TYPE::COLLIDER2D:
 		return new CCollider2D;
+		break;
 	case COMPONENT_TYPE::COLLIDER3D:
 		break;
 	case COMPONENT_TYPE::LIGHT2D:
 		return new CLight2D;
+		break;
 	case COMPONENT_TYPE::LIGHT3D:
 		break;
 	case COMPONENT_TYPE::ANIMATOR2D:
 		return new CAnimator2D;
+		break;
 	case COMPONENT_TYPE::ANIMATOR3D:
 		break;
 	case COMPONENT_TYPE::STATE_MACHINE:
 		break;
 	case COMPONENT_TYPE::RIGIDBODY:
 		return new CRigidbody;
+		break;
 	case COMPONENT_TYPE::CAMERA:
 		return new CCamera;
+		break;
 	case COMPONENT_TYPE::MESHRENDER:
 		return new CMeshRender;
+		break;
 	case COMPONENT_TYPE::TILEMAP:
 		return new CTileMap;
-	case COMPONENT_TYPE::PARTICLE_SYSTEM:
+		break;
+	case COMPONENT_TYPE::PARTICLESYSTEM:
 		break;
 	case COMPONENT_TYPE::DECAl:
 		break;

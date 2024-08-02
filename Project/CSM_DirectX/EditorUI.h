@@ -20,6 +20,7 @@ private:
 
 	bool			  m_UseMenuBar;
 	bool		      m_Move;
+	bool			  m_HorizontalScrollbar;
 	
 	ImVec2			  m_ChildSize;
 
@@ -34,10 +35,11 @@ public:
 	void SetChildBorder(bool _Set)	{ m_ChildBorder = _Set; }
 	void SetChildSize(ImVec2 _Size)	{ m_ChildSize = _Size; }
 
-	void SetModal(bool _Modal)  { m_Modal = _Modal; }
-	bool IsModal()			    { return m_Modal; }
-	void UseMenuBar(bool _Use)  { m_UseMenuBar = _Use; }
-	void SetMove(bool _Move)	{ m_Move = _Move; }
+	void SetModal(bool _Modal)			   { m_Modal = _Modal; }
+	bool IsModal()						   { return m_Modal; }
+	void UseMenuBar(bool _Use)			   { m_UseMenuBar = _Use; }
+	void SetMove(bool _Move)			   { m_Move = _Move; }
+	void SetHorizontalScrollBar(bool _Use) { m_HorizontalScrollbar = _Use; }
 
 	const string& GetName()		{ return m_Name; }
 	const string& GetFullName() { return m_FullName; }

@@ -39,13 +39,11 @@ void CEditorMgr::Init()
 	InitImGui();
 
 	// Content 폴더를 감시하는 커널 오브젝트 생성
+	 // Content 폴더를 감시하는 커널 오브젝트 생성
 	wstring ContentPath = CPathMgr::GetInst()->GetContentPath();
-	m_hNotifyHandle = FindFirstChangeNotification(ContentPath.c_str(),
-												  true,
-												  FILE_NOTIFY_CHANGE_FILE_NAME | 
-												  FILE_NOTIFY_CHANGE_DIR_NAME  |
-											      FILE_ACTION_ADDED			   |
-												  FILE_ACTION_REMOVED);
+	m_hNotifyHandle = FindFirstChangeNotification(ContentPath.c_str(), true
+		, FILE_NOTIFY_CHANGE_FILE_NAME | FILE_NOTIFY_CHANGE_DIR_NAME
+		| FILE_ACTION_ADDED | FILE_ACTION_REMOVED);
 }
 
 void CEditorMgr::Tick()

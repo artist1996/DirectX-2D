@@ -25,7 +25,7 @@ void CEditorCameraScript::Tick()
 		PerspectiveMove();
 	}
 
-	if (KEY_TAP(KEY::P))
+	if (KEY_TAP(KEY::_1))
 	{
 		if (PROJ_TYPE::ORTHOGRAPHIC == Camera()->GetProjType())
 		{
@@ -49,22 +49,22 @@ void CEditorCameraScript::OrthoGraphicMove()
 	Transform()->SetRelativeRotation(Vec3(0.f, 0.f, 0.f));
 	Vec3 vPos = Transform()->GetRelativePos();
 
-	if (KEY_PRESSED(KEY::W))
+	if (KEY_PRESSED(KEY::UP))
 	{
 		vPos.y += EngineDT * Speed;
 	}
 
-	if (KEY_PRESSED(KEY::S))
+	if (KEY_PRESSED(KEY::DOWN))
 	{
 		vPos.y -= EngineDT * Speed;
 	}
 
-	if (KEY_PRESSED(KEY::A))
+	if (KEY_PRESSED(KEY::LEFT))
 	{
 		vPos.x -= EngineDT * Speed;
 	}
 
-	if (KEY_PRESSED(KEY::D))
+	if (KEY_PRESSED(KEY::RIGHT))
 	{
 		vPos.x += EngineDT * Speed;
 	}

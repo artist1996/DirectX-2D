@@ -77,7 +77,7 @@ void Outliner::GameObjectClicked(DWORD_PTR _Param)
 	Inspector* pInspector = (Inspector*)CEditorMgr::GetInst()->FindEditorUI("Inspector");
 	
 	pInspector->SetTargetObject(pObject);
-	ImGui::SetWindowFocus(nullptr);
+	//ImGui::SetWindowFocus(nullptr);
 }
 
 void Outliner::AddGameObject(TreeNode* _Node, CGameObject* _Object)

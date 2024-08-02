@@ -67,6 +67,13 @@ void TileMapUI::Update()
 	pTileMap->SetTileSize(TileSize);
 	m_UIHeight += (UINT)ImGui::GetItemRectSize().y;
 
+	Vec2 TexTileSize = pTileMap->GetTextureTileSize();
+	ImGui::Text("Texture TileSize");
+	ImGui::SameLine();
+	ImGui::DragFloat2("##TileMapTexTileSize", (float*)&TexTileSize);
+	m_UIHeight += (UINT)ImGui::GetItemRectSize().y;
+	pTileMap->SetAtlasTileSize(TexTileSize);
+
 	int Row = pTileMap->GetRow();
 	int Col = pTileMap->GetCol();
 
@@ -74,12 +81,12 @@ void TileMapUI::Update()
 	ImGui::SameLine();
 	ImGui::InputInt("##TileMapRow", &Row);
 	m_UIHeight += (UINT)ImGui::GetItemRectSize().y;
+	pTileMap->SetRowCol(Row, Col);
 
 	ImGui::Text("Tile Col");
 	ImGui::SameLine();
-	ImGui::InputInt("##TileMapRow", &Col);
+	ImGui::InputInt("##TileMapCol", &Col);
 	m_UIHeight += (UINT)ImGui::GetItemRectSize().y;
-
 	pTileMap->SetRowCol(Row, Col);
 
 	SetChildSize(ImVec2(0.f, (float)m_UIHeight + 10.f));

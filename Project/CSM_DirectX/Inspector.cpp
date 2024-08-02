@@ -21,6 +21,7 @@ Inspector::Inspector()
 	, m_arrComUI{}
 	, m_arrAssetUI{}
 {
+	SetHorizontalScrollBar(false);
 }
 
 Inspector::~Inspector()

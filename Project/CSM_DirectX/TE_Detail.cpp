@@ -68,15 +68,12 @@ void TE_Detail::TileMapInfo()
 		ImGui::EndDragDropTarget();
 	}
 
-	//ImGui::SameLine();
-	//if (ImGui::Button("##AtlasTexBtn", ImVec2(18.f, 18.f)))
-	//{
-	//	ListUI* pListUI = (ListUI*)CEditorMgr::GetInst()->FindEditorUI("List");
-	//	pListUI->SetName("Texture");
-	//	vector<string> vecTexNames;
-	//	CAssetMgr::GetInst()->GetAssetNames(ASSET_TYPE::TEXTURE, vecTexNames);
-	//	pListUI->AddList(vecTexNames);
-	//	pListUI->AddDelegate(this, (DELEGATE_1)&TE_Detail::SelectTexture);
-	//	pListUI->SetActive(true);
-	//}
+	ImGui::SameLine();
+	
+	bool UseGrid = GetRenderer()->IsGrid();
+
+	if (ImGui::Checkbox("##RendererUseGrid", &UseGrid))
+	{
+		GetRenderer()->UseGrid(UseGrid);
+	}
 }

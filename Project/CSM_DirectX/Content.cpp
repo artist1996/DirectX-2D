@@ -10,6 +10,7 @@
 #include <Engine/CAssetMgr.h>
 #include <Engine/assets.h>
 #include <Engine/CTaskMgr.h>
+#include <Engine/CGameObject.h>
 
 Content::Content()
 	: m_Tree(nullptr)
@@ -22,6 +23,7 @@ Content::Content()
 	m_Tree->UseDrag(true);
 	m_Tree->SetShowNameOnly(true);
 	m_Tree->AddClickedDelegate(this, (DELEGATE_1)&Content::AssetClicked);
+	m_Tree->AddPopupDelegate(this, (DELEGATE_1)&Content::PopupMenu);
 
 	RenewContent();
 }
@@ -72,7 +74,30 @@ void Content::AssetClicked(DWORD_PTR _Param)
 	Ptr<CAsset> pAsset = (CAsset*)pNode->GetData();
 	Inspector* pInspector = (Inspector*)CEditorMgr::GetInst()->FindEditorUI("Inspector");
 	pInspector->SetTargetAsset(pAsset);
-	ImGui::SetWindowFocus(nullptr);
+	//ImGui::SetWindowFocus(nullptr);
+}
+
+void Content::PopupMenu(DWORD_PTR _Param)
+{
+	TreeNode* pNode = (TreeNode*)_Param;
+	
+	Ptr<CAsset> pAsset = (CAsset*)pNode->GetData();
+
+	if (ASSET_TYPE::PREFAB == pAsset->GetAssetType())
+	{
+		if (ImGui::MenuItem("Instantiate"))
+		{
+			Ptr<CPrefab> pPrefab = (CPrefab*)pAsset.Get();
+
+			CGameObject* CloneObj = pPrefab->Instantiate();
+
+			CreateObject(CloneObj, 5);
+
+			ImGui::CloseCurrentPopup();
+		}
+	}
+
+	ImGui::EndPopup();
 }
 
 void Content::Reload()
@@ -87,38 +112,35 @@ void Content::Reload()
 		LoadAsset(m_vecAssetPath[i]);
 	}
 
-	return;
-
-	// AssetMgr에는 존재 하지만 Content 폴더 내에 없는 Asset은 AssetMgr 에서 삭제 해준다.
-	
+	// AssetMgr에는 존재 하지만 Content 폴더 내에 없는 Asset은 AssetMgr 에서 삭제 해준다.	
 	wstring strContentPath = CPathMgr::GetInst()->GetContentPath();
 	
 	for (UINT i = 0; i < (UINT)ASSET_TYPE::END; ++i)
 	{
-		const map<wstring, Ptr<CAsset>> mapAssets = CAssetMgr::GetInst()->GetAssets((ASSET_TYPE)i);
-
-		for (const auto pair : mapAssets)
+		const map<wstring, Ptr<CAsset>>& mapAssets = CAssetMgr::GetInst()->GetAssets((ASSET_TYPE)i);
+	
+		for (const auto& pair : mapAssets)
 		{
 			if (pair.second->IsEngineAsset())
 				continue;
-
+	
 			wstring strRelativePath = pair.second->GetKey();
-
+	
 			// 절대경로로 Asset File이 존재 하는지 확인한다.
 			if (!std::filesystem::exists(strContentPath + strRelativePath))
 			{
 				// Asset 들은 스마트포인터로 관리하고 있기 때문에 RefCount 를 확인 후 1보다 크다면 다른 곳에서도 참조중이므로
 				// 바로 삭제하지 않는다.
-				if (1 >= pair.second->GetRefCount())
+				if (pair.second->GetRefCount() <= 1)
 				{
-					CTaskMgr::GetInst()->AddTask(tTask{ TASK_TYPE::DELETE_ASSET, (DWORD_PTR)pair.second.Get(), });
+					CTaskMgr::GetInst()->AddTask(tTask{ TASK_TYPE::DELETE_ASSET, (DWORD_PTR)pair.second.Get() });
 				}
 				else
 				{
-					int ret = MessageBox(nullptr, L"다른 곳에서 참조되고 있을 수 있습니다.%n 그래도 삭제 하시겠습니까?", L"Error", MB_YESNO);
+					int ret = MessageBox(nullptr, L"다른 곳에서 참조되고 있을 수 있습니다.\n 그래도 삭제 하시겠습니까?", L"Error", MB_YESNO);
 					if (ret == IDYES)
 					{
-						CTaskMgr::GetInst()->AddTask(tTask{ TASK_TYPE::DELETE_ASSET, (DWORD_PTR)pair.second.Get(), });
+						CTaskMgr::GetInst()->AddTask(tTask{ TASK_TYPE::DELETE_ASSET, (DWORD_PTR)pair.second.Get() });
 					}
 				}
 			}
@@ -165,10 +187,7 @@ void Content::FindAssetName(const wstring& _FolderPath, const wstring& _Filter)
 
 void Content::LoadAsset(const path& _Path)
 {
-	// filesystem 의 extension 를 사용 해 확장자 명을 추출해준다.
 	path ext = _Path.extension();
-
-	// 확장자 명을 비교 해 Asset을 Loading
 
 	if (ext == L".mesh")
 		CAssetMgr::GetInst()->Load<CMesh>(_Path, _Path);
@@ -186,6 +205,6 @@ void Content::LoadAsset(const path& _Path)
 	//	CAssetMgr::GetInst()->Load<CSound>(_Path, _Path);
 	else if (ext == L".sprite")
 		CAssetMgr::GetInst()->Load<CSprite>(_Path, _Path);
-	else if (ext == L".anim" || ext == L".flip")
+	else if (ext == L".anim")
 		CAssetMgr::GetInst()->Load<CAnimation>(_Path, _Path);
 }
