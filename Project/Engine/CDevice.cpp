@@ -251,8 +251,8 @@ int CDevice::CreateDepthStencilState()
 	m_DSState[(UINT)DS_TYPE::LESS] = nullptr;
 
 	// Less Equal
-	Desc.DepthEnable = true; // 깊이 판정을 진행
-	Desc.DepthFunc = D3D11_COMPARISON_LESS_EQUAL; // 깊이 판정 방식
+	Desc.DepthEnable = true;						  // 깊이 판정을 진행
+	Desc.DepthFunc = D3D11_COMPARISON_LESS_EQUAL;     // 깊이 판정 방식
 	Desc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL; // 깊이 판정 성공시 깊이 기록 여부
 	Desc.StencilEnable = false;
 
@@ -279,6 +279,17 @@ int CDevice::CreateDepthStencilState()
 	Desc.StencilEnable = false;
 
 	if (FAILED(DEVICE->CreateDepthStencilState(&Desc, m_DSState[(UINT)DS_TYPE::NO_TEST].GetAddressOf())))
+	{
+		return E_FAIL;
+	}
+
+	// NO_WRITE
+	Desc.DepthEnable = true;
+	Desc.DepthFunc = D3D11_COMPARISON_LESS;
+	Desc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO;
+	Desc.StencilEnable = false;
+
+	if (FAILED(DEVICE->CreateDepthStencilState(&Desc, m_DSState[(UINT)DS_TYPE::NO_WRITE].GetAddressOf())))
 	{
 		return E_FAIL;
 	}

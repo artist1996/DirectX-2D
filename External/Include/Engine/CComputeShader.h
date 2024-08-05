@@ -22,7 +22,7 @@ protected:
     tMtrlConst                  m_Const;
 
 public:
-    int Excute();
+    int Execute();
 
 private:
     int CreateComputeShader(const wstring& _strRelativePath, const string& _strFuncName);

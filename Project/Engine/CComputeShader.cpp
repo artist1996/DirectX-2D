@@ -22,7 +22,7 @@ CComputeShader::~CComputeShader()
 {
 }
 
-int CComputeShader::Excute()
+int CComputeShader::Execute()
 {
 	// ComputeShader 를 상속 받은 class 들의 각자를 Binding 해준다
 	if (FAILED(Binding()))

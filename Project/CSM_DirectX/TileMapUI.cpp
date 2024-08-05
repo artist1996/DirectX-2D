@@ -51,7 +51,7 @@ void TileMapUI::Update()
 
 	m_UIHeight += (UINT)ImGui::GetItemRectSize().y;
 
-	m_UIHeight += (UINT)ImGui::GetItemRectSize().y + 20.f;
+	m_UIHeight += (UINT)ImGui::GetItemRectSize().y + 20;
 	
 	int MaxIdx = pTileMap->GetTileMaxIdx();
 

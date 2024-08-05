@@ -38,10 +38,12 @@ void CTestLevel::CreateTestLevel()
 
 	Ptr<CTexture> pBackground_SeiraRoomTex = CAssetMgr::GetInst()->FindAsset<CTexture>(L"texture\\background\\seriaroom.png");
 
+	//pMtrl->SetTexParam(TEX_0, pBackground_SeiraRoomTex);
+
 	CSetColorCS cs;
 	cs.SetTexture(pTestTex);
 	cs.SetClearColor(Vec4(0.f, 0.f, 1.f, 1.f));
-	cs.Excute();
+	cs.Execute();
 	
 	CStructuredBuffer* pBuffer = new CStructuredBuffer;
 	pBuffer->Create(sizeof(tParticle), 1, SB_TYPE::SRV_UAV, true);
@@ -79,8 +81,11 @@ void CTestLevel::CreateTestLevel()
 	//CGameObject* BGSeria = new CGameObject;
 	//BGSeria->SetName(L"BG_Seria");
 	//BGSeria->AddComponent(new CTransform);
+	//BGSeria->AddComponent(new CMeshRender);
+	//BGSeria->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
+	//BGSeria->MeshRender()->SetMaterial(pMtrl);
 	//pLevel->AddObject(1, BGSeria);
-	
+
 	CGameObject* CamObj = new CGameObject;
 	CamObj->SetName(L"MainCamera");
 	CamObj->AddComponent(new CTransform);
@@ -160,6 +165,15 @@ void CTestLevel::CreateTestLevel()
 	pTileMap->TileMap()->SetAtlasTileSize(Vec2(224.f,120.f));
 	
 	pLevel->AddObject(2, pTileMap);
+
+	// Particle
+	CGameObject* pParticle = new CGameObject;
+	pParticle->SetName(L"Particle");
+	pParticle->AddComponent(new CTransform);
+	pParticle->AddComponent(new CParticleSystem);
+	
+	pLevel->AddObject(0, pParticle);
+	
 	
 	// Platform
 	CGameObject* pPlatform = new CGameObject;

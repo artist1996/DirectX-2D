@@ -145,6 +145,11 @@ void CAssetMgr::CreateEngineMaterial()
 	AddAsset(L"TileMapMtrl", pMtrl);
 
 	pMtrl = new CMaterial(true);
+	pMtrl->SetShader(FindAsset<CGraphicShader>(L"ParticleRenderShader"));
+	AddAsset(L"ParticleRenderMtrl", pMtrl);
+
+
+	pMtrl = new CMaterial(true);
 	pMtrl->SetShader(FindAsset<CGraphicShader>(L"GrayFilterShader"));
 	pMtrl->SetTexParam(TEX_0, FindAsset<CTexture>(L"PostProcessTex"));
 	pMtrl->SetTexParam(TEX_1, FindAsset<CTexture>(L"texture\\noise\\noise_01.png"));
@@ -171,9 +176,9 @@ void CAssetMgr::CreateEngineTexture()
 									    , DXGI_FORMAT_R8G8B8A8_UNORM, D3D11_BIND_SHADER_RESOURCE);
 	
 	// Noise Texture
-	//Load<CTexture>(L"texture\\noise\\noise_01.png", L"texture\\noise\\noise_01.png");
-	//Load<CTexture>(L"texture\\noise\\noise_02.png", L"texture\\noise\\noise_02.png");
-	//Load<CTexture>(L"texture\\noise\\noise_03.jpg", L"texture\\noise\\noise_03.jpg");
+	Load<CTexture>(L"texture\\noise\\noise_01.png", L"texture\\noise\\noise_01.png");
+	Load<CTexture>(L"texture\\noise\\noise_02.png", L"texture\\noise\\noise_02.png");
+	Load<CTexture>(L"texture\\noise\\noise_03.jpg", L"texture\\noise\\noise_03.jpg");
 }
 
 void CAssetMgr::CreateEngineSprite()
@@ -319,6 +324,18 @@ void CAssetMgr::CreateEngineGraphicShader()
 
 	AddAsset(L"TileMapShader", pShader);
 
+	// Particle Shader
+	pShader = new CGraphicShader;
+	pShader->CreateVertexShader(L"shader\\particle.fx", "VS_Particle");
+	pShader->CreatePixelShader(L"shader\\particle.fx", "PS_Particle");
+	pShader->SetRSType(RS_TYPE::CULL_NONE);
+	pShader->SetDSType(DS_TYPE::NO_WRITE);
+	pShader->SetBSType(BS_TYPE::ALPHABLEND);
+
+	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_PARTICLE);
+
+	AddAsset(L"ParticleRenderShader", pShader);
+
 	// PostProcess Shader
 	pShader = new CGraphicShader;
 	pShader->CreateVertexShader(L"shader\\postprocess.fx", "VS_GrayFilter");
@@ -344,6 +361,11 @@ void CAssetMgr::CreateEngineGraphicShader()
 	AddAsset(L"DistortionShader", pShader);
 }
 
+#include "CParticleTickCS.h"
+
 void CAssetMgr::CreateEngineComputeShader()
 {
+	Ptr<CComputeShader> pCS = nullptr;
+	pCS = new CParticleTickCS;
+	AddAsset(L"ParticleTickCS", pCS);
 }

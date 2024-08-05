@@ -191,3 +191,9 @@ void CStructuredBuffer::Binding(UINT _RegisterNum)
 	CONTEXT->GSSetShaderResources(_RegisterNum, 1, m_SRV.GetAddressOf());
 	CONTEXT->PSSetShaderResources(_RegisterNum, 1, m_SRV.GetAddressOf());
 }
+
+void CStructuredBuffer::Bind_CS_UAV(UINT _RegisterNum)
+{
+	CONTEXT->CSSetUnorderedAccessViews(_RegisterNum, 1, m_UAV.GetAddressOf(), nullptr);
+	
+}

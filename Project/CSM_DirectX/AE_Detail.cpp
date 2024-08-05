@@ -205,7 +205,7 @@ void AE_Detail::SpriteList()
 
 	if (ImGui::Button("Delete", ImVec2(88.f, 20.f)))
 	{
-		m_Sprite = GetAnimation()->erase(m_Sprite);
+		GetAnimation()->erase(m_CurFrameIdx);
 	}
 
 	ImGui::EndGroup();

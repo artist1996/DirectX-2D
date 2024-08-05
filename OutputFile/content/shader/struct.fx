@@ -17,4 +17,14 @@ struct tLightInfo
     uint   Type;         // 광원 종류
     int3   Padding;      // 패딩
 };
+
+struct tParticle
+{
+    float3 vLocalPos;
+    float3 vWorldPos;
+    float4 vColor;
+    float  Mass;
+    int    Active;
+};
+
 #endif

@@ -50,22 +50,10 @@ void CAnimation::Insert(Ptr<CSprite> _Sprite, Ptr<CSprite> m_InsertSprite)
 	}
 }
 
-Ptr<CSprite> CAnimation::erase(Ptr<CSprite> _Sprite)
+void CAnimation::erase(int _Idx)
 {
 	vector<Ptr<CSprite>>::iterator iter = m_vecSprite.begin();
-
-	for (iter; iter != m_vecSprite.end(); ++iter)
-	{
-		if ((*iter) == _Sprite)
-		{
-			iter = m_vecSprite.erase(iter);
-
-			if (iter != m_vecSprite.end())
-				return (*iter);
-			else
-				return nullptr;
-		}
-	}
+	m_vecSprite.erase(iter + _Idx);
 }
 
 int CAnimation::Load(const wstring& _FilePath)

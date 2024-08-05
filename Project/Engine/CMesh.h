@@ -21,6 +21,7 @@ public:
     void Binding();
 
     void Render();
+    void Render_Particle(UINT _Count);
 
     virtual int Load(const wstring& _FilePath) override { return S_OK; }
     virtual int Save(const wstring& _FilePath) override { return S_OK; }

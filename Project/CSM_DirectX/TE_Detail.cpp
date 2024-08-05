@@ -46,6 +46,7 @@ void TE_Detail::TileMapInfo()
 		
 	ImGui::Text("Name");
 	ImGui::SameLine();
+	ImGui::SetNextItemWidth(130);
 	ImGui::InputText("##TEDetailTexName", (char*)strKey.c_str(), strKey.length(), ImGuiInputTextFlags_ReadOnly);
 
 	if (ImGui::BeginDragDropTarget())
@@ -68,10 +69,10 @@ void TE_Detail::TileMapInfo()
 		ImGui::EndDragDropTarget();
 	}
 
-	ImGui::SameLine();
-	
 	bool UseGrid = GetRenderer()->IsGrid();
 
+	ImGui::Text("Grid");
+	ImGui::SameLine();
 	if (ImGui::Checkbox("##RendererUseGrid", &UseGrid))
 	{
 		GetRenderer()->UseGrid(UseGrid);

@@ -1,14 +1,17 @@
 #pragma once
 #include "CRenderComponent.h"
 
+#include "CParticleTickCS.h"
+
 class CStructuredBuffer;
 
 class CParticleSystem :
     public CRenderComponent
 {
 private:
-    CStructuredBuffer* m_ParticleBuffer;
-    int                m_MaxParticleCount;
+    CStructuredBuffer*   m_ParticleBuffer;
+    Ptr<CParticleTickCS> m_TickCS;
+    int                  m_MaxParticleCount;
 
 public:
     virtual void FinalTick() override;

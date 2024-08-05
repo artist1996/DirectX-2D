@@ -34,6 +34,7 @@ public:
     void SetData(void* _pData, UINT _DataSize = 0);
     void GetData(void* _pData, UINT _DataSize = 0);
     void Binding(UINT _RegisterNum);
+    void Bind_CS_UAV(UINT _RegisterNum);
     
 
 public:

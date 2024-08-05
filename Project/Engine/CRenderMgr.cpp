@@ -151,7 +151,7 @@ void CRenderMgr::RenderStart()
 	Ptr<CTexture> DSTex = CAssetMgr::GetInst()->FindAsset<CTexture>(L"DepthStencilTex");
 	CONTEXT->OMSetRenderTargets(1, RTTex->GetRTV().GetAddressOf(), DSTex->GetDSV().Get());
 
-	float color[4] = { 0.f, 0.f, 0.f, 1.f };
+	float color[4] = { 0.4f, 0.4f, 0.4f, 1.f };
 	CONTEXT->ClearRenderTargetView(RTTex->GetRTV().Get(), color);
 	CONTEXT->ClearDepthStencilView(DSTex->GetDSV().Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.f, 0);
 
