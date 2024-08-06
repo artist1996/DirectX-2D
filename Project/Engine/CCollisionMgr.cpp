@@ -56,6 +56,20 @@ void CCollisionMgr::CollisionCheck(UINT _Layer1, UINT _Layer2)
     }
 }
 
+void CCollisionMgr::CollisionUnCheck(UINT _Layer1, UINT _Layer2)
+{
+	UINT Row = _Layer1;
+	UINT Col = _Layer2;
+
+	if (Row > Col)
+	{
+		Row = _Layer2;
+		Col = _Layer1;
+	}
+
+	m_Matrix[Row] &= ~(1 << Col);	
+}
+
 void CCollisionMgr::CollisionBtwLayer(UINT _Left, UINT _Right)
 {
 	CLevel* pCurLevel = CLevelMgr::GetInst()->GetCurrentLevel();

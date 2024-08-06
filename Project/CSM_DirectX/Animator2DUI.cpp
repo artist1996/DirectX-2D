@@ -15,6 +15,7 @@ Animator2DUI::Animator2DUI()
 	: ComponentUI(COMPONENT_TYPE::ANIMATOR2D)
 	, m_UIHeight(0)
 	, m_Idx(0)
+	, m_SelectedIdx(0)
 {
 }
 
@@ -42,15 +43,15 @@ void Animator2DUI::Update()
 
 	Ptr<CAnimation> pAnimation = pAnimator2D->GetCurAnimation();
 
-	ImGui::Text("Cur Animation");
-	ImGui::SameLine(100);
+	ImGui::Text("Animation");
+	ImGui::SameLine();
 	string strName;
 	if (nullptr != pAnimation)
 		strName = string(pAnimation->GetKey().begin(), pAnimation->GetKey().end());
 	else
 		strName = "";
 
-	ImGui::SetNextItemWidth(200.f);
+	ImGui::SetNextItemWidth(183.f);
 	ImGui::InputText("##CurAnimationName", (char*)strName.c_str(), strName.length(), ImGuiInputTextFlags_ReadOnly);
 	ImGui::SameLine();
 
@@ -83,7 +84,7 @@ void Animator2DUI::Update()
 					//		break;
 					//	}
 					//}
-					pAnimator2D->AddAnimation(pAnimation.size(), (CAnimation*)pAsset.Get());
+					pAnimator2D->AddAnimation((int)pAnimation.size(), (CAnimation*)pAsset.Get());
 				}
 			}
 		}
@@ -117,52 +118,119 @@ void Animator2DUI::Update()
 
 	m_UIHeight += (int)ImGui::GetItemRectSize().y;
 
-	// Cur Sprite
-	Ptr<CSprite> pSprite = pAnimator2D->GetCurSprite();
+	const vector<Ptr<CAnimation>>& vecAnimations = pAnimator2D->GetAnimations();
 
-	if (nullptr == pSprite)
+	static int item_current_idx = 0; // Here we store our selection data as an index.
+	if (ImGui::BeginListBox("##AnimationsListBox"))
 	{
-		SetChildSize(ImVec2(0.f, (float)m_UIHeight + 10.f));
-		return;
+		if (!vecAnimations.empty())
+		{
+			for (int i = 0; i < vecAnimations.size(); i++)
+			{
+				const bool is_selected = (item_current_idx == i);
+				if (ImGui::Selectable(string(vecAnimations[i]->GetKey().begin(), vecAnimations[i]->GetKey().end()).c_str(), is_selected))
+					item_current_idx = i;
+
+				// Set the initial focus when opening the combo (scrolling + keyboard navigation focus)
+				if (is_selected)
+				{
+					Ptr<CAnimation> pAnimation = CAssetMgr::GetInst()->FindAsset<CAnimation>(vecAnimations[i]->GetKey());
+					m_SelectedIdx = i;
+					pAnimator2D->SetCurAnimation(vecAnimations[i]);
+					ImGui::SetItemDefaultFocus();
+				}
+			}
+		}
+
+		ImGui::EndListBox();
 	}
 
-	ImGui::Text("Cur Sprite");
-	ImGui::SameLine(100);
 	m_UIHeight += (int)ImGui::GetItemRectSize().y;
 
-	// Cur Sprite Name
-	strName = string(pSprite->GetKey().begin(), pSprite->GetKey().end());
-	ImGui::InputText("##CurSprite Name", (char*)strName.c_str(), strName.length(), ImGuiInputTextFlags_ReadOnly);
-	m_UIHeight += (int)ImGui::GetItemRectSize().y;
+	if (ImGui::BeginDragDropTarget())
+	{
+		const ImGuiPayload* Payload = ImGui::AcceptDragDropPayload("ContentTree");
 
-	// Cur Sprite Image
-	ImVec2 uv_min = ImVec2(pSprite->GetLeftTopUV().x, pSprite->GetLeftTopUV().y);
-	ImVec2 uv_max = ImVec2(uv_min.x + pSprite->GetSliceUV().x, uv_min.y + pSprite->GetSliceUV().y);
+		if (Payload)
+		{
+			TreeNode* pNode = *((TreeNode**)Payload->Data);
+			Ptr<CAsset> pAsset = (CAsset*)pNode->GetData();
 
-	ImVec4 tint_col = ImVec4(1.0f, 1.0f, 1.0f, 1.0f);
-	ImVec4 border_col = ImVec4(0.7f, 0.7f, 0.7f, 1.0f);
+			if (ASSET_TYPE::ANIMATION == pAsset->GetAssetType())
+			{
+				vector<Ptr<CAnimation>> pAnimation = pAnimator2D->GetAnimations();
 
-	ImGui::Image(pSprite->GetAtlasTexture()->GetSRV().Get(), ImVec2(150.f, 150.f), uv_min, uv_max, tint_col, border_col);
-	m_UIHeight += (int)ImGui::GetItemRectSize().y;
-	// Cur Frame Index
-	int CurIndex = pAnimator2D->GetCurFrameIndex();
+				if (0 == pAnimation.size())
+				{
+					pAnimator2D->AddAnimation(0, (CAnimation*)pAsset.Get());
+				}
+				else
+				{
+					pAnimator2D->AddAnimation((int)pAnimation.size(), (CAnimation*)pAsset.Get());
+					pAnimator2D->SetCurAnimation((CAnimation*)pAsset.Get());
+				}
+			}
+		}
+
+		ImGui::EndDragDropTarget();
+	}
+
+	// Erase
+	ImGui::SameLine();
+
+	if(ImGui::Button("DELETE", ImVec2(65.f, 18.f)))
+	{
+		pAnimator2D->erase(m_SelectedIdx);
+		pAnimator2D->SetCurAnimation(nullptr);
+	}
 	
-	ImGui::Text("Frame Index");
-	ImGui::SameLine(100);
-	ImGui::DragInt("##FrameIndex", &CurIndex);
-	m_UIHeight += (int)ImGui::GetItemRectSize().y;
 
-	float FPS = pAnimator2D->GetFPS();
+	// Cur Sprite
+	//Ptr<CSprite> pSprite = pAnimator2D->GetCurSprite();
+	//
+	//if (nullptr == pSprite)
+	//{
+	//	SetChildSize(ImVec2(0.f, (float)m_UIHeight + 10.f));
+	//	return;
+	//}
+	//
+	//ImGui::Text("Cur Sprite");
+	//ImGui::SameLine(100);
+	//m_UIHeight += (int)ImGui::GetItemRectSize().y;
+	//
+	//// Cur Sprite Name
+	//strName = string(pSprite->GetKey().begin(), pSprite->GetKey().end());
+	//ImGui::InputText("##CurSprite Name", (char*)strName.c_str(), strName.length(), ImGuiInputTextFlags_ReadOnly);
+	//m_UIHeight += (int)ImGui::GetItemRectSize().y;
+	//
+	//// Cur Sprite Image
+	//ImVec2 uv_min = ImVec2(pSprite->GetLeftTopUV().x, pSprite->GetLeftTopUV().y);
+	//ImVec2 uv_max = ImVec2(uv_min.x + pSprite->GetSliceUV().x, uv_min.y + pSprite->GetSliceUV().y);
+	//
+	//ImVec4 tint_col = ImVec4(1.0f, 1.0f, 1.0f, 1.0f);
+	//ImVec4 border_col = ImVec4(0.7f, 0.7f, 0.7f, 1.0f);
+	//
+	//ImGui::Image(pSprite->GetAtlasTexture()->GetSRV().Get(), ImVec2(150.f, 150.f), uv_min, uv_max, tint_col, border_col);
+	//m_UIHeight += (int)ImGui::GetItemRectSize().y;
+	//// Cur Frame Index
+	//int CurIndex = pAnimator2D->GetCurFrameIndex();
+	//
+	//ImGui::Text("Frame Index");
+	//ImGui::SameLine(100);
+	//ImGui::DragInt("##FrameIndex", &CurIndex);
+	//m_UIHeight += (int)ImGui::GetItemRectSize().y;
+	//
+	//float FPS = pAnimator2D->GetFPS();
+	//
+	//ImGui::Text("FPS");
+	//ImGui::SameLine(100);
+	//ImGui::DragFloat("##Animation FPS", &FPS);
+	//m_UIHeight += (int)ImGui::GetItemRectSize().y;
+	//
+	//pAnimator2D->SetFPS(FPS);
 
-	ImGui::Text("FPS");
-	ImGui::SameLine(100);
-	ImGui::DragFloat("##Animation FPS", &FPS);
-	m_UIHeight += (int)ImGui::GetItemRectSize().y;
 
-	pAnimator2D->SetFPS(FPS);
-
-
-	SetChildSize(ImVec2(0.f, (float)m_UIHeight));
+	SetChildSize(ImVec2(0.f, (float)m_UIHeight + 20.f));
 }
 
 void Animator2DUI::SelectFlipBook(DWORD_PTR _ListUI)

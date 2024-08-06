@@ -36,9 +36,6 @@ void CTestLevel::CreateTestLevel()
 																 DXGI_FORMAT_R8G8B8A8_UNORM,
 																 D3D11_BIND_UNORDERED_ACCESS | D3D11_BIND_SHADER_RESOURCE);
 
-	Ptr<CTexture> pBackground_SeiraRoomTex = CAssetMgr::GetInst()->FindAsset<CTexture>(L"texture\\background\\seriaroom.png");
-
-	//pMtrl->SetTexParam(TEX_0, pBackground_SeiraRoomTex);
 
 	CSetColorCS cs;
 	cs.SetTexture(pTestTex);
@@ -75,6 +72,8 @@ void CTestLevel::CreateTestLevel()
 	
 	//return;
 
+	
+
 	CLevel* pLevel = new CLevel;
 	ChangeLevel(pLevel, LEVEL_STATE::STOP);
 
@@ -83,7 +82,7 @@ void CTestLevel::CreateTestLevel()
 	//BGSeria->AddComponent(new CTransform);
 	//BGSeria->AddComponent(new CMeshRender);
 	//BGSeria->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
-	//BGSeria->MeshRender()->SetMaterial(pMtrl);
+	////BGSeria->MeshRender()->SetMaterial(pMtrl);
 	//pLevel->AddObject(1, BGSeria);
 
 	CGameObject* CamObj = new CGameObject;
@@ -171,6 +170,8 @@ void CTestLevel::CreateTestLevel()
 	pParticle->SetName(L"Particle");
 	pParticle->AddComponent(new CTransform);
 	pParticle->AddComponent(new CParticleSystem);
+
+	pParticle->Transform()->SetRelativePos(Vec3(0.f, 0.f, 0.f));
 	
 	pLevel->AddObject(0, pParticle);
 	
@@ -231,22 +232,22 @@ void CTestLevel::CreateTestLevel()
 	//pLevel->AddObject(0, pGrayFilterObj);
 	
 	// Monster Object
-	CGameObject* pMonster = new CGameObject;
-	pMonster->SetName(L"Monster");
-	pMonster->AddComponent(new CTransform);
-	pMonster->AddComponent(new CMeshRender);
-	pMonster->AddComponent(new CCollider2D);
-	pMonster->Transform()->SetRelativePos(-300.f, 0.f, 200.f);
-	pMonster->Transform()->SetRelativeScale(200.f, 200.f, 1.f);
-	
-	pMonster->Collider2D()->SetIndependentScale(true);
-	pMonster->Collider2D()->SetOffset(Vec3(0.f, 0.f, 0.f));
-	pMonster->Collider2D()->SetScale(Vec3(220.f, 220.f, 1.f));
-	
-	pMonster->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
-	pMonster->MeshRender()->SetMaterial(pMtrl);
-	
-	pLevel->AddObject(4, pMonster);
+	//CGameObject* pMonster = new CGameObject;
+	//pMonster->SetName(L"Monster");
+	//pMonster->AddComponent(new CTransform);
+	//pMonster->AddComponent(new CMeshRender);
+	//pMonster->AddComponent(new CCollider2D);
+	//pMonster->Transform()->SetRelativePos(-300.f, 0.f, 200.f);
+	//pMonster->Transform()->SetRelativeScale(200.f, 200.f, 1.f);
+	//
+	//pMonster->Collider2D()->SetIndependentScale(true);
+	//pMonster->Collider2D()->SetOffset(Vec3(0.f, 0.f, 0.f));
+	//pMonster->Collider2D()->SetScale(Vec3(220.f, 220.f, 1.f));
+	//
+	//pMonster->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
+	//pMonster->MeshRender()->SetMaterial(pMtrl);
+	//
+	//pLevel->AddObject(4, pMonster);
 	
 	//
 	//wstring strLevelPath = CPathMgr::GetInst()->GetContentPath();
@@ -257,8 +258,9 @@ void CTestLevel::CreateTestLevel()
 	
 	//pMtrl->Save(L"material\\std2d.mtrl");
 	
-	CCollisionMgr::GetInst()->CollisionCheck(3, 4);
-	CCollisionMgr::GetInst()->CollisionCheck(4, 5);
+	//CCollisionMgr::GetInst()->CollisionCheck(3, 4);
+	//CCollisionMgr::GetInst()->CollisionCheck(4, 5);
+	//CCollisionMgr::GetInst()->CollisionCheck(10, 11);
 }
 
 void CTestLevel::CreatePrefab()

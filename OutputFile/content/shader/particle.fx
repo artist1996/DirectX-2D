@@ -18,23 +18,40 @@ struct VS_OUT
 {
     float4 vPosition : SV_Position;
     float2 vUV       : TEXCOORD;
+    
+    uint   InstID    : FOG;
 };
 
 VS_OUT VS_Particle(VS_IN _in)
 {
     VS_OUT output = (VS_OUT) 0.f;
     
-    float3 vWorldPos = _in.vPos * float3(10.f, 10.f, 1.f) + ParticleBuffer[_in.InstID].vWorldPos;
+    float3 vWorldPos = _in.vPos * float3(100.f, 100.f, 1.f) + ParticleBuffer[_in.InstID].vWorldPos;
     
     output.vPosition = mul(mul(float4(vWorldPos, 1.f), matView), matProj);
-    output.vUV = _in.vUV;
+    output.vUV       = _in.vUV;
+    output.InstID    = _in.InstID;
     
     return output;
 }
 
+// 1. 비활성화 파티클 처리
+// GeometryShader 에서 정점을 생성 및 삭제
+// 비활성화된 파티클을 렌더링할 차례면, 출력스트림을 비워서, 중간에 파이프라인을 종료시킨다.
+
+// 2. 파티클 빌보드 처리
+
 float4 PS_Particle(VS_OUT _in) : SV_Target
 {
-    return float4(1.f, 0.f, 0.f, 1.f);
+    float4 vColor = float4(1.f, 0.f, 0.f, 1.f);
+    
+    if(g_btex_0)
+    {
+        vColor  = g_tex_0.Sample(g_sam_0, _in.vUV);
+        vColor *= ParticleBuffer[_in.InstID].vColor;
+    }
+    
+    return vColor;
 }
 
 #endif

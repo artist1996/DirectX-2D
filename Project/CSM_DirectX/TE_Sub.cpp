@@ -17,3 +17,8 @@ void TE_Sub::Init()
 void TE_Sub::Update()
 {
 }
+
+void TE_Sub::Deactivate()
+{
+	m_TargetObject = nullptr;
+}

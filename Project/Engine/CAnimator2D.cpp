@@ -152,6 +152,11 @@ void CAnimator2D::Binding()
 	}
 }
 
+void CAnimator2D::erase(int _Idx)
+{
+	m_vecAnimation.erase(m_vecAnimation.begin() + _Idx);
+}
+
 void CAnimator2D::Clear()
 {
 	tSpriteInfo tInfo = {};

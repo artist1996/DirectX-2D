@@ -11,7 +11,12 @@ class CParticleSystem :
 private:
     CStructuredBuffer*   m_ParticleBuffer;
     Ptr<CParticleTickCS> m_TickCS;
+    Ptr<CTexture>        m_ParticleTex;
+
     int                  m_MaxParticleCount;
+
+public:
+    void SetParticleTexture(Ptr<CTexture> _Texture) { m_ParticleTex = _Texture; }
 
 public:
     virtual void FinalTick() override;

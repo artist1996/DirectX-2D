@@ -64,6 +64,7 @@ void AnimationUI::Update()
 
 		ImGui::Text("LeftTop");
 		ImGui::SameLine(100);
+		ImGui::SetNextItemWidth(200.f);
 		ImGui::DragFloat2("##LeftTop", (float*)&vLeftTop);
 
 		// Slice
@@ -72,6 +73,7 @@ void AnimationUI::Update()
 
 		ImGui::Text("Slice");
 		ImGui::SameLine(100);
+		ImGui::SetNextItemWidth(200.f);
 		ImGui::DragFloat2("##Slice", (float*)&vSlice);
 
 		// Offset
@@ -80,12 +82,37 @@ void AnimationUI::Update()
 
 		ImGui::Text("Offset");
 		ImGui::SameLine(100);
+		ImGui::SetNextItemWidth(200.f);
 		ImGui::DragFloat2("##Offset", (float*)&vOffset);
+		ImGui::SameLine();
+
+		if (ImGui::Button("Apply to All", ImVec2(100.f, 18.f)))
+		{
+			const vector<Ptr<CSprite>> pSprites = pAnimation->GetSprites();
+
+			for (size_t i = 0; i < pSprites.size(); ++i)
+			{
+				pSprites[i]->SetOffsetUV(vOffset);
+			}
+		}
 
 		// Background
 		ImGui::Text("Background");
 		ImGui::SameLine(100);
+		ImGui::SetNextItemWidth(200.f);
 		ImGui::DragFloat2("##Background", (float*)&vBackground);
+
+		ImGui::SameLine();
+
+		if (ImGui::Button("Apply to All", ImVec2(100.f, 18.f)))
+		{
+			const vector<Ptr<CSprite>> pSprites = pAnimation->GetSprites();
+
+			for (size_t i = 0; i < pSprites.size(); ++i)
+			{
+				pSprites[i]->SetBackgroundUV(vBackground);
+			}
+		}
 
 		pSprite->SetLeftTopUV(vLeftTop);
 		pSprite->SetSliceUV(vSlice);

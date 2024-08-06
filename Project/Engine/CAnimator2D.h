@@ -27,6 +27,8 @@ public:
     void Reset();
     void Binding();
     
+    void erase(int _Idx);
+    
     void SetCurAnimation(Ptr<CAnimation> _FlipBook) { m_CurAnimation = _FlipBook; }
     void SetFPS(float _FPS) { m_FPS = _FPS; }
     float GetFPS()          { return m_FPS; }

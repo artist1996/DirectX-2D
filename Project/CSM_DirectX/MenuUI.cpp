@@ -15,6 +15,7 @@
 #include "CEditorMgr.h"
 
 #include "CLevelSaveLoad.h"
+#include "CollisionMatrix.h"
 
 MenuUI::MenuUI()
 {
@@ -32,7 +33,6 @@ void MenuUI::Tick()
 
 	if (ImGui::BeginMainMenuBar())
 	{
-
 		Update();
 
 		ImGui::EndMainMenuBar();
@@ -121,6 +121,12 @@ void MenuUI::Level()
 		}
 		ImGui::EndDisabled();
 
+		if (ImGui::MenuItem("Layer Collision Matrix"))
+		{
+			CollisionMatrix* pCollisionMatrix = (CollisionMatrix*)CEditorMgr::GetInst()->FindEditorUI("Layer Collision Matrix");
+			pCollisionMatrix->SetActive(true);
+		}
+
 		ImGui::EndMenu();
 	}
 
@@ -133,7 +139,7 @@ void MenuUI::GameObject()
 	{
 		if (ImGui::MenuItem("Create Empty Object"))
 		{
-		
+			
 		}
 
 		AddComponent();
@@ -407,7 +413,7 @@ void MenuUI::SaveLevel()
 	strInitPath += L"level\\";
 	ofn.lpstrInitialDir = strInitPath.c_str();
 
-	ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
+	ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST | OFN_OVERWRITEPROMPT | OFN_ALLOWMULTISELECT | OFN_EXPLORER;
 
 	if (GetSaveFileName(&ofn))
 	{

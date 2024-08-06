@@ -5,6 +5,7 @@ class Animator2DUI :
 {
 private:
     UINT m_UIHeight;
+    int  m_SelectedIdx;
     int  m_Idx;
 
 public:

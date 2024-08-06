@@ -95,8 +95,8 @@ void CAssetMgr::CreateEngineMesh()
 	for (size_t i = 0; i < Slice; ++i)
 	{
 		vecIdx.push_back(0);
-		vecIdx.push_back(i + 2);
-		vecIdx.push_back(i + 1);
+		vecIdx.push_back(UINT(i + 2));
+		vecIdx.push_back(UINT(i + 1));
 	}
 
 	// Mesh »ý¼º	
@@ -110,7 +110,7 @@ void CAssetMgr::CreateEngineMesh()
 	
 	for (size_t i = 0; i < vecVtx.size() - 1; ++i)
 	{
-		vecIdx.push_back(i + 1);
+		vecIdx.push_back(UINT(i + 1));
 	}
 
 	pMesh = new CMesh;
@@ -287,7 +287,7 @@ void CAssetMgr::CreateEngineGraphicShader()
 
 	pShader->SetRSType(RS_TYPE::CULL_NONE);	
 	pShader->SetDSType(DS_TYPE::NO_TEST_NO_WRITE);
-	pShader->SetBSType(BS_TYPE::ALPHABLEND);
+	pShader->SetBSType(BS_TYPE::ALPHABLEND_COVERAGE);
 
 	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_TRANSPARENT);
 

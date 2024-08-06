@@ -29,6 +29,8 @@
 #include "TE_TextureView.h"
 #include "TE_Renderer.h"
 
+#include "CollisionMatrix.h"
+
 void CEditorMgr::InitImGui()
 {
 	// Setup Dear ImGui context
@@ -65,7 +67,7 @@ void CEditorMgr::InitImGui()
 	colors[ImGuiCol_TextDisabled] = ImVec4{ 0.5f, 0.5f, 0.5f, 1.0f };
 
 	// Headers
-	colors[ImGuiCol_Header] = ImVec4{ 0.13f, 0.13f, 0.17f, 1.0f };
+	colors[ImGuiCol_Header] = ImVec4{ 0.18f, 0.18f, 0.23f, 1.0f };
 	colors[ImGuiCol_HeaderHovered] = ImVec4{ 0.19f, 0.2f, 0.25f, 1.0f };
 	colors[ImGuiCol_HeaderActive] = ImVec4{ 0.16f, 0.16f, 0.21f, 1.0f };
 
@@ -94,6 +96,8 @@ void CEditorMgr::InitImGui()
 	colors[ImGuiCol_TabUnfocused] = ImVec4{ 0.16f, 0.16f, 0.21f, 1.0f };
 	colors[ImGuiCol_TabUnfocusedActive] = ImVec4{ 0.16f, 0.16f, 0.21f, 1.0f };
 
+
+
 	// Title
 	colors[ImGuiCol_TitleBg] = ImVec4{ 0.16f, 0.16f, 0.21f, 1.0f };
 	colors[ImGuiCol_TitleBgActive] = ImVec4{ 0.16f, 0.16f, 0.21f, 1.0f };
@@ -119,7 +123,7 @@ void CEditorMgr::InitImGui()
 	if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
 	{
 		style.WindowRounding = 0.0f;
-		style.Colors[ImGuiCol_WindowBg].w = 1.0f;
+		style.Colors[ImGuiCol_WindowBg].w = 1.f;
 	}
 
 	// Setup Platform/Renderer backends
@@ -276,6 +280,11 @@ void CEditorMgr::CreateEditorUI()
 	pTileMapEditor->SetName("TileMap Editor");
 	pTileMapEditor->Init();
 	m_mapUI.insert(make_pair(pTileMapEditor->GetName(), pTileMapEditor));
+
+	EditorUI* pCollisionMatrix = new CollisionMatrix;
+	pCollisionMatrix->SetName("Layer Collision Matrix");
+	pCollisionMatrix->Init();
+	m_mapUI.insert(make_pair(pCollisionMatrix->GetName(), pCollisionMatrix));
 }
 
 EditorUI* CEditorMgr::FindEditorUI(const string& _strName)

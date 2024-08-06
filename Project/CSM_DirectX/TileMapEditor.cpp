@@ -19,6 +19,13 @@ TileMapEditor::~TileMapEditor()
 {
 }
 
+void TileMapEditor::SetTargetObject(CGameObject* _TargetObject)
+{
+	m_Detail->SetTargetObject(_TargetObject);
+	m_TextureView->SetTargetObject(_TargetObject);
+	m_Renderer->SetTargetObject(_TargetObject);
+}
+
 void TileMapEditor::Init()
 {
 	m_Detail = (TE_Detail*)CEditorMgr::GetInst()->FindEditorUI("TE_Detail");

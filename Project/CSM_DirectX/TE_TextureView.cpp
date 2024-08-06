@@ -106,18 +106,19 @@ void TE_TextureView::ClickedCheck()
 void TE_TextureView::DrawRect()
 {
 	CTileMap* pTileMap = GetTargetObject()->TileMap();
-
+	
 	// 클릭한 타일의 좌상단 좌표
 	ImVec2 LT = ImVec2(m_ImageRectMin.x + ((float)m_ClickCol * (pTileMap->GetTextureTileSize().x) * m_Ratio)
 					 , m_ImageRectMin.y + ((float)m_ClickRow * (pTileMap->GetTextureTileSize().y) * m_Ratio));
-
-
+	
+	
 	// 클릭한 타일의 우하단 좌표
 	ImVec2 RB = ImVec2(LT.x + pTileMap->GetTextureTileSize().x * m_Ratio
 					 , LT.y + pTileMap->GetTextureTileSize().y * m_Ratio);
-	
-	ImVec2 RectMax = ImGui::GetItemRectMax();
 
+
+	ImVec2 RectMax = ImGui::GetItemRectMax();
+	
 	// 사각형을 그리기
 	if(m_ImageRectMin.x <= LT.x && m_ImageRectMin.y <= LT.y && RectMax.x >= RB.x && RectMax.y >= RB.y)
 		ImGui::GetWindowDrawList()->AddRect(LT, RB, ImGui::GetColorU32(ImVec4(0.f, 1.f, 0.f, 1.f)), 0.f, 0, 2.f);

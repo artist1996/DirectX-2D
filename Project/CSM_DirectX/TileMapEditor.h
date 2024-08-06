@@ -15,6 +15,9 @@ public:
     TE_Renderer* GetRenderer()       { return m_Renderer; }
 
 public:
+    void SetTargetObject(CGameObject* _TargetObject);
+
+public:
     virtual void Init() override;
     virtual void Update() override;
     

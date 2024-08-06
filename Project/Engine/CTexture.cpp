@@ -4,6 +4,8 @@
 
 CTexture::CTexture()
 	: CAsset(ASSET_TYPE::TEXTURE)
+	, m_Desc{}
+	, m_RecentBindingRegisterNum(0)
 {
 }
 
@@ -165,6 +167,12 @@ void CTexture::Binding(UINT _RegisterNum)
 	CONTEXT->PSSetShaderResources(_RegisterNum, 1, m_SRV.GetAddressOf());
 }
 
+void CTexture::Binding_CS_SRV(UINT _RegisterNum)
+{
+	m_RecentBindingRegisterNum = _RegisterNum;
+	CONTEXT->CSSetShaderResources(_RegisterNum, 1, m_SRV.GetAddressOf());
+}
+
 void CTexture::Binding_CS_UAV(UINT _RegisterNum)
 {
 	UINT i = -1;
@@ -180,6 +188,10 @@ void CTexture::Clear(UINT _RegisterNum)
 	CONTEXT->DSSetShaderResources(_RegisterNum, 1, &pRSV);
 	CONTEXT->GSSetShaderResources(_RegisterNum, 1, &pRSV);
 	CONTEXT->PSSetShaderResources(_RegisterNum, 1, &pRSV);
+}
+
+void CTexture::Clear_CS_SRV()
+{
 }
 
 void CTexture::Clear_CS_UAV()

@@ -23,6 +23,8 @@ public:
     virtual void Init() override;
     virtual void Update() override;
 
+    virtual void Deactivate() override;
+
 public:
     TE_Sub();
     virtual ~TE_Sub();

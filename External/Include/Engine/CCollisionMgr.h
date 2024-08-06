@@ -25,7 +25,11 @@ private:
 	map<ULONGLONG, bool>	m_mapCollisionInfo;
     
 public:
+	UINT* GetCollisionMatrix() { return m_Matrix; }
+
+public:
 	void CollisionCheck(UINT _Layer1, UINT _Layer2);
+	void CollisionUnCheck(UINT _Layer1, UINT _Layer2);
 	void CollisionCheckClear() { memset(m_Matrix, 0, sizeof(UINT) * MAX_LAYER); }
 
 private:
