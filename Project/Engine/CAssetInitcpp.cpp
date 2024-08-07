@@ -21,11 +21,24 @@ void CAssetMgr::Init()
 
 void CAssetMgr::CreateEngineMesh()
 {
-	// Vertex Buffer 생성	(삼각형 그릴 것 정점 3개)
+	Ptr<CMesh> pMesh = nullptr;
+	Vtx v;
+
+	// Point Mesh
+	pMesh = new CMesh;
+
+	UINT i = 0;
+	v.vPos = Vec3(0.f, 0.f, 0.f);
+	v.vColor = Vec4(0.f, 0.f, 0.f, 0.f);
+	v.vUV = Vec2(0.f, 0.f);
+
+	pMesh->Create(&v, 1, &i, 1);
+	AddAsset(L"PointMesh", pMesh);
+
+	// Rect Mesh
 	Vtx arrVtx[4] = {};
 	UINT arrIdx[6] = {};
 
-	// Rect Mesh
 	arrVtx[0].vPos = Vec3(-0.5f, 0.5f, 0.f);
 	arrVtx[0].vColor = Vec4(1.f, 0.f, 0.f, 1.f);
 	arrVtx[0].vUV = Vec2(0.f, 0.f);
@@ -46,7 +59,7 @@ void CAssetMgr::CreateEngineMesh()
 	arrIdx[0] = 0; arrIdx[1] = 1; arrIdx[2] = 2;
 	arrIdx[3] = 0; arrIdx[4] = 2; arrIdx[5] = 3;
 
-	Ptr<CMesh> pMesh = nullptr;
+	
 	pMesh = new CMesh;
 	pMesh->Create(arrVtx, 4, arrIdx, 6);
 	pMesh->SetEngineAsset();
@@ -63,7 +76,7 @@ void CAssetMgr::CreateEngineMesh()
 	// Circle Mesh
 	vector<Vtx> vecVtx;
 	vector<UINT> vecIdx;
-	Vtx v;
+	
 
 	UINT Slice = 40;
 	float fTheta = XM_2PI / Slice; // 360도 에서 Slice 만큼 나눈 세타각
@@ -144,11 +157,12 @@ void CAssetMgr::CreateEngineMaterial()
 	pMtrl->SetShader(FindAsset<CGraphicShader>(L"TileMapShader"));
 	AddAsset(L"TileMapMtrl", pMtrl);
 
+	// ParticleMtrl
 	pMtrl = new CMaterial(true);
 	pMtrl->SetShader(FindAsset<CGraphicShader>(L"ParticleRenderShader"));
 	AddAsset(L"ParticleRenderMtrl", pMtrl);
 
-
+	// GrayFilterMtrl
 	pMtrl = new CMaterial(true);
 	pMtrl->SetShader(FindAsset<CGraphicShader>(L"GrayFilterShader"));
 	pMtrl->SetTexParam(TEX_0, FindAsset<CTexture>(L"PostProcessTex"));
@@ -327,11 +341,13 @@ void CAssetMgr::CreateEngineGraphicShader()
 	// Particle Shader
 	pShader = new CGraphicShader;
 	pShader->CreateVertexShader(L"shader\\particle.fx", "VS_Particle");
+	pShader->CreateGeometryShader(L"shader\\particle.fx", "GS_Particle");
 	pShader->CreatePixelShader(L"shader\\particle.fx", "PS_Particle");
+
+	pShader->SetTopology(D3D11_PRIMITIVE_TOPOLOGY_POINTLIST);
 	pShader->SetRSType(RS_TYPE::CULL_NONE);
 	pShader->SetDSType(DS_TYPE::NO_WRITE);
 	pShader->SetBSType(BS_TYPE::ALPHABLEND);
-
 	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_PARTICLE);
 
 	AddAsset(L"ParticleRenderShader", pShader);

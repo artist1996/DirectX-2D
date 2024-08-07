@@ -2,6 +2,8 @@
 #include "CLayer.h"
 #include "CGameObject.h"
 
+#include "CAssetMgr.h"
+
 CLayer::CLayer(int _LayerIdx)
 	: m_LayerIdx(_LayerIdx)
 {
@@ -19,7 +21,13 @@ CLayer::CLayer(const CLayer& _Origin)
 
 CLayer::~CLayer()
 {
-	Delete_Vec(m_Parents);
+	for (size_t i = 0; i < m_Parents.size(); ++i)
+	{
+		if (nullptr != m_Parents[i])
+			delete m_Parents[i];
+	}
+
+	//Delete_Vec(m_Parents);
 }
 
 void CLayer::Begin()

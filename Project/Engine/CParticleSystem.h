@@ -3,6 +3,12 @@
 
 #include "CParticleTickCS.h"
 
+struct tSpawnCount
+{
+    UINT iSpawnCount;
+    UINT Padding[3];
+};
+
 class CStructuredBuffer;
 
 class CParticleSystem :
@@ -10,8 +16,11 @@ class CParticleSystem :
 {
 private:
     CStructuredBuffer*   m_ParticleBuffer;
+    CStructuredBuffer*   m_SpawnCountBuffer;
     Ptr<CParticleTickCS> m_TickCS;
     Ptr<CTexture>        m_ParticleTex;
+
+    float                m_Time;                // 누적 시간
 
     int                  m_MaxParticleCount;
 

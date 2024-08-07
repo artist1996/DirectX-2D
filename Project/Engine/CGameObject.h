@@ -34,6 +34,8 @@ public:
     int GetLayerIdx() { return m_LayerIdx; }
     void AddChild(CGameObject* _ChildObject);
 
+    void ConvertToPrefab();
+
     void DisconnectWithLayer();
 
     // Unregister : 등록을 취소하다, 등록하는 행위를 취소하다.

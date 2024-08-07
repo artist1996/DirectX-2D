@@ -22,6 +22,7 @@ struct tParticle
 {
     float3 vLocalPos;
     float3 vWorldPos;
+    float3 vScale;
     float4 vColor;
     
     float3 vForce;
@@ -30,7 +31,13 @@ struct tParticle
     float  Mass;
     int    Active;
     
-    int2   Padding;
+    int3   Padding;
+};
+
+struct tSpawnCount
+{
+    uint  iSpawnCount;
+    uint3 Padding;
 };
 
 #endif

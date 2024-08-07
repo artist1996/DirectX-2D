@@ -134,6 +134,7 @@ enum SHADER_DOMAIN
 	DOMAIN_UI,			// UI
 
 	DOMAIN_DEBUG,		// µð¹ö±×
+	DOMAIN_NONE,		// None
 };
 
 enum class DEBUG_SHAPE

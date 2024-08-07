@@ -98,13 +98,9 @@ void Outliner::GameObjectAddChild(DWORD_PTR _Param1, DWORD_PTR _Param2)
 {
 	TreeNode* pDragNode = (TreeNode*)_Param1;
 	TreeNode* pDropNode = (TreeNode*)_Param2;
-
-	Vec2 vPos = (Vec2)_Param1;
-
 	// UI
 	// UI Manager
 	// Hover UI Tick <<
-
 
 	CGameObject* pDragObject = (CGameObject*)pDragNode->GetData();
 	CGameObject* pDropObject = nullptr;
@@ -127,8 +123,6 @@ void Outliner::GameObjectAddChild(DWORD_PTR _Param1, DWORD_PTR _Param2)
 		
 		CLevelMgr::GetInst()->GetCurrentLevel()->RegisterAsParent(pDragObject->GetLayerIdx(), pDragObject);
 	}
-	
-	RenewLevel();
 }
 
 void Outliner::DroppedFromOuter(DWORD_PTR _OuterData, DWORD_PTR _DropNode)

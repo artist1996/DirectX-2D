@@ -232,7 +232,7 @@ CComponent* CLevelSaveLoad::GetComponent(COMPONENT_TYPE _Type)
 		return new CTileMap;
 		break;
 	case COMPONENT_TYPE::PARTICLESYSTEM:
-		break;
+		return new CParticleSystem;
 	case COMPONENT_TYPE::DECAl:
 		break;
 	case COMPONENT_TYPE::SKYBOX:

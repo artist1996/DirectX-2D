@@ -16,6 +16,7 @@
 
 #include "CLevelSaveLoad.h"
 #include "CollisionMatrix.h"
+#include "CreateGameObject.h"
 
 MenuUI::MenuUI()
 {
@@ -139,7 +140,8 @@ void MenuUI::GameObject()
 	{
 		if (ImGui::MenuItem("Create Empty Object"))
 		{
-			
+			CreateGameObject* pUI = (CreateGameObject*)CEditorMgr::GetInst()->FindEditorUI("Create GameObject");
+			pUI->SetActive(true);
 		}
 
 		AddComponent();
@@ -160,6 +162,13 @@ void MenuUI::Assets()
 			wstring Key = GetAssetKey(ASSET_TYPE::MATERIAL, L"Default Material");
 			CAssetMgr::GetInst()->AddAsset(Key, pMtrl);
 			pMtrl->Save(Key);
+		}
+
+		if (ImGui::MenuItem("Create Empty Prefab"))
+		{
+			Ptr<CPrefab> pPrefab = new CPrefab;
+			wstring Key = GetAssetKey(ASSET_TYPE::PREFAB, L"Default Prefab");
+			CAssetMgr::GetInst()->AddAsset(Key, pPrefab);
 		}
 
 		ImGui::EndMenu();
@@ -310,8 +319,16 @@ void MenuUI::AddComponent()
 				ImGui::EndMenu();
 				return;
 			}
-
-			pObject->AddComponent(new CTileMap);
+			if (pObject->GetRenderComponent())
+				return;
+			else
+			{
+				CTileMap* pTileMap = new CTileMap;
+				
+				pObject->AddComponent(pTileMap);
+				pObject->TileMap()->SetTileSize(Vec2(64.f, 64.f));
+				pObject->TileMap()->SetAtlasTileSize(Vec2(224.f, 120.f));
+			}
 		}
 
 		ImGui::EndMenu();

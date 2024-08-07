@@ -160,11 +160,14 @@
     <Filter Include="02. EditorUI\02. Content">
       <UniqueIdentifier>{a2f88154-defc-440b-b2c9-27ea05294f4a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. EditorUI\11. Module">
-      <UniqueIdentifier>{9b52670b-82ac-4e28-85b1-9cd5629b7ef3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. EditorUI\10. Level Collision Matrix">
       <UniqueIdentifier>{41a8f150-6818-446e-b3bd-07883708326c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. EditorUI\12. Module">
+      <UniqueIdentifier>{9b52670b-82ac-4e28-85b1-9cd5629b7ef3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. EditorUI\11. Create GameObject">
+      <UniqueIdentifier>{6d6ea85d-29dd-4b76-ae1c-4d002b51e9d4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -301,7 +304,7 @@
       <Filter>01. Manager\02. TestLevel</Filter>
     </ClInclude>
     <ClInclude Include="ParamUI.h">
-      <Filter>02. EditorUI\11. Module</Filter>
+      <Filter>02. EditorUI\12. Module</Filter>
     </ClInclude>
     <ClInclude Include="ScriptUI.h">
       <Filter>02. EditorUI\01. Inspector\ComponentUI\09. ScriptUI</Filter>
@@ -362,6 +365,9 @@
     </ClInclude>
     <ClInclude Include="CollisionMatrix.h">
       <Filter>02. EditorUI\10. Level Collision Matrix</Filter>
+    </ClInclude>
+    <ClInclude Include="CreateGameObject.h">
+      <Filter>02. EditorUI\11. Create GameObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -493,7 +499,7 @@
       <Filter>01. Manager\02. TestLevel</Filter>
     </ClCompile>
     <ClCompile Include="ParamUI.cpp">
-      <Filter>02. EditorUI\11. Module</Filter>
+      <Filter>02. EditorUI\12. Module</Filter>
     </ClCompile>
     <ClCompile Include="ScriptUI.cpp">
       <Filter>02. EditorUI\01. Inspector\ComponentUI\09. ScriptUI</Filter>
@@ -554,6 +560,9 @@
     </ClCompile>
     <ClCompile Include="CollisionMatrix.cpp">
       <Filter>02. EditorUI\10. Level Collision Matrix</Filter>
+    </ClCompile>
+    <ClCompile Include="CreateGameObject.cpp">
+      <Filter>02. EditorUI\11. Create GameObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

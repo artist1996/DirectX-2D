@@ -96,15 +96,16 @@ struct tParticle
 {
 	Vec3  vLocalPos;
 	Vec3  vWorldPos;
+	Vec3  vScale;
 	Vec4  vColor;
 	
 	Vec3  vForce;
 	Vec3  vVelocity;
 
-	int   Active;
 	float Mass;
+	int   Active;
 
-	int   Padding[2];
+	int   Padding[3];
 };
 
 struct tGlobalData

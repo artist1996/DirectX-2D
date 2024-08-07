@@ -28,7 +28,11 @@ void TileMapUI::Update()
 
 	CTileMap* pTileMap = GetTargetObject()->TileMap();
 
-	string strTexKey = string(pTileMap->GetTexture()->GetKey().begin(), pTileMap->GetTexture()->GetKey().end());
+	string strTexKey;
+
+	if(nullptr != pTileMap->GetTexture())
+		strTexKey = string(pTileMap->GetTexture()->GetKey().begin(), pTileMap->GetTexture()->GetKey().end());
+
 
 	ImGui::Text("Texture");
 	ImGui::SameLine(92.f);
@@ -46,6 +50,7 @@ void TileMapUI::Update()
 			if (ASSET_TYPE::TEXTURE == pAsset->GetAssetType())
 			{
 				pTileMap->SetAtlasTexture((CTexture*)pAsset.Get());
+				Ptr<CTexture> pTex = (CTexture*)pAsset.Get();
 			}
 		}
 	

@@ -19,6 +19,9 @@ void TransformUI::Update()
 
 	CTransform* pTrans = GetTargetObject()->Transform();
 
+	if (nullptr == pTrans)
+		return;
+
 	Vec3 vPos = pTrans->GetRelativePos();
 	Vec3 vScale = pTrans->GetRelativeScale();
 	Vec3 vRot = pTrans->GetRelativeRotation();

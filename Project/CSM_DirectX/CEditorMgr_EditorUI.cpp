@@ -31,6 +31,8 @@
 
 #include "CollisionMatrix.h"
 
+#include "CreateGameObject.h"
+
 void CEditorMgr::InitImGui()
 {
 	// Setup Dear ImGui context
@@ -285,6 +287,11 @@ void CEditorMgr::CreateEditorUI()
 	pCollisionMatrix->SetName("Layer Collision Matrix");
 	pCollisionMatrix->Init();
 	m_mapUI.insert(make_pair(pCollisionMatrix->GetName(), pCollisionMatrix));
+
+	EditorUI* pCreateGameObject = new CreateGameObject;
+	pCreateGameObject->SetName("Create GameObject");
+	pCreateGameObject->Init();
+	m_mapUI.insert(make_pair(pCreateGameObject->GetName(), pCreateGameObject));	
 }
 
 EditorUI* CEditorMgr::FindEditorUI(const string& _strName)

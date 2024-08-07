@@ -18,9 +18,11 @@ class CGraphicShader :
 {
 private:
     ComPtr<ID3D11VertexShader>    m_VS;
+    ComPtr<ID3D11GeometryShader>  m_GS;
     ComPtr<ID3D11PixelShader>     m_PS;
-
+    
     ComPtr<ID3DBlob>              m_VSBlob;
+    ComPtr<ID3DBlob>              m_GSBlob;
     ComPtr<ID3DBlob>              m_PSBlob;
 
     ComPtr<ID3D11InputLayout>     m_Layout;
@@ -57,7 +59,9 @@ public:
 
 public:
     int CreateVertexShader(const wstring& _RelativePath, const string& _FuncName);
+    int CreateGeometryShader(const wstring& _RelativePath, const string& _FuncName);
     int CreatePixelShader(const wstring& _RelativePath, const string& _FuncName);
+    
 
     virtual int Load(const wstring& _Key) override { return S_OK; }
     virtual int Save(const wstring& _Key) override { return S_OK; }

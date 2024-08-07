@@ -4,6 +4,7 @@
 
 #include "ComponentUI.h"
 
+#include <Engine/CAssetMgr.h>
 #include <Engine/CLevelMgr.h>
 #include <Engine/CLevel.h>
 #include <Engine/CLayer.h>
@@ -73,6 +74,17 @@ void Inspector::Update()
 			Idx = 31;
 
 		m_TargetObject->ChangeLayer(m_TargetObject, Idx);
+	}
+
+	if (ImGui::Button("Convert to Prefab", ImVec2(150.f, 18.f)))
+	{
+		Ptr<CPrefab> pPrefab = new CPrefab;
+		pPrefab->SetProtoObject(m_TargetObject->Clone());
+		
+		wstring strFilePath = CPathMgr::GetInst()->GetContentPath();
+
+		pPrefab->Save(strFilePath + L"prefab\\" + m_TargetObject->GetName() + L".pref");
+		CAssetMgr::GetInst()->AddAsset(m_TargetObject->GetName(), pPrefab);
 	}
 }
 

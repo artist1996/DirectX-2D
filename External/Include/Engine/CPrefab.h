@@ -15,7 +15,10 @@ private:
 
 public:
     void SetProtoObject(CGameObject* _Object) { m_ProtoObject = _Object; }
+    int  GetProtoObjectIdx();
     CGameObject* Instantiate();
+
+    CGameObject* GetProtoObject() { return m_ProtoObject; }
 
 public:
     virtual int Save(const wstring& _FilePath) override;

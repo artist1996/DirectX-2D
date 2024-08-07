@@ -213,6 +213,13 @@ bool CGameObject::IsAncestor(CGameObject* _Object)
 	return false;
 }
 
+void CGameObject::ConvertToPrefab()
+{
+	Ptr<CPrefab> pPrefab = new CPrefab;
+
+	pPrefab->SetProtoObject(this);
+}
+
 void CGameObject::Begin()
 {
 	for (UINT i = 0; i < (UINT)COMPONENT_TYPE::END; ++i)

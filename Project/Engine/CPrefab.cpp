@@ -17,6 +17,11 @@ CPrefab::~CPrefab()
 		delete m_ProtoObject;
 }
 
+int CPrefab::GetProtoObjectIdx()
+{
+	return m_ProtoObject->GetLayerIdx();
+}
+
 CGameObject* CPrefab::Instantiate()
 {
 	return m_ProtoObject->Clone();

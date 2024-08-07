@@ -91,8 +91,10 @@ void Content::PopupMenu(DWORD_PTR _Param)
 
 			CGameObject* CloneObj = pPrefab->Instantiate();
 
-			CreateObject(CloneObj, 5);
+			if (L"Player" == CloneObj->GetName())
+				CreateObject(CloneObj, 3);
 
+			
 			ImGui::CloseCurrentPopup();
 		}
 	}

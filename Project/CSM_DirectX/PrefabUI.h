@@ -4,6 +4,7 @@ class PrefabUI :
     public AssetUI
 {
 private:
+    int     m_Idx;
 
 public:
     virtual void Update() override;

@@ -50,6 +50,9 @@ void CTileMap::FinalTick()
 
 void CTileMap::Render()
 {
+	if (m_vecTileInfo.empty())
+		return;
+
 	m_Buffer->SetData(m_vecTileInfo.data(), sizeof(tTileInfo) * m_Row * m_Col);
 	m_Buffer->Binding(15);
 
@@ -98,7 +101,7 @@ void CTileMap::SetTileSize(Vec2 _Size)
 {
 	// TileSize 가 변경되면 TileMap 크기도 변해야한다.
 	m_TileSize = _Size;
-
+	
 	ChangeTileMapSize();
 }
 
