@@ -70,6 +70,16 @@ void CCollisionMgr::CollisionUnCheck(UINT _Layer1, UINT _Layer2)
 	m_Matrix[Row] &= ~(1 << Col);	
 }
 
+void CCollisionMgr::SetCollisionMatrix(UINT* _Matrix)
+{
+	CollisionCheckClear();
+
+	for (UINT i = 0; i < MAX_LAYER; ++i)
+	{
+		m_Matrix[i] = _Matrix[i];
+	}
+}
+
 void CCollisionMgr::CollisionBtwLayer(UINT _Left, UINT _Right)
 {
 	CLevel* pCurLevel = CLevelMgr::GetInst()->GetCurrentLevel();

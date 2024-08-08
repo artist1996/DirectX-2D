@@ -7,6 +7,7 @@
 
 CLevel::CLevel()
 	: m_Layer{}
+	, m_Matrix{}
 	, m_State(LEVEL_STATE::STOP)
 {
 	for (int i = 0; i < MAX_LAYER; ++i)
@@ -18,11 +19,17 @@ CLevel::CLevel()
 CLevel::CLevel(const CLevel& _Origin)
 	: CEntity(_Origin)
 	, m_Layer{}
+	, m_Matrix{}
 	, m_State(LEVEL_STATE::STOP)
 {
 	for (UINT i = 0; i < MAX_LAYER; ++i)
 	{
 		m_Layer[i] = _Origin.m_Layer[i]->Clone();
+	}
+
+	for (UINT i = 0; i < MAX_LAYER; ++i)
+	{
+		m_Matrix[i] = _Origin.m_Matrix[i];
 	}
 }
 
@@ -105,6 +112,34 @@ void CLevel::ClearObject()
 	{
 		m_Layer[i]->ClearObject();
 	}
+}
+
+void CLevel::CollisionCheck(UINT _Layer1, UINT _Layer2)
+{
+	UINT Row = _Layer1;
+	UINT Col = _Layer2;
+
+	if (Row > Col)
+	{
+		Row = _Layer2;
+		Col = _Layer1;
+	}
+
+	m_Matrix[Row] |= (1 << Col);
+}
+
+void CLevel::CollisionUnCheck(UINT _Layer1, UINT _Layer2)
+{
+	UINT Row = _Layer1;
+	UINT Col = _Layer2;
+
+	if (Row > Col)
+	{
+		Row = _Layer2;
+		Col = _Layer1;
+	}
+
+	m_Matrix[Row] &= ~(1 << Col);
 }
 
 void CLevel::ChangeLevelState(LEVEL_STATE _NextState)

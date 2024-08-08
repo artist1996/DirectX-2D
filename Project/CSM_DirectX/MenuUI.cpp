@@ -122,10 +122,12 @@ void MenuUI::Level()
 		}
 		ImGui::EndDisabled();
 
-		if (ImGui::MenuItem("Layer Collision Matrix"))
+		CollisionMatrix* pCollisionMatrix = (CollisionMatrix*)CEditorMgr::GetInst()->FindEditorUI("Layer Collision Matrix");
+		bool IsActive = pCollisionMatrix->IsActive();
+
+		if (ImGui::MenuItem("Layer Collision Matrix", nullptr, &IsActive))
 		{
-			CollisionMatrix* pCollisionMatrix = (CollisionMatrix*)CEditorMgr::GetInst()->FindEditorUI("Layer Collision Matrix");
-			pCollisionMatrix->SetActive(true);
+			pCollisionMatrix->SetActive(IsActive);
 		}
 
 		ImGui::EndMenu();

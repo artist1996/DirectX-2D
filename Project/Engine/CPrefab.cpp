@@ -13,8 +13,7 @@ CPrefab::CPrefab()
 
 CPrefab::~CPrefab()
 {
-	if (nullptr != m_ProtoObject)
-		delete m_ProtoObject;
+	SAFE_DELETE(m_ProtoObject);
 }
 
 int CPrefab::GetProtoObjectIdx()

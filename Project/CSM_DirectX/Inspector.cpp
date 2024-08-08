@@ -79,12 +79,12 @@ void Inspector::Update()
 	if (ImGui::Button("Convert to Prefab", ImVec2(150.f, 18.f)))
 	{
 		Ptr<CPrefab> pPrefab = new CPrefab;
+		
 		pPrefab->SetProtoObject(m_TargetObject->Clone());
 		
 		wstring strFilePath = CPathMgr::GetInst()->GetContentPath();
 
 		pPrefab->Save(strFilePath + L"prefab\\" + m_TargetObject->GetName() + L".pref");
-		CAssetMgr::GetInst()->AddAsset(m_TargetObject->GetName(), pPrefab);
 	}
 }
 

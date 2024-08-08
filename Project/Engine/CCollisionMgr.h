@@ -31,6 +31,7 @@ public:
 	void CollisionCheck(UINT _Layer1, UINT _Layer2);
 	void CollisionUnCheck(UINT _Layer1, UINT _Layer2);
 	void CollisionCheckClear() { memset(m_Matrix, 0, sizeof(UINT) * MAX_LAYER); }
+	void SetCollisionMatrix(UINT* _Matrix);
 
 private:
 	bool IsCollision(CCollider2D* _Left, CCollider2D* _Right);

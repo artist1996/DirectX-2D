@@ -37,23 +37,23 @@ void CTestLevel::CreateTestLevel()
 																 D3D11_BIND_UNORDERED_ACCESS | D3D11_BIND_SHADER_RESOURCE);
 
 
-	CSetColorCS cs;
-	cs.SetTexture(pTestTex);
-	cs.SetClearColor(Vec4(0.f, 0.f, 1.f, 1.f));
-	cs.Execute();
-	
-	CStructuredBuffer* pBuffer = new CStructuredBuffer;
-	pBuffer->Create(sizeof(tParticle), 1, SB_TYPE::SRV_UAV, true);
-
-	tParticle Particle = {};
-	tParticle Particle2 = {};
-
-	Particle.Active = true;
-	Particle.vColor = Vec4(1.f, 0.f, 0.f, 1.f);
-	pBuffer->SetData(&Particle, sizeof(tParticle));
-
-	pBuffer->GetData(&Particle2);
-	delete pBuffer;
+	//CSetColorCS cs;
+	//cs.SetTexture(pTestTex);
+	//cs.SetClearColor(Vec4(0.f, 0.f, 1.f, 1.f));
+	//cs.Execute();
+	//
+	//CStructuredBuffer* pBuffer = new CStructuredBuffer;
+	//pBuffer->Create(sizeof(tParticle), 1, SB_TYPE::SRV_UAV, true);
+	//
+	//tParticle Particle = {};
+	//tParticle Particle2 = {};
+	//
+	//Particle.Active = true;
+	//Particle.vColor = Vec4(1.f, 0.f, 0.f, 1.f);
+	//pBuffer->SetData(&Particle, sizeof(tParticle));
+	//
+	//pBuffer->GetData(&Particle2);
+	//delete pBuffer;
 
 	//pMtrl->SetTexParam(TEX_0, pBackground_SeiraRoomTex);
 
@@ -166,14 +166,14 @@ void CTestLevel::CreateTestLevel()
 	pLevel->AddObject(2, pTileMap);
 
 	// Particle
-	CGameObject* pParticle = new CGameObject;
-	pParticle->SetName(L"Particle");
-	pParticle->AddComponent(new CTransform);
-	pParticle->AddComponent(new CParticleSystem);
-
-	pParticle->Transform()->SetRelativePos(Vec3(0.f, 0.f, 0.f));
-	
-	pLevel->AddObject(0, pParticle);
+	//CGameObject* pParticle = new CGameObject;
+	//pParticle->SetName(L"Particle");
+	//pParticle->AddComponent(new CTransform);
+	//pParticle->AddComponent(new CParticleSystem);
+	//
+	//pParticle->Transform()->SetRelativePos(Vec3(0.f, 0.f, 0.f));
+	//
+	//pLevel->AddObject(0, pParticle);
 	
 	
 	// Platform

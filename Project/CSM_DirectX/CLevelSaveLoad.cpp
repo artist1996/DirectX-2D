@@ -6,6 +6,7 @@
 #include <Engine/CLayer.h>
 #include <Engine/CGameObject.h>
 #include <Engine/components.h>
+#include <Engine/CCollisionMgr.h>
 
 #include <Scripts/CScriptMgr.h>
 
@@ -21,7 +22,15 @@ void CLevelSaveLoad::SaveLevel(const wstring& _FilePath, CLevel* _pLevel)
 		return;
 
 	SaveWString(_pLevel->GetName(), pFile);
-
+	UINT CollisionMatrix[MAX_LAYER] = {};
+	
+	for (UINT i = 0; i < MAX_LAYER; ++i)
+	{
+		CollisionMatrix[i] = _pLevel->GetCollisionMatrix(i);
+	
+		fwrite(&CollisionMatrix[i], sizeof(UINT), 1, pFile);
+	}
+	
 	for (UINT i = 0; i < MAX_LAYER; ++i)
 	{
 		CLayer* pLayer = _pLevel->GetLayer(i);
@@ -95,15 +104,16 @@ void CLevelSaveLoad::SaveGameObject(FILE* _pFile, CGameObject* _Object)
 		SaveGameObject(_pFile, vecChild[i]);
 	}
 }
+
 CLevel* CLevelSaveLoad::LoadLevel(const wstring& _FilePath)
 {
 	FILE* pFile = nullptr;
 
 	_wfopen_s(&pFile, _FilePath.c_str(), L"rb");
-	
+
 	if (nullptr == pFile)
 		return nullptr;
-	
+
 	// Level »ý¼º
 	CLevel* pLevel = new CLevel;
 
@@ -111,6 +121,15 @@ CLevel* CLevelSaveLoad::LoadLevel(const wstring& _FilePath)
 	wstring strLevelName;
 	LoadWString(strLevelName, pFile);
 	pLevel->SetName(strLevelName);
+
+	UINT CollisionMatrix[MAX_LAYER] = {};
+	
+	for (UINT i = 0; i < MAX_LAYER; ++i)
+	{
+		fread(&CollisionMatrix[i], sizeof(UINT), 1, pFile);
+	}
+	
+	CCollisionMgr::GetInst()->SetCollisionMatrix(CollisionMatrix);
 
 	for (UINT i = 0; i < MAX_LAYER; ++i)
 	{

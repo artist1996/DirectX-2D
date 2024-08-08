@@ -12,6 +12,8 @@ private:
 
     LEVEL_STATE  m_State;
 
+    UINT         m_Matrix[MAX_LAYER];
+
 public:
     void AddObject(int _LayerIdx, CGameObject* _Object, bool _bMoveChild = false);
     CLayer* GetLayer(int _LayderIdx) { return m_Layer[_LayderIdx]; }
@@ -21,6 +23,11 @@ public:
 
     void RegisterAsParent(int _LayerIdx, CGameObject* _Object);
     void ClearObject();
+
+    UINT GetCollisionMatrix(UINT _Idx) { return m_Matrix[_Idx]; }
+
+    void CollisionCheck(UINT _Layer1, UINT _Layer2);
+    void CollisionUnCheck(UINT _Layer1, UINT _Layer2);
     
 private:
     void ChangeLevelState(LEVEL_STATE _NextState);
