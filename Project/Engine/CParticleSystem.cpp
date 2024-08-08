@@ -39,7 +39,7 @@ CParticleSystem::CParticleSystem()
 		arrParticle[i].Mass		 = 1.f;
 		arrParticle[i].vLocalPos = Vec3(0.f, 0.f, 0.f);
 		arrParticle[i].vWorldPos = Vec3(0.f, 0.f, 0.f);
-		arrParticle[i].vScale	 = Vec3(50.f, 50.f, 0.f);
+		arrParticle[i].vScale	 = Vec3(100.f, 100.f, 0.f);
 		arrParticle[i].vColor	 = Vec4(0.8f, 0.8f, 0.5f, 0.7f);
 		arrParticle[i].vVelocity = Vec3(cosf(Angle * (float)i), sinf(Angle * (float)i), 0.f) * 5.f;
 	}
@@ -54,10 +54,8 @@ CParticleSystem::CParticleSystem()
 
 CParticleSystem::~CParticleSystem()
 {
-	if (nullptr != m_ParticleBuffer)
-		delete m_ParticleBuffer;
-	if (nullptr != m_SpawnCountBuffer)
-		delete m_SpawnCountBuffer;
+	SAFE_DELETE(m_ParticleBuffer);
+	SAFE_DELETE(m_SpawnCountBuffer);
 }
 
 void CParticleSystem::FinalTick()

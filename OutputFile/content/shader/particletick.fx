@@ -19,10 +19,24 @@ void CS_ParticleTick(int3 _ID : SV_DispatchThreadID)
     
     if (false == PARTICLE.Active)
     {
-        if (0 < SpawnCountBuffer[0].iSpawnCount)
+        int SpawnCount = SpawnCountBuffer[0].iSpawnCount;
+        
+        while (0 < SpawnCount)
         {
-            PARTICLE.Active = true;
-            SpawnCountBuffer[0].iSpawnCount = SpawnCountBuffer[0].iSpawnCount - 1;
+            int Origin = 0;
+               
+            InterlockedCompareExchange(SpawnCountBuffer[0].iSpawnCount
+                                     , SpawnCount
+                                     , SpawnCountBuffer[0].iSpawnCount - 1
+                                     , Origin);
+            
+            if(SpawnCount == Origin)
+            {
+                PARTICLE.Active = true;
+                break;
+            }
+            
+            SpawnCount = SpawnCountBuffer[0].iSpawnCount;
         }
         
         return;
