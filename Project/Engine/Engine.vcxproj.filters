@@ -151,11 +151,11 @@
     <ClInclude Include="CSetColorCS.h">
       <Filter>HLSL\03. Compute Shader\01. SetColorShader</Filter>
     </ClInclude>
-    <ClInclude Include="CParticleSystem.h">
-      <Filter>08. Component\RenderComponent\03. ParticleSystem</Filter>
-    </ClInclude>
     <ClInclude Include="CParticleTickCS.h">
       <Filter>HLSL\03. Compute Shader\02. ParticleTick</Filter>
+    </ClInclude>
+    <ClInclude Include="CParticleSystem.h">
+      <Filter>08. Component\RenderComponent\03. ParticleSystem</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

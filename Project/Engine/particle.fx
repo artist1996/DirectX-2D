@@ -50,7 +50,7 @@ void GS_Particle(point VS_OUT _in[1], inout TriangleStream<GS_OUT> _OutStream)
     if(false == ParticleBuffer[_in[0].InstID].Active)
         return;
     
-    float3 fScale = ParticleBuffer[_in[0].InstID].vScale;
+    float3 fScale = ParticleBuffer[_in[0].InstID].vWorldScale;
     float3 vViewPos = mul(float4(ParticleBuffer[_in[0].InstID].vWorldPos, 1.f), matView);
     
     // RectMesh 정점 세팅

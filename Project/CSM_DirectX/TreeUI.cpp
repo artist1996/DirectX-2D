@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "TreeUI.h"
 
+#include <Engine/CKeyMgr.h>
+
 // ========
 // TreeNode
 // ========
@@ -63,7 +65,17 @@ void TreeNode::Update()
 
 	if (ImGui::TreeNodeEx(strName.c_str(), Flags))
 	{
-		if (ImGui::IsItemHovered() && ImGui::IsMouseReleased(ImGuiMouseButton_Left))
+		if (ImGui::IsItemHovered()
+		 && ImGui::IsKeyDown(ImGuiKey_LeftShift)
+		 && ImGui::IsMouseClicked(ImGuiMouseButton_Left))
+		{
+			if (m_Owner->GetSelectedNode())
+			{
+				m_Owner->SetDuplicateNode(this);
+			}
+		}
+
+		if (ImGui::IsItemHovered() && ImGui::IsMouseReleased(ImGuiMouseButton_Left) && !ImGui::IsKeyDown(ImGuiKey_LeftShift))
 			m_Owner->SetSelectedNode(this);
 
 		DragCheck();
@@ -105,12 +117,24 @@ void TreeNode::DragCheck()
 	{
 		if (ImGui::BeginDragDropSource())
 		{
-			TreeNode* pDragNode = this;
-			ImGui::SetDragDropPayload(m_Owner->GetName().c_str(), &pDragNode, sizeof(TreeNode*));
-			ImGui::Text(m_strName.c_str());
-			ImGui::EndDragDropSource();
+			if (m_Owner->IsEmptyDuplicateNodes())
+			{
+				TreeNode* pDragNode = this;
+				ImGui::SetDragDropPayload(m_Owner->GetName().c_str(), &pDragNode, sizeof(TreeNode*));
+				ImGui::Text(m_strName.c_str());
+				ImGui::EndDragDropSource();
 
-			m_Owner->SetDragedNode(this);
+				m_Owner->SetDragedNode(this);
+			}
+
+			else
+			{
+				const vector<TreeNode*>& vecDuplicateNodes = m_Owner->GetDuplicateNodes();
+
+				ImGui::SetDragDropPayload(m_Owner->GetName().c_str(), vecDuplicateNodes.data(), vecDuplicateNodes.size() * sizeof(TreeNode*));
+				ImGui::Text(m_strName.c_str());
+				ImGui::EndDragDropSource();			
+			}			
 		}
 	}
 }
@@ -122,7 +146,8 @@ void TreeNode::DropCheck()
 	
 	if (ImGui::BeginDragDropTarget())
 	{
-		m_Owner->SetDroppedNode(this);
+		if(m_Owner->IsEmptyDuplicateNodes())
+			m_Owner->SetDroppedNode(this);
 		
 		ImGui::EndDragDropTarget();
 	}
@@ -135,6 +160,7 @@ void TreeNode::DropCheck()
 TreeUI::TreeUI()
 	: m_Root(nullptr)
 	, m_SelectedNode(nullptr)
+	, m_DuplicateNode(nullptr)
 	, m_DragedNode(nullptr)
 	, m_DroppedNode(nullptr)
 	, m_ClickedInst(nullptr)
@@ -143,11 +169,14 @@ TreeUI::TreeUI()
 	, m_SelfDragDropFunc(nullptr)
 	, m_DropInst(nullptr)
 	, m_DropFunc(nullptr)
+	, m_PopupInst(nullptr)
+	, m_PopupFunc(nullptr)
 	, m_NodeID(0)
 	, m_UseDrag(false)
 	, m_UseDrop(false)
 	, m_ShowRoot(false)
 	, m_ShowNameOnly(false)
+	, m_Duplicate(false)
 {
 }
 
@@ -217,9 +246,20 @@ void TreeUI::SetSelectedNode(TreeNode* _Node)
 	if (nullptr != m_SelectedNode)
 		m_SelectedNode->m_Selected = false;
 
+	if (!m_vecNodes.empty())
+	{
+		for (size_t i = 0; i < m_vecNodes.size(); ++i)
+		{
+			m_vecNodes[i]->m_Selected = false;
+		}
+
+		m_vecNodes.clear();
+	}
+
 	// 새로운 노드를 선택된 노드로 갱신
 	m_SelectedNode = _Node;
-
+	m_DuplicateNode = nullptr;
+		
 	// 새로운 노드를 선택된 상태로 변경 후 함수포인터 호출
 	if (nullptr != m_SelectedNode)
 	{
@@ -237,6 +277,47 @@ void TreeUI::SetDragedNode(TreeNode* _Node)
 	// Draged Node Setting
 	m_DragedNode = _Node;
 }
+void TreeUI::SetDuplicateNode(TreeNode* _Node)
+{
+	if (nullptr != m_DuplicateNode)
+		m_DuplicateNode->m_Selected = false;
+
+	m_DuplicateNode = _Node;
+
+	SetDuplicateNodes();
+}
+void TreeUI::SetDuplicateNodes()
+{
+	TreeNode* pNode = nullptr;
+
+	for (size_t i = 0; i < m_Root->m_vecChildNode.size(); ++i)
+	{
+		if (m_Root->m_vecChildNode[i]->GetName() == "SPRITE" 
+		 || m_Root->m_vecChildNode[i]->GetName() == "ANIMATION")
+		{
+			pNode = m_Root->m_vecChildNode[i];
+
+			for (size_t i = 0; i < pNode->m_vecChildNode.size(); ++i)
+			{
+				if (m_SelectedNode == pNode->m_vecChildNode[i])
+					m_Duplicate = true;
+
+				if (m_Duplicate)
+				{
+					m_vecNodes.push_back(pNode->m_vecChildNode[i]);
+					pNode->m_vecChildNode[i]->m_Selected = true;
+				}
+
+				if (m_DuplicateNode == pNode->m_vecChildNode[i])
+				{
+					m_Duplicate = false;
+					break;
+				}
+			}
+		}
+	}
+}
+
 void TreeUI::SetDroppedNode(TreeNode* _Node)
 {
 	// Drag 된 Node 가 없는 경우 (외부 데이터가 Tree 안으로 들어올 때)

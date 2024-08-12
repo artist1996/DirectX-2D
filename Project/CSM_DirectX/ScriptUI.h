@@ -7,8 +7,10 @@ class ScriptUI :
 private:
     class CScript*      m_Script;
     UINT                m_UIHeight;
+    
 
     Ptr<CPrefab>*       m_SelectedPrefab;
+    
 
 public:
     void SetTargetScript(CScript* _Script);

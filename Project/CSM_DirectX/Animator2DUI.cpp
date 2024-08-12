@@ -8,6 +8,7 @@
 #include <Engine/CAnimation.h>
 #include <Engine/CAnimator2D.h>
 
+#include "Content.h"
 #include "ListUI.h"
 #include "TreeUI.h"
 
@@ -74,21 +75,11 @@ void Animator2DUI::Update()
 				}
 				else
 				{
-					//for (size_t i = 0; i < pAnimation.size(); ++i)
-					//{
-					//	if (nullptr != pAnimation[i])
-					//		continue;
-					//	else
-					//	{
-					//		pFlipBookCom->AddFlipBook(i + 1, (CFlipBook*)pAsset.Get());
-					//		break;
-					//	}
-					//}
 					pAnimator2D->AddAnimation((int)pAnimation.size(), (CAnimation*)pAsset.Get());
 				}
 			}
 		}
-
+		
 		ImGui::EndDragDropTarget();
 	}
 

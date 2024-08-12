@@ -166,14 +166,14 @@ void CTestLevel::CreateTestLevel()
 	pLevel->AddObject(2, pTileMap);
 
 	// Particle
-	//CGameObject* pParticle = new CGameObject;
-	//pParticle->SetName(L"Particle");
-	//pParticle->AddComponent(new CTransform);
-	//pParticle->AddComponent(new CParticleSystem);
-	//
-	//pParticle->Transform()->SetRelativePos(Vec3(0.f, 0.f, 0.f));
-	//
-	//pLevel->AddObject(0, pParticle);
+	CGameObject* pParticle = new CGameObject;
+	pParticle->SetName(L"Particle");
+	pParticle->AddComponent(new CTransform);
+	pParticle->AddComponent(new CParticleSystem);
+	
+	pParticle->Transform()->SetRelativePos(Vec3(0.f, 0.f, 0.f));
+	
+	pLevel->AddObject(0, pParticle);
 	
 	
 	// Platform

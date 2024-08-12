@@ -15,7 +15,7 @@ CParticleSystem::CParticleSystem()
 	, m_TickCS(nullptr)
 	, m_ParticleTex(nullptr)
 	, m_Time(0.f)
-	, m_MaxParticleCount(30)
+	, m_MaxParticleCount(1000)
 {
 	// Mesh Material
 	
@@ -29,19 +29,21 @@ CParticleSystem::CParticleSystem()
 	m_ParticleTex = CAssetMgr::GetInst()->FindAsset<CTexture>(L"texture\\particle\\FX_Flare.png");
 		
 	// Particle 100°³ Init
-	tParticle arrParticle[30] = {};
+	tParticle arrParticle[1000] = {};
 	
 	float Angle = XM_2PI/ m_MaxParticleCount;
+
+	srand(time(NULL));
 	
 	for (int i = 0; i < m_MaxParticleCount; ++i)
 	{
-		arrParticle[i].Active	 = false;
-		arrParticle[i].Mass		 = 1.f;
-		arrParticle[i].vLocalPos = Vec3(0.f, 0.f, 0.f);
-		arrParticle[i].vWorldPos = Vec3(0.f, 0.f, 0.f);
-		arrParticle[i].vScale	 = Vec3(100.f, 100.f, 0.f);
-		arrParticle[i].vColor	 = Vec4(0.8f, 0.8f, 0.5f, 0.7f);
-		arrParticle[i].vVelocity = Vec3(cosf(Angle * (float)i), sinf(Angle * (float)i), 0.f) * 5.f;
+		arrParticle[i].Active	   = false;
+		arrParticle[i].vLocalPos   = Vec3(0.f, 0.f, 0.f);
+		arrParticle[i].vWorldPos   = Vec3(0.f, 0.f, 0.f);
+		arrParticle[i].vWorldScale = Vec3(100.f, 100.f, 0.f);
+		arrParticle[i].vColor	   = Vec4(0.8f, 0.8f, 0.5f, 0.7f);
+		//arrParticle[i].vVelocity   = Vec3(cosf(Angle * (float)i), sinf(Angle * (float)i), 0.f) * 5.f;
+		arrParticle[i].vVelocity = Vec3(cosf(rand() % 360), -1.f, 0.f) * 200.f;
 	}
 	
 	m_ParticleBuffer = new CStructuredBuffer;
@@ -63,7 +65,7 @@ void CParticleSystem::FinalTick()
 	// Spawn Count
 	m_Time += EngineDT;
 
-	if (2.f <= m_Time)
+	if (0.05f <= m_Time)
 	{
 		tSpawnCount count = {};
 		count.iSpawnCount = 1;
@@ -72,6 +74,7 @@ void CParticleSystem::FinalTick()
 		m_Time = 0.f;
 	}
 
+	m_TickCS->SetParticleWorldPos(Transform()->GetWorldPos());
 	m_TickCS->SetParticleBuffer(m_ParticleBuffer);
 	m_TickCS->SetSpawnCountBuffer(m_SpawnCountBuffer);
 	m_TickCS->Execute();

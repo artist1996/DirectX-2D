@@ -5,12 +5,14 @@
 #include "CEditorMgr.h"
 #include "AE_Preview.h"
 #include "AE_SpriteView.h"
+#include "Content.h"
 #include "ListUI.h"
 #include "TreeUI.h"
 
 AE_Detail::AE_Detail()
 	: m_FPS(0.f)
 	, m_CurFrameIdx(0)
+	, m_ClearNodes(false)
 {
 }
 
@@ -54,6 +56,7 @@ void AE_Detail::ShowInfo()
 	if (ImGui::BeginDragDropTarget())
 	{
 		const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ContentTree");
+
 		if (payload)
 		{
 			TreeNode** ppNode = (TreeNode**)payload->Data;
@@ -66,6 +69,7 @@ void AE_Detail::ShowInfo()
 				GetPreview()->SetAnimation((CAnimation*)pAsset.Get());
 			}
 		}
+
 
 		ImGui::EndDragDropTarget();
 	}
@@ -97,23 +101,53 @@ void AE_Detail::AddSprite()
 {
 	if (ImGui::BeginDragDropTarget())
 	{
-		const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ContentTree");
-		if (payload)
-		{
-			TreeNode** ppNode = (TreeNode**)payload->Data;
-			TreeNode* pNode = *ppNode;
+		Content* pContent = (Content*)CEditorMgr::GetInst()->FindEditorUI("Content");
 
-			Ptr<CAsset> pAsset = (CAsset*)pNode->GetData();
-			if (ASSET_TYPE::SPRITE == pAsset->GetAssetType())
+		TreeUI* pTreeUI = pContent->GetTree();
+
+		const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ContentTree");
+
+		if (pTreeUI->IsEmptyDuplicateNodes())
+		{
+			if (payload)
 			{
-				m_Sprite = ((CSprite*)pAsset.Get());
-				GetAnimation()->AddSprite(m_Sprite);
+				TreeNode** ppNode = (TreeNode**)payload->Data;
+				TreeNode* pNode = *ppNode;
+
+				Ptr<CAsset> pAsset = (CAsset*)pNode->GetData();
+				if (ASSET_TYPE::SPRITE == pAsset->GetAssetType())
+				{
+					m_Sprite = ((CSprite*)pAsset.Get());
+					GetAnimation()->AddSprite(m_Sprite);
+				}
+			}
+		}
+		
+		else
+		{
+			if (payload)
+			{
+				TreeNode** ppNode = (TreeNode**)payload->Data;
+				size_t NodeCount = payload->DataSize / sizeof(TreeNode*);
+
+				for (size_t i = 0; i < NodeCount; ++i)
+				{
+					TreeNode* pNode = ppNode[i];
+
+					Ptr<CAsset> pAsset = (CAsset*)pNode->GetData();
+
+					if (ASSET_TYPE::SPRITE == pAsset->GetAssetType())
+					{
+						m_Sprite = ((CSprite*)pAsset.Get());
+						GetAnimation()->AddSprite(m_Sprite);
+						m_ClearNodes = true;
+					}
+				}
 			}
 		}
 
 		ImGui::EndDragDropTarget();
 	}
-
 
 	if (ImGui::Button("ADD SPRITE", ImVec2(88.f, 20.f)))
 	{
@@ -125,7 +159,6 @@ void AE_Detail::AddSprite()
 		pListUI->AddDelegate(this, (DELEGATE_1)&AE_Detail::SelectSprite);
 		pListUI->SetActive(true);
 	}
-
 }
 
 void AE_Detail::PlayOrStop()
@@ -188,6 +221,7 @@ void AE_Detail::SpriteList()
 	if (ImGui::BeginDragDropTarget())
 	{
 		const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ContentTree");
+
 		if (payload)
 		{
 			TreeNode** ppNode = (TreeNode**)payload->Data;
@@ -198,11 +232,11 @@ void AE_Detail::SpriteList()
 			{
 				GetAnimation()->Insert(GetAnimation()->GetSprite(m_CurFrameIdx), (CSprite*)pAsset.Get());
 			}
-		}
+		}	
 
 		ImGui::EndDragDropTarget();
 	}
-
+	
 	if (ImGui::Button("Delete", ImVec2(88.f, 20.f)))
 	{
 		GetAnimation()->erase(m_CurFrameIdx);

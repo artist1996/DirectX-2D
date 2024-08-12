@@ -44,36 +44,46 @@ class TreeUI :
     public EditorUI
 {
 private:
-    TreeNode*  m_Root;
-    TreeNode*  m_SelectedNode;
-    TreeNode*  m_DragedNode;
-    TreeNode*  m_DroppedNode;
-    
-    UINT       m_NodeID;
-    bool       m_ShowRoot;
+    vector<TreeNode*> m_vecNodes;
 
-    bool       m_UseDrag;
-    bool       m_UseDrop;
-    bool       m_ShowNameOnly;
+    TreeNode*         m_Root;
+    TreeNode*         m_SelectedNode;
+    TreeNode*         m_DuplicateNode;
+    TreeNode*         m_DragedNode;
+    TreeNode*         m_DroppedNode;
+                     
+    UINT              m_NodeID;
+    bool              m_ShowRoot;
+                     
+    bool              m_UseDrag;
+    bool              m_UseDrop;
+    bool              m_ShowNameOnly;
+    bool              m_Duplicate;
+                     
+    EditorUI*         m_ClickedInst;
+    DELEGATE_1        m_ClickedFunc;
+                     
+    EditorUI*         m_PopupInst;
+    DELEGATE_1        m_PopupFunc;
+                     
+    EditorUI*         m_SelfDragDropInst;
+    DELEGATE_2        m_SelfDragDropFunc;
 
-    EditorUI*  m_ClickedInst;
-    DELEGATE_1 m_ClickedFunc;
-
-    EditorUI*  m_PopupInst;
-    DELEGATE_1 m_PopupFunc;
-
-    EditorUI*  m_SelfDragDropInst;
-    DELEGATE_2 m_SelfDragDropFunc;
-
-    EditorUI*  m_DropInst;
-    DELEGATE_2 m_DropFunc;
-    string     m_DropPayLoadName;
+    EditorUI*         m_DropInst;
+    DELEGATE_2        m_DropFunc;
+    string            m_DropPayLoadName;
 
 public:
     virtual void Update() override;
 
-    TreeNode* AddNode(TreeNode* _Parent, const string& _strName, DWORD_PTR _Data = 0);
+    TreeNode* AddNode(TreeNode* _Parent, const string& _strName, DWORD_PTR _Data = 0);    
+    TreeNode* GetSelectedNode()                     { return m_SelectedNode; };
+    const vector<TreeNode*>& GetDuplicateNodes()    { return m_vecNodes; }
+
     void SetDragedNode(TreeNode* _Node);
+    void SetDuplicateNode(TreeNode* _Node);
+    void SetDuplicateNodes();
+
     void SetDroppedNode(TreeNode* _Node);
     void SetDropPayLoadName(const string& _strName) { m_DropPayLoadName = _strName; }
     void PopupMenu(TreeNode* _Node);
@@ -88,15 +98,17 @@ public:
     void UseDrop(bool _Drop)         { m_UseDrop = _Drop; }
     void SetShowNameOnly(bool _Name) { m_ShowNameOnly = _Name; }
 
-    bool IsDrag()         { return m_UseDrag; }
-    bool IsDrop()         { return m_UseDrop; }
-    bool IsShowNameOnly() { return m_ShowNameOnly; }
+    bool IsDrag()                { return m_UseDrag; }
+    bool IsDrop()                { return m_UseDrop; }
+    bool IsShowNameOnly()        { return m_ShowNameOnly; }
+    bool IsEmptyDuplicateNodes() { return m_vecNodes.empty(); }
 
     void AddClickedDelegate(EditorUI* _Inst, DELEGATE_1 _Func)      { m_ClickedInst = _Inst; m_ClickedFunc = _Func; }
     void AddSelfDragDropDelegate(EditorUI* _Inst, DELEGATE_2 _Func) { m_SelfDragDropInst = _Inst; m_SelfDragDropFunc = _Func; }
     void AddDropDelegate(EditorUI* _Inst, DELEGATE_2 _Func)         { m_DropInst = _Inst; m_DropFunc = _Func; }
     void AddPopupDelegate(EditorUI* _Inst, DELEGATE_1 _Func)        { m_PopupInst = _Inst; m_PopupFunc = _Func; }
     void Clear();
+    void ClearDuplicateNodes()                                      { m_vecNodes.clear(); }
 
 public:
     TreeUI();

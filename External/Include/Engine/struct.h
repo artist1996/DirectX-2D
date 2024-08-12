@@ -94,18 +94,16 @@ struct tLightInfo
 
 struct tParticle
 {
-	Vec3  vLocalPos;
-	Vec3  vWorldPos;
-	Vec3  vScale;
-	Vec4  vColor;
-	
-	Vec3  vForce;
-	Vec3  vVelocity;
+	Vec3   vLocalPos;
+	Vec3   vWorldPos;
+	Vec3   vWorldScale;
+	Vec4   vColor;
+	Vec3   vVelocity;
 
-	float Mass;
-	int   Active;
-
-	int   Padding[3];
+	float  Age;
+	float  Life;
+	float  NormalizedAge;
+	int    Active;
 };
 
 struct tGlobalData

@@ -17,6 +17,9 @@ private:
     void LoadAsset(const path& _Path);
 
 public:
+    TreeUI* GetTree() { return m_Tree; }
+
+public:
     void Reload();
 
 public:

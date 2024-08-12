@@ -10,6 +10,8 @@ private:
 
     float           m_FPS;
 
+    bool            m_ClearNodes;
+
 private:
     void ShowInfo();
     void PlayOrStop();

@@ -40,6 +40,7 @@ VTX_OUT VS_Std2D(VTX_IN _in)
 float4 PS_Std2D(VTX_OUT _in) : SV_Target
 {
     float4 vColor = float4(0.f, 0.f, 0.f, 1.f);
+   
     
     // FlipBook 을 사용한다
     if (UseFlipBook)
@@ -87,7 +88,7 @@ float4 PS_Std2D(VTX_OUT _in) : SV_Target
     
     vColor.rgb = vColor.rgb * Light.Color.rgb 
                + vColor.rgb * Light.Ambient.rgb;
-    
+       
     return vColor;
 }
 
