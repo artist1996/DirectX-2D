@@ -35,19 +35,9 @@ int CAnimation::Save(const wstring& _FilePath)
 	return S_OK;
 }
 
-void CAnimation::Insert(Ptr<CSprite> _Sprite, Ptr<CSprite> m_InsertSprite)
+void CAnimation::Insert(int _Idx, Ptr<CSprite> _InsertSprite)
 {
-	vector<Ptr<CSprite>>::iterator iter = m_vecSprite.begin();
-
-
-	for (iter; iter != m_vecSprite.end(); ++iter)
-	{
-		if (_Sprite == (*iter))
-		{
-			m_vecSprite.insert(iter, m_InsertSprite);
-			break;
-		}
-	}
+	m_vecSprite.insert(m_vecSprite.begin() + _Idx, _InsertSprite);
 }
 
 void CAnimation::erase(int _Idx)

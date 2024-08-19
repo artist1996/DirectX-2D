@@ -23,7 +23,7 @@ void TextureUI::Update()
 	ImVec4 tint_col = ImVec4(1.0f, 1.0f, 1.0f, 1.0f);
 	ImVec4 border_col = ImVec4(0.7f, 0.7f, 0.7f, 1.0f);
 
-	ImGui::Image(pTexture->GetSRV().Get(), ImVec2(150.f,150.f), uv_min, uv_max, tint_col, border_col);
+	ImGui::Image(pTexture->GetSRV().Get(), ImVec2(300.f,300.f), uv_min, uv_max, tint_col, border_col);
 
 	// Texture Name
 	string strName = string(pTexture->GetKey().begin(), pTexture->GetKey().end());

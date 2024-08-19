@@ -127,7 +127,7 @@ void Animator2DUI::Update()
 				{
 					Ptr<CAnimation> pAnimation = CAssetMgr::GetInst()->FindAsset<CAnimation>(vecAnimations[i]->GetKey());
 					m_SelectedIdx = i;
-					pAnimator2D->SetCurAnimation(vecAnimations[i]);
+					//pAnimator2D->SetCurAnimation(vecAnimations[i]);
 					ImGui::SetItemDefaultFocus();
 				}
 			}
@@ -158,7 +158,7 @@ void Animator2DUI::Update()
 				else
 				{
 					pAnimator2D->AddAnimation((int)pAnimation.size(), (CAnimation*)pAsset.Get());
-					pAnimator2D->SetCurAnimation((CAnimation*)pAsset.Get());
+					//pAnimator2D->SetCurAnimation((CAnimation*)pAsset.Get());
 				}
 			}
 		}

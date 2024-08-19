@@ -4,6 +4,8 @@ class ParticleSystemUI :
     public ComponentUI
 {
 private:
+    void Spawn();
+    void Spawn_Burst();
 
 public:
     virtual void Update() override;

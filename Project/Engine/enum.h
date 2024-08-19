@@ -64,6 +64,12 @@ enum DIR
 	FRONT,
 };
 
+enum OBJ_DIR
+{
+	DIR_LEFT,
+	DIR_RIGHT,
+};
+
 enum class RS_TYPE
 {
 	CULL_BACK,
@@ -188,6 +194,29 @@ enum class ANIMATION_EDITOR
 {
 	SPRITE,
 	PREVIEW,
+
+	END,
+};
+
+enum class PLATFORM_TYPE
+{
+	LEFT,
+	UP,
+	RIGHT,
+	BOTTOM,
+
+	END,
+};
+
+enum class PARTICLE_MODULE
+{
+	SPAWN,
+	SPAWN_BURST,
+	ADD_VELOCITY,
+	SCALE,
+	DRAG,
+	NOISE_FORCE,
+	RENDER,
 
 	END,
 };

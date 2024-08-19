@@ -1,15 +1,31 @@
 #pragma once
 #include <Engine/CScript.h>
 
-
 class CPlayerScript :
     public CScript
 {
 private:
-    float         m_Speed;
-    Ptr<CTexture> m_Texture;
+    enum STATE    { IDLE, MOVE, JUMP, RUN, DEAD, AT_1, AT_2, AT_3, SK_1, SK_2, SK_3, SK_4, SK_5, SK_6, SK_7, SK_8, SK_9, END, };
 
-    Ptr<CPrefab>  m_MissilePref;
+private:
+    class CGameObject* m_MoveObject;
+    class CGameObject* m_JumpObject;
+
+    Ptr<CTexture>      m_Texture;
+    Ptr<CPrefab>       m_MissilePref;
+    
+    OBJ_DIR            m_Dir;
+    STATE              m_State;
+
+    float              m_Speed;
+    float              m_JumpHeight;
+
+private:
+    void Idle();
+    void Move();
+    void Run();
+    void Jump();
+    void Dead();
 
 public:
     virtual void Begin() override;

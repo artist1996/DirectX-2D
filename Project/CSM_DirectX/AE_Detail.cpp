@@ -203,7 +203,7 @@ void AE_Detail::SpriteList()
 				if (is_selected)
 				{
 					m_Sprite = CAssetMgr::GetInst()->FindAsset<CSprite>(vecSprites[i]->GetKey());
-					m_CurFrameIdx = i;
+					m_CurFrameIdx = item_current_idx;
 					GetSV()->SetSprite(vecSprites[m_CurFrameIdx]);
 					ImGui::SetItemDefaultFocus();
 				}
@@ -230,7 +230,7 @@ void AE_Detail::SpriteList()
 			Ptr<CAsset> pAsset = (CAsset*)pNode->GetData();
 			if (ASSET_TYPE::SPRITE == pAsset->GetAssetType())
 			{
-				GetAnimation()->Insert(GetAnimation()->GetSprite(m_CurFrameIdx), (CSprite*)pAsset.Get());
+				GetAnimation()->Insert(m_CurFrameIdx, (CSprite*)pAsset.Get());
 			}
 		}	
 

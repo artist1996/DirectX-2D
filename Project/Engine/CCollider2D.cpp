@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "CCollider2D.h"
 
+#include "CKeyMgr.h"
 #include "CTransform.h"
 #include "CScript.h"
 
@@ -8,6 +9,7 @@ CCollider2D::CCollider2D()
 	: CComponent(COMPONENT_TYPE::COLLIDER2D)
 	, m_OverlapCount(0)
 	, m_IndependentScale(false)
+	, m_bActive(true)
 {
 }
 
@@ -17,6 +19,7 @@ CCollider2D::CCollider2D(const CCollider2D& _Origin)
 	, m_Scale(_Origin.m_Scale)
 	, m_OverlapCount(0)
 	, m_IndependentScale(_Origin.m_IndependentScale)
+	, m_bActive(_Origin.m_bActive)
 {
 }
 
@@ -26,6 +29,9 @@ CCollider2D::~CCollider2D()
 
 void CCollider2D::FinalTick()
 {	
+	if (KEY_TAP(KEY::_0))
+		m_bActive = !m_bActive;
+
 	// Offset 행렬 구하기
 	Matrix matTranslation = XMMatrixTranslation(m_Offset.x, m_Offset.y, m_Offset.z);
 	
@@ -44,11 +50,15 @@ void CCollider2D::FinalTick()
 	}
 
 	m_matColWorld = matTranslation * matScale * matObjectScaleInv * GetOwner()->Transform()->GetWorldMatrix();
+
 	
-	if(m_OverlapCount)
-		DrawDebugRect(m_matColWorld, Vec4(1.f, 0.f, 0.f, 1.f), 0.f, false);
-	else
-		DrawDebugRect(m_matColWorld, Vec4(0.f, 1.f, 0.f, 1.f), 0.f, false);
+	if (m_bActive)
+	{
+		if (m_OverlapCount)
+			DrawDebugRect(m_matColWorld, Vec4(1.f, 0.f, 0.f, 1.f), 0.f, false);
+		else
+			DrawDebugRect(m_matColWorld, Vec4(0.f, 1.f, 0.f, 1.f), 0.f, false);
+	}
 }
 
 void CCollider2D::BeginOverlap(CCollider2D* _OtherCollider)

@@ -24,9 +24,10 @@ void AE_SpriteView::Update()
 
 	if (nullptr == pTexture)
 		return;
-
-	ImVec2 uv_min = ImVec2(0.0f, 0.0f);
-	ImVec2 uv_max = ImVec2(1.0f, 1.0f);
+	Vec2 vLT = m_Sprite->GetLeftTopUV();
+	Vec2 vSlice = m_Sprite->GetSliceUV();
+	ImVec2 uv_min = ImVec2(vLT.x, vLT.y);
+	ImVec2 uv_max = ImVec2(vLT.x + vSlice.x, vLT.y + vSlice.y);
 
 	Vec2 vResolution = Vec2((float)pTexture->Width(), (float)pTexture->Height());
 
@@ -37,7 +38,7 @@ void AE_SpriteView::Update()
 	ImVec4 border_col = ImVec4(0.7f, 0.7f, 0.7f, 1.0f);
 
 	ImGui::Image(pTexture->GetSRV().Get(), BackGroundSize
-		, ImVec2(uv_min.x - Offset.x, uv_min.x - Offset.y)
+		, ImVec2(uv_min.x - Offset.x, uv_min.y - Offset.y)
 		, ImVec2(uv_max.x - Offset.x, uv_max.y - Offset.y)
 		, tint_col, border_col);
 }

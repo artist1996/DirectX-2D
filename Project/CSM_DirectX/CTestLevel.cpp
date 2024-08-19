@@ -17,7 +17,9 @@
 #include <Scripts/CPlayerScript.h>
 #include <Scripts/CMissileScript.h>
 #include <Scripts/CCameraMoveScript.h>
-#include <Scripts/CPlatformScript.h>;
+#include <Scripts/CPlatformScript.h>
+#include <Scripts/CPlayerMoveScript.h>
+#include <Scripts/CPlayerJumpScript.h>
 
 #include "CLevelSaveLoad.h"
 
@@ -103,10 +105,11 @@ void CTestLevel::CreateTestLevel()
 	pLevel->GetLayer(0)->SetName(L"Default");
 	pLevel->GetLayer(1)->SetName(L"Background");
 	pLevel->GetLayer(2)->SetName(L"Tile");
-	pLevel->GetLayer(3)->SetName(L"Player");
-	pLevel->GetLayer(4)->SetName(L"Monster");
-	pLevel->GetLayer(5)->SetName(L"PlayerProjectile");
-	pLevel->GetLayer(6)->SetName(L"MonsterProjectile");
+	pLevel->GetLayer(3)->SetName(L"Platform");
+	pLevel->GetLayer(4)->SetName(L"Player");
+	pLevel->GetLayer(5)->SetName(L"Movement");
+	pLevel->GetLayer(6)->SetName(L"Monster");
+	pLevel->GetLayer(7)->SetName(L"PlayerProjectile");
 	
 	//// Light2D Object
 	CGameObject* pLight2D = new CGameObject;
@@ -133,20 +136,18 @@ void CTestLevel::CreateTestLevel()
 	pPlayer->AddComponent(new CRigidbody);
 	
 	pPlayer->Transform()->SetRelativePos(0.f, 0.f, 100.f);
-	pPlayer->Transform()->SetRelativeScale(300.f, 300.f, 1.f);
+	pPlayer->Transform()->SetRelativeScale(350.f, 350.f, 1.f);
 	
 	pPlayer->Collider2D()->SetIndependentScale(true);
-	pPlayer->Collider2D()->SetOffset(Vec3(0.f, 0.f, 0.f));
-	pPlayer->Collider2D()->SetScale(Vec3(200.f, 200.f, 1.f));
+	pPlayer->Collider2D()->SetOffset(Vec3(0.f, -0.24f, 0.f));
+	pPlayer->Collider2D()->SetScale(Vec3(50.f, 100.f, 1.f));
 	
 	pPlayer->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
 	pPlayer->MeshRender()->SetMaterial(pMtrl);
 	
-	//pPlayer->FlipBookComponent()->AddFlipBook(5, CAssetMgr::GetInst()->FindAsset<CFlipBook>(L"Link_MoveDown"));
-	//pPlayer->FlipBookComponent()->Play(5, 10, true);
-	pPlayer->Rigidbody()->UseGravity(true);
+	pPlayer->Rigidbody()->UseGravity(false);
 	
-	pLevel->AddObject(3, pPlayer);
+	pLevel->AddObject(4, pPlayer);
 	
 	// TileMap
 	CGameObject* pTileMap = new CGameObject;
@@ -192,8 +193,32 @@ void CTestLevel::CreateTestLevel()
 	
 	pPlatform->Collider2D()->SetScale(Vec3(1.f, 1.f, 1.f));
 	
-	pLevel->AddObject(4, pPlatform);
+	pLevel->AddObject(3, pPlatform);
+
+	CGameObject* pPlayerMove = new CGameObject;
+	pPlayerMove->SetName(L"PlayerMove");
+	pPlayerMove->AddComponent(new CTransform);
+	pPlayerMove->AddComponent(new CCollider2D);
+	pPlayerMove->AddComponent(new CPlayerMoveScript);
 	
+	pPlayerMove->Transform()->SetRelativePos(Vec3(0.f, 0.f, 300.f));
+	pPlayerMove->Transform()->SetRelativeScale(Vec3(50.f, 50.f, 1.f));
+
+	pPlayerMove->Collider2D()->SetScale(Vec3(1.f, 1.f, 1.f));
+	pPlayerMove->Collider2D()->SetOffset(Vec3(0.f, -1.f, 1.f));
+	
+	pLevel->AddObject(5, pPlayerMove);
+
+	CGameObject* pPlayerJump = new CGameObject;
+	pPlayerJump->SetName(L"PlayerJump");
+	pPlayerJump->AddComponent(new CTransform);
+	pPlayerJump->AddComponent(new CRigidbody);
+	pPlayerJump->AddComponent(new CPlayerJumpScript);
+	
+	pPlayerJump->Transform()->SetRelativePos(Vec3(0.f, 0.f, 300.f));
+	pPlayerJump->Transform()->SetRelativeScale(Vec3(1.f, 1.f, 1.f));
+	
+	pLevel->AddObject(5, pPlayerJump);
 	//pObject->MeshRender()->GetMaterial()->SetScalarParam(INT_1, 0);
 	//pObject->MeshRender()->GetMaterial()->SetScalarParam(FLOAT_0, 0.01f);
 	//pObject->MeshRender()->GetMaterial()->SetScalarParam(VEC4_0, Vec4(0.f, 1.f, 0.f, 1.f));

@@ -425,9 +425,6 @@
     <Filter Include="HLSL\01. Header">
       <UniqueIdentifier>{f64c447e-0990-49ce-b3c7-9a1d159a2e14}</UniqueIdentifier>
     </Filter>
-    <Filter Include="HLSL\02. Render">
-      <UniqueIdentifier>{6f314835-5a03-4c91-a83b-7766e21b791b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="03. Device\StructuredBuffer">
       <UniqueIdentifier>{30c97082-cdca-4d39-b36c-1aca85877f5a}</UniqueIdentifier>
     </Filter>
@@ -436,15 +433,6 @@
     </Filter>
     <Filter Include="08. Component\08. Light2D">
       <UniqueIdentifier>{c4b18fe7-268f-451e-a85b-5cf1cdd5e824}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="HLSL\02. Render\01. 2D">
-      <UniqueIdentifier>{65008b77-2500-4bc7-a78c-64efb871fe0c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="HLSL\02. Render\02. 3D">
-      <UniqueIdentifier>{4113b864-a737-486e-9143-724c4a43c1cb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="HLSL\02. Render\03. PostProcess">
-      <UniqueIdentifier>{1e562a1d-6dac-4001-9fb0-b5df1dc3409a}</UniqueIdentifier>
     </Filter>
     <Filter Include="Module">
       <UniqueIdentifier>{9f2f76aa-c5b1-4508-9b1d-84ae6b0a6f34}</UniqueIdentifier>
@@ -463,6 +451,18 @@
     </Filter>
     <Filter Include="HLSL\03. Compute Shader\02. ParticleTick">
       <UniqueIdentifier>{40edd074-127a-4329-9753-b524971e6afc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HLSL\02. Render">
+      <UniqueIdentifier>{6f314835-5a03-4c91-a83b-7766e21b791b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HLSL\02. Render\01. 2D">
+      <UniqueIdentifier>{65008b77-2500-4bc7-a78c-64efb871fe0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HLSL\02. Render\02. 3D">
+      <UniqueIdentifier>{4113b864-a737-486e-9143-724c4a43c1cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HLSL\02. Render\03. PostProcess">
+      <UniqueIdentifier>{1e562a1d-6dac-4001-9fb0-b5df1dc3409a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

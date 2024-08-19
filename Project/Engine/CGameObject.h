@@ -21,6 +21,8 @@ private:
     int                  m_LayerIdx;    // 소속 레이어의 인덱스 번호
     bool                 m_Dead;        // Object Dead
 
+    bool                 m_Moveable[(UINT)PLATFORM_TYPE::END];
+
 public:
     void AddComponent(CComponent* _Component);
     CComponent* GetComponent(COMPONENT_TYPE _Type) { return m_arrCom[(UINT)_Type]; }
@@ -34,7 +36,8 @@ public:
     int GetLayerIdx() { return m_LayerIdx; }
     void AddChild(CGameObject* _ChildObject);
 
-    void ConvertToPrefab();
+    void SetMoveable(PLATFORM_TYPE _Type, bool _Set) { m_Moveable[(UINT)_Type] = _Set; }
+    bool* GetMoveable()                              { return m_Moveable; }
 
     void DisconnectWithLayer();
 

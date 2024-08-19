@@ -90,7 +90,7 @@ void SE_TextureView::SelectCheck()
 	m_ImageRectMin = ImGui::GetItemRectMin();
 
 	// Mouse LBTN Check
-	if (KEY_TAP(KEY::LBTN))
+	if (ImGui::IsMouseClicked(ImGuiMouseButton_Left) && ImGui::IsWindowFocused())
 	{
 		// ÇöÀç Mouse Pos¿¡ µû¸¥ ImageÀÇ ÇÈ¼¿ ÁÂÇ¥
 		Vec2 vPixelPos = Vec2(ImGui::GetMousePos().x, ImGui::GetMousePos().y);
@@ -106,16 +106,14 @@ void SE_TextureView::SelectCheck()
 	}
 
 	// Mouse RBTN Check
-	if (KEY_TAP(KEY::RBTN))
+	if (ImGui::IsMouseClicked(ImGuiMouseButton_Right) && ImGui::IsWindowFocused())
 	{
 		Vec2 vPixelPos = Vec2(ImGui::GetMousePos().x, ImGui::GetMousePos().y);
 		ImVec2 vDiff = ImVec2(vPixelPos.x - m_ImageRectMin.x, vPixelPos.y - m_ImageRectMin.y);
 		m_MouseLT = ImVec2(vDiff.x / m_Ratio, vDiff.y / m_Ratio);
-
-
 	}
 
-	if (KEY_PRESSED(KEY::RBTN))
+	if (ImGui::IsMouseDown(ImGuiMouseButton_Right))
 	{
 		Vec2 vPixelPos = Vec2(ImGui::GetMousePos().x, ImGui::GetMousePos().y);
 		ImVec2 vDiff = ImVec2(vPixelPos.x - m_ImageRectMin.x, vPixelPos.y - m_ImageRectMin.y);

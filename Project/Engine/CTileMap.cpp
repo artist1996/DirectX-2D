@@ -41,7 +41,7 @@ CTileMap::CTileMap(const CTileMap& _Origin)
 
 CTileMap::~CTileMap()
 {
-	delete m_Buffer;
+	SAFE_DELETE(m_Buffer);
 }
 
 void CTileMap::FinalTick()

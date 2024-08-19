@@ -3,11 +3,20 @@
 
 #include "CMissileScript.h"
 
+#include <Engine/CLevelMgr.h>
+#include <Engine/CLevel.h>
+#include <Engine/CLayer.h>
+
 CPlayerScript::CPlayerScript()
 	: CScript(SCRIPT_TYPE::PLAYERSCRIPT)
-	, m_Speed(500.f)
+	, m_MoveObject(nullptr)
+	, m_JumpObject(nullptr)
 	, m_Texture(nullptr)
 	, m_MissilePref(nullptr)
+	, m_Dir(OBJ_DIR::DIR_RIGHT)
+	, m_State(STATE::IDLE)
+	, m_Speed(500.f)
+	, m_JumpHeight(0.f)
 {
 	AddScriptParam(SCRIPT_PARAM::FLOAT,"PlayerSpeed", &m_Speed);
 	AddScriptParam(SCRIPT_PARAM::PREFAB, "Missile", &m_MissilePref);
@@ -21,87 +30,187 @@ void CPlayerScript::Begin()
 {
 	MeshRender()->GetDynamicMaterial();
 	//m_MissilePref = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"MissilePref");
+
+	m_MoveObject = CLevelMgr::GetInst()->FindObjectByName(L"PlayerMove");
+	m_JumpObject = CLevelMgr::GetInst()->FindObjectByName(L"PlayerJump");
+
+	Animator2D()->Play((int)IDLE, 5.f, true);
 }
 
 void CPlayerScript::Tick()
 {
-	Vec3 vPos = Transform()->GetRelativePos();
-
-	if (KEY_TAP(KEY::RIGHT))
+	Vec3 vMovePos = m_MoveObject->Transform()->GetRelativePos();
+	float fJumpHeight = m_JumpObject->Transform()->GetRelativePos().y;
+	
+	switch (m_State)
 	{
-		Vec3 vRot = Transform()->GetRelativeRotation();
-		vRot = Vec3(0.f, 0.f, 0.f);
-		Transform()->SetRelativeRotation(vRot);	
+	case CPlayerScript::STATE::IDLE:
+		Idle();
+		break;
+	case CPlayerScript::STATE::MOVE:
+		Move();
+		break;
+	case CPlayerScript::STATE::JUMP:
+		//Jump();
+		break;
+	case CPlayerScript::STATE::RUN:
+		Run();
+		break;
+	case CPlayerScript::STATE::DEAD:
+		Dead();
+		break;
+	case CPlayerScript::STATE::AT_1:
+		break;
+	case CPlayerScript::STATE::AT_2:
+		break;
+	case CPlayerScript::STATE::AT_3:
+		break;
+	case CPlayerScript::STATE::SK_1:
+		break;
+	case CPlayerScript::STATE::SK_2:
+		break;
+	case CPlayerScript::STATE::SK_3:
+		break;
+	case CPlayerScript::STATE::SK_4:
+		break;
+	case CPlayerScript::STATE::SK_5:
+		break;
+	case CPlayerScript::STATE::SK_6:
+		break;
+	case CPlayerScript::STATE::SK_7:
+		break;
+	case CPlayerScript::STATE::SK_8:
+		break;
+	case CPlayerScript::STATE::SK_9:
+		break;
+	case CPlayerScript::STATE::END:
+		break;
+	default:
+		break;
 	}
+	
+	Transform()->SetRelativePos(Vec3(vMovePos.x, vMovePos.y + fJumpHeight, vMovePos.z));
+}
 
-	else if (KEY_PRESSED(KEY::RIGHT))
-		vPos.x += m_Speed * DT;
-	else if (KEY_RELEASED(KEY::RIGHT))
-	{
-
-	}
+void CPlayerScript::Idle()
+{
+	Vec3 vRot = Transform()->GetRelativeRotation();
 
 	if (KEY_TAP(KEY::LEFT))
 	{
-		Vec3 vRot = Transform()->GetRelativeRotation();
+		m_Dir = OBJ_DIR::DIR_LEFT;
+		m_State = STATE::MOVE;
+		vRot = Vec3(0.f, 0.f, 0.f);
+		Animator2D()->Play((int)STATE::MOVE, 8.f, true);
+	}
+	else if (KEY_PRESSED(KEY::LEFT))
+	{
+		m_Dir = OBJ_DIR::DIR_LEFT;
+		m_State = STATE::MOVE;
+		vRot = Vec3(0.f, 0.f, 0.f);
+		Animator2D()->Play((int)STATE::MOVE, 8.f, true);
+	}
+
+	if (KEY_TAP(KEY::RIGHT))
+	{
+		m_Dir = OBJ_DIR::DIR_LEFT;
+		m_State = STATE::MOVE;	
 		vRot.x = XM_PI;
 		vRot.z = XM_PI;
-		Transform()->SetRelativeRotation(vRot);
-		//Animator2D()->Play(1, 10, true);
+		Animator2D()->Play((int)STATE::MOVE, 8.f, true);
 	}
-
-	else if (KEY_PRESSED(KEY::LEFT))
-		vPos.x -= m_Speed * DT;
-	else if (KEY_RELEASED(KEY::LEFT))
+	else if (KEY_PRESSED(KEY::RIGHT))
 	{
-
+		m_Dir = OBJ_DIR::DIR_LEFT;
+		m_State = STATE::MOVE;
+		vRot.x = XM_PI;
+		vRot.z = XM_PI;
+		Animator2D()->Play((int)STATE::MOVE, 8.f, true);
 	}
-		//Animator2D()->Play(0, 3, true);
 	
 	if (KEY_TAP(KEY::UP))
 	{
-		//Animator2D()->Play(1, 10, true);
+		m_State = STATE::MOVE;
+		Animator2D()->Play((int)STATE::MOVE, 8.f, true);
 	}
 	else if (KEY_PRESSED(KEY::UP))
-		vPos.y += m_Speed * DT;
-	else if (KEY_RELEASED(KEY::UP))
-		Animator2D()->Play(0, 3, true);
-	
+	{
+		m_State = STATE::MOVE;
+		Animator2D()->Play((int)STATE::MOVE, 8.f, true);
+	}
+
 	if (KEY_TAP(KEY::DOWN))
 	{
-		//Animator2D()->Play(1, 10, true);
+		m_State = STATE::MOVE;
+		Animator2D()->Play((int)STATE::MOVE, 8.f, true);
 	}
 	else if (KEY_PRESSED(KEY::DOWN))
-		vPos.y -= m_Speed * DT;
-	else if (KEY_RELEASED(KEY::DOWN))
-		Animator2D()->Play(0, 3, true);
-
-	if (KEY_TAP(KEY::SPACE))
 	{
-		if (nullptr != m_MissilePref)
-			Instantiate(m_MissilePref, 5, Transform()->GetWorldPos(), L"Missile");
+		m_State = STATE::MOVE;
+		Animator2D()->Play((int)STATE::MOVE, 8.f, true);
 	}
-
-	if (KEY_PRESSED(KEY::Z))
+	
+	if (KEY_TAP(KEY::X))
 	{
-		//MeshRender()->GetMaterial()->SetScalarParam(INT_0, 1);
-
-		Vec3 vRot = Transform()->GetRelativeRotation();
-		vRot.z += XM_PI * DT;
-		Transform()->SetRelativeRotation(vRot);
+		//Animator2D()->Play((int)STATE::AT_1, 15.f, true);
 	}
-
-	else
-	{
-		MeshRender()->GetMaterial()->SetScalarParam(INT_0, 0);
-	}
-
 	if (KEY_TAP(KEY::C))
 	{
-		Rigidbody()->Jump();
+		//Animator2D()->Play((int)STATE::JUMP, 15.f, true);
 	}
 
-	Transform()->SetRelativePos(vPos);
+	Transform()->SetRelativeRotation(vRot);
+}
+
+void CPlayerScript::Move()
+{
+	// ATTACK
+	if (KEY_RELEASED(KEY::LEFT))
+	{
+		m_State = STATE::IDLE;
+		Animator2D()->Play((int)IDLE, 5.f, true);
+	}
+
+	if (KEY_RELEASED(KEY::RIGHT))
+	{
+		m_State = STATE::IDLE;
+		Animator2D()->Play((int)IDLE, 5.f, true);
+	}
+	
+	if (KEY_RELEASED(KEY::UP))
+	{
+		m_State = STATE::IDLE;
+		Animator2D()->Play((int)IDLE, 5.f, true);
+	}
+	
+	if (KEY_RELEASED(KEY::DOWN))
+	{
+		m_State = STATE::IDLE;
+		Animator2D()->Play((int)IDLE, 5.f, true);
+	}
+
+	// SKILL
+
+	// JUMP
+	if (KEY_TAP(KEY::C))
+	{
+		//Rigidbody()->Jump();
+		//Rigidbody()->UseGravity(true);
+		////Animator2D()->Play((int)STATE::JUMP, 15.f, true);
+	}
+}
+
+void CPlayerScript::Run()
+{
+}
+
+void CPlayerScript::Jump()
+{
+	
+}
+
+void CPlayerScript::Dead()
+{
 }
 
 void CPlayerScript::SaveToFile(FILE* _pFile)
@@ -116,8 +225,4 @@ void CPlayerScript::LoadFromFile(FILE* _pFile)
 
 void CPlayerScript::BeginOverlap(CCollider2D* _OwnCollider, CGameObject* _OtherObj, CCollider2D* _OtherCollider)
 {
-	//if (L"Monster" == _OtherObj->GetName())
-	//{
-	//	DeleteObject(_OtherObj);
-	//}
 }

@@ -1,4 +1,6 @@
 CCameraMoveScript
 CMissileScript
 CPlatformScript
+CPlayerJumpScript
+CPlayerMoveScript
 CPlayerScript

@@ -16,6 +16,7 @@ CGameObject::CGameObject()
 	, m_Parent(nullptr)
 	, m_LayerIdx(-1)	// 최초 생성 시 어느 레이어 소속도 아니다(레벨안에 있지 않은 상태)
 	, m_Dead(false)
+	, m_Moveable{ true,true,true,true }
 {
 }
 
@@ -26,6 +27,7 @@ CGameObject::CGameObject(const CGameObject& _Origin)
 	, m_Parent(nullptr)
 	, m_LayerIdx(-1)
 	, m_Dead(false)
+	, m_Moveable{ true,true,true,true }
 {
 	// Component 복사
 	for (UINT i = 0; i < (UINT)COMPONENT_TYPE::END; ++i)
@@ -211,13 +213,6 @@ bool CGameObject::IsAncestor(CGameObject* _Object)
 	}
 
 	return false;
-}
-
-void CGameObject::ConvertToPrefab()
-{
-	Ptr<CPrefab> pPrefab = new CPrefab;
-
-	pPrefab->SetProtoObject(this);
 }
 
 void CGameObject::Begin()
