@@ -34,9 +34,12 @@ public:
     void SetParticleTexture(Ptr<CTexture> _Texture) { m_ParticleTex = _Texture; }
 
     Ptr<CTexture>       GetParticleTex()      { return m_ParticleTex; }
-    tParticleModule     GetModuleInfo()       { return m_Module; }    
+    tParticleModule&    GetModuleInfo()       { return m_Module; }    
     int                 GetMaxParticleCount() { return m_MaxParticleCount; }
     
+    UINT&               GetSpaceType()        { return m_Module.SpaceType; }
+
+    void CreateModuleBuffer();
 
 public:
     virtual void FinalTick() override;

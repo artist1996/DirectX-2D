@@ -4,6 +4,9 @@ class ParticleSystemUI :
     public ComponentUI
 {
 private:
+    bool m_bChange;
+
+private:
     void Spawn();
     void Spawn_Burst();
 

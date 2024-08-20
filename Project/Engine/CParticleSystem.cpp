@@ -16,7 +16,8 @@ CParticleSystem::CParticleSystem()
 	, m_ParticleTex(nullptr)
 	, m_Module{}
 	, m_Time(0.f)
-	, m_MaxParticleCount(100)
+	, m_BurstTime(0.f)
+	, m_MaxParticleCount(1000)
 {
 	// Mesh Material
 	
@@ -56,7 +57,7 @@ CParticleSystem::CParticleSystem()
 	// Spawn Burst Module
 	m_Module.Module[(UINT)PARTICLE_MODULE::SPAWN_BURST] = true;
 	m_Module.SpawnBurstRepeat	  = true;
-	m_Module.SpawnBurstCount	  = 20;
+	m_Module.SpawnBurstCount	  = 500;
 	m_Module.SpawnBurstRepeatTime = 3.f;
 
 	// Scale Module
@@ -117,6 +118,11 @@ CParticleSystem::~CParticleSystem()
 	SAFE_DELETE(m_ParticleBuffer);
 	SAFE_DELETE(m_SpawnCountBuffer);
 	SAFE_DELETE(m_ModuleBuffer);
+}
+
+void CParticleSystem::CreateModuleBuffer()
+{
+	m_ModuleBuffer->Create(sizeof(tParticleModule), 1, SB_TYPE::SRV_UAV, true, &m_Module);
 }
 
 void CParticleSystem::FinalTick()

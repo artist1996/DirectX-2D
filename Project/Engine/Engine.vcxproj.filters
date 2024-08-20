@@ -157,6 +157,9 @@
     <ClInclude Include="CParticleSystem.h">
       <Filter>08. Component\RenderComponent\03. ParticleSystem</Filter>
     </ClInclude>
+    <ClInclude Include="CSound.h">
+      <Filter>06. Asset\06. Sound</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CEngine.cpp">
@@ -293,6 +296,9 @@
     </ClCompile>
     <ClCompile Include="CParticleTickCS.cpp">
       <Filter>HLSL\03. Compute Shader\02. ParticleTick</Filter>
+    </ClCompile>
+    <ClCompile Include="CSound.cpp">
+      <Filter>06. Asset\06. Sound</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

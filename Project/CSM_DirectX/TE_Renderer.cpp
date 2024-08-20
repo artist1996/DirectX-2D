@@ -12,6 +12,7 @@ TE_Renderer::TE_Renderer()
 	, m_Ratio(1.f)
 	, m_UseGrid(true)
 {
+	SetHorizontalScrollBar(true);
 }
 
 TE_Renderer::~TE_Renderer()

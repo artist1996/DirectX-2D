@@ -67,12 +67,12 @@ ASSET_TYPE GetAssetType()
 	
 	if constexpr (std::is_same_v<T, CPrefab>)
 		return ASSET_TYPE::PREFAB;
-	//
+	
 	if constexpr (std::is_same_v<T, CTexture>)
 		return ASSET_TYPE::TEXTURE;
 	
-	//if constexpr (std::is_same_v<T, CSound>)
-	//	return ASSET_TYPE::SOUND;
+	if constexpr (std::is_same_v<T, CSound>)
+		return ASSET_TYPE::SOUND;
 
 	if constexpr (std::is_same_v<T, CGraphicShader>)
 		return ASSET_TYPE::GRAPHIC_SHADER;
