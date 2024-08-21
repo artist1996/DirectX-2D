@@ -38,7 +38,8 @@ void CTestLevel::CreateTestLevel()
 																 DXGI_FORMAT_R8G8B8A8_UNORM,
 																 D3D11_BIND_UNORDERED_ACCESS | D3D11_BIND_SHADER_RESOURCE);
 
-
+	//Ptr<CSound> pSound = CAssetMgr::GetInst()->FindAsset<CSound>(L"sound\\leshphon.mp3");
+	//pSound->Play(0, 1.f, false);
 	//CSetColorCS cs;
 	//cs.SetTexture(pTestTex);
 	//cs.SetClearColor(Vec4(0.f, 0.f, 1.f, 1.f));
@@ -79,13 +80,13 @@ void CTestLevel::CreateTestLevel()
 	CLevel* pLevel = new CLevel;
 	ChangeLevel(pLevel, LEVEL_STATE::STOP);
 
-	//CGameObject* BGSeria = new CGameObject;
-	//BGSeria->SetName(L"BG_Seria");
-	//BGSeria->AddComponent(new CTransform);
-	//BGSeria->AddComponent(new CMeshRender);
-	//BGSeria->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
-	////BGSeria->MeshRender()->SetMaterial(pMtrl);
-	//pLevel->AddObject(1, BGSeria);
+	CGameObject* BGSeria = new CGameObject;
+	BGSeria->SetName(L"BG_Seria");
+	BGSeria->AddComponent(new CTransform);
+	BGSeria->AddComponent(new CMeshRender);
+	BGSeria->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
+	BGSeria->MeshRender()->SetMaterial(pMtrl);
+	pLevel->AddObject(1, BGSeria);
 
 	CGameObject* CamObj = new CGameObject;
 	CamObj->SetName(L"MainCamera");

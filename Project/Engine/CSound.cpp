@@ -7,11 +7,9 @@ FMOD_RESULT CHANNEL_CALLBACK(FMOD_CHANNELCONTROL* channelcontrol, FMOD_CHANNELCO
 	, FMOD_CHANNELCONTROL_CALLBACK_TYPE callbacktype
 	, void* commanddata1, void* commanddata2);
 
-
-
-
 CSound::CSound()
 	: CAsset(ASSET_TYPE::SOUND)
+	, m_Sound(nullptr)
 {
 }
 
@@ -19,7 +17,7 @@ CSound::~CSound()
 {
 	if (nullptr != m_Sound)
 	{
-		FMOD_RESULT result = m_Sound->release();
+		m_Sound->release();
 		m_Sound = nullptr;
 	}
 }
@@ -40,7 +38,7 @@ int CSound::Play(int _iRoopCount, float _fVolume, bool _bOverlap)
 	_iRoopCount -= 1;
 
 	FMOD::Channel* pChannel = nullptr;
-	CAssetMgr::GetInst()->GetFMODSystem()->playSound(m_Sound, nullptr, false, &pChannel);
+	CEngine::GetInst()->GetFMODSystem()->playSound(m_Sound, nullptr, false, &pChannel);
 
 	// 재생 실패
 	if (nullptr == pChannel)
@@ -104,9 +102,9 @@ void CSound::RemoveChannel(FMOD::Channel* _pTargetChannel)
 
 int CSound::Load(const wstring& _FilePath)
 {
-	string path(_FilePath.begin(), _FilePath.end());
+	string path = string(_FilePath.begin(), _FilePath.end());
 
-	if (FMOD_OK != CAssetMgr::GetInst()->GetFMODSystem()->createSound(path.c_str(), FMOD_DEFAULT, nullptr, &m_Sound))
+	if (FMOD_OK != CEngine::GetInst()->GetFMODSystem()->createSound(path.c_str(), FMOD_DEFAULT, nullptr, &m_Sound))
 	{
 		assert(nullptr);
 	}

@@ -163,11 +163,14 @@
     <Filter Include="02. EditorUI\10. Level Collision Matrix">
       <UniqueIdentifier>{41a8f150-6818-446e-b3bd-07883708326c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. EditorUI\12. Module">
-      <UniqueIdentifier>{9b52670b-82ac-4e28-85b1-9cd5629b7ef3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. EditorUI\11. Create GameObject">
       <UniqueIdentifier>{6d6ea85d-29dd-4b76-ae1c-4d002b51e9d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. EditorUI\13. Module">
+      <UniqueIdentifier>{9b52670b-82ac-4e28-85b1-9cd5629b7ef3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. EditorUI\12. Level Editor">
+      <UniqueIdentifier>{84c0e6e4-9d92-401d-8d9e-912e3a55e5de}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -304,7 +307,7 @@
       <Filter>01. Manager\02. TestLevel</Filter>
     </ClInclude>
     <ClInclude Include="ParamUI.h">
-      <Filter>02. EditorUI\12. Module</Filter>
+      <Filter>02. EditorUI\13. Module</Filter>
     </ClInclude>
     <ClInclude Include="ScriptUI.h">
       <Filter>02. EditorUI\01. Inspector\ComponentUI\09. ScriptUI</Filter>
@@ -368,6 +371,9 @@
     </ClInclude>
     <ClInclude Include="CreateGameObject.h">
       <Filter>02. EditorUI\11. Create GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelEditor.h">
+      <Filter>02. EditorUI\12. Level Editor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -499,7 +505,7 @@
       <Filter>01. Manager\02. TestLevel</Filter>
     </ClCompile>
     <ClCompile Include="ParamUI.cpp">
-      <Filter>02. EditorUI\12. Module</Filter>
+      <Filter>02. EditorUI\13. Module</Filter>
     </ClCompile>
     <ClCompile Include="ScriptUI.cpp">
       <Filter>02. EditorUI\01. Inspector\ComponentUI\09. ScriptUI</Filter>
@@ -563,6 +569,9 @@
     </ClCompile>
     <ClCompile Include="CreateGameObject.cpp">
       <Filter>02. EditorUI\11. Create GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelEditor.cpp">
+      <Filter>02. EditorUI\12. Level Editor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

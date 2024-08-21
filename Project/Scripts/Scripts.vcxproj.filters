@@ -22,6 +22,9 @@
     <Filter Include="Scripts\PlayerScript\PlayerJumpScript">
       <UniqueIdentifier>{b3e00048-f6a0-4781-9982-bb20337f4b7d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scripts\CameraScript">
+      <UniqueIdentifier>{1f6c615f-356c-4360-a290-9feebae13b69}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -29,9 +32,6 @@
     </ClInclude>
     <ClInclude Include="pch.h">
       <Filter>Default</Filter>
-    </ClInclude>
-    <ClInclude Include="CCameraMoveScript.h">
-      <Filter>Scripts</Filter>
     </ClInclude>
     <ClInclude Include="CMissileScript.h">
       <Filter>Scripts</Filter>
@@ -51,6 +51,9 @@
     <ClInclude Include="CPlayerJumpScript.h">
       <Filter>Scripts\PlayerScript\PlayerJumpScript</Filter>
     </ClInclude>
+    <ClInclude Include="CCameraMoveScript.h">
+      <Filter>Scripts\CameraScript</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -58,9 +61,6 @@
     </ClCompile>
     <ClCompile Include="Scripts.cpp">
       <Filter>Default</Filter>
-    </ClCompile>
-    <ClCompile Include="CCameraMoveScript.cpp">
-      <Filter>Scripts</Filter>
     </ClCompile>
     <ClCompile Include="CMissileScript.cpp">
       <Filter>Scripts</Filter>
@@ -79,6 +79,9 @@
     </ClCompile>
     <ClCompile Include="CPlayerJumpScript.cpp">
       <Filter>Scripts\PlayerScript\PlayerJumpScript</Filter>
+    </ClCompile>
+    <ClCompile Include="CCameraMoveScript.cpp">
+      <Filter>Scripts\CameraScript</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

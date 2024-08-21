@@ -62,7 +62,6 @@ void EditorUI::Tick()
 			ImGui::End();
 		}
 
-
 		// Modal
 		else
 		{

@@ -57,6 +57,12 @@ void CTaskMgr::ExecuteTask()
 			// GC ¿¡ ³Ö¾îÁÜ
 			pObject->m_Dead = true;
 			m_GC.push_back(pObject);
+
+			CLayer* pLayer = CLevelMgr::GetInst()->GetCurrentLevel()->GetLayer(pObject->GetLayerIdx());
+
+			pLayer->DeregisterObject(pObject);
+		
+			CLevelMgr::GetInst()->m_LevelChanged = true;
 		}
 		break;
 

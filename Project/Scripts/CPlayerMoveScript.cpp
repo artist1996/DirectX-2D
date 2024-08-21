@@ -39,7 +39,6 @@ void CPlayerMoveScript::Tick()
 
 void CPlayerMoveScript::Idle()
 {
-
 	if (KEY_TAP(KEY::LEFT) || KEY_PRESSED(KEY::LEFT))
 	{
 		m_State = ST_MOVE;

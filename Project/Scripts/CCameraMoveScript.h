@@ -5,13 +5,16 @@ class CCameraMoveScript :
     public CScript
 {
 private:
-    float   m_CamSpeed;
+    CGameObject* m_Target;
+
+    float        m_CamSpeed;
 
 private:
     void OrthoGraphicMove();
     void PerspectiveMove();
 
 public:
+    virtual void Begin() override;
     virtual void Tick() override;
 
 public:

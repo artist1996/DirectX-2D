@@ -4,13 +4,11 @@
 
 CAssetMgr::CAssetMgr()
 	: m_Changed(false)
-	, m_FMODSystem(nullptr)
 {
 }
 
 CAssetMgr::~CAssetMgr()
 {
-	
 }
 
 void CAssetMgr::Tick()
@@ -18,7 +16,6 @@ void CAssetMgr::Tick()
 	if (m_Changed)
 		m_Changed = false;
 
-	m_FMODSystem->update();
 }
 
 Ptr<CAsset> CAssetMgr::FindAsset(ASSET_TYPE _Type, const wstring& _Key)

@@ -9,6 +9,7 @@ CLevel::CLevel()
 	: m_Layer{}
 	, m_Matrix{}
 	, m_State(LEVEL_STATE::STOP)
+	, m_BGM(nullptr)
 {
 	for (int i = 0; i < MAX_LAYER; ++i)
 	{
@@ -44,6 +45,9 @@ void CLevel::Begin()
 	{
 		m_Layer[i]->Begin();
 	}
+
+	if(nullptr != m_BGM)
+		m_BGM->Play(0, 0.7f, false);
 }
 
 void CLevel::Tick()

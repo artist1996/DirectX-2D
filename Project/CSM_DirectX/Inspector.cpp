@@ -86,6 +86,14 @@ void Inspector::Update()
 
 		pPrefab->Save(strFilePath + L"prefab\\" + m_TargetObject->GetName() + L".pref");
 	}
+
+	ImGui::SameLine();
+
+	if (ImGui::Button("DELETE OBJECT", ImVec2(150.f, 18.f)))
+	{
+		DeleteObject(m_TargetObject);
+		SetTargetObject(nullptr);
+	}
 }
 
 void Inspector::SetTargetObject(CGameObject* _Target)

@@ -169,6 +169,8 @@ void CGameObject::AddChild(CGameObject* _ChildObject)
 
 	m_vecChildren.push_back(_ChildObject);
 	_ChildObject->m_Parent = this;
+
+	CLevelMgr::GetInst()->LevelChanged();
 }
 
 void CGameObject::DisconnectWithLayer()

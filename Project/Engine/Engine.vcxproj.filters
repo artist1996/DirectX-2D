@@ -160,6 +160,9 @@
     <ClInclude Include="CSound.h">
       <Filter>06. Asset\06. Sound</Filter>
     </ClInclude>
+    <ClInclude Include="CFontMgr.h">
+      <Filter>04. Manager\09. FontMgr</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CEngine.cpp">
@@ -299,6 +302,9 @@
     </ClCompile>
     <ClCompile Include="CSound.cpp">
       <Filter>06. Asset\06. Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="CFontMgr.cpp">
+      <Filter>04. Manager\09. FontMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -469,6 +475,9 @@
     </Filter>
     <Filter Include="HLSL\02. Render\03. PostProcess">
       <UniqueIdentifier>{1e562a1d-6dac-4001-9fb0-b5df1dc3409a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Manager\09. FontMgr">
+      <UniqueIdentifier>{13f755ed-fdb1-4e7f-a842-7afbf067be57}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

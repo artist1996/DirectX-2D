@@ -16,6 +16,7 @@ CComputeShader::CComputeShader(UINT _ThreadPerGroupX, UINT _ThreadPerGroupY, UIN
 	, m_Const{}
 {
 	CreateComputeShader(_strShaderRelativePath, _strFuncName);
+	SetEngineAsset();
 }
 
 CComputeShader::~CComputeShader()

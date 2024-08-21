@@ -5,6 +5,8 @@
 #include "CLevelMgr.h"
 #include "CLevel.h"
 
+#include "CFontMgr.h"
+
 CTimeMgr::CTimeMgr()
 	: m_llCurCount{}
 	, m_llPrevCount{}
@@ -14,6 +16,7 @@ CTimeMgr::CTimeMgr()
 	, m_Time(0.f)
 	, m_E_DeltaTime(0.f)
 	, m_E_Time(0.f)
+	, m_szBuff{}
 {
 
 }
@@ -61,9 +64,8 @@ void CTimeMgr::Tick()
 
 	if (1.f < AccTime)
 	{
-		wchar_t szBuff[255] = {};
-		swprintf_s(szBuff, L"DeltaTime : %f, FPS : %d ", m_E_DeltaTime, m_FPS);
-		SetWindowText(CEngine::GetInst()->GetMainWnd(), szBuff);
+		swprintf_s(m_szBuff, L"DT : %f, FPS : %d ", m_E_DeltaTime, m_FPS);
+		//SetWindowText(CEngine::GetInst()->GetMainWnd(), szBuff);
 		AccTime = 0.f;
 		m_FPS = 0;
 	}
@@ -86,4 +88,9 @@ void CTimeMgr::Tick()
 	g_GlobalData.g_Time = m_Time;
 	g_GlobalData.g_EngineDT = m_E_DeltaTime;
 	g_GlobalData.g_EngineTime = m_E_Time;
+}
+
+void CTimeMgr::Render()
+{
+	CFontMgr::GetInst()->DrawFont(m_szBuff, 10, 20, 16, FONT_RGBA(255, 20, 20, 255));
 }

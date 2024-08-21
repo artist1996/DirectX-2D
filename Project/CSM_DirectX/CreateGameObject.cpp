@@ -6,7 +6,6 @@
 #include <Engine/CLayer.h>
 #include <Engine/CGameObject.h>
 
-
 CreateGameObject::CreateGameObject()
 	: m_LayerIdx(0)
 {

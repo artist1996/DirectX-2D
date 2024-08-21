@@ -20,7 +20,6 @@ CParticleSystem::CParticleSystem()
 	, m_MaxParticleCount(1000)
 {
 	// Mesh Material
-	
 	SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"PointMesh"));
 	SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"ParticleRenderMtrl"));
 	
@@ -206,8 +205,16 @@ void CParticleSystem::CarculateSpawnCount()
 
 void CParticleSystem::SaveToFile(FILE* _File)
 {
+	SaveAssetRef(m_ParticleTex, _File);
+
+	fwrite(&m_MaxParticleCount, sizeof(int), 1, _File);
+	fwrite(&m_Module, sizeof(tParticleModule), 1, _File);
 }
 
 void CParticleSystem::LoadFromFile(FILE* _File)
 {
+	LoadAssetRef(m_ParticleTex, _File);
+
+	fread(&m_MaxParticleCount, sizeof(int), 1, _File);
+	fread(&m_Module, sizeof(tParticleModule), 1, _File);
 }

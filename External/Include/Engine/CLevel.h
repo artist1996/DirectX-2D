@@ -9,10 +9,10 @@ class CLevel :
 {
 private:
     CLayer*      m_Layer[MAX_LAYER];
-
     LEVEL_STATE  m_State;
-
     UINT         m_Matrix[MAX_LAYER];
+
+    Ptr<CSound>  m_BGM;
 
 public:
     void AddObject(int _LayerIdx, CGameObject* _Object, bool _bMoveChild = false);
@@ -28,6 +28,9 @@ public:
 
     void CollisionCheck(UINT _Layer1, UINT _Layer2);
     void CollisionUnCheck(UINT _Layer1, UINT _Layer2);
+
+    void SetBGM(Ptr<CSound> _BGM)    { m_BGM = _BGM; }
+    Ptr<CSound> GetBGM()             { return m_BGM; }
     
 private:
     void ChangeLevelState(LEVEL_STATE _NextState);

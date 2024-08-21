@@ -26,7 +26,6 @@ private:
 
 public:
 	void AddChild(EditorUI* _UI);
-
 	
 	void SetActive(bool _Active);
 	bool IsActive()					{ return m_Active; }

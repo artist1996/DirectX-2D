@@ -74,6 +74,8 @@ void CRenderMgr::Tick()
 
 	RenderDebugShape();
 
+	CTimeMgr::GetInst()->Render();
+
 	Clear();
 }
 

@@ -22,6 +22,9 @@ void CLevelSaveLoad::SaveLevel(const wstring& _FilePath, CLevel* _pLevel)
 		return;
 
 	SaveWString(_pLevel->GetName(), pFile);
+	SaveAssetRef(_pLevel->GetBGM(), pFile);
+
+
 	UINT CollisionMatrix[MAX_LAYER] = {};
 	
 	for (UINT i = 0; i < MAX_LAYER; ++i)
@@ -121,6 +124,11 @@ CLevel* CLevelSaveLoad::LoadLevel(const wstring& _FilePath)
 	wstring strLevelName;
 	LoadWString(strLevelName, pFile);
 	pLevel->SetName(strLevelName);
+
+	Ptr<CSound> pBGM = nullptr;
+	LoadAssetRef(pBGM, pFile);
+
+	pLevel->SetBGM(pBGM);
 
 	UINT CollisionMatrix[MAX_LAYER] = {};
 	

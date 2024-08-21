@@ -19,9 +19,12 @@ private:
 	float			m_E_DeltaTime;	// Engine DeltaTime
 	float			m_E_Time;		// 엔진이 켜진 이후로 진행된 시간
 
+	wchar_t			m_szBuff[255];	// DT, Frame 출력 Buffer
+
 public:
 	void Init();
 	void Tick();
+	void Render();
 
 public:
 	float GetDeltaTime()	   { return m_DeltaTime; }

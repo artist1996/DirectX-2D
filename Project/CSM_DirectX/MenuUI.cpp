@@ -205,6 +205,14 @@ void MenuUI::Editor()
 			CEditorMgr::GetInst()->FindEditorUI("TileMap Editor")->SetActive(IsTEActive);
 		}
 
+		EditorUI* pLevelEditor = CEditorMgr::GetInst()->FindEditorUI("Level Editor");
+		bool IsLVActive = pLevelEditor->IsActive();
+
+		if (ImGui::MenuItem("Level Editor", nullptr, &IsLVActive))
+		{
+			pLevelEditor->SetActive(IsLVActive);
+		}
+
 		ImGui::EndMenu();
 	}
 }
@@ -432,11 +440,15 @@ void MenuUI::SaveLevel()
 	strInitPath += L"level\\";
 	ofn.lpstrInitialDir = strInitPath.c_str();
 
-	ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST | OFN_OVERWRITEPROMPT | OFN_ALLOWMULTISELECT | OFN_EXPLORER;
+	ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST |  OFN_ALLOWMULTISELECT | OFN_EXPLORER;
+
+	//OFN_OVERWRITEPROMPT |
 
 	if (GetSaveFileName(&ofn))
-	{
+	{	
 		CLevel* pCurLevel = CLevelMgr::GetInst()->GetCurrentLevel();
+
+		path path = szSelect;
 
 		if (LEVEL_STATE::STOP != pCurLevel->GetState() || nullptr == pCurLevel)
 			return;
@@ -474,4 +486,7 @@ void MenuUI::LoadLevel()
 		CLevel* pLevel = CLevelSaveLoad::LoadLevel(szSelect);
 		ChangeLevel(pLevel, LEVEL_STATE::STOP);
 	}
+
+	Inspector* pInspector = (Inspector*)CEditorMgr::GetInst()->FindEditorUI("Inspector");
+	pInspector->SetTargetObject(nullptr);
 }
