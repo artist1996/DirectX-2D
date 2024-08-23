@@ -45,15 +45,17 @@ float4 PS_Std2D(VTX_OUT _in) : SV_Target
     // FlipBook 을 사용한다
     if (UseFlipBook)
     {
-        // in.vUV : 스프라이트 를 참조할 위치를 비율로 환산한 값               
+        // in.vUV : 스프라이트 를 참조할 위치를 비율로 환산한 값
+        
         float2 BackGroundLeftTop = LeftTopUV - (BackGroundUV - SliceUV) / 2.f;
         float2 vSpriteUV = BackGroundLeftTop + (_in.vUV * BackGroundUV);
+
         vSpriteUV -= OffsetUV;
-   
+        
         if (LeftTopUV.x <= vSpriteUV.x && vSpriteUV.x <= LeftTopUV.x + SliceUV.x
             && LeftTopUV.y <= vSpriteUV.y && vSpriteUV.y <= LeftTopUV.y + SliceUV.y)
         {
-            vColor = g_AtlasTex.Sample(g_sam_1, vSpriteUV);
+            vColor = g_AtlasTex.Sample(g_sam_1, vSpriteUV);         
         }
         else
         {

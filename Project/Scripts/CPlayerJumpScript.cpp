@@ -3,7 +3,9 @@
 
 CPlayerJumpScript::CPlayerJumpScript()
 	: CScript(SCRIPT_TYPE::PLAYERJUMPSCRIPT)
+	, m_NormalJump(false)
 {
+	SetName(L"CPlayerJumpScript");
 }
 
 CPlayerJumpScript::~CPlayerJumpScript()
@@ -32,6 +34,7 @@ void CPlayerJumpScript::LoadFromFile(FILE* _pFile)
 
 void CPlayerJumpScript::Jump()
 {
+	m_NormalJump = true;
 	Rigidbody()->Jump();
 }
 
@@ -43,5 +46,6 @@ void CPlayerJumpScript::AxisCheck()
 	{
 		Rigidbody()->SetGround(true);
 		Transform()->SetRelativePos(Vec3(0.f,0.f,0.f));
+		m_NormalJump = false;
 	}
 }

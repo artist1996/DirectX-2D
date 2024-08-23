@@ -5,10 +5,14 @@ class CPlayerJumpScript :
     public CScript
 {
 private:
+    bool m_NormalJump;
 
 private:
     void Jump();
     void AxisCheck();
+
+public:
+    bool IsNormalJump() { return m_NormalJump; }
 
 public:
     virtual void Begin() override;

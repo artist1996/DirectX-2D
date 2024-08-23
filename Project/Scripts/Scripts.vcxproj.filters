@@ -13,17 +13,20 @@
     <Filter Include="Scripts\PlayerScript">
       <UniqueIdentifier>{48304f43-ef73-4569-b2b1-e526439abd54}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Scripts\PlayerScript\PlayerMoveScript">
-      <UniqueIdentifier>{57cb2e6a-940f-47ba-bbfe-ab012bf646a6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Scripts\PlayerScript\PlayerEntityScript">
-      <UniqueIdentifier>{411b4e33-e519-480d-bd2b-d45403f5be65}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Scripts\PlayerScript\PlayerJumpScript">
-      <UniqueIdentifier>{b3e00048-f6a0-4781-9982-bb20337f4b7d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Scripts\CameraScript">
       <UniqueIdentifier>{1f6c615f-356c-4360-a290-9feebae13b69}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\PlayerScript\PlayerSub">
+      <UniqueIdentifier>{cdc244b2-eeea-4d2a-8932-b667fd3aae6a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\PlayerScript\PlayerSub\PlayerEntityScript">
+      <UniqueIdentifier>{411b4e33-e519-480d-bd2b-d45403f5be65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\PlayerScript\PlayerSub\PlayerJumpScript">
+      <UniqueIdentifier>{b3e00048-f6a0-4781-9982-bb20337f4b7d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\PlayerScript\PlayerSub\PlayerMoveScript">
+      <UniqueIdentifier>{57cb2e6a-940f-47ba-bbfe-ab012bf646a6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -43,13 +46,13 @@
       <Filter>Scripts</Filter>
     </ClInclude>
     <ClInclude Include="CPlayerScript.h">
-      <Filter>Scripts\PlayerScript\PlayerEntityScript</Filter>
+      <Filter>Scripts\PlayerScript\PlayerSub\PlayerEntityScript</Filter>
     </ClInclude>
     <ClInclude Include="CPlayerMoveScript.h">
-      <Filter>Scripts\PlayerScript\PlayerMoveScript</Filter>
+      <Filter>Scripts\PlayerScript\PlayerSub\PlayerMoveScript</Filter>
     </ClInclude>
     <ClInclude Include="CPlayerJumpScript.h">
-      <Filter>Scripts\PlayerScript\PlayerJumpScript</Filter>
+      <Filter>Scripts\PlayerScript\PlayerSub\PlayerJumpScript</Filter>
     </ClInclude>
     <ClInclude Include="CCameraMoveScript.h">
       <Filter>Scripts\CameraScript</Filter>
@@ -72,13 +75,13 @@
       <Filter>Scripts</Filter>
     </ClCompile>
     <ClCompile Include="CPlayerScript.cpp">
-      <Filter>Scripts\PlayerScript\PlayerEntityScript</Filter>
+      <Filter>Scripts\PlayerScript\PlayerSub\PlayerEntityScript</Filter>
     </ClCompile>
     <ClCompile Include="CPlayerMoveScript.cpp">
-      <Filter>Scripts\PlayerScript\PlayerMoveScript</Filter>
+      <Filter>Scripts\PlayerScript\PlayerSub\PlayerMoveScript</Filter>
     </ClCompile>
     <ClCompile Include="CPlayerJumpScript.cpp">
-      <Filter>Scripts\PlayerScript\PlayerJumpScript</Filter>
+      <Filter>Scripts\PlayerScript\PlayerSub\PlayerJumpScript</Filter>
     </ClCompile>
     <ClCompile Include="CCameraMoveScript.cpp">
       <Filter>Scripts\CameraScript</Filter>

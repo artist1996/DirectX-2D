@@ -84,8 +84,8 @@ void CCameraMoveScript::OrthoGraphicMove()
 	//if (vPos.y <= 0.f)
 	//	vPos.y = 0.f;
 
-	Transform()->SetRelativePos(vPos);
-	//Transform()->SetRelativePos(Vec3(0.f,0.f,1.f));
+	//Transform()->SetRelativePos(vPos);
+	Transform()->SetRelativePos(Vec3(0.f,0.f,1.f));
 }
 
 void CCameraMoveScript::PerspectiveMove()

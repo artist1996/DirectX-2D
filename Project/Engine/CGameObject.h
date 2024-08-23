@@ -14,7 +14,7 @@ private:
     CComponent*          m_arrCom[(UINT)COMPONENT_TYPE::END];
     CRenderComponent*    m_RenderCom;
     vector<CScript*>     m_vecScript;
-                                
+    
     CGameObject*         m_Parent;
     vector<CGameObject*> m_vecChildren;
 
@@ -31,6 +31,8 @@ public:
     CGameObject* GetParent()                  { return m_Parent; }
     const vector<CGameObject*>& GetChildren() { return m_vecChildren; }
     const vector<CScript*>& GetScripts()      { return m_vecScript; }
+
+    CScript* FindScriptByName(const wstring& _strName);
 
     void ChangeLayer(CGameObject* _Object, int _Idx);
     int GetLayerIdx() { return m_LayerIdx; }

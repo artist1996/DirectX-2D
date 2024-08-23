@@ -8,18 +8,25 @@ private:
     enum STATE       { ST_IDLE, ST_MOVE, ST_RUN, ST_END, };
 
 private:
-    STATE        m_State;
-    
-    float        m_Speed;
-    bool         m_MoveAble;
-    bool         m_TapMove;
-
+    class CPlayerJumpScript*  m_JumpScript;
+    STATE                     m_State;
+                             
+    float                     m_Speed;
+    bool                      m_MoveAble;
+    bool                      m_TapMove;
 
 private:
     void Idle();
     void Move();
     void Run();
+
+private:
+    void CorrectionSpeed();
     
+public:
+    void SetMoveable(bool _Set) { m_MoveAble = _Set; }
+    bool IsMoveable()           { return m_MoveAble; }
+
 public:
     virtual void Begin() override;
     virtual void Tick() override;

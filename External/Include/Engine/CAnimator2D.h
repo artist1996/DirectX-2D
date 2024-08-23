@@ -32,7 +32,8 @@ public:
     void SetCurAnimation(Ptr<CAnimation> _FlipBook) { m_CurAnimation = _FlipBook; }
     void SetFPS(float _FPS) { m_FPS = _FPS; }
     float GetFPS()          { return m_FPS; }
-    
+    bool IsFinish()         { return m_Finish; }
+
     static void Clear();
 
 public:

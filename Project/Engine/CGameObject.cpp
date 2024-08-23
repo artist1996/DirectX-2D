@@ -88,6 +88,18 @@ void CGameObject::AddComponent(CComponent* _Component)
 	}
 }
 
+CScript* CGameObject::FindScriptByName(const wstring& _strName)
+{
+
+	for (size_t i = 0; i < m_vecScript.size(); ++i)
+	{
+		if (_strName == m_vecScript[i]->GetName())
+			return m_vecScript[i];
+	}
+
+	return nullptr;
+}
+
 void CGameObject::ChangeLayer(CGameObject* _Object, int _Idx)
 {
 	if (m_Parent)
