@@ -6,8 +6,11 @@ class CPlayerScript :
 {
 private:
     enum STATE    { IDLE, MOVE, AT_1, AT_2, AT_3,
-                    JUMP, LANDING, RUN, DEAD,
-                    SK_1, SK_2, SK_3, SK_4, SK_5, SK_6, SK_7, SK_8, SK_9, END, };
+                    JUMP, LANDING, RUN, DG_AT1, DG_AT2, DG_AT3, DG_AT4,
+                    SK_1, SK_2, SK_3, SK_4, SK_5, SK_6, SK_7, SK_8, SK_9, AT_4, DEAD, END, };
+
+    enum class ANIMATION_NUM { IDLE, MOVE, AT_1, AT_2, AT_3, JUMP, LANDING, RUN, DG_AT1, DG_AT2, DG_AT3,
+                               JACKSPIKE, RANDOMSHOT, DEATHBYREVOLVER, WINDMILL, MACHKICK, };
 
 private:
     class CPlayerMoveScript* m_MoveScript;
@@ -31,16 +34,37 @@ private:
     bool                     m_Run;
 
 private:
+    void SetState(STATE _State) { m_State = _State; }
+
+private:
     void Idle();
     void Move();
     void AT1();
     void AT2();
     void AT3();
+    void AT4();
+
+    void AT_DG1();
+    void AT_DG2();
+    void AT_DG3();
+    void AT_DG4();
+
     void Run();
     void Jump();
     void Landing();
     void Dead();
 
+    // Skill
+    void DeathByRevolver();
+    void JackSpike();
+    void RisingShot();
+    void HeadShot();
+    void RandomShot();
+    void WindMill();
+    void MachKick();
+
+    // Stylish Skill
+    void Stylish();
 public:
     virtual void Begin() override;
     virtual void Tick() override;

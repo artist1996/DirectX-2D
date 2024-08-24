@@ -163,6 +163,12 @@
     <ClInclude Include="CFontMgr.h">
       <Filter>04. Manager\09. FontMgr</Filter>
     </ClInclude>
+    <ClInclude Include="CFSM.h">
+      <Filter>08. Component\09. FSM</Filter>
+    </ClInclude>
+    <ClInclude Include="CState.h">
+      <Filter>Module</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CEngine.cpp">
@@ -305,6 +311,12 @@
     </ClCompile>
     <ClCompile Include="CFontMgr.cpp">
       <Filter>04. Manager\09. FontMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="CFSM.cpp">
+      <Filter>08. Component\09. FSM</Filter>
+    </ClCompile>
+    <ClCompile Include="CState.cpp">
+      <Filter>Module</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -478,6 +490,9 @@
     </Filter>
     <Filter Include="04. Manager\09. FontMgr">
       <UniqueIdentifier>{13f755ed-fdb1-4e7f-a842-7afbf067be57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="08. Component\09. FSM">
+      <UniqueIdentifier>{893487aa-3f50-4161-8c5f-38cb55d44684}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

@@ -16,8 +16,15 @@
 #pragma comment(lib, "Engine\\Engine")
 #endif
 
+#ifdef _DEBUG
+#pragma comment(lib, "States\\States_D")
+#else
+#pragma comment(lib, "States\\States")
+#endif
+
 #include <Engine/global.h>
 #include <Engine/CEngine.h>
+
 
 #include "CScriptMgr.h"
 

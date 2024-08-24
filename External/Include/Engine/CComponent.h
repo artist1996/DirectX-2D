@@ -33,6 +33,7 @@ public:
     GET_OTHER_COMPONENT(Light2D);
     GET_OTHER_COMPONENT(Rigidbody);
     GET_OTHER_COMPONENT(ParticleSystem);
+    GET_OTHER_COMPONENT(FSM);
 
 private:
     void SetOwner(CGameObject* _Object) { m_Owner = _Object; }

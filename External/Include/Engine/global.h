@@ -18,7 +18,7 @@ using namespace Microsoft::WRL;
 #ifdef _DEBUG
 #pragma comment(lib, "DirectxTex//DirectXTex_debug.lib")
 #else
-#prgma comment(lib, "DirectxTex//DirectXTex.lib")
+#pragma comment(lib, "DirectxTex//DirectXTex.lib")
 #endif
 
 #include "SimpleMath.h"

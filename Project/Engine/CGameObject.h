@@ -4,6 +4,7 @@
 class CComponent;
 class CRenderComponent;
 class CScript;
+class CState;
 
 #define GET_COMPONENT(Type, TYPE) class C##Type* Type() {return (C##Type*)GetComponent(COMPONENT_TYPE::TYPE);}
 
@@ -14,9 +15,12 @@ private:
     CComponent*          m_arrCom[(UINT)COMPONENT_TYPE::END];
     CRenderComponent*    m_RenderCom;
     vector<CScript*>     m_vecScript;
+    vector<CState*>      m_vecState;
     
     CGameObject*         m_Parent;
     vector<CGameObject*> m_vecChildren;
+
+    OBJ_DIR              m_Dir;
 
     int                  m_LayerIdx;    // 소속 레이어의 인덱스 번호
     bool                 m_Dead;        // Object Dead
@@ -50,6 +54,9 @@ public:
     bool IsDead() { return m_Dead; }
     bool IsAncestor(CGameObject* _Object);
 
+    void SetDir(OBJ_DIR _Dir)   { m_Dir = _Dir; }
+    OBJ_DIR GetDir()            { return m_Dir; }
+
     GET_COMPONENT(Transform, TRANSFORM);
     GET_COMPONENT(MeshRender, MESHRENDER);
     GET_COMPONENT(Camera, CAMERA);
@@ -59,6 +66,7 @@ public:
     GET_COMPONENT(Light2D, LIGHT2D);
     GET_COMPONENT(Rigidbody, RIGIDBODY);
     GET_COMPONENT(ParticleSystem, PARTICLESYSTEM);
+    GET_COMPONENT(FSM, STATEMACHINE);
 
 public:
     void Begin();

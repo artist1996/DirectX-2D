@@ -17,6 +17,7 @@ CGameObject::CGameObject()
 	, m_LayerIdx(-1)	// 최초 생성 시 어느 레이어 소속도 아니다(레벨안에 있지 않은 상태)
 	, m_Dead(false)
 	, m_Moveable{ true,true,true,true }
+	, m_Dir(OBJ_DIR::DIR_RIGHT)
 {
 }
 
@@ -28,6 +29,7 @@ CGameObject::CGameObject(const CGameObject& _Origin)
 	, m_LayerIdx(-1)
 	, m_Dead(false)
 	, m_Moveable{ true,true,true,true }
+	, m_Dir(_Origin.m_Dir)
 {
 	// Component 복사
 	for (UINT i = 0; i < (UINT)COMPONENT_TYPE::END; ++i)

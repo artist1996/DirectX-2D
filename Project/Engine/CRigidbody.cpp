@@ -145,7 +145,7 @@ void CRigidbody::FinalTick()
 	if (m_UseGravity && !m_Ground)
 	{
 		m_VelocityByGravity += Vec3(0.f, -1.f, 0.f) * m_GravityAccel * DT;
-
+		//m_VelocityByGravity += Vec3(0.f, 0.f, -1.f) * m_GravityAccel * DT;
 		if (0.f != m_MaxGravitySpeed && m_MaxGravitySpeed < m_VelocityByGravity.Length())
 		{
 			m_VelocityByGravity.Normalize();

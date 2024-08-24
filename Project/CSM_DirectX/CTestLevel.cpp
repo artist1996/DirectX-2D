@@ -60,14 +60,14 @@ void CTestLevel::CreateTestLevel()
 	//CamObj->AddComponent(new CCameraMoveScript);
 	//
 	//CamObj->Camera()->SetPriority(0);
-	//
+	////
 	//CamObj->Camera()->SetLayerAll();
 	//CamObj->Camera()->SetLayer(31, false);
 	//CamObj->Camera()->SetFar(100000.f);
 	//CamObj->Camera()->SetProjType(PROJ_TYPE::ORTHOGRAPHIC);
-	////CamObj->Camera()->SetProjType(PROJ_TYPE::PERSPECTIVE);
+	//////CamObj->Camera()->SetProjType(PROJ_TYPE::PERSPECTIVE);
 	//pLevel->AddObject(0, CamObj);
-	//
+	////
 	//pLevel->GetLayer(0)->SetName(L"Default");
 	//pLevel->GetLayer(1)->SetName(L"Background");
 	//pLevel->GetLayer(2)->SetName(L"Tile");
@@ -76,8 +76,8 @@ void CTestLevel::CreateTestLevel()
 	//pLevel->GetLayer(5)->SetName(L"Movement");
 	//pLevel->GetLayer(6)->SetName(L"Monster");
 	//pLevel->GetLayer(7)->SetName(L"PlayerProjectile");
-	//
-	////// Light2D Object
+	////
+	//////// Light2D Object
 	//CGameObject* pLight2D = new CGameObject;
 	//pLight2D->SetName(L"Directional");
 	//pLight2D->AddComponent(new CTransform);
@@ -90,8 +90,8 @@ void CTestLevel::CreateTestLevel()
 	//pLight2D->Light2D()->SetRadius(500.f);
 	//
 	//pLevel->AddObject(0, pLight2D);
-	//
-	//// Player Object
+	////
+	////// Player Object
 	//CGameObject* pPlayer = new CGameObject;
 	//pPlayer->SetName(L"Player");
 	//pPlayer->AddComponent(new CTransform);
@@ -112,6 +112,8 @@ void CTestLevel::CreateTestLevel()
 	//pPlayer->MeshRender()->SetMaterial(pMtrl);
 	//
 	//pPlayer->Rigidbody()->UseGravity(false);
+	//
+	//pPlayer->Animator2D()->AddAnimation(0, CAssetMgr::GetInst()->FindAsset<CAnimation>(L"Animation\\player\\idle\\gunner_idle.anim"));
 	//
 	//pLevel->AddObject(4, pPlayer);
 	//

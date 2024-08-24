@@ -27,6 +27,7 @@ void CPlayerMoveScript::Begin()
 {
 	CGameObject* pObject = CLevelMgr::GetInst()->FindObjectByName(L"PlayerJump");
 	m_JumpScript = (CPlayerJumpScript*)pObject->FindScriptByName(L"CPlayerJumpScript");
+	Collider2D()->SetOffset(Vec3(0.15f, -4.f, 0.f));
 }
 
 void CPlayerMoveScript::Tick()
