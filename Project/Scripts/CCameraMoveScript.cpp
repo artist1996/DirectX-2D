@@ -7,6 +7,7 @@
 
 CCameraMoveScript::CCameraMoveScript()
 	: CScript(SCRIPT_TYPE::CAMERAMOVESCRIPT)
+	, m_Target(nullptr)
 	, m_CamSpeed(500.f)
 {
 }
@@ -56,7 +57,7 @@ void CCameraMoveScript::OrthoGraphicMove()
 		Speed *= 3.f;
 
 	//Transform()->SetRelativeRotation(Vec3(0.f, 0.f, 0.f));
-	//Vec3 vPos = m_Target->Transform()->GetWorldPos();
+	Vec3 vPos = m_Target->Transform()->GetWorldPos();
 
 	//if (KEY_PRESSED(KEY::W))
 	//{
@@ -85,7 +86,7 @@ void CCameraMoveScript::OrthoGraphicMove()
 	//	vPos.y = 0.f;
 
 	//Transform()->SetRelativePos(vPos);
-	//Transform()->SetRelativePos(Vec3(0.f,0.f,1.f));
+	Transform()->SetRelativePos(Vec3(0.f,0.f,1.f));
 }
 
 void CCameraMoveScript::PerspectiveMove()

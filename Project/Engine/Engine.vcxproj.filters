@@ -169,6 +169,9 @@
     <ClInclude Include="CState.h">
       <Filter>Module</Filter>
     </ClInclude>
+    <ClInclude Include="CObjectPoolMgr.h">
+      <Filter>04. Manager\10. ObjectPoolMgr</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CEngine.cpp">
@@ -317,6 +320,9 @@
     </ClCompile>
     <ClCompile Include="CState.cpp">
       <Filter>Module</Filter>
+    </ClCompile>
+    <ClCompile Include="CObjectPoolMgr.cpp">
+      <Filter>04. Manager\10. ObjectPoolMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -493,6 +499,9 @@
     </Filter>
     <Filter Include="08. Component\09. FSM">
       <UniqueIdentifier>{893487aa-3f50-4161-8c5f-38cb55d44684}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Manager\10. ObjectPoolMgr">
+      <UniqueIdentifier>{eeb1a8c5-4476-4398-b81e-a2c2753929f2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

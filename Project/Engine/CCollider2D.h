@@ -29,6 +29,8 @@ public:
 
     bool IsIndependentScale() { return m_IndependentScale; }
 
+    void SetActive(bool _Set) { m_bActive = _Set; }
+
 public:
     virtual void SaveToFile(FILE* _pFile) override;
     virtual void LoadFromFile(FILE* _pFile) override;

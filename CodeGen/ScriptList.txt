@@ -1,6 +1,12 @@
+CBuffScript
 CCameraMoveScript
-CMissileScript
+CHammerScript
+CHeadShotEffectScript
+CMuzzleScript
+CPistolScript
 CPlatformScript
 CPlayerJumpScript
 CPlayerMoveScript
 CPlayerScript
+CRandomShootScript
+CWindmillScript

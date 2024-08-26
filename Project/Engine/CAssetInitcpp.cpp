@@ -147,6 +147,17 @@ void CAssetMgr::CreateEngineMaterial()
 	pMtrl->SetShader(FindAsset<CGraphicShader>(L"Std2DAlphaBlendShader"));
 	AddAsset(L"Std2DAlphaBlendMtrl", pMtrl);
 
+	// Std2DHeadShotMtrl
+	pMtrl = new CMaterial(true);
+	pMtrl->SetShader(FindAsset<CGraphicShader>(L"Std2DHeadShotAlphaBlendShader"));
+	AddAsset(L"Std2DHeadShotAlphaBlendMtrl", pMtrl);
+
+	// Std2D DNF Mtrl
+	pMtrl = new CMaterial(true);
+	pMtrl->SetShader(FindAsset<CGraphicShader>(L"Std2DDNFAlphaBlendShader"));
+	AddAsset(L"Std2DDNFAlphaBlendMtrl", pMtrl);
+
+
 	// DebugShapeMtrl
 	pMtrl = new CMaterial(true);
 	pMtrl->SetShader(FindAsset<CGraphicShader>(L"DebugShapeShader"));
@@ -299,14 +310,37 @@ void CAssetMgr::CreateEngineGraphicShader()
 	pShader->CreatePixelShader(L"shader\\std2d.fx", "PS_Std2D_Alphablend");
 
 	pShader->SetRSType(RS_TYPE::CULL_NONE);	
-	pShader->SetDSType(DS_TYPE::NO_TEST_NO_WRITE);
+	pShader->SetDSType(DS_TYPE::LESS);
 	pShader->SetBSType(BS_TYPE::ALPHABLEND_COVERAGE);
 
 	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_TRANSPARENT);
 
 	AddAsset(L"Std2DAlphaBlendShader", pShader);
 
+	// HeadShot Shader
+	pShader = new CGraphicShader;
+	pShader->CreateVertexShader(L"shader\\std2d.fx", "VS_Std2D");
+	pShader->CreatePixelShader(L"shader\\std2d.fx", "PS_HeadShot_AlphaBlend");
 	
+	pShader->SetRSType(RS_TYPE::CULL_NONE);
+	pShader->SetDSType(DS_TYPE::NO_TEST_NO_WRITE);
+	pShader->SetBSType(BS_TYPE::ALPHABLEND_COVERAGE);
+
+	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_TRANSPARENT);
+	AddAsset(L"Std2DHeadShotAlphaBlendShader", pShader);
+
+	// DNF 이미지 바탕이 검은색인것들 전용
+	pShader = new CGraphicShader;
+	pShader->CreateVertexShader(L"shader\\std2d.fx", "VS_Std2D");
+	pShader->CreatePixelShader(L"shader\\std2d.fx", "PS_DNF_AlphaBlend");
+
+	pShader->SetRSType(RS_TYPE::CULL_NONE);
+	pShader->SetDSType(DS_TYPE::NO_TEST_NO_WRITE);
+	pShader->SetBSType(BS_TYPE::ALPHABLEND_COVERAGE);
+
+	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_TRANSPARENT);
+	AddAsset(L"Std2DDNFAlphaBlendShader", pShader);
+
 	// DebugShapeShader
 	pShader = new CGraphicShader;
 	pShader->CreateVertexShader(L"shader\\debug.fx", "VS_DebugShape");

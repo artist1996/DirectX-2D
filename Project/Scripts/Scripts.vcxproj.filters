@@ -10,23 +10,65 @@
     <Filter Include="Manager">
       <UniqueIdentifier>{4f377921-a526-46d8-9aad-2690ef026be8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Scripts\PlayerScript">
+    <Filter Include="Scripts\01. PlayerScript">
       <UniqueIdentifier>{48304f43-ef73-4569-b2b1-e526439abd54}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Scripts\CameraScript">
+    <Filter Include="Scripts\02. PlayerSkillScript">
+      <UniqueIdentifier>{4a9e02b0-a7df-438a-9042-520c52521009}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\02. PlayerSkillScript\01. Buff">
+      <UniqueIdentifier>{7744850e-eee2-4dbc-a3a0-83f2fdeb645b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\02. PlayerSkillScript\02. RandomShoot">
+      <UniqueIdentifier>{8cbaf040-4baf-4781-b85b-6aa27e31e90f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\03. PlayerEffectScript">
+      <UniqueIdentifier>{eb41b7cb-402b-42b0-ab5d-e03799e14c01}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\04. PlatformScript">
+      <UniqueIdentifier>{ecc53cfb-0c0c-4f0c-a591-674601e4651f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\00. CameraScript">
       <UniqueIdentifier>{1f6c615f-356c-4360-a290-9feebae13b69}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Scripts\PlayerScript\PlayerSub">
-      <UniqueIdentifier>{cdc244b2-eeea-4d2a-8932-b667fd3aae6a}</UniqueIdentifier>
+    <Filter Include="Scripts\02. PlayerSkillScript\03. Pistol">
+      <UniqueIdentifier>{6087766c-003e-41af-8271-7b91ffc20793}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Scripts\PlayerScript\PlayerSub\PlayerEntityScript">
+    <Filter Include="Scripts\01. PlayerScript\01. PlayerEntityScript">
       <UniqueIdentifier>{411b4e33-e519-480d-bd2b-d45403f5be65}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Scripts\PlayerScript\PlayerSub\PlayerJumpScript">
+    <Filter Include="Scripts\01. PlayerScript\02. PlayerJumpScript">
       <UniqueIdentifier>{b3e00048-f6a0-4781-9982-bb20337f4b7d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Scripts\PlayerScript\PlayerSub\PlayerMoveScript">
+    <Filter Include="Scripts\01. PlayerScript\03. PlayerMoveScript">
       <UniqueIdentifier>{57cb2e6a-940f-47ba-bbfe-ab012bf646a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\03. PlayerEffectScript\02. RevolverHammerScript">
+      <UniqueIdentifier>{398a200a-1848-4862-b253-f4ca96844cd9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\03. PlayerEffectScript\01. RevolverMuzzleScript">
+      <UniqueIdentifier>{a072db7e-9eaa-4568-8775-fb8fee40ed71}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\03. PlayerEffectScript\03. HeadShotEffect">
+      <UniqueIdentifier>{0f81d8df-95e5-41eb-8ca1-415428a41fc1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\02. PlayerSkillScript\04. WindMill">
+      <UniqueIdentifier>{da887d9b-8b6a-4819-b396-ce8c164e6605}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\02. PlayerSkillScript\05. MachKick">
+      <UniqueIdentifier>{343e29c4-320d-4039-bff1-84acb9e4c99a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\02. PlayerSkillScript\06. DoubleGunHawk">
+      <UniqueIdentifier>{cb866253-fc03-4c60-98cd-2fc8fd532e83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\02. PlayerSkillScript\07. HeadShot">
+      <UniqueIdentifier>{299c45ab-54f6-4728-955a-5d8d94cec322}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\02. PlayerSkillScript\08. RisingShot">
+      <UniqueIdentifier>{ec784029-79b8-4adf-b344-bcb197c628db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\02. PlayerSkillScript\09. JackSpike">
+      <UniqueIdentifier>{0c3f07f4-0a88-4a97-9141-e61b13db457c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -36,26 +78,44 @@
     <ClInclude Include="pch.h">
       <Filter>Default</Filter>
     </ClInclude>
-    <ClInclude Include="CMissileScript.h">
-      <Filter>Scripts</Filter>
-    </ClInclude>
     <ClInclude Include="CScriptMgr.h">
       <Filter>Manager</Filter>
     </ClInclude>
-    <ClInclude Include="CPlatformScript.h">
-      <Filter>Scripts</Filter>
-    </ClInclude>
     <ClInclude Include="CPlayerScript.h">
-      <Filter>Scripts\PlayerScript\PlayerSub\PlayerEntityScript</Filter>
+      <Filter>Scripts\01. PlayerScript\01. PlayerEntityScript</Filter>
     </ClInclude>
     <ClInclude Include="CPlayerMoveScript.h">
-      <Filter>Scripts\PlayerScript\PlayerSub\PlayerMoveScript</Filter>
+      <Filter>Scripts\01. PlayerScript\03. PlayerMoveScript</Filter>
     </ClInclude>
     <ClInclude Include="CPlayerJumpScript.h">
-      <Filter>Scripts\PlayerScript\PlayerSub\PlayerJumpScript</Filter>
+      <Filter>Scripts\01. PlayerScript\02. PlayerJumpScript</Filter>
     </ClInclude>
     <ClInclude Include="CCameraMoveScript.h">
-      <Filter>Scripts\CameraScript</Filter>
+      <Filter>Scripts\00. CameraScript</Filter>
+    </ClInclude>
+    <ClInclude Include="CBuffScript.h">
+      <Filter>Scripts\02. PlayerSkillScript\01. Buff</Filter>
+    </ClInclude>
+    <ClInclude Include="CRandomShootScript.h">
+      <Filter>Scripts\02. PlayerSkillScript\02. RandomShoot</Filter>
+    </ClInclude>
+    <ClInclude Include="CPistolScript.h">
+      <Filter>Scripts\02. PlayerSkillScript\03. Pistol</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlatformScript.h">
+      <Filter>Scripts\04. PlatformScript</Filter>
+    </ClInclude>
+    <ClInclude Include="CMuzzleScript.h">
+      <Filter>Scripts\03. PlayerEffectScript\01. RevolverMuzzleScript</Filter>
+    </ClInclude>
+    <ClInclude Include="CHammerScript.h">
+      <Filter>Scripts\03. PlayerEffectScript\02. RevolverHammerScript</Filter>
+    </ClInclude>
+    <ClInclude Include="CHeadShotEffectScript.h">
+      <Filter>Scripts\03. PlayerEffectScript\03. HeadShotEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="CWindmillScript.h">
+      <Filter>Scripts\02. PlayerSkillScript\04. WindMill</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -65,26 +125,44 @@
     <ClCompile Include="Scripts.cpp">
       <Filter>Default</Filter>
     </ClCompile>
-    <ClCompile Include="CMissileScript.cpp">
-      <Filter>Scripts</Filter>
-    </ClCompile>
     <ClCompile Include="CScriptMgr.cpp">
       <Filter>Manager</Filter>
     </ClCompile>
-    <ClCompile Include="CPlatformScript.cpp">
-      <Filter>Scripts</Filter>
-    </ClCompile>
     <ClCompile Include="CPlayerScript.cpp">
-      <Filter>Scripts\PlayerScript\PlayerSub\PlayerEntityScript</Filter>
+      <Filter>Scripts\01. PlayerScript\01. PlayerEntityScript</Filter>
     </ClCompile>
     <ClCompile Include="CPlayerMoveScript.cpp">
-      <Filter>Scripts\PlayerScript\PlayerSub\PlayerMoveScript</Filter>
+      <Filter>Scripts\01. PlayerScript\03. PlayerMoveScript</Filter>
     </ClCompile>
     <ClCompile Include="CPlayerJumpScript.cpp">
-      <Filter>Scripts\PlayerScript\PlayerSub\PlayerJumpScript</Filter>
+      <Filter>Scripts\01. PlayerScript\02. PlayerJumpScript</Filter>
     </ClCompile>
     <ClCompile Include="CCameraMoveScript.cpp">
-      <Filter>Scripts\CameraScript</Filter>
+      <Filter>Scripts\00. CameraScript</Filter>
+    </ClCompile>
+    <ClCompile Include="CBuffScript.cpp">
+      <Filter>Scripts\02. PlayerSkillScript\01. Buff</Filter>
+    </ClCompile>
+    <ClCompile Include="CRandomShootScript.cpp">
+      <Filter>Scripts\02. PlayerSkillScript\02. RandomShoot</Filter>
+    </ClCompile>
+    <ClCompile Include="CPistolScript.cpp">
+      <Filter>Scripts\02. PlayerSkillScript\03. Pistol</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlatformScript.cpp">
+      <Filter>Scripts\04. PlatformScript</Filter>
+    </ClCompile>
+    <ClCompile Include="CMuzzleScript.cpp">
+      <Filter>Scripts\03. PlayerEffectScript\01. RevolverMuzzleScript</Filter>
+    </ClCompile>
+    <ClCompile Include="CHammerScript.cpp">
+      <Filter>Scripts\03. PlayerEffectScript\02. RevolverHammerScript</Filter>
+    </ClCompile>
+    <ClCompile Include="CHeadShotEffectScript.cpp">
+      <Filter>Scripts\03. PlayerEffectScript\03. HeadShotEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="CWindmillScript.cpp">
+      <Filter>Scripts\02. PlayerSkillScript\04. WindMill</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

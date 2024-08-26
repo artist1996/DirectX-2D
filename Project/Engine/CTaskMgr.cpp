@@ -7,6 +7,7 @@
 #include "CGameObject.h"
 
 #include "CAssetMgr.h"
+#include "CObjectPoolMgr.h"
 
 CTaskMgr::CTaskMgr()
 {}
@@ -102,8 +103,21 @@ void CTaskMgr::ExecuteTask()
 			CLevelMgr::GetInst()->m_LevelChanged = true;
 		}
 		break;
+		case TASK_TYPE::DISCONNECT_LAYER:
+		{
+			CGameObject* pObject = (CGameObject*)m_vecTask[i].Param_0;
+			CLevel* pLevel = CLevelMgr::GetInst()->GetCurrentLevel();
+		
+			CLayer* pLayer = pLevel->GetLayer(pObject->m_LayerIdx);
+		
+			//pLayer->DeregisterObject(pObject);
+			pLayer->DisconnectWithObject(pObject);
+			CObjectPoolMgr::GetInst()->RetrieveRandomShoot(pObject);
+			pObject->m_LayerIdx = -1;
+			CLevelMgr::GetInst()->LevelChanged();
 		}
-
+		break;
+		}
 	}
 
 	m_vecTask.clear();	

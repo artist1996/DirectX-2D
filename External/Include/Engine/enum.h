@@ -168,6 +168,9 @@ enum TASK_TYPE
 
 	CHANGE_LEVEL,
 
+	// Param_0 : Layer, Param_1 : Object Adress
+	DISCONNECT_LAYER,
+
 	ASSET_CHANGED,
 	LEVEL_CHANGED,
 

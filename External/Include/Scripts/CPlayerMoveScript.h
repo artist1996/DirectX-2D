@@ -1,15 +1,15 @@
 #pragma once
 #include <Engine/CScript.h>
 
+enum MOVE_STATE { ST_IDLE, ST_MOVE, ST_RUN, ST_TACKLE, ST_END, };
+
 class CPlayerMoveScript :
     public CScript
 {
 private:
-    enum STATE       { ST_IDLE, ST_MOVE, ST_RUN, ST_END, };
-
-private:
+    class CPlayerScript*      m_EntityScript;
     class CPlayerJumpScript*  m_JumpScript;
-    STATE                     m_State;
+    MOVE_STATE                m_State;
                              
     float                     m_Speed;
     bool                      m_MoveAble;
@@ -19,6 +19,7 @@ private:
     void Idle();
     void Move();
     void Run();
+    void Tackle();
 
 private:
     void CorrectionSpeed();
@@ -26,6 +27,9 @@ private:
 public:
     void SetMoveable(bool _Set) { m_MoveAble = _Set; }
     bool IsMoveable()           { return m_MoveAble; }
+
+    void SetState(MOVE_STATE _State) { m_State = _State; }
+    void SetSpeed(float _Speed) { m_Speed = _Speed; }
 
 public:
     virtual void Begin() override;
@@ -42,6 +46,6 @@ public:
 public:
     CLONE(CPlayerMoveScript);
     CPlayerMoveScript();
-    virtual ~CPlayerMoveScript();  
+    virtual ~CPlayerMoveScript();
 };
 

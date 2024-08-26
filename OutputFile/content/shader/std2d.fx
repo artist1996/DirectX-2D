@@ -40,7 +40,6 @@ VTX_OUT VS_Std2D(VTX_IN _in)
 float4 PS_Std2D(VTX_OUT _in) : SV_Target
 {
     float4 vColor = float4(0.f, 0.f, 0.f, 1.f);
-   
     
     // FlipBook 을 사용한다
     if (UseFlipBook)
@@ -52,15 +51,15 @@ float4 PS_Std2D(VTX_OUT _in) : SV_Target
 
         vSpriteUV -= OffsetUV;
         
+        
         if (LeftTopUV.x <= vSpriteUV.x && vSpriteUV.x <= LeftTopUV.x + SliceUV.x
             && LeftTopUV.y <= vSpriteUV.y && vSpriteUV.y <= LeftTopUV.y + SliceUV.y)
         {
-            vColor = g_AtlasTex.Sample(g_sam_1, vSpriteUV);         
+            vColor = g_AtlasTex.Sample(g_sam_1, vSpriteUV);           
         }
         else
         {
            discard;
-           //vColor = float4(1.f, 1.f, 0.f, 1.f);
         }
     }
     // FlipBook 을 사용 하지 않는다.
@@ -90,7 +89,7 @@ float4 PS_Std2D(VTX_OUT _in) : SV_Target
     
     vColor.rgb = vColor.rgb * Light.Color.rgb 
                + vColor.rgb * Light.Ambient.rgb;
-       
+    
     return vColor;
 }
 
@@ -98,15 +97,134 @@ float4 PS_Std2D_Alphablend(VTX_OUT _in) : SV_Target
 {
     float4 vColor = float4(0.f, 0.f, 0.f, 1.f);
     
-    if (g_btex_0)
+    if (UseFlipBook)
     {
-        vColor = g_tex_0.Sample(g_sam_1, _in.vUV);
+        // in.vUV : 스프라이트 를 참조할 위치를 비율로 환산한 값
+        
+        float2 BackGroundLeftTop = LeftTopUV - (BackGroundUV - SliceUV) / 2.f;
+        float2 vSpriteUV = BackGroundLeftTop + (_in.vUV * BackGroundUV);
+
+        vSpriteUV -= OffsetUV;
+        
+        
+        if (LeftTopUV.x <= vSpriteUV.x && vSpriteUV.x <= LeftTopUV.x + SliceUV.x
+            && LeftTopUV.y <= vSpriteUV.y && vSpriteUV.y <= LeftTopUV.y + SliceUV.y)
+        {
+            vColor = g_AtlasTex.Sample(g_sam_1, vSpriteUV);
+        }
+        else
+        {
+            discard;
+        }
+    }
+    // FlipBook 을 사용 하지 않는다.
+    else
+    {
+        if (g_btex_0)
+        {
+            vColor = g_tex_0.Sample(g_sam_1, _in.vUV);
+        }
+        else
+        {
+            vColor = float4(1.f, 0.f, 1.f, 1.f);
+        }
+    }
+    
+    return vColor;
+}
+
+float4 PS_HeadShot_AlphaBlend(VTX_OUT _in) : SV_Target
+{
+    float4 vColor = float4(0.f, 0.f, 0.f, 1.f);
+    
+    if (UseFlipBook)
+    {
+        // in.vUV : 스프라이트 를 참조할 위치를 비율로 환산한 값
+        
+        float2 BackGroundLeftTop = LeftTopUV - (BackGroundUV - SliceUV) / 2.f;
+        float2 vSpriteUV = BackGroundLeftTop + (_in.vUV * BackGroundUV);
+
+        vSpriteUV -= OffsetUV;
+        
+        
+        if (LeftTopUV.x <= vSpriteUV.x && vSpriteUV.x <= LeftTopUV.x + SliceUV.x
+            && LeftTopUV.y <= vSpriteUV.y && vSpriteUV.y <= LeftTopUV.y + SliceUV.y)
+        {
+            vColor = g_AtlasTex.Sample(g_sam_1, vSpriteUV);
+        }
+        else
+        {
+            discard;
+        }
+              
+        if (vColor.r <= 0.34f) // 검은색 처리
+        {
+            vColor.a = 0.5f;
+        }     
+        
+        if(vColor.r >= 0.27f && vColor.g < 0.5f)
+        {
+            vColor.a = 0.61f;           
+            vColor.r = saturate(vColor.r * 2.5f);
+            vColor.g = saturate(vColor.g * 2.f);
+        }  
     }
     
     else
     {
-        vColor = float4(1.f, 0.f, 1.f, 1.f);
+        if (g_btex_0)
+        {
+            vColor = g_tex_0.Sample(g_sam_1, _in.vUV);
+        }
+        else
+        {
+            vColor = float4(1.f, 0.f, 1.f, 1.f);
+        }
     }
+    
+    return vColor;
+}
+
+float4 PS_DNF_AlphaBlend(VTX_OUT _in) : SV_Target
+{
+    float4 vColor = float4(0.f, 0.f, 0.f, 1.f);
+    
+    if (UseFlipBook)
+    {
+        // in.vUV : 스프라이트 를 참조할 위치를 비율로 환산한 값
+        
+        float2 BackGroundLeftTop = LeftTopUV - (BackGroundUV - SliceUV) / 2.f;
+        float2 vSpriteUV = BackGroundLeftTop + (_in.vUV * BackGroundUV);
+
+        vSpriteUV -= OffsetUV;
+         
+        if (LeftTopUV.x <= vSpriteUV.x && vSpriteUV.x <= LeftTopUV.x + SliceUV.x
+            && LeftTopUV.y <= vSpriteUV.y && vSpriteUV.y <= LeftTopUV.y + SliceUV.y)
+        {
+            vColor = g_AtlasTex.Sample(g_sam_1, vSpriteUV);
+        }
+        else
+        {
+            discard;
+        } 
+        
+        if(vColor.r <= 0.15f && vColor.g <= 0.15f && vColor.b <= 0.15f)
+            discard;
+            
+    }
+    // FlipBook 을 사용 하지 않는다.
+    else
+    {
+        if (g_btex_0)
+        {
+            vColor = g_tex_0.Sample(g_sam_1, _in.vUV);
+        }
+        else
+        {
+            vColor = float4(1.f, 0.f, 1.f, 1.f);
+        }
+    }
+    
     return vColor;
 }
 

@@ -24,6 +24,15 @@ void DeleteObject(CGameObject* _DeleteObject)
 	CTaskMgr::GetInst()->AddTask(Task);
 }
 
+void DisconnectObject(CGameObject* _DisconnetObject)
+{
+	tTask Task = {};
+	Task.Type = TASK_TYPE::DISCONNECT_LAYER;
+	Task.Param_0 = (DWORD_PTR)_DisconnetObject;
+
+	CTaskMgr::GetInst()->AddTask(Task);
+}
+
 void ChangeLevelState(LEVEL_STATE _State)
 {
 	tTask Task = {};

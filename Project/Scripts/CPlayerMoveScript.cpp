@@ -6,12 +6,14 @@
 #include <Engine/CTransform.h>
 #include <Engine/CAnimator2D.h>
 
+#include "CPlayerScript.h"
 #include "CPlayerJumpScript.h"
 
 CPlayerMoveScript::CPlayerMoveScript()
 	: CScript(SCRIPT_TYPE::PLAYERMOVESCRIPT)
+	, m_EntityScript(nullptr)
 	, m_JumpScript(nullptr)
-	, m_State(STATE::ST_IDLE)
+	, m_State(MOVE_STATE::ST_IDLE)
 	, m_Speed(300.f)
 	, m_MoveAble(true)
 	, m_TapMove(false)
@@ -27,6 +29,10 @@ void CPlayerMoveScript::Begin()
 {
 	CGameObject* pObject = CLevelMgr::GetInst()->FindObjectByName(L"PlayerJump");
 	m_JumpScript = (CPlayerJumpScript*)pObject->FindScriptByName(L"CPlayerJumpScript");
+
+	pObject = CLevelMgr::GetInst()->FindObjectByName(L"Player");
+	m_EntityScript = (CPlayerScript*)pObject->FindScriptByName(L"CPlayerScript");
+
 	Collider2D()->SetOffset(Vec3(0.15f, -4.f, 0.f));
 }
 
@@ -34,14 +40,17 @@ void CPlayerMoveScript::Tick()
 {
 	switch (m_State)
 	{
-	case CPlayerMoveScript::ST_IDLE:
+	case ST_IDLE:
 		Idle();
 		break;
-	case CPlayerMoveScript::ST_MOVE:
+	case ST_MOVE:
 		Move();
 		break;
-	case CPlayerMoveScript::ST_RUN:
+	case ST_RUN:
 		Run();
+		break;
+	case ST_TACKLE:
+		Tackle();
 		break;
 	}
 }
@@ -104,7 +113,6 @@ void CPlayerMoveScript::Move()
 	Vec3 vPos = Transform()->GetRelativePos();
 	bool* bMoveable = GetOwner()->GetMoveable();
 
-
 	if (m_MoveAble)
 	{
 		if (KEY_PRESSED(KEY::LEFT) && bMoveable[(UINT)PLATFORM_TYPE::LEFT])
@@ -153,6 +161,26 @@ void CPlayerMoveScript::Run()
 	//
 	//	Transform()->SetRelativePos(vPos);
 	//}
+}
+
+void CPlayerMoveScript::Tackle()
+{
+	Vec3 vPos = Transform()->GetRelativePos();
+	bool* bMoveable = GetOwner()->GetMoveable();
+
+	if (OBJ_DIR::DIR_RIGHT == m_EntityScript->GetDir()
+		&& bMoveable[(UINT)PLATFORM_TYPE::RIGHT])
+	{
+		vPos += Vec3(1.f, 0.f, 0.f) * m_Speed * 2.5f * DT;
+	}
+
+	else if (OBJ_DIR::DIR_LEFT == m_EntityScript->GetDir()
+		&& bMoveable[(UINT)PLATFORM_TYPE::LEFT])
+	{
+		vPos += Vec3(-1.f, 0.f, 0.f) * m_Speed * 2.5f * DT;
+	}
+
+	Transform()->SetRelativePos(vPos);
 }
 
 void CPlayerMoveScript::CorrectionSpeed()

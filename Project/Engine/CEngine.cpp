@@ -11,6 +11,7 @@
 #include "CTaskMgr.h"
 #include "CFontMgr.h"
 #include "CPrefab.h"
+#include "CObjectPoolMgr.h"
 
 CEngine::CEngine()
 	: m_hWnd(nullptr)
@@ -61,6 +62,8 @@ int CEngine::Init(HWND _hWnd, POINT _ptResolution, OBJECT_SAVE _SaveFunc, OBJECT
 	// Prefab Function µî·Ï
 	CPrefab::g_ObjectSaveFunc = _SaveFunc;
 	CPrefab::g_ObjectLoadFunc = _LoadFunc;
+
+	CObjectPoolMgr::GetInst()->Init();
 
 	return S_OK;
 }

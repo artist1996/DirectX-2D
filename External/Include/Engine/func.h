@@ -2,6 +2,7 @@
 
 void CreateObject(class CGameObject* _NewObject, int _LayerIndex);
 void DeleteObject(CGameObject* _DeleteObject);
+void DisconnectObject(CGameObject* _DisconnetObject);
 void ChangeLevelState(LEVEL_STATE _State);
 void ChangeLevel(class CLevel* _NextLevel, LEVEL_STATE _NextLevelState);
 
@@ -50,6 +51,16 @@ void Delete_Map(map<T1, T2>& _map)
 	}
 
 	_map.clear();
+}
+
+template<typename T>
+void Delete_List(std::list<T*>& _list)
+{
+	for (typename std::list<T*>::iterator iter = _list.begin(); iter != _list.end();)
+	{
+		delete* iter;
+		iter = _list.erase(iter);
+	}
 }
 
 #include "assets.h"

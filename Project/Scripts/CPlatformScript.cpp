@@ -89,26 +89,6 @@ void CPlatformScript::Overlap(CCollider2D* _OwnCollider, CGameObject* _OtherObj,
 
 void CPlatformScript::EndOverlap(CCollider2D* _OwnCollider, CGameObject* _OtherObj, CCollider2D* _OtherCollider)
 {
-	//if (PLATFORM_TYPE::LEFT == m_Type)
-	//{
-	//	if (L"PlayerMove" == _OtherObj->GetName())
-	//		_OtherObj->SetMoveable(PLATFORM_TYPE::LEFT, true);
-	//}
-	//if (PLATFORM_TYPE::UP == m_Type)
-	//{
-	//	if (L"PlayerMove" == _OtherObj->GetName())
-	//		_OtherObj->SetMoveable(PLATFORM_TYPE::UP, true);
-	//}
-	//if (PLATFORM_TYPE::RIGHT == m_Type)
-	//{
-	//	if (L"PlayerMove" == _OtherObj->GetName())
-	//		_OtherObj->SetMoveable(PLATFORM_TYPE::RIGHT, true);
-	//}
-	//if (PLATFORM_TYPE::BOTTOM == m_Type)
-	//{
-	//	if (L"PlayerMove" == _OtherObj->GetName())
-	//		_OtherObj->SetMoveable(PLATFORM_TYPE::BOTTOM, true);
-	//}
 	_OtherObj->SetMoveable(PLATFORM_TYPE::LEFT, true);
 	_OtherObj->SetMoveable(PLATFORM_TYPE::RIGHT, true);
 	_OtherObj->SetMoveable(PLATFORM_TYPE::BOTTOM, true);

@@ -25,6 +25,7 @@ private:
     int                  m_LayerIdx;    // 소속 레이어의 인덱스 번호
     bool                 m_Dead;        // Object Dead
 
+    Vec3                 m_InitPos;
     bool                 m_Moveable[(UINT)PLATFORM_TYPE::END];
 
 public:
@@ -57,6 +58,9 @@ public:
     void SetDir(OBJ_DIR _Dir)   { m_Dir = _Dir; }
     OBJ_DIR GetDir()            { return m_Dir; }
 
+    void SetInitPos(Vec3 _Pos) { m_InitPos = _Pos; }
+    Vec3 GetInitPos()          { return m_InitPos; }
+
     GET_COMPONENT(Transform, TRANSFORM);
     GET_COMPONENT(MeshRender, MESHRENDER);
     GET_COMPONENT(Camera, CAMERA);
@@ -83,4 +87,5 @@ public:
     friend class CLevel;
     friend class CLayer;
     friend class CTaskMgr;
+    friend class CObjectPoolMgr;
 };
