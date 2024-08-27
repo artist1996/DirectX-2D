@@ -17,6 +17,8 @@
 #include "CConstBuffer.h"
 #include "CStructuredBuffer.h"
 
+#include "CFontMgr.h"
+
 CRenderMgr::CRenderMgr()
 	: m_DebugObject(nullptr)
 	, m_EditorCamera(nullptr)

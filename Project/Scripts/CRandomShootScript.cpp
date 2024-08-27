@@ -3,6 +3,7 @@
 
 CRandomShootScript::CRandomShootScript()
 	: CScript(SCRIPT_TYPE::RANDOMSHOOTSCRIPT)
+	, m_Count(0)
 {
 }
 
@@ -13,6 +14,7 @@ CRandomShootScript::~CRandomShootScript()
 void CRandomShootScript::Begin()
 {
 	MeshRender()->GetDynamicMaterial();
+	MeshRender()->GetMaterial()->SetScalarParam(INT_3, 1);
 	Animator2D()->Play(0, 17.f, false);
 //#ifdef _DEBUG
 //	Collider2D()->SetActive(true);

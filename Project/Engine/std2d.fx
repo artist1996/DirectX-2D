@@ -130,6 +130,13 @@ float4 PS_Std2D_Alphablend(VTX_OUT _in) : SV_Target
         }
     }
     
+    if(g_int_3)
+    {
+        vColor.r *= 2.f;
+        vColor.g *= 2.f;
+        vColor.b *= 2.f;
+    }
+    
     return vColor;
 }
 
@@ -182,6 +189,10 @@ float4 PS_HeadShot_AlphaBlend(VTX_OUT _in) : SV_Target
         }
     }
     
+    vColor.r *= 1.5f;
+    vColor.g *= 1.5f;
+    vColor.b *= 1.5f;
+    
     return vColor;
 }
 
@@ -208,11 +219,13 @@ float4 PS_DNF_AlphaBlend(VTX_OUT _in) : SV_Target
             discard;
         } 
         
-        if(vColor.r <= 0.15f && vColor.g <= 0.15f && vColor.b <= 0.15f)
+        if(vColor.r <= 0.4f && vColor.g <= 0.4f && vColor.b <= 0.4f)
             discard;
             
+        vColor.b += 0.6f;
+        vColor.a = 0.501f;
     }
-    // FlipBook 을 사용 하지 않는다.
+    // Animation 을 사용 하지 않는다.
     else
     {
         if (g_btex_0)
@@ -224,6 +237,11 @@ float4 PS_DNF_AlphaBlend(VTX_OUT _in) : SV_Target
             vColor = float4(1.f, 0.f, 1.f, 1.f);
         }
     }
+    
+    
+    vColor.r *= 3.f;
+    vColor.g *= 3.f;
+    vColor.b *= 3.f;
     
     return vColor;
 }

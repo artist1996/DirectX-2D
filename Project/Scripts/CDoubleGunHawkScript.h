@@ -19,6 +19,12 @@ private:
     float        m_Time;
     float        m_StopTime;
 
+    float        m_Force;
+    float        m_Mass;
+
+    float        m_Accel;
+    float        m_Friction;
+
     bool         m_Move;
     bool         m_Stop;
     bool         m_ReverseMove;

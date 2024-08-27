@@ -26,6 +26,7 @@ public:
     const Matrix& GetWorldMatrix() { return m_matColWorld; }
 
     int GetOverlapCount()     { return m_OverlapCount; }
+    void MinusOverlapCount()  { m_OverlapCount -= 1; }
 
     bool IsIndependentScale() { return m_IndependentScale; }
 

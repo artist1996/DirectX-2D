@@ -12,7 +12,7 @@ CHeadShotEffectScript::~CHeadShotEffectScript()
 
 void CHeadShotEffectScript::Begin()
 {
-	Animator2D()->Play(0, 22.f, false);
+	Animator2D()->Play(0, 12.f, false);
 }
 
 void CHeadShotEffectScript::Tick()

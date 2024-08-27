@@ -76,6 +76,15 @@
     <Filter Include="Scripts\02. PlayerSkillScript\07. HeadShot\02. Diagonal">
       <UniqueIdentifier>{edda1265-8009-4583-b213-d0c1c0d4521d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scripts\02. PlayerSkillScript\08. RisingShot\01. Normal">
+      <UniqueIdentifier>{96c8b010-9471-4a29-ae83-b3a1c1e09f37}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\02. PlayerSkillScript\08. RisingShot\02. Diagonal">
+      <UniqueIdentifier>{69404d0f-fdd3-4830-97b4-24c05922d253}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\03. PlayerEffectScript\04. GunHawkExplode">
+      <UniqueIdentifier>{970e8af2-4045-4cc7-9524-fbb24a848c90}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -129,6 +138,18 @@
     <ClInclude Include="CDoubleGunHawkScript.h">
       <Filter>Scripts\02. PlayerSkillScript\06. DoubleGunHawk</Filter>
     </ClInclude>
+    <ClInclude Include="CMachKickScript.h">
+      <Filter>Scripts\02. PlayerSkillScript\05. MachKick</Filter>
+    </ClInclude>
+    <ClInclude Include="CJackSpikeScript.h">
+      <Filter>Scripts\02. PlayerSkillScript\09. JackSpike</Filter>
+    </ClInclude>
+    <ClInclude Include="CRisingShotScript.h">
+      <Filter>Scripts\02. PlayerSkillScript\08. RisingShot\01. Normal</Filter>
+    </ClInclude>
+    <ClInclude Include="CGunHawkExplodeScript.h">
+      <Filter>Scripts\03. PlayerEffectScript\04. GunHawkExplode</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -181,6 +202,18 @@
     </ClCompile>
     <ClCompile Include="CDoubleGunHawkScript.cpp">
       <Filter>Scripts\02. PlayerSkillScript\06. DoubleGunHawk</Filter>
+    </ClCompile>
+    <ClCompile Include="CMachKickScript.cpp">
+      <Filter>Scripts\02. PlayerSkillScript\05. MachKick</Filter>
+    </ClCompile>
+    <ClCompile Include="CJackSpikeScript.cpp">
+      <Filter>Scripts\02. PlayerSkillScript\09. JackSpike</Filter>
+    </ClCompile>
+    <ClCompile Include="CRisingShotScript.cpp">
+      <Filter>Scripts\02. PlayerSkillScript\08. RisingShot\01. Normal</Filter>
+    </ClCompile>
+    <ClCompile Include="CGunHawkExplodeScript.cpp">
+      <Filter>Scripts\03. PlayerEffectScript\04. GunHawkExplode</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

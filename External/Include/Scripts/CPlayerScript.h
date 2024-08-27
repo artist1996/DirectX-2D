@@ -15,7 +15,33 @@ struct tPlayerPrefab
     Ptr<CPrefab> GunHawkFirstDownPref;
     Ptr<CPrefab> GunHawkSecondUpPref;
     Ptr<CPrefab> GunHawkSecondDownPref;
+    Ptr<CPrefab> MachKickPref;
+    Ptr<CPrefab> JackSpikePref;
+    Ptr<CPrefab> RisingShotPref;
+};
 
+struct tPlayerSkillTime
+{
+    float fHeadShotTime;
+    float fDeathByRevolverTime;
+    float fRandomShootTime;
+    float fWindMillTime;
+    float fGunHawkTime;
+    float fMachKickTime;
+    float fJackSpikeTime;
+    float fRisingShotTime;
+};
+
+struct tPlayerUseSkill
+{
+    bool bHeadShot;
+    bool bDeathByRevolver;
+    bool bRandShoot;
+    bool bWindMill;
+    bool bGunHawk;
+    bool bMachKick;
+    bool bJackSpike;
+    bool bRisingShot;
 };
 
 class CPlayerScript :
@@ -51,6 +77,9 @@ private:
     Ptr<CPrefab>             m_GunHawkFirstDownPref;
     Ptr<CPrefab>             m_GunHawkSecondUpPref;
     Ptr<CPrefab>             m_GunHawkSecondDownPref;
+    Ptr<CPrefab>             m_MachKickPref;
+    Ptr<CPrefab>             m_JackSpikePref;
+    Ptr<CPrefab>             m_RisingShotPref;
                              
     OBJ_DIR                  m_Dir;
     STATE                    m_State;
@@ -108,12 +137,16 @@ private:
     void CreateRandomShoot();
     void CreatePistol();
     void CreateWindMill();
+    void CreateMuzzelOfRevolverNormal();
     void CreateMuzzelOfRevolver();
     void CreateHammerOfRevolver();
     void CreateHeadShotEffect();
     void CreateHeadShot();
     void CreateGunHawkFirst();
     void CreateGunHawkSecond();
+    void CreateMachKick();
+    void CreateJackSpike();
+    void CreateRisingShot();
 
 public:
     void ChangeStateDoubleGunHawkStandBy();

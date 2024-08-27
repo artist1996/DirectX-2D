@@ -5,7 +5,8 @@ class CRandomShootScript :
     public CScript
 {
 private:
-    
+    int m_Count;
+
 public:
     virtual void Begin() override;
     virtual void Tick() override;

@@ -1,9 +1,12 @@
 CBuffScript
 CCameraMoveScript
 CDoubleGunHawkScript
+CGunHawkExplodeScript
 CHammerScript
 CHeadShotEffectScript
 CHeadShotScript
+CJackSpikeScript
+CMachKickScript
 CMuzzleScript
 CPistolScript
 CPlatformScript
@@ -11,4 +14,5 @@ CPlayerJumpScript
 CPlayerMoveScript
 CPlayerScript
 CRandomShootScript
+CRisingShotScript
 CWindmillScript

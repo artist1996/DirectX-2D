@@ -109,8 +109,7 @@ void CTaskMgr::ExecuteTask()
 			CLevel* pLevel = CLevelMgr::GetInst()->GetCurrentLevel();
 		
 			CLayer* pLayer = pLevel->GetLayer(pObject->m_LayerIdx);
-		
-			//pLayer->DeregisterObject(pObject);
+
 			pLayer->DisconnectWithObject(pObject);
 			CObjectPoolMgr::GetInst()->RetrieveRandomShoot(pObject);
 			pObject->m_LayerIdx = -1;
