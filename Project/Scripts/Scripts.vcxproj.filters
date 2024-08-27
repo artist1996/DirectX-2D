@@ -70,6 +70,12 @@
     <Filter Include="Scripts\02. PlayerSkillScript\09. JackSpike">
       <UniqueIdentifier>{0c3f07f4-0a88-4a97-9141-e61b13db457c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scripts\02. PlayerSkillScript\07. HeadShot\01. Normal">
+      <UniqueIdentifier>{6290317b-6ebf-4b79-bf2a-8ef37b94a5f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\02. PlayerSkillScript\07. HeadShot\02. Diagonal">
+      <UniqueIdentifier>{edda1265-8009-4583-b213-d0c1c0d4521d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -117,6 +123,12 @@
     <ClInclude Include="CWindmillScript.h">
       <Filter>Scripts\02. PlayerSkillScript\04. WindMill</Filter>
     </ClInclude>
+    <ClInclude Include="CHeadShotScript.h">
+      <Filter>Scripts\02. PlayerSkillScript\07. HeadShot\01. Normal</Filter>
+    </ClInclude>
+    <ClInclude Include="CDoubleGunHawkScript.h">
+      <Filter>Scripts\02. PlayerSkillScript\06. DoubleGunHawk</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -163,6 +175,12 @@
     </ClCompile>
     <ClCompile Include="CWindmillScript.cpp">
       <Filter>Scripts\02. PlayerSkillScript\04. WindMill</Filter>
+    </ClCompile>
+    <ClCompile Include="CHeadShotScript.cpp">
+      <Filter>Scripts\02. PlayerSkillScript\07. HeadShot\01. Normal</Filter>
+    </ClCompile>
+    <ClCompile Include="CDoubleGunHawkScript.cpp">
+      <Filter>Scripts\02. PlayerSkillScript\06. DoubleGunHawk</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

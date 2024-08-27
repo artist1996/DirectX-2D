@@ -17,6 +17,7 @@ CPlayerMoveScript::CPlayerMoveScript()
 	, m_Speed(300.f)
 	, m_MoveAble(true)
 	, m_TapMove(false)
+	, m_ForceTime(0.f)
 {
 	SetName(L"CPlayerMoveScript");
 }
@@ -51,6 +52,9 @@ void CPlayerMoveScript::Tick()
 		break;
 	case ST_TACKLE:
 		Tackle();
+		break;
+	case ST_FORCE:
+		Force();
 		break;
 	}
 }
@@ -181,6 +185,22 @@ void CPlayerMoveScript::Tackle()
 	}
 
 	Transform()->SetRelativePos(vPos);
+}
+
+void CPlayerMoveScript::Force()
+{
+	m_ForceTime += DT;
+
+	if(OBJ_DIR::DIR_LEFT == m_EntityScript->GetDir())
+		Rigidbody()->AddForce(Vec3(1000.f, 0.f, 0.f));
+	else if(OBJ_DIR::DIR_RIGHT == m_EntityScript->GetDir())
+		Rigidbody()->AddForce(Vec3(-1000.f, 0.f, 0.f));
+
+	if (0.1f < m_ForceTime)
+	{
+		SetState(MOVE_STATE::ST_IDLE);
+		m_ForceTime = 0.f;
+	}
 }
 
 void CPlayerMoveScript::CorrectionSpeed()

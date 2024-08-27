@@ -1,7 +1,7 @@
 #pragma once
 #include <Engine/CScript.h>
 
-enum MOVE_STATE { ST_IDLE, ST_MOVE, ST_RUN, ST_TACKLE, ST_END, };
+enum MOVE_STATE { ST_IDLE, ST_MOVE, ST_RUN, ST_TACKLE, ST_FORCE, ST_END, };
 
 class CPlayerMoveScript :
     public CScript
@@ -15,11 +15,14 @@ private:
     bool                      m_MoveAble;
     bool                      m_TapMove;
 
+    float                     m_ForceTime;
+
 private:
     void Idle();
     void Move();
     void Run();
     void Tackle();
+    void Force();
 
 private:
     void CorrectionSpeed();

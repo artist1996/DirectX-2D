@@ -3,8 +3,10 @@
 
 #include "CBuffScript.h"
 #include "CCameraMoveScript.h"
+#include "CDoubleGunHawkScript.h"
 #include "CHammerScript.h"
 #include "CHeadShotEffectScript.h"
+#include "CHeadShotScript.h"
 #include "CMuzzleScript.h"
 #include "CPistolScript.h"
 #include "CPlatformScript.h"
@@ -18,8 +20,10 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 {
 	_vec.push_back(L"CBuffScript");
 	_vec.push_back(L"CCameraMoveScript");
+	_vec.push_back(L"CDoubleGunHawkScript");
 	_vec.push_back(L"CHammerScript");
 	_vec.push_back(L"CHeadShotEffectScript");
+	_vec.push_back(L"CHeadShotScript");
 	_vec.push_back(L"CMuzzleScript");
 	_vec.push_back(L"CPistolScript");
 	_vec.push_back(L"CPlatformScript");
@@ -36,10 +40,14 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CBuffScript;
 	if (L"CCameraMoveScript" == _strScriptName)
 		return new CCameraMoveScript;
+	if (L"CDoubleGunHawkScript" == _strScriptName)
+		return new CDoubleGunHawkScript;
 	if (L"CHammerScript" == _strScriptName)
 		return new CHammerScript;
 	if (L"CHeadShotEffectScript" == _strScriptName)
 		return new CHeadShotEffectScript;
+	if (L"CHeadShotScript" == _strScriptName)
+		return new CHeadShotScript;
 	if (L"CMuzzleScript" == _strScriptName)
 		return new CMuzzleScript;
 	if (L"CPistolScript" == _strScriptName)
@@ -69,11 +77,17 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 	case (UINT)SCRIPT_TYPE::CAMERAMOVESCRIPT:
 		return new CCameraMoveScript;
 		break;
+	case (UINT)SCRIPT_TYPE::DOUBLEGUNHAWKSCRIPT:
+		return new CDoubleGunHawkScript;
+		break;
 	case (UINT)SCRIPT_TYPE::HAMMERSCRIPT:
 		return new CHammerScript;
 		break;
 	case (UINT)SCRIPT_TYPE::HEADSHOTEFFECTSCRIPT:
 		return new CHeadShotEffectScript;
+		break;
+	case (UINT)SCRIPT_TYPE::HEADSHOTSCRIPT:
+		return new CHeadShotScript;
 		break;
 	case (UINT)SCRIPT_TYPE::MUZZLESCRIPT:
 		return new CMuzzleScript;
@@ -115,12 +129,20 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 		return L"CCameraMoveScript";
 		break;
 
+	case SCRIPT_TYPE::DOUBLEGUNHAWKSCRIPT:
+		return L"CDoubleGunHawkScript";
+		break;
+
 	case SCRIPT_TYPE::HAMMERSCRIPT:
 		return L"CHammerScript";
 		break;
 
 	case SCRIPT_TYPE::HEADSHOTEFFECTSCRIPT:
 		return L"CHeadShotEffectScript";
+		break;
+
+	case SCRIPT_TYPE::HEADSHOTSCRIPT:
+		return L"CHeadShotScript";
 		break;
 
 	case SCRIPT_TYPE::MUZZLESCRIPT:

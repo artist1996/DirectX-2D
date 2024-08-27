@@ -10,6 +10,12 @@ struct tPlayerPrefab
     Ptr<CPrefab> MuzzlePref;
     Ptr<CPrefab> HammerPref;
     Ptr<CPrefab> WindmillPref;
+    Ptr<CPrefab> HeadShotPref;
+    Ptr<CPrefab> GunHawkFirstUpPref;
+    Ptr<CPrefab> GunHawkFirstDownPref;
+    Ptr<CPrefab> GunHawkSecondUpPref;
+    Ptr<CPrefab> GunHawkSecondDownPref;
+
 };
 
 class CPlayerScript :
@@ -18,10 +24,11 @@ class CPlayerScript :
 private:
     enum STATE    { IDLE, MOVE, AT_1, AT_2, AT_3,
                     JUMP, LANDING, RUN, DG_AT1, DG_AT2, DG_AT3, DG_AT4,
-                    SK_1, SK_2, SK_3, SK_4, SK_5, SK_6, SK_7, SK_8, SK_9, AT_4, DEAD, TACKLE, END, };
+                    SK_1, SK_2, SK_3, SK_4, SK_5, SK_6, SK_7, SK_8, SK_9, AT_4, DEAD, TACKLE,
+                    GUNHAWKSHOOT, GUNHAWKSTANDBY, GUNHAWKLASTSHOOT, END, };
 
     enum class ANIMATION_NUM { IDLE, MOVE, AT_1, AT_2, AT_3, JUMP, LANDING, RUN, DG_AT1, DG_AT2, DG_AT3,
-                               JACKSPIKE, RANDOMSHOT, DEATHBYREVOLVER, WINDMILL, MACHKICK, TACKLE, };
+                               JACKSPIKE, RANDOMSHOT, DEATHBYREVOLVER, WINDMILL, MACHKICK, TACKLE, GUNHAWKSHOOT, GUNHAWKSTANDBY, };
 
 private:
     class CPlayerMoveScript* m_MoveScript;
@@ -39,6 +46,11 @@ private:
     Ptr<CPrefab>             m_HammerPref;
     Ptr<CPrefab>             m_HeadShotEffectPref;
     Ptr<CPrefab>             m_WindmillPref;
+    Ptr<CPrefab>             m_HeadShotPref;
+    Ptr<CPrefab>             m_GunHawkFirstUpPref;
+    Ptr<CPrefab>             m_GunHawkFirstDownPref;
+    Ptr<CPrefab>             m_GunHawkSecondUpPref;
+    Ptr<CPrefab>             m_GunHawkSecondDownPref;
                              
     OBJ_DIR                  m_Dir;
     STATE                    m_State;
@@ -85,6 +97,9 @@ private:
     void RandomShot();
     void WindMill();
     void MachKick();
+    void GunHawkShoot();
+    void GunHawkStandBy();
+    void GunHawkLastShoot();
 
     // Stylish Skill
     void Stylish();
@@ -96,6 +111,12 @@ private:
     void CreateMuzzelOfRevolver();
     void CreateHammerOfRevolver();
     void CreateHeadShotEffect();
+    void CreateHeadShot();
+    void CreateGunHawkFirst();
+    void CreateGunHawkSecond();
+
+public:
+    void ChangeStateDoubleGunHawkStandBy();
 
 public:
     virtual void Begin() override;

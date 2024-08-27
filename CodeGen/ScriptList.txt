@@ -1,7 +1,9 @@
 CBuffScript
 CCameraMoveScript
+CDoubleGunHawkScript
 CHammerScript
 CHeadShotEffectScript
+CHeadShotScript
 CMuzzleScript
 CPistolScript
 CPlatformScript

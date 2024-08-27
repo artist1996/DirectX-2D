@@ -73,6 +73,7 @@ void ScriptUI::Update()
 			ParamUI::DragVec2((Vec2*)vecParam[i].pData, 1.f, vecParam[i].strDesc);
 			break;
 		case SCRIPT_PARAM::VEC3:
+			ParamUI::DragVec3((Vec3*)vecParam[i].pData, 1.f, vecParam[i].strDesc);
 			break;
 		case SCRIPT_PARAM::VEC4:
 			ParamUI::DragVec4((Vec4*)vecParam[i].pData, 1.f, vecParam[i].strDesc);

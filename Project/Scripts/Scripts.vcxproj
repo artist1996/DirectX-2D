@@ -160,7 +160,9 @@ call CodeGen.exe</Command>
   <ItemGroup>
     <ClInclude Include="CBuffScript.h" />
     <ClInclude Include="CCameraMoveScript.h" />
+    <ClInclude Include="CDoubleGunHawkScript.h" />
     <ClInclude Include="CHammerScript.h" />
+    <ClInclude Include="CHeadShotScript.h" />
     <ClInclude Include="CHeadShotEffectScript.h" />
     <ClInclude Include="CMuzzleScript.h" />
     <ClInclude Include="CPistolScript.h" />
@@ -177,7 +179,9 @@ call CodeGen.exe</Command>
   <ItemGroup>
     <ClCompile Include="CBuffScript.cpp" />
     <ClCompile Include="CCameraMoveScript.cpp" />
+    <ClCompile Include="CDoubleGunHawkScript.cpp" />
     <ClCompile Include="CHammerScript.cpp" />
+    <ClCompile Include="CHeadShotScript.cpp" />
     <ClCompile Include="CHeadShotEffectScript.cpp" />
     <ClCompile Include="CMuzzleScript.cpp" />
     <ClCompile Include="CPistolScript.cpp" />

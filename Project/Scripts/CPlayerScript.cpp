@@ -27,6 +27,11 @@ CPlayerScript::CPlayerScript()
 	, m_HammerPref(nullptr)
 	, m_HeadShotEffectPref(nullptr)
 	, m_WindmillPref(nullptr)
+	, m_HeadShotPref(nullptr)
+	, m_GunHawkFirstUpPref(nullptr)
+	, m_GunHawkFirstDownPref(nullptr)
+	, m_GunHawkSecondUpPref(nullptr)
+	, m_GunHawkSecondDownPref(nullptr)
 	, m_Dir(OBJ_DIR::DIR_LEFT)
 	, m_State(STATE::IDLE)
 	, m_Speed(500.f)
@@ -57,6 +62,13 @@ void CPlayerScript::Begin()
 	m_HammerPref = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\revolverhammer_normal.pref");
 	m_HeadShotEffectPref = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\headshoteffect.pref");
 	m_WindmillPref = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\windmilleffect.pref");
+	m_HeadShotPref = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\skill_headshot.pref");
+	m_GunHawkFirstUpPref = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\gunhawk0_up.pref");
+	m_GunHawkFirstDownPref = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\gunhawk0_down.pref");
+	m_GunHawkSecondUpPref = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\gunhawk1_up.pref");
+	m_GunHawkSecondDownPref = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\gunhawk1_down.pref");
+
+
 	m_MoveObject = CLevelMgr::GetInst()->FindObjectByName(L"PlayerMove");
 	m_JumpObject = CLevelMgr::GetInst()->FindObjectByName(L"PlayerJump");
 	
@@ -144,6 +156,15 @@ void CPlayerScript::Tick()
 		break;
 	case CPlayerScript::STATE::TACKLE:
 		Tackle();
+		break;
+	case CPlayerScript::STATE::GUNHAWKSHOOT:
+		GunHawkShoot();
+		break;
+	case CPlayerScript::STATE::GUNHAWKSTANDBY:
+		GunHawkStandBy();
+		break;
+	case CPlayerScript::STATE::GUNHAWKLASTSHOOT:
+		GunHawkLastShoot();
 		break;
 	case CPlayerScript::STATE::END:
 		break;
@@ -330,6 +351,13 @@ void CPlayerScript::Idle()
 		SetState(STATE::SK_7);
 		Animator2D()->Play((int)ANIMATION_NUM::MACHKICK, 20.f, false);
 		SetMoveable(false);
+	}
+	if (KEY_TAP(KEY::Q))
+	{
+		SetState(STATE::GUNHAWKSHOOT);
+		Animator2D()->Play((int)ANIMATION_NUM::GUNHAWKSHOOT, 15.f, false);
+		SetMoveable(false);
+		CreateGunHawkFirst();
 	}
 
 	Transform()->SetRelativeRotation(vRot);
@@ -747,6 +775,7 @@ void CPlayerScript::HeadShot()
 {
 	if (m_Spawn && 3 <= Animator2D()->GetCurFrameIndex())
 	{
+		CreateHeadShot();
 		CreateHeadShotEffect();
 		m_Spawn = false;
 	}
@@ -784,6 +813,44 @@ void CPlayerScript::WindMill()
 }
 
 void CPlayerScript::MachKick()
+{
+	if (Animator2D()->IsFinish())
+	{
+		SetState(STATE::IDLE);
+		Animator2D()->Play((int)ANIMATION_NUM::IDLE, 5.f, true);
+		SetMoveable(true);
+	}
+}
+
+void CPlayerScript::GunHawkShoot()
+{
+	if (Animator2D()->IsFinish())
+	{
+		SetState(STATE::IDLE);
+		Animator2D()->Play((int)ANIMATION_NUM::IDLE, 5.f, true);
+		SetMoveable(true);
+	}
+}
+
+void CPlayerScript::GunHawkStandBy()
+{
+	if (!Animator2D()->IsFinish() && KEY_TAP(KEY::Q))
+	{
+		SetState(STATE::GUNHAWKLASTSHOOT);
+		Animator2D()->Play((int)ANIMATION_NUM::GUNHAWKSHOOT, 15.f, true);
+		CreateGunHawkSecond();
+		SetMoveable(false);
+	}
+
+	else if (Animator2D()->IsFinish())
+	{
+		SetState(STATE::IDLE);
+		Animator2D()->Play((int)ANIMATION_NUM::IDLE, 5.f, true);
+		SetMoveable(true);
+	}
+}
+
+void CPlayerScript::GunHawkLastShoot()
 {
 	if (Animator2D()->IsFinish())
 	{
@@ -1157,6 +1224,98 @@ void CPlayerScript::CreateHeadShotEffect()
 	}
 
 	CreateObject(pObject, 0);
+}
+
+void CPlayerScript::CreateHeadShot()
+{
+	CGameObject* pObject = m_HeadShotPref->Instantiate();
+	Vec3 vPos = Transform()->GetWorldPos();
+
+	if (OBJ_DIR::DIR_LEFT == m_Dir)
+	{
+		pObject->Transform()->SetRelativePos(Vec3(vPos.x - 175.f, vPos.y + 40.f, vPos.z));
+		pObject->SetDir(OBJ_DIR::DIR_LEFT);
+	}
+
+	else if (OBJ_DIR::DIR_RIGHT == m_Dir)
+	{
+		pObject->Transform()->SetRelativePos(Vec3(vPos.x + 175.f, vPos.y + 40.f, vPos.z));
+		pObject->SetDir(OBJ_DIR::DIR_RIGHT);
+	}
+
+	pObject->SetInitPos(vPos);
+
+	CreateObject(pObject, 7);
+}
+
+void CPlayerScript::CreateGunHawkFirst()
+{
+	Vec3 vPos = Transform()->GetWorldPos();
+
+	CGameObject* GunHawkUp = m_GunHawkFirstUpPref->Instantiate();
+	CGameObject* GunHawkDown = m_GunHawkFirstDownPref->Instantiate();
+
+	if(OBJ_DIR::DIR_LEFT == m_Dir)
+	{
+		GunHawkUp->Transform()->SetRelativePos(Vec3(vPos.x + 50.f, vPos.y - 5.f, vPos.z));
+		GunHawkDown->Transform()->SetRelativePos(Vec3(vPos.x + 50.f, vPos.y - 5.f, vPos.z));
+		GunHawkUp->Transform()->SetRelativeRotation(Vec3(XM_PI / 3.f, 0.f, 0.f));
+		GunHawkDown->Transform()->SetRelativeRotation(Vec3(XM_PI / 3.f, 0.f, 0.f));
+	}
+
+	else if (OBJ_DIR::DIR_RIGHT == m_Dir)
+	{
+		GunHawkUp->Transform()->SetRelativePos(Vec3(vPos.x + 50.f, vPos.y - 5.f, vPos.z));
+		GunHawkDown->Transform()->SetRelativePos(Vec3(vPos.x + 50.f, vPos.y - 5.f, vPos.z));
+		GunHawkUp->Transform()->SetRelativeRotation(Vec3(XM_PI / 3.f, 0.f, 0.f));
+		GunHawkDown->Transform()->SetRelativeRotation(Vec3(XM_PI / 3.f, 0.f, 0.f));
+	}
+
+	GunHawkUp->SetDir(m_Dir);
+	GunHawkDown->SetDir(m_Dir);
+	GunHawkUp->SetInitPos(vPos);
+	GunHawkDown->SetInitPos(vPos);
+	CreateObject(GunHawkUp, 7);
+	CreateObject(GunHawkDown, 7);
+}
+
+void CPlayerScript::CreateGunHawkSecond()
+{
+	Vec3 vPos = Transform()->GetWorldPos();
+
+	CGameObject* GunHawkUp = m_GunHawkSecondUpPref->Instantiate();
+	CGameObject* GunHawkDown = m_GunHawkSecondDownPref->Instantiate();
+
+	if (OBJ_DIR::DIR_LEFT == m_Dir)
+	{
+		GunHawkUp->Transform()->SetRelativePos(Vec3(vPos.x + 50.f, vPos.y, vPos.z));
+		GunHawkDown->Transform()->SetRelativePos(Vec3(vPos.x + 50.f, vPos.y, vPos.z));
+		GunHawkUp->Transform()->SetRelativeRotation(Vec3(XM_PI / 2.65f, 0.f, 0.f));
+		GunHawkDown->Transform()->SetRelativeRotation(Vec3(XM_PI / 2.65f, 0.f, 0.f));
+	}
+
+	else if (OBJ_DIR::DIR_RIGHT == m_Dir)
+	{
+		GunHawkUp->Transform()->SetRelativePos(Vec3(vPos.x + 50.f, vPos.y, vPos.z));
+		GunHawkDown->Transform()->SetRelativePos(Vec3(vPos.x + 50.f, vPos.y, vPos.z));
+		GunHawkUp->Transform()->SetRelativeRotation(Vec3(XM_PI / 2.65f, 0.f, 0.f));
+		GunHawkDown->Transform()->SetRelativeRotation(Vec3(XM_PI / 2.65f, 0.f, 0.f));
+	}
+
+	GunHawkUp->SetDir(m_Dir);
+	GunHawkDown->SetDir(m_Dir);
+	GunHawkUp->SetInitPos(vPos);
+	GunHawkDown->SetInitPos(vPos);
+	CreateObject(GunHawkUp, 7);
+	CreateObject(GunHawkDown, 7);
+}
+
+void CPlayerScript::ChangeStateDoubleGunHawkStandBy()
+{
+	Animator2D()->Play((int)ANIMATION_NUM::GUNHAWKSTANDBY, 1.f, false);
+	SetState(STATE::GUNHAWKSTANDBY);
+	m_MoveScript->SetState(MOVE_STATE::ST_FORCE);
+	//m_MoveScript->Rigidbody()->AddForce(Vec3(10000.f, 0.f, 0.f));
 }
 
 void CPlayerScript::SaveToFile(FILE* _pFile)
