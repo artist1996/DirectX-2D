@@ -1,0 +1,24 @@
+#pragma once
+#include <Engine/CScript.h>
+
+class CDiagonalHeadShotScript :
+    public CScript
+{
+private:
+    Vec3    m_DestroyPos;
+    float   m_Speed;
+
+public:
+    virtual void Begin() override;
+    virtual void Tick() override;
+
+public:
+    virtual void SaveToFile(FILE* _pFile)   override {}
+    virtual void LoadFromFile(FILE* _pFile) override {}
+
+public:
+    CLONE(CDiagonalHeadShotScript);
+    CDiagonalHeadShotScript();
+    virtual ~CDiagonalHeadShotScript();
+};
+

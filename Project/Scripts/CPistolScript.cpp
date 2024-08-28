@@ -3,8 +3,7 @@
 
 CPistolScript::CPistolScript()
 	: CScript(SCRIPT_TYPE::PISTOLSCRIPT)
-	, m_Speed(50.f)
-	, m_Dir(DIR_LEFT)
+	, m_Speed(1000.f)
 {
 }
 
@@ -29,11 +28,11 @@ void CPistolScript::Tick()
 	switch (GetOwner()->GetDir())
 	{
 	case OBJ_DIR::DIR_LEFT:
-		vPos.x -= 1000.f * DT;
+		vPos.x -= m_Speed * DT;
 		break;
 
 	case OBJ_DIR::DIR_RIGHT:
-		vPos.x += 1000.f * DT;
+		vPos.x += m_Speed * DT;
 		break;
 	}
 
@@ -41,6 +40,7 @@ void CPistolScript::Tick()
 	{
 		DeleteObject(GetOwner());
 	}
+
 
 	Transform()->SetRelativePos(vPos);
 }

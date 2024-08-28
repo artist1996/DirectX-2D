@@ -85,6 +85,24 @@
     <Filter Include="Scripts\03. PlayerEffectScript\04. GunHawkExplode">
       <UniqueIdentifier>{970e8af2-4045-4cc7-9524-fbb24a848c90}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scripts\02. PlayerSkillScript\03. Pistol\01. Normal">
+      <UniqueIdentifier>{ad28ae7d-5dcc-486a-916b-59eb4c79ecf7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\02. PlayerSkillScript\03. Pistol\02. Diagonal">
+      <UniqueIdentifier>{d004ebd1-3f01-40e7-b2b9-817aa0c62a8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\05. NPCScript">
+      <UniqueIdentifier>{2eac85f5-e8a0-4269-bc3a-b93f70e99eec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\05. NPCScript\01. Seria">
+      <UniqueIdentifier>{95e264fa-989a-4126-9ec0-5f672cbb66a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\06. GateScript">
+      <UniqueIdentifier>{166948f6-871d-450d-8302-52b3a6987ee2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\06. GateScript\01. SeriaRoomGate">
+      <UniqueIdentifier>{447b6b60-5e50-424c-a2a4-8019c24c70a6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -113,9 +131,6 @@
     </ClInclude>
     <ClInclude Include="CRandomShootScript.h">
       <Filter>Scripts\02. PlayerSkillScript\02. RandomShoot</Filter>
-    </ClInclude>
-    <ClInclude Include="CPistolScript.h">
-      <Filter>Scripts\02. PlayerSkillScript\03. Pistol</Filter>
     </ClInclude>
     <ClInclude Include="CPlatformScript.h">
       <Filter>Scripts\04. PlatformScript</Filter>
@@ -150,6 +165,18 @@
     <ClInclude Include="CGunHawkExplodeScript.h">
       <Filter>Scripts\03. PlayerEffectScript\04. GunHawkExplode</Filter>
     </ClInclude>
+    <ClInclude Include="CPistolScript.h">
+      <Filter>Scripts\02. PlayerSkillScript\03. Pistol\01. Normal</Filter>
+    </ClInclude>
+    <ClInclude Include="CDiagonalPistolScript.h">
+      <Filter>Scripts\02. PlayerSkillScript\03. Pistol\02. Diagonal</Filter>
+    </ClInclude>
+    <ClInclude Include="CSeriaScript.h">
+      <Filter>Scripts\05. NPCScript\01. Seria</Filter>
+    </ClInclude>
+    <ClInclude Include="CDiagonalHeadShotScript.h">
+      <Filter>Scripts\02. PlayerSkillScript\07. HeadShot\02. Diagonal</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -178,9 +205,6 @@
     </ClCompile>
     <ClCompile Include="CRandomShootScript.cpp">
       <Filter>Scripts\02. PlayerSkillScript\02. RandomShoot</Filter>
-    </ClCompile>
-    <ClCompile Include="CPistolScript.cpp">
-      <Filter>Scripts\02. PlayerSkillScript\03. Pistol</Filter>
     </ClCompile>
     <ClCompile Include="CPlatformScript.cpp">
       <Filter>Scripts\04. PlatformScript</Filter>
@@ -214,6 +238,18 @@
     </ClCompile>
     <ClCompile Include="CGunHawkExplodeScript.cpp">
       <Filter>Scripts\03. PlayerEffectScript\04. GunHawkExplode</Filter>
+    </ClCompile>
+    <ClCompile Include="CPistolScript.cpp">
+      <Filter>Scripts\02. PlayerSkillScript\03. Pistol\01. Normal</Filter>
+    </ClCompile>
+    <ClCompile Include="CDiagonalPistolScript.cpp">
+      <Filter>Scripts\02. PlayerSkillScript\03. Pistol\02. Diagonal</Filter>
+    </ClCompile>
+    <ClCompile Include="CSeriaScript.cpp">
+      <Filter>Scripts\05. NPCScript\01. Seria</Filter>
+    </ClCompile>
+    <ClCompile Include="CDiagonalHeadShotScript.cpp">
+      <Filter>Scripts\02. PlayerSkillScript\07. HeadShot\02. Diagonal</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

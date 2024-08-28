@@ -28,6 +28,8 @@ private:
     Vec3                 m_InitPos;
     bool                 m_Moveable[(UINT)PLATFORM_TYPE::END];
 
+    CGameObject*         m_Owner;
+
 public:
     void AddComponent(CComponent* _Component);
     CComponent* GetComponent(COMPONENT_TYPE _Type) { return m_arrCom[(UINT)_Type]; }
@@ -60,6 +62,9 @@ public:
 
     void SetInitPos(Vec3 _Pos) { m_InitPos = _Pos; }
     Vec3 GetInitPos()          { return m_InitPos; }
+
+    void SetOwner(CGameObject* _Owner) { m_Owner = _Owner; }
+    CGameObject* GetOwner()            { return m_Owner; }
 
     GET_COMPONENT(Transform, TRANSFORM);
     GET_COMPONENT(MeshRender, MESHRENDER);

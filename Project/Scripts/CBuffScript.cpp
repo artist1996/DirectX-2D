@@ -16,6 +16,7 @@ void CBuffScript::Begin()
 {
 	MeshRender()->GetDynamicMaterial();
 	Animator2D()->Play(0, 20.f, false);
+	MeshRender()->GetMaterial()->SetScalarParam(INT_3, 0);
 }
 
 void CBuffScript::Tick()

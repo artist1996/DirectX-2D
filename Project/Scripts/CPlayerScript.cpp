@@ -5,7 +5,7 @@
 #include <Engine/CLevel.h>
 #include <Engine/CLayer.h>
 
-#include <Engine/CFontMgr.h>
+#include <Engine/CDistanceMgr.h>
 #include <Engine/CObjectPoolMgr.h>
 
 #include <Engine/CFSM.h>
@@ -43,12 +43,25 @@ CPlayerScript::CPlayerScript()
 	, m_Time(0.f)
 	, m_NextAttack(false)
 	, m_Run(false)
-	, m_Spawn(false)
+	, m_Spawn(true)
 	, m_Muzzel(true)
+	, m_CheckRange(false)
+	, m_CoolTime{}
+	, m_UseSkill{}
+	, m_Prefabs{}
 {
 	SetName(L"CPlayerScript");
 
 	AddScriptParam(SCRIPT_PARAM::FLOAT,"PlayerSpeed", &m_Speed);
+
+	m_CoolTime.fHeadShotCoolTime		= 5.f;
+	m_CoolTime.fDeathByRevolverCoolTime = 10.f;
+	m_CoolTime.fRandomShootCoolTime		= 23.f;
+	m_CoolTime.fWindMillCoolTime		= 7.f;
+	m_CoolTime.fGunHawkCoolTime			= 31.f;
+	m_CoolTime.fMachKickCoolTime		= 7.f;
+	m_CoolTime.fJackSpikeCoolTime		= 3.f;
+	m_CoolTime.fRisingShotCoolTime		= 3.f;
 }
 
 CPlayerScript::~CPlayerScript()
@@ -75,12 +88,17 @@ void CPlayerScript::Begin()
 	m_JackSpikePref = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\skill_jackspike.pref");
 	m_RisingShotPref = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\skill_risingshot.pref");
 
+	m_Prefabs.DiagonalPistolPref = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\diagonalpistol.pref");
+	m_Prefabs.DiagonalHeadShotPref = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\diagonalheadshot.pref");
+
 	m_MoveObject = CLevelMgr::GetInst()->FindObjectByName(L"PlayerMove");
 	m_JumpObject = CLevelMgr::GetInst()->FindObjectByName(L"PlayerJump");
 	
 	m_MoveScript = (CPlayerMoveScript*)m_MoveObject->FindScriptByName(L"CPlayerMoveScript");
 	m_JumpScript = (CPlayerJumpScript*)m_JumpObject->FindScriptByName(L"CPlayerJumpScript");
 	
+	CDistanceMgr::GetInst()->Init();
+
 	Animator2D()->Play((int)IDLE, 5.f, true);
 
 	Collider2D()->SetOffset(Vec3(0.f, -0.44f, 1.f));
@@ -90,6 +108,8 @@ void CPlayerScript::Tick()
 {
 	Vec3 vMovePos = m_MoveObject->Transform()->GetRelativePos();
 	float fJumpHeight = m_JumpObject->Transform()->GetRelativePos().y;
+
+	m_CheckRange = CDistanceMgr::GetInst()->IsInRange();
 
 	switch (m_State)
 	{
@@ -187,6 +207,7 @@ void CPlayerScript::Tick()
 		m_Time = 0.f;
 	}
 
+	SkillTimeCheck();
 	Transform()->SetRelativePos(Vec3(vMovePos.x, vMovePos.y + fJumpHeight, vMovePos.z + fJumpHeight));
 	Vec3 vPos = Transform()->GetWorldPos();
 }
@@ -196,6 +217,8 @@ void CPlayerScript::Idle()
 	Vec3 vRot = Transform()->GetRelativeRotation();
 
 	Collider2D()->SetOffset(Vec3(0.f, -0.44f, 1.f));
+
+	m_JumpScript->SetJump(false);
 
 	if (KEY_TAP(KEY::LEFT))
 	{
@@ -276,11 +299,25 @@ void CPlayerScript::Idle()
 	
 	if (KEY_TAP(KEY::X))
 	{
-		m_State = STATE::AT_1;
-		Animator2D()->Play((int)STATE::AT_1, 15.f, false);
-		SetMoveable(false);
-		CreateMuzzelOfRevolverNormal();
-		CreatePistol();
+		if (m_CheckRange)
+		{
+			m_State = STATE::DG_AT1;
+			Animator2D()->Play((int)STATE::DG_AT1, 15.f, true);
+			SetMoveable(false);
+			CreateMuzzelOfRevolverDiagonal();
+			CreateDiagonalPistol();
+		}
+
+		else
+		{
+			m_State = STATE::AT_1;
+			Animator2D()->Play((int)STATE::AT_1, 15.f, false);
+			SetMoveable(false);
+			CreateMuzzelOfRevolverNormal();
+			CreatePistol();
+		}
+
+		m_JumpScript->SetJump(true);
 	}
 	else if (KEY_PRESSED(KEY::DOWN) && KEY_TAP(KEY::X))
 	{
@@ -296,78 +333,7 @@ void CPlayerScript::Idle()
 	}
 
 	// Skill
-
-	if (KEY_TAP(KEY::Z))
-	{
-		SetState(STATE::SK_1);
-		Animator2D()->Play((int)ANIMATION_NUM::JACKSPIKE, 11.f, false);
-		CreateJackSpike();
-		SetMoveable(false);
-	}
-	
-	if (KEY_TAP(KEY::S))
-	{
-		SetState(STATE::SK_2);
-		Animator2D()->Play((int)ANIMATION_NUM::AT_3, 20.f, false);
-		SetMoveable(false);
-	}
-
-	if (KEY_TAP(KEY::A))
-	{
-		SetState(STATE::SK_3);
-		Animator2D()->Play((int)ANIMATION_NUM::AT_3, 25.f, false);
-		SetMoveable(false);
-	}
-
-	if (KEY_TAP(KEY::G))
-	{
-		SetState(STATE::SK_4);
-		Animator2D()->Play((int)ANIMATION_NUM::RANDOMSHOT, 30.f, false);
-		SetMoveable(false);
-
-		//Vec3 vPos = Transform()->GetWorldPos();
-	}
-
-	if (KEY_TAP(KEY::SPACE))
-	{
-		SetState(STATE::SK_5);
-		Animator2D()->Play((int)ANIMATION_NUM::DEATHBYREVOLVER, 17.f, false);
-		SetMoveable(false);
-
-		CGameObject* pBuff = m_BuffPref->Instantiate();
-
-		Vec3 vPos = Transform()->GetWorldPos();
-		CGameObject* pCam = CLevelMgr::GetInst()->FindObjectByName(L"MainCamera");
-		
-		pBuff->Transform()->SetRelativePos(Vec3(vPos.x, pCam->Transform()->GetWorldPos().y, vPos.z + 100.f));
-		pBuff->Transform()->SetRelativeScale(Vec3(470.f, 768.f, 1.f));
-		pBuff->Transform()->SetRelativeRotation(vRot);
-		pBuff->MeshRender()->GetMaterial()->SetShader(CAssetMgr::GetInst()->FindAsset<CGraphicShader>(L"Std2DAlphaBlendShader"));
-		
-		CreateObject(pBuff, 0);
-	}
-
-	if (KEY_TAP(KEY::D))
-	{
-		SetState(STATE::SK_6);
-		Animator2D()->Play((int)ANIMATION_NUM::WINDMILL, 20.f, false);
-		CreateWindMill();
-	}
-
-	if (KEY_TAP(KEY::F))
-	{
-		SetState(STATE::SK_7);
-		Animator2D()->Play((int)ANIMATION_NUM::MACHKICK, 20.f, false);
-		CreateMachKick();
-		SetMoveable(false);
-	}
-	if (KEY_TAP(KEY::Q))
-	{
-		SetState(STATE::GUNHAWKSHOOT);
-		Animator2D()->Play((int)ANIMATION_NUM::GUNHAWKSHOOT, 7.f, false);
-		SetMoveable(false);
-		CreateGunHawkFirst();
-	}
+	Stylish();
 
 	Transform()->SetRelativeRotation(vRot);
 }
@@ -404,6 +370,10 @@ void CPlayerScript::Move()
 		m_State = STATE::DG_AT1;
 		Animator2D()->Play((int)STATE::DG_AT1, 15.f, true);
 		SetMoveable(false);
+		CreateMuzzelOfRevolverDiagonal();
+		CreateDiagonalPistol();
+
+		m_JumpScript->SetJump(true);
 	}
 
 	else if (KEY_TAP(KEY::X))
@@ -411,6 +381,7 @@ void CPlayerScript::Move()
 		m_State = STATE::AT_1;
 		Animator2D()->Play((int)STATE::AT_1, 15.f, false);
 		SetMoveable(false);
+		m_JumpScript->SetJump(true);
 	}
 
 	// JUMP
@@ -421,54 +392,7 @@ void CPlayerScript::Move()
 	}
 
 	// SKILL
-	if (KEY_TAP(KEY::Z))
-	{
-		SetState(STATE::SK_1);
-		Animator2D()->Play((int)ANIMATION_NUM::JACKSPIKE, 7.f, false);
-		SetMoveable(false);
-	}
-
-	if (KEY_TAP(KEY::S))
-	{
-		SetState(STATE::SK_2);
-		Animator2D()->Play((int)ANIMATION_NUM::AT_3, 20.f, false);
-		SetMoveable(false);
-	}
-
-	if (KEY_TAP(KEY::A))
-	{
-		SetState(STATE::SK_3);
-		Animator2D()->Play((int)ANIMATION_NUM::DG_AT3, 25.f, false);
-		CreateHeadShotEffect();
-		SetMoveable(false);
-	}
-
-	if (KEY_TAP(KEY::G))
-	{
-		SetState(STATE::SK_4);
-		Animator2D()->Play((int)ANIMATION_NUM::RANDOMSHOT, 25.f, false);
-		SetMoveable(false);
-	}
-
-	if (KEY_TAP(KEY::D))
-	{
-		SetState(STATE::SK_6);
-		Animator2D()->Play((int)ANIMATION_NUM::WINDMILL, 20.f, false);
-	}
-
-	if (KEY_TAP(KEY::F))
-	{
-		SetState(STATE::SK_7);
-		Animator2D()->Play((int)ANIMATION_NUM::MACHKICK, 20.f, false);
-		SetMoveable(false);
-	}
-
-	if (KEY_TAP(KEY::SPACE))
-	{
-		SetState(STATE::SK_5);
-		Animator2D()->Play((int)ANIMATION_NUM::DEATHBYREVOLVER, 17.f, false);
-		SetMoveable(false);
-	}
+	Stylish();
 }
 
 void CPlayerScript::AT1()
@@ -493,6 +417,8 @@ void CPlayerScript::AT1()
 		CreatePistol();
 		CreateMuzzelOfRevolverNormal();
 	}
+
+	Stylish();
 }
 
 void CPlayerScript::AT2()
@@ -517,31 +443,12 @@ void CPlayerScript::AT2()
 		m_State = STATE::IDLE;
 		SetMoveable(true);
 	}
+
+	Stylish();
 }
 
 void CPlayerScript::AT3()
 {
-	//if (KEY_TAP(KEY::X) && !Animator2D()->IsFinish())
-	//{
-	//	m_NextAttack = true;
-	//}
-	//
-	//if (m_NextAttack && Animator2D()->IsFinish())
-	//{
-	//	Animator2D()->Play((int)AT_2, 17.f, true);
-	//	m_State = STATE::AT_4;
-	//	m_NextAttack = false;
-	//	CreatePistol();
-	//	return;
-	//}
-	//
-	//else if (!m_NextAttack && Animator2D()->IsFinish())
-	//{
-	//	Animator2D()->Play((int)IDLE, 5.f, true);
-	//	m_State = STATE::IDLE;
-	//	SetMoveable(true);
-	//}
-
 	if (KEY_TAP(KEY::X) && !Animator2D()->IsFinish() && !m_NextAttack)
 	{
 		m_NextAttack = true;
@@ -560,6 +467,8 @@ void CPlayerScript::AT3()
 		m_State = STATE::IDLE;
 		SetMoveable(true);
 	}
+
+	Stylish();
 }
 
 void CPlayerScript::AT4()
@@ -577,6 +486,8 @@ void CPlayerScript::AT4()
 		Animator2D()->Play((int)IDLE, 5.f, true);
 		SetMoveable(true);
 	}
+
+	Stylish();
 }
 
 void CPlayerScript::AT_DG1()
@@ -588,18 +499,30 @@ void CPlayerScript::AT_DG1()
 	
 	if(m_NextAttack && Animator2D()->IsFinish())
 	{
-		if (KEY_PRESSED(KEY::DOWN))
+		if (m_CheckRange)
 		{
 			m_State = STATE::DG_AT2;
 			Animator2D()->Play((int)STATE::DG_AT2, 10.f, true);
+			CreateDiagonalPistol();
+			CreateMuzzelOfRevolverDiagonal();
+			m_NextAttack = false;
 		}
-		else if(KEY_RELEASED(KEY::DOWN))
+		else
 		{
-			m_State = STATE::AT_2;
-			Animator2D()->Play((int)STATE::AT_2, 10.f, true);
+			if (KEY_PRESSED(KEY::DOWN))
+			{
+				m_State = STATE::DG_AT2;
+				Animator2D()->Play((int)STATE::DG_AT2, 10.f, true);
+			}
+			else if (KEY_RELEASED(KEY::DOWN))
+			{
+				m_State = STATE::AT_2;
+				Animator2D()->Play((int)STATE::AT_2, 10.f, true);
+			}
+			CreateDiagonalPistol();
+			CreateMuzzelOfRevolverDiagonal();
+			m_NextAttack = false;
 		}
-
-		m_NextAttack = false;
 	}
 	
 	else if (!m_NextAttack && Animator2D()->IsFinish())
@@ -608,6 +531,8 @@ void CPlayerScript::AT_DG1()
 		Animator2D()->Play((int)STATE::IDLE, 5.f, true);
 		SetMoveable(true);
 	}
+
+	Stylish();
 }
 
 void CPlayerScript::AT_DG2()
@@ -623,13 +548,15 @@ void CPlayerScript::AT_DG2()
 		{
 			m_State = STATE::DG_AT3;
 			Animator2D()->Play((int)STATE::DG_AT2, 10.f, true);
+			CreateDiagonalPistol();
+			CreateMuzzelOfRevolverDiagonal();
 		}
 		else if(KEY_RELEASED(KEY::DOWN))
 		{
 			m_State = STATE::AT_2;
 			Animator2D()->Play((int)STATE::AT_2, 10.f, true);
 		}
-
+		
 		m_NextAttack = false;
 	}
 
@@ -639,6 +566,8 @@ void CPlayerScript::AT_DG2()
 		Animator2D()->Play((int)IDLE, 5.f, true);
 		SetMoveable(true);
 	}
+
+	Stylish();
 }
 
 void CPlayerScript::AT_DG3()
@@ -650,18 +579,26 @@ void CPlayerScript::AT_DG3()
 
 	if (m_NextAttack && Animator2D()->IsFinish())
 	{
-		if (KEY_PRESSED(KEY::DOWN))
+		if (m_CheckRange)
 		{
 			m_State = STATE::DG_AT4;
 			Animator2D()->Play((int)STATE::DG_AT3, 17.f, true);
 		}
 
-		else if (KEY_RELEASED(KEY::DOWN))
+		else
 		{
-			m_State = STATE::AT_2;
-			Animator2D()->Play((int)STATE::AT_3, 10.f, true);
+			if (KEY_PRESSED(KEY::DOWN))
+			{
+				m_State = STATE::DG_AT4;
+				Animator2D()->Play((int)STATE::DG_AT3, 17.f, true);
+			}
+
+			else if (KEY_RELEASED(KEY::DOWN))
+			{
+				m_State = STATE::AT_2;
+				Animator2D()->Play((int)STATE::AT_3, 10.f, true);
+			}
 		}
-		m_NextAttack = false;
 	}
 
 	else if (!m_NextAttack && Animator2D()->IsFinish())
@@ -670,16 +607,27 @@ void CPlayerScript::AT_DG3()
 		Animator2D()->Play((int)IDLE, 5.f, true);
 		SetMoveable(true);
 	}
+
+	Stylish();
 }
 
 void CPlayerScript::AT_DG4()
 {
+	if (m_NextAttack && 5 == Animator2D()->GetCurFrameIndex())
+	{
+		CreateDiagonalPistol();
+		CreateMuzzelOfRevolverDiagonal();
+		m_NextAttack = false;
+	}
+
 	if (Animator2D()->IsFinish())
 	{
 		m_State = STATE::IDLE;
 		Animator2D()->Play((int)IDLE, 5.f, true);
 		SetMoveable(true);
 	}
+
+	Stylish();
 }
 
 void CPlayerScript::Tackle()
@@ -696,6 +644,8 @@ void CPlayerScript::Tackle()
 
 void CPlayerScript::Jump()
 {
+	m_JumpScript->SetJump(true);
+
 	if (!m_JumpScript->IsNormalJump() && Animator2D()->IsFinish())
 	{
 		m_State = STATE::LANDING;
@@ -709,6 +659,7 @@ void CPlayerScript::Landing()
 	{
 		m_State = STATE::IDLE;
 		Animator2D()->Play((int)IDLE, 5.f, true);
+		m_JumpScript->SetJump(false);
 	}
 }
 
@@ -744,6 +695,8 @@ void CPlayerScript::Run()
 		m_MoveScript->SetState(MOVE_STATE::ST_TACKLE);
 		m_MoveScript->SetSpeed(700.f);
 	}
+
+	Stylish();
 }
 
 void CPlayerScript::Dead()
@@ -768,6 +721,8 @@ void CPlayerScript::JackSpike()
 		Animator2D()->Play((int)ANIMATION_NUM::IDLE, 5.f, true);
 		SetMoveable(true);
 	}
+
+	Stylish();
 }
 
 void CPlayerScript::RisingShot()
@@ -786,15 +741,34 @@ void CPlayerScript::RisingShot()
 		SetMoveable(true);
 		m_Spawn = true;
 	}
+
+	Stylish();
 }
 
 void CPlayerScript::HeadShot()
 {
 	if (m_Spawn && 3 <= Animator2D()->GetCurFrameIndex())
 	{
-		CreateHeadShot();
-		CreateHeadShotEffect();
-		m_Spawn = false;
+		if (m_CheckRange)
+		{
+			CreateDiagonalHeadShot();
+			CreateDiagonalHeadShotEffect();
+			m_Spawn = false;
+		}
+
+		else if (KEY_PRESSED(KEY::DOWN))
+		{
+			CreateDiagonalHeadShot();
+			CreateDiagonalHeadShotEffect();
+			m_Spawn = false;
+		}
+
+		else
+		{
+			CreateHeadShot();
+			CreateHeadShotEffect();
+			m_Spawn = false;
+		}
 	}
 
 	if (Animator2D()->IsFinish())
@@ -827,6 +801,8 @@ void CPlayerScript::WindMill()
 		Animator2D()->Play((int)ANIMATION_NUM::IDLE, 5.f, true);
 		SetMoveable(true);
 	}
+
+	Stylish();
 }
 
 void CPlayerScript::MachKick()
@@ -847,6 +823,8 @@ void CPlayerScript::GunHawkShoot()
 		Animator2D()->Play((int)ANIMATION_NUM::IDLE, 5.f, true);
 		SetMoveable(true);
 	}
+
+	Stylish();
 }
 
 void CPlayerScript::GunHawkStandBy()
@@ -875,10 +853,200 @@ void CPlayerScript::GunHawkLastShoot()
 		Animator2D()->Play((int)ANIMATION_NUM::IDLE, 5.f, true);
 		SetMoveable(true);
 	}
+
+	Stylish();
+}
+
+void CPlayerScript::SkillTimeCheck()
+{
+	if (m_UseSkill.bHeadShot)
+	{
+		m_CoolTime.fHeadShotTime += DT;
+		
+		if (m_CoolTime.fHeadShotCoolTime <= m_CoolTime.fHeadShotTime)
+		{
+			m_UseSkill.bHeadShot = false;
+			m_CoolTime.fHeadShotTime = 0.f;
+		}
+	}
+	if (m_UseSkill.bDeathByRevolver)
+	{
+		m_CoolTime.fDeathByRevolverTime += DT;
+
+		if (m_CoolTime.fDeathByRevolverCoolTime <= m_CoolTime.fDeathByRevolverTime)
+		{
+			m_UseSkill.bDeathByRevolver = false;
+			m_CoolTime.fDeathByRevolverTime = 0.f;
+		}
+	}
+	if (m_UseSkill.bWindMill)
+	{
+		m_CoolTime.fWindMillTime += DT;
+
+		if (m_CoolTime.fWindMillCoolTime <= m_CoolTime.fWindMillTime)
+		{
+			m_UseSkill.bWindMill = false;
+			m_CoolTime.fWindMillTime = 0.f;
+		}
+	}
+	if (m_UseSkill.bRandShoot)
+	{
+		m_CoolTime.fRandomShootTime += DT;
+
+		if (m_CoolTime.fRandomShootCoolTime <= m_CoolTime.fRandomShootTime)
+		{
+			m_UseSkill.bRandShoot = false;
+			m_CoolTime.fRandomShootTime = 0.f;
+		}
+	}
+	if (m_UseSkill.bGunHawk)
+	{
+		m_CoolTime.fGunHawkTime += DT;
+
+		if (m_CoolTime.fGunHawkCoolTime <= m_CoolTime.fGunHawkTime)
+		{
+			m_UseSkill.bGunHawk = false;
+			m_CoolTime.fGunHawkTime = 0.f;
+		}
+	}
+	if (m_UseSkill.bMachKick)
+	{
+		m_CoolTime.fMachKickTime += DT;
+
+		if (m_CoolTime.fMachKickCoolTime <= m_CoolTime.fMachKickTime)
+		{
+			m_UseSkill.bMachKick = false;
+			m_CoolTime.fMachKickTime = 0.f;
+		}
+	}
+	if (m_UseSkill.bJackSpike)
+	{
+		m_CoolTime.fJackSpikeTime += DT;
+
+		if (m_CoolTime.fJackSpikeCoolTime <= m_CoolTime.fJackSpikeTime)
+		{
+			m_UseSkill.bJackSpike = false;
+			m_CoolTime.fJackSpikeTime = 0.f;
+		}
+	}
+	if (m_UseSkill.bRisingShot)
+	{
+		m_CoolTime.fRisingShotTime += DT;
+
+		if (m_CoolTime.fRisingShotCoolTime <= m_CoolTime.fRisingShotTime)
+		{
+			m_UseSkill.bRisingShot = false;
+			m_CoolTime.fRisingShotTime = 0.f;
+		}
+	}
 }
 
 void CPlayerScript::Stylish()
 {
+	if (!m_UseSkill.bJackSpike && KEY_TAP(KEY::Z))
+	{
+		SetState(STATE::SK_1);
+		Animator2D()->Play((int)ANIMATION_NUM::JACKSPIKE, 11.f, false);
+		CreateJackSpike();
+		SetMoveable(false);
+		m_UseSkill.bJackSpike = true;
+
+		m_JumpScript->SetJump(true);
+	}
+
+	if (!m_UseSkill.bHeadShot && KEY_TAP(KEY::A))
+	{
+		SetState(STATE::SK_3);
+		if(KEY_PRESSED(KEY::DOWN))
+			Animator2D()->Play((int)ANIMATION_NUM::DG_AT3, 25.f, false);
+		else
+			Animator2D()->Play((int)ANIMATION_NUM::AT_3, 25.f, false);
+
+		SetMoveable(false);
+		m_UseSkill.bHeadShot = true;
+		
+		m_JumpScript->SetJump(true);
+	}
+
+	if (!m_UseSkill.bRisingShot && KEY_TAP(KEY::S))
+	{
+		SetState(STATE::SK_2);
+		Animator2D()->Play((int)ANIMATION_NUM::AT_3, 20.f, false);
+		SetMoveable(false);
+		m_UseSkill.bRisingShot = true;
+
+		m_JumpScript->SetJump(true);
+	}
+
+	if (!m_UseSkill.bWindMill && KEY_TAP(KEY::D))
+	{
+		SetState(STATE::SK_6);
+		Animator2D()->Play((int)ANIMATION_NUM::WINDMILL, 20.f, false);
+		CreateWindMill();
+		m_UseSkill.bWindMill = true;
+
+		m_JumpScript->SetJump(true);
+	}
+
+	if (!m_UseSkill.bMachKick && KEY_TAP(KEY::F))
+	{
+		SetState(STATE::SK_7);
+		Animator2D()->Play((int)ANIMATION_NUM::MACHKICK, 20.f, false);
+		CreateMachKick();
+		SetMoveable(false);
+		m_UseSkill.bMachKick = true;
+
+		m_JumpScript->SetJump(true);
+	}
+
+	if (!m_UseSkill.bRandShoot && KEY_TAP(KEY::G))
+	{
+		SetState(STATE::SK_4);
+		Animator2D()->Play((int)ANIMATION_NUM::RANDOMSHOT, 30.f, false);
+		SetMoveable(false);
+		m_UseSkill.bRandShoot = true;
+
+		m_JumpScript->SetJump(true);
+	}
+
+	if (!m_UseSkill.bDeathByRevolver && KEY_TAP(KEY::SPACE))
+	{
+		SetState(STATE::SK_5);
+		Animator2D()->Play((int)ANIMATION_NUM::DEATHBYREVOLVER, 17.f, false);
+		SetMoveable(false);
+		CreateDeathByRevolver();
+		m_UseSkill.bDeathByRevolver = true;
+
+		m_JumpScript->SetJump(true);
+	}
+
+	if (!m_UseSkill.bGunHawk && KEY_TAP(KEY::Q))
+	{
+		SetState(STATE::GUNHAWKSHOOT);
+		Animator2D()->Play((int)ANIMATION_NUM::GUNHAWKSHOOT, 7.f, false);
+		SetMoveable(false);
+		CreateGunHawkFirst();
+		m_UseSkill.bGunHawk = true;
+
+		m_JumpScript->SetJump(true);
+	}
+}
+
+void CPlayerScript::CreateDeathByRevolver()
+{
+	Vec3 vRot = Transform()->GetRelativeRotation();
+
+	CGameObject* pBuff = m_BuffPref->Instantiate();
+
+	Vec3 vPos = Transform()->GetWorldPos();
+	CGameObject* pCam = CLevelMgr::GetInst()->FindObjectByName(L"MainCamera");
+
+	pBuff->Transform()->SetRelativePos(Vec3(vPos.x, pCam->Transform()->GetWorldPos().y, vPos.z + 100.f));
+	pBuff->Transform()->SetRelativeScale(Vec3(470.f, 768.f, 1.f));
+	pBuff->Transform()->SetRelativeRotation(vRot);
+	pBuff->MeshRender()->GetMaterial()->SetShader(CAssetMgr::GetInst()->FindAsset<CGraphicShader>(L"Std2DAlphaBlendShader"));
+
+	CreateObject(pBuff, 0);
 }
 
 void CPlayerScript::CreateRandomShoot()
@@ -893,7 +1061,6 @@ void CPlayerScript::CreateRandomShoot()
 		pObject->Transform()->SetRelativeScale(Vec3(300.f, 300.f, 1.f));
 		pObject->Transform()->SetRelativeRotation(Vec3(0.f, XM_PI, 0.f));
 		CreateObject(pObject, 7);
-		//pObject->Animator2D()->Play(0, 20.f, false);
 
 		pObject = CObjectPoolMgr::GetInst()->GetRandomShoot();
 		pObject->Transform()->SetRelativePos(Vec3(vPos.x + 150.f, vPos.y + 50.f, vPos.z));
@@ -901,7 +1068,6 @@ void CPlayerScript::CreateRandomShoot()
 		pObject->Transform()->SetRelativeRotation(Vec3(0.f, XM_2PI, 0.f));
 
 		CreateObject(pObject, 7);
-		//pObject->Animator2D()->Play(0, 20.f, false);
 
 		m_Spawn = false;
 	}
@@ -911,7 +1077,6 @@ void CPlayerScript::CreateRandomShoot()
 
 	if (m_Spawn && CurIdx == 3)
 	{
-		//CGameObject* pObject = m_RandomShootPref->Instantiate();
 		CGameObject* pObject = CObjectPoolMgr::GetInst()->GetRandomShoot();
 		pObject->Transform()->SetRelativePos(Vec3(vPos.x - 60.f, vPos.y + 130.f, vPos.z));
 		pObject->Transform()->SetRelativeScale(Vec3(300.f, 300.f, 1.f));
@@ -919,7 +1084,6 @@ void CPlayerScript::CreateRandomShoot()
 		CreateObject(pObject, 7);
 
 		pObject = CObjectPoolMgr::GetInst()->GetRandomShoot();
-		//pObject = m_RandomShootPref->Instantiate();
 		pObject->Transform()->SetRelativePos(Vec3(vPos.x + 60.f, vPos.y - 130.f, vPos.z));
 		pObject->Transform()->SetRelativeScale(Vec3(300.f, 300.f, 1.f));
 		pObject->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, XM_PI * 1.7f));
@@ -933,14 +1097,12 @@ void CPlayerScript::CreateRandomShoot()
 
 	if (m_Spawn && CurIdx == 6)
 	{
-		//CGameObject* pObject = pObject = m_RandomShootPref->Instantiate();
 		CGameObject* pObject = CObjectPoolMgr::GetInst()->GetRandomShoot();
 		pObject->Transform()->SetRelativePos(Vec3(vPos.x - 150.f, vPos.y + 100.f, vPos.z));
 		pObject->Transform()->SetRelativeScale(Vec3(300.f, 300.f, 1.f));
 		pObject->Transform()->SetRelativeRotation(Vec3(0.f, XM_PI, XM_PI * 1.75f));
 		CreateObject(pObject, 7);
 
-		//pObject = pObject = m_RandomShootPref->Instantiate();
 		pObject = CObjectPoolMgr::GetInst()->GetRandomShoot();
 		pObject->Transform()->SetRelativePos(Vec3(vPos.x + 150.f, vPos.y - 100.f, vPos.z));
 		pObject->Transform()->SetRelativeScale(Vec3(300.f, 300.f, 1.f));
@@ -955,14 +1117,12 @@ void CPlayerScript::CreateRandomShoot()
 
 	if (m_Spawn && CurIdx == 8)
 	{
-		//CGameObject* pObject = pObject = m_RandomShootPref->Instantiate();
 		CGameObject* pObject = CObjectPoolMgr::GetInst()->GetRandomShoot();
 		pObject->Transform()->SetRelativePos(Vec3(vPos.x - 150.f, vPos.y + 50.f, vPos.z));
 		pObject->Transform()->SetRelativeScale(Vec3(300.f, 300.f, 1.f));
 		pObject->Transform()->SetRelativeRotation(Vec3(0.f, XM_PI, 0.f));
 		CreateObject(pObject, 7);
 
-		//pObject = m_RandomShootPref->Instantiate();
 		pObject = CObjectPoolMgr::GetInst()->GetRandomShoot();
 		pObject->Transform()->SetRelativePos(Vec3(vPos.x + 150.f, vPos.y + 100.f, vPos.z));
 		pObject->Transform()->SetRelativeScale(Vec3(300.f, 300.f, 1.f));
@@ -977,14 +1137,12 @@ void CPlayerScript::CreateRandomShoot()
 
 	if (m_Spawn && CurIdx == 12)
 	{
-		//CGameObject* pObject = pObject = m_RandomShootPref->Instantiate();
 		CGameObject* pObject = CObjectPoolMgr::GetInst()->GetRandomShoot();
 		pObject->Transform()->SetRelativePos(Vec3(vPos.x - 150.f, vPos.y + 50.f, vPos.z));
 		pObject->Transform()->SetRelativeScale(Vec3(300.f, 300.f, 1.f));
 		pObject->Transform()->SetRelativeRotation(Vec3(0.f, XM_PI, 0.f));
 		CreateObject(pObject, 7);
 
-		//pObject = m_RandomShootPref->Instantiate(); 
 		pObject = CObjectPoolMgr::GetInst()->GetRandomShoot();
 		pObject->Transform()->SetRelativePos(Vec3(vPos.x + 150.f, vPos.y + 50.f, vPos.z));
 		pObject->Transform()->SetRelativeScale(Vec3(300.f, 300.f, 1.f));
@@ -999,14 +1157,12 @@ void CPlayerScript::CreateRandomShoot()
 
 	if (m_Spawn && CurIdx == 15)
 	{
-		//CGameObject* pObject = m_RandomShootPref->Instantiate();
 		CGameObject* pObject = CObjectPoolMgr::GetInst()->GetRandomShoot();
 		pObject->Transform()->SetRelativePos(Vec3(vPos.x - 60.f, vPos.y + 130.f, vPos.z));
 		pObject->Transform()->SetRelativeScale(Vec3(300.f, 300.f, 1.f));
 		pObject->Transform()->SetRelativeRotation(Vec3(0.f, XM_PI, XM_PI * 1.7f));
 		CreateObject(pObject, 7);
 
-		//pObject = m_RandomShootPref->Instantiate(); 
 		pObject = CObjectPoolMgr::GetInst()->GetRandomShoot();
 		pObject->Transform()->SetRelativePos(Vec3(vPos.x + 60.f, vPos.y - 130.f, vPos.z));
 		pObject->Transform()->SetRelativeScale(Vec3(300.f, 300.f, 1.f));
@@ -1021,14 +1177,12 @@ void CPlayerScript::CreateRandomShoot()
 
 	if (m_Spawn && CurIdx == 18)
 	{
-		//CGameObject* pObject = m_RandomShootPref->Instantiate(); 
 		CGameObject* pObject = CObjectPoolMgr::GetInst()->GetRandomShoot();
 		pObject->Transform()->SetRelativePos(Vec3(vPos.x - 150.f, vPos.y + 100.f, vPos.z));
 		pObject->Transform()->SetRelativeScale(Vec3(300.f, 300.f, 1.f));
 		pObject->Transform()->SetRelativeRotation(Vec3(0.f, XM_PI, XM_PI * 1.75f));
 		CreateObject(pObject, 7);
 
-		//pObject = m_RandomShootPref->Instantiate(); 
 		pObject = CObjectPoolMgr::GetInst()->GetRandomShoot();
 		pObject->Transform()->SetRelativePos(Vec3(vPos.x + 150.f, vPos.y - 100.f, vPos.z));
 		pObject->Transform()->SetRelativeScale(Vec3(300.f, 300.f, 1.f));
@@ -1043,14 +1197,12 @@ void CPlayerScript::CreateRandomShoot()
 
 	if (m_Spawn && CurIdx == 20)
 	{
-		//CGameObject* pObject = pObject = m_RandomShootPref->Instantiate(); 
 		CGameObject* pObject = CObjectPoolMgr::GetInst()->GetRandomShoot();
 		pObject->Transform()->SetRelativePos(Vec3(vPos.x - 150.f, vPos.y + 50.f, vPos.z));
 		pObject->Transform()->SetRelativeScale(Vec3(300.f, 300.f, 1.f));
 		pObject->Transform()->SetRelativeRotation(Vec3(0.f, XM_PI, 0.f));
 		CreateObject(pObject, 7);
 
-		//pObject = m_RandomShootPref->Instantiate();
 		pObject = CObjectPoolMgr::GetInst()->GetRandomShoot();
 		pObject->Transform()->SetRelativePos(Vec3(vPos.x + 150.f, vPos.y + 100.f, vPos.z));
 		pObject->Transform()->SetRelativeScale(Vec3(300.f, 300.f, 1.f));
@@ -1065,14 +1217,12 @@ void CPlayerScript::CreateRandomShoot()
 
 	if (m_Spawn && CurIdx == 24)
 	{
-		//CGameObject* pObject = m_RandomShootPref->Instantiate();
 		CGameObject* pObject = CObjectPoolMgr::GetInst()->GetRandomShoot();
 		pObject->Transform()->SetRelativePos(Vec3(vPos.x - 150.f, vPos.y + 50.f, vPos.z));
 		pObject->Transform()->SetRelativeScale(Vec3(300.f, 300.f, 1.f));
 		pObject->Transform()->SetRelativeRotation(Vec3(0.f, XM_PI, 0.f));
 		CreateObject(pObject, 7);
 
-		//pObject = m_RandomShootPref->Instantiate(); 
 		pObject = CObjectPoolMgr::GetInst()->GetRandomShoot();
 		pObject->Transform()->SetRelativePos(Vec3(vPos.x + 150.f, vPos.y + 50.f, vPos.z));
 		pObject->Transform()->SetRelativeScale(Vec3(300.f, 300.f, 1.f));
@@ -1087,20 +1237,17 @@ void CPlayerScript::CreateRandomShoot()
 
 	if (m_Spawn && CurIdx == 27)
 	{
-		//CGameObject* pObject = m_RandomShootPref->Instantiate(); 
 		CGameObject* pObject = CObjectPoolMgr::GetInst()->GetRandomShoot();
 		pObject->Transform()->SetRelativePos(Vec3(vPos.x - 60.f, vPos.y + 130.f, vPos.z));
 		pObject->Transform()->SetRelativeScale(Vec3(300.f, 300.f, 1.f));
 		pObject->Transform()->SetRelativeRotation(Vec3(0.f, XM_PI, XM_PI * 1.7f));
 		CreateObject(pObject, 7);
 
-		//pObject = m_RandomShootPref->Instantiate(); 
 		pObject = CObjectPoolMgr::GetInst()->GetRandomShoot();
 		pObject->Transform()->SetRelativePos(Vec3(vPos.x + 60.f, vPos.y - 130.f, vPos.z));
 		pObject->Transform()->SetRelativeScale(Vec3(300.f, 300.f, 1.f));
 		pObject->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, XM_PI * 1.7f));
 		CreateObject(pObject, 7);
-		//pObject->Animator2D()->Play(0, 20.f, true);
 
 		m_Spawn = false;
 	}
@@ -1110,14 +1257,12 @@ void CPlayerScript::CreateRandomShoot()
 
 	if (m_Spawn && CurIdx == 30)
 	{
-		//CGameObject* pObject = m_RandomShootPref->Instantiate();
 		CGameObject* pObject = CObjectPoolMgr::GetInst()->GetRandomShoot();
 		pObject->Transform()->SetRelativePos(Vec3(vPos.x - 150.f, vPos.y + 100.f, vPos.z));
 		pObject->Transform()->SetRelativeScale(Vec3(300.f, 300.f, 1.f));
 		pObject->Transform()->SetRelativeRotation(Vec3(0.f, XM_PI, XM_PI * 1.75f));
 		CreateObject(pObject, 7);
 
-		//pObject = m_RandomShootPref->Instantiate();
 		pObject = CObjectPoolMgr::GetInst()->GetRandomShoot();
 		pObject->Transform()->SetRelativePos(Vec3(vPos.x + 150.f, vPos.y - 100.f, vPos.z));
 		pObject->Transform()->SetRelativeScale(Vec3(300.f, 300.f, 1.f));
@@ -1132,14 +1277,12 @@ void CPlayerScript::CreateRandomShoot()
 
 	if (m_Spawn && CurIdx == 32)
 	{
-		//CGameObject* pObject = m_RandomShootPref->Instantiate(); 
 		CGameObject* pObject = CObjectPoolMgr::GetInst()->GetRandomShoot();
 		pObject->Transform()->SetRelativePos(Vec3(vPos.x - 150.f, vPos.y + 50.f, vPos.z));
 		pObject->Transform()->SetRelativeScale(Vec3(300.f, 300.f, 1.f));
 		pObject->Transform()->SetRelativeRotation(Vec3(0.f, XM_PI, 0.f));
 		CreateObject(pObject, 7);
 
-		//pObject = m_RandomShootPref->Instantiate();
 		pObject = CObjectPoolMgr::GetInst()->GetRandomShoot();
 		pObject->Transform()->SetRelativePos(Vec3(vPos.x + 150.f, vPos.y + 100.f, vPos.z));
 		pObject->Transform()->SetRelativeScale(Vec3(300.f, 300.f, 1.f));
@@ -1173,6 +1316,27 @@ void CPlayerScript::CreatePistol()
 
 		CreateObject(pObject, 7);
 	}
+}
+
+void CPlayerScript::CreateDiagonalPistol()
+{
+	Vec3 vPos = Transform()->GetWorldPos();
+
+	CGameObject* pObject = m_Prefabs.DiagonalPistolPref->Instantiate();
+
+	if (OBJ_DIR::DIR_LEFT == m_Dir)
+	{
+		pObject->Transform()->SetRelativePos(Vec3(vPos.x - 175.f, vPos.y - 35.f, vPos.z));
+	}
+
+	else if (OBJ_DIR::DIR_RIGHT == m_Dir)
+	{
+		pObject->Transform()->SetRelativePos(Vec3(vPos.x + 175.f, vPos.y - 35.f, vPos.z));
+	}
+
+	pObject->SetDir(m_Dir);
+	pObject->SetOwner(m_MoveObject);
+	CreateObject(pObject, 7);
 }
 
 void CPlayerScript::CreateWindMill()
@@ -1224,6 +1388,44 @@ void CPlayerScript::CreateMuzzelOfRevolver()
 	CreateObject(pObject, 0);
 }
 
+void CPlayerScript::CreateMuzzelOfRevolverDiagonal()
+{
+	CGameObject* pObject = m_MuzzlePref->Instantiate();
+
+	Vec3 vPos = Transform()->GetWorldPos();
+
+	if (STATE::DG_AT4 == m_State)
+	{
+		if (OBJ_DIR::DIR_LEFT == m_Dir)
+		{
+			pObject->Transform()->SetRelativePos(Vec3(vPos.x - 190.f, vPos.y - 30.f, vPos.z - 1.f));
+			pObject->Transform()->SetRelativeRotation(Vec3(0.f, XM_PI, XM_PI * 2.25f));
+		}
+
+		else if (OBJ_DIR::DIR_RIGHT == m_Dir)
+		{
+			pObject->Transform()->SetRelativePos(Vec3(vPos.x + 190.f, vPos.y - 30.f, vPos.z - 1.f));
+			pObject->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, XM_PI * 1.75f));
+		}
+	}
+	else
+	{
+		if (OBJ_DIR::DIR_LEFT == m_Dir)
+		{
+			pObject->Transform()->SetRelativePos(Vec3(vPos.x - 158.f, vPos.y - 20.f, vPos.z - 1.f));
+			pObject->Transform()->SetRelativeRotation(Vec3(0.f, XM_PI, XM_PI * 2.25f));
+		}
+
+		else if (OBJ_DIR::DIR_RIGHT == m_Dir)
+		{
+			pObject->Transform()->SetRelativePos(Vec3(vPos.x + 158.f, vPos.y - 20.f, vPos.z - 1.f));
+			pObject->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, XM_PI * 1.75f));
+		}
+	}
+
+	CreateObject(pObject, 0);
+}
+
 void CPlayerScript::CreateHammerOfRevolver()
 {
 	CGameObject* pObject = m_HammerPref->Instantiate();
@@ -1263,6 +1465,26 @@ void CPlayerScript::CreateHeadShotEffect()
 	CreateObject(pObject, 0);
 }
 
+void CPlayerScript::CreateDiagonalHeadShotEffect()
+{
+	CGameObject* pObject = m_HeadShotEffectPref->Instantiate();
+	Vec3 vPos = Transform()->GetWorldPos();
+
+	if (OBJ_DIR::DIR_LEFT == m_Dir)
+	{
+		pObject->Transform()->SetRelativePos(Vec3(vPos.x - 230.f, vPos.y - 50.f, vPos.z + 100.f));
+		pObject->Transform()->SetRelativeRotation(Vec3(0.f, XM_PI, XM_PI * 2.15f));
+	}
+
+	else if (OBJ_DIR::DIR_RIGHT == m_Dir)
+	{
+		pObject->Transform()->SetRelativePos(Vec3(vPos.x + 250.f, vPos.y - 50.f, vPos.z + 100.f));
+		pObject->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, XM_PI * 1.75f));
+	}
+
+	CreateObject(pObject, 0);
+}
+
 void CPlayerScript::CreateHeadShot()
 {
 	CGameObject* pObject = m_HeadShotPref->Instantiate();
@@ -1285,6 +1507,27 @@ void CPlayerScript::CreateHeadShot()
 	CreateObject(pObject, 7);
 }
 
+void CPlayerScript::CreateDiagonalHeadShot()
+{
+	Vec3 vPos = Transform()->GetWorldPos();
+
+	CGameObject* pObject = m_Prefabs.DiagonalHeadShotPref->Instantiate();
+
+	if (OBJ_DIR::DIR_LEFT == m_Dir)
+	{
+		pObject->Transform()->SetRelativePos(Vec3(vPos.x - 175.f, vPos.y - 35.f, vPos.z));
+	}
+
+	else if (OBJ_DIR::DIR_RIGHT == m_Dir)
+	{
+		pObject->Transform()->SetRelativePos(Vec3(vPos.x + 175.f, vPos.y - 35.f, vPos.z));
+	}
+
+	pObject->SetDir(m_Dir);
+	pObject->SetOwner(m_MoveObject);
+	CreateObject(pObject, 7);
+}
+
 void CPlayerScript::CreateGunHawkFirst()
 {
 	Vec3 vPos = Transform()->GetWorldPos();
@@ -1296,16 +1539,16 @@ void CPlayerScript::CreateGunHawkFirst()
 	{
 		GunHawkUp->Transform()->SetRelativePos(Vec3(vPos.x + 50.f, vPos.y, vPos.z));
 		GunHawkDown->Transform()->SetRelativePos(Vec3(vPos.x + 50.f, vPos.y, vPos.z));
-		GunHawkUp->Transform()->SetRelativeRotation(Vec3(XM_PI / 1.6f, 0.f, 0.f));
-		GunHawkDown->Transform()->SetRelativeRotation(Vec3(XM_PI / 1.6f, 0.f, 0.f));
+		GunHawkUp->Transform()->SetRelativeRotation(Vec3(XM_PI / 1.5f, 0.f, 0.f));
+		GunHawkDown->Transform()->SetRelativeRotation(Vec3(XM_PI / 1.5f, 0.f, 0.f));
 	}
 
 	else if (OBJ_DIR::DIR_RIGHT == m_Dir)
 	{
 		GunHawkUp->Transform()->SetRelativePos(Vec3(vPos.x + 50.f, vPos.y, vPos.z));
 		GunHawkDown->Transform()->SetRelativePos(Vec3(vPos.x + 50.f, vPos.y, vPos.z));
-		GunHawkUp->Transform()->SetRelativeRotation(Vec3(XM_PI / 1.6f, 0.f, 0.f));
-		GunHawkDown->Transform()->SetRelativeRotation(Vec3(XM_PI / 1.6f, 0.f, 0.f));
+		GunHawkUp->Transform()->SetRelativeRotation(Vec3(XM_PI / 1.5f, 0.f, 0.f));
+		GunHawkDown->Transform()->SetRelativeRotation(Vec3(XM_PI / 1.5f, 0.f, 0.f));
 	}
 
 	GunHawkUp->SetDir(m_Dir);
@@ -1327,8 +1570,8 @@ void CPlayerScript::CreateGunHawkSecond()
 	{
 		GunHawkUp->Transform()->SetRelativePos(Vec3(vPos.x + 50.f, vPos.y, vPos.z));
 		GunHawkDown->Transform()->SetRelativePos(Vec3(vPos.x + 50.f, vPos.y, vPos.z));
-		GunHawkUp->Transform()->SetRelativeRotation(Vec3(XM_PI / 1.7f, 0.f, 0.f));
-		GunHawkDown->Transform()->SetRelativeRotation(Vec3(XM_PI / 1.7f, 0.f, 0.f));
+		GunHawkUp->Transform()->SetRelativeRotation(Vec3(XM_PI / 1.6f, 0.f, 0.f));
+		GunHawkDown->Transform()->SetRelativeRotation(Vec3(XM_PI / 1.6f, 0.f, 0.f));
 	}
 
 	else if (OBJ_DIR::DIR_RIGHT == m_Dir)

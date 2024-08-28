@@ -3,6 +3,8 @@
 
 #include "CBuffScript.h"
 #include "CCameraMoveScript.h"
+#include "CDiagonalHeadShotScript.h"
+#include "CDiagonalPistolScript.h"
 #include "CDoubleGunHawkScript.h"
 #include "CGunHawkExplodeScript.h"
 #include "CHammerScript.h"
@@ -18,12 +20,15 @@
 #include "CPlayerScript.h"
 #include "CRandomShootScript.h"
 #include "CRisingShotScript.h"
+#include "CSeriaScript.h"
 #include "CWindmillScript.h"
 
 void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 {
 	_vec.push_back(L"CBuffScript");
 	_vec.push_back(L"CCameraMoveScript");
+	_vec.push_back(L"CDiagonalHeadShotScript");
+	_vec.push_back(L"CDiagonalPistolScript");
 	_vec.push_back(L"CDoubleGunHawkScript");
 	_vec.push_back(L"CGunHawkExplodeScript");
 	_vec.push_back(L"CHammerScript");
@@ -39,6 +44,7 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CPlayerScript");
 	_vec.push_back(L"CRandomShootScript");
 	_vec.push_back(L"CRisingShotScript");
+	_vec.push_back(L"CSeriaScript");
 	_vec.push_back(L"CWindmillScript");
 }
 
@@ -48,6 +54,10 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CBuffScript;
 	if (L"CCameraMoveScript" == _strScriptName)
 		return new CCameraMoveScript;
+	if (L"CDiagonalHeadShotScript" == _strScriptName)
+		return new CDiagonalHeadShotScript;
+	if (L"CDiagonalPistolScript" == _strScriptName)
+		return new CDiagonalPistolScript;
 	if (L"CDoubleGunHawkScript" == _strScriptName)
 		return new CDoubleGunHawkScript;
 	if (L"CGunHawkExplodeScript" == _strScriptName)
@@ -78,6 +88,8 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CRandomShootScript;
 	if (L"CRisingShotScript" == _strScriptName)
 		return new CRisingShotScript;
+	if (L"CSeriaScript" == _strScriptName)
+		return new CSeriaScript;
 	if (L"CWindmillScript" == _strScriptName)
 		return new CWindmillScript;
 	return nullptr;
@@ -92,6 +104,12 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 		break;
 	case (UINT)SCRIPT_TYPE::CAMERAMOVESCRIPT:
 		return new CCameraMoveScript;
+		break;
+	case (UINT)SCRIPT_TYPE::DIAGONALHEADSHOTSCRIPT:
+		return new CDiagonalHeadShotScript;
+		break;
+	case (UINT)SCRIPT_TYPE::DIAGONALPISTOLSCRIPT:
+		return new CDiagonalPistolScript;
 		break;
 	case (UINT)SCRIPT_TYPE::DOUBLEGUNHAWKSCRIPT:
 		return new CDoubleGunHawkScript;
@@ -138,6 +156,9 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 	case (UINT)SCRIPT_TYPE::RISINGSHOTSCRIPT:
 		return new CRisingShotScript;
 		break;
+	case (UINT)SCRIPT_TYPE::SERIASCRIPT:
+		return new CSeriaScript;
+		break;
 	case (UINT)SCRIPT_TYPE::WINDMILLSCRIPT:
 		return new CWindmillScript;
 		break;
@@ -155,6 +176,14 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 
 	case SCRIPT_TYPE::CAMERAMOVESCRIPT:
 		return L"CCameraMoveScript";
+		break;
+
+	case SCRIPT_TYPE::DIAGONALHEADSHOTSCRIPT:
+		return L"CDiagonalHeadShotScript";
+		break;
+
+	case SCRIPT_TYPE::DIAGONALPISTOLSCRIPT:
+		return L"CDiagonalPistolScript";
 		break;
 
 	case SCRIPT_TYPE::DOUBLEGUNHAWKSCRIPT:
@@ -215,6 +244,10 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 
 	case SCRIPT_TYPE::RISINGSHOTSCRIPT:
 		return L"CRisingShotScript";
+		break;
+
+	case SCRIPT_TYPE::SERIASCRIPT:
+		return L"CSeriaScript";
 		break;
 
 	case SCRIPT_TYPE::WINDMILLSCRIPT:

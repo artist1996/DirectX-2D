@@ -12,6 +12,7 @@
 
 CGameObject::CGameObject()
 	: m_arrCom{}
+	, m_Owner(nullptr)
 	, m_RenderCom(nullptr)
 	, m_Parent(nullptr)
 	, m_LayerIdx(-1)	// 최초 생성 시 어느 레이어 소속도 아니다(레벨안에 있지 않은 상태)

@@ -7,10 +7,12 @@ struct tPlayerPrefab
     Ptr<CPrefab> BuffPref;
     Ptr<CPrefab> RandomShootPref;
     Ptr<CPrefab> PistolPref;
+    Ptr<CPrefab> DiagonalPistolPref;
     Ptr<CPrefab> MuzzlePref;
     Ptr<CPrefab> HammerPref;
     Ptr<CPrefab> WindmillPref;
     Ptr<CPrefab> HeadShotPref;
+    Ptr<CPrefab> DiagonalHeadShotPref;
     Ptr<CPrefab> GunHawkFirstUpPref;
     Ptr<CPrefab> GunHawkFirstDownPref;
     Ptr<CPrefab> GunHawkSecondUpPref;
@@ -30,6 +32,15 @@ struct tPlayerSkillTime
     float fMachKickTime;
     float fJackSpikeTime;
     float fRisingShotTime;
+
+    float fHeadShotCoolTime;
+    float fDeathByRevolverCoolTime;
+    float fRandomShootCoolTime;
+    float fWindMillCoolTime;
+    float fGunHawkCoolTime;
+    float fMachKickCoolTime;
+    float fJackSpikeCoolTime;
+    float fRisingShotCoolTime;
 };
 
 struct tPlayerUseSkill
@@ -84,6 +95,10 @@ private:
     OBJ_DIR                  m_Dir;
     STATE                    m_State;
     
+    tPlayerSkillTime         m_CoolTime;
+    tPlayerUseSkill          m_UseSkill;
+    tPlayerPrefab            m_Prefabs;
+
     float                    m_Speed;
     float                    m_JumpHeight;
                              
@@ -94,6 +109,7 @@ private:
 
     bool                     m_Spawn;
     bool                     m_Muzzel;
+    bool                     m_CheckRange;
 
 private:
     void SetState(STATE _State) { m_State = _State; }
@@ -130,18 +146,26 @@ private:
     void GunHawkStandBy();
     void GunHawkLastShoot();
 
+    // Skill TimeCheck
+    void SkillTimeCheck();
+
     // Stylish Skill
     void Stylish();
 
     // Create Effect
+    void CreateDeathByRevolver();
     void CreateRandomShoot();
     void CreatePistol();
+    void CreateDiagonalPistol();
     void CreateWindMill();
     void CreateMuzzelOfRevolverNormal();
     void CreateMuzzelOfRevolver();
+    void CreateMuzzelOfRevolverDiagonal();
     void CreateHammerOfRevolver();
     void CreateHeadShotEffect();
+    void CreateDiagonalHeadShotEffect();
     void CreateHeadShot();
+    void CreateDiagonalHeadShot();
     void CreateGunHawkFirst();
     void CreateGunHawkSecond();
     void CreateMachKick();

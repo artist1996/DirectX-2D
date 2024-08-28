@@ -5,6 +5,7 @@ class CPlayerJumpScript :
     public CScript
 {
 private:
+    bool m_Jump;
     bool m_NormalJump;
 
 private:
@@ -12,7 +13,8 @@ private:
     void AxisCheck();
 
 public:
-    bool IsNormalJump() { return m_NormalJump; }
+    bool IsNormalJump()      { return m_NormalJump; }
+    void SetJump(bool _Jump) { m_Jump = _Jump; }
 
 public:
     virtual void Begin() override;

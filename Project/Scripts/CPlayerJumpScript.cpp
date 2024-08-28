@@ -4,6 +4,7 @@
 CPlayerJumpScript::CPlayerJumpScript()
 	: CScript(SCRIPT_TYPE::PLAYERJUMPSCRIPT)
 	, m_NormalJump(false)
+	, m_Jump(false)
 {
 	SetName(L"CPlayerJumpScript");
 }
@@ -18,24 +19,17 @@ void CPlayerJumpScript::Begin()
 
 void CPlayerJumpScript::Tick()
 {
-	if(KEY_TAP(KEY::C))
+	if(KEY_TAP(KEY::C) && !m_Jump)
 		Jump();
 
 	AxisCheck();
-}
-
-void CPlayerJumpScript::SaveToFile(FILE* _pFile)
-{
-}
-
-void CPlayerJumpScript::LoadFromFile(FILE* _pFile)
-{
 }
 
 void CPlayerJumpScript::Jump()
 {
 	m_NormalJump = true;
 	Rigidbody()->Jump();
+	SetJump(true);
 }
 
 void CPlayerJumpScript::AxisCheck()
@@ -46,6 +40,15 @@ void CPlayerJumpScript::AxisCheck()
 	{
 		Rigidbody()->SetGround(true);
 		Transform()->SetRelativePos(Vec3(0.f,0.f,0.f));
+		SetJump(false);
 		m_NormalJump = false;
 	}
+}
+
+void CPlayerJumpScript::SaveToFile(FILE* _pFile)
+{
+}
+
+void CPlayerJumpScript::LoadFromFile(FILE* _pFile)
+{
 }

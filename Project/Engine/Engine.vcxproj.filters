@@ -172,6 +172,9 @@
     <ClInclude Include="CObjectPoolMgr.h">
       <Filter>04. Manager\10. ObjectPoolMgr</Filter>
     </ClInclude>
+    <ClInclude Include="CDistanceMgr.h">
+      <Filter>04. Manager\11. DistanceMgr</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CEngine.cpp">
@@ -323,6 +326,9 @@
     </ClCompile>
     <ClCompile Include="CObjectPoolMgr.cpp">
       <Filter>04. Manager\10. ObjectPoolMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="CDistanceMgr.cpp">
+      <Filter>04. Manager\11. DistanceMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -502,6 +508,9 @@
     </Filter>
     <Filter Include="04. Manager\10. ObjectPoolMgr">
       <UniqueIdentifier>{eeb1a8c5-4476-4398-b81e-a2c2753929f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Manager\11. DistanceMgr">
+      <UniqueIdentifier>{599755b7-e2ae-4a57-8863-e4a4e5c260b1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

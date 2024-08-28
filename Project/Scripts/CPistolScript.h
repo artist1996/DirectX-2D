@@ -5,7 +5,6 @@ class CPistolScript :
     public CScript
 {
 private:
-    OBJ_DIR m_Dir;
     float   m_Speed;
 
 public:
