@@ -68,6 +68,7 @@ struct tDebugShapeInfo
 struct tTask
 {
 	TASK_TYPE Type;
+	
 	DWORD_PTR Param_0;
 	DWORD_PTR Param_1;
 };

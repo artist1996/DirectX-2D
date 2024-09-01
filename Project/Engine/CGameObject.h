@@ -30,6 +30,8 @@ private:
 
     CGameObject*         m_Owner;
 
+    OBJ_ID               m_ID;
+
 public:
     void AddComponent(CComponent* _Component);
     CComponent* GetComponent(COMPONENT_TYPE _Type) { return m_arrCom[(UINT)_Type]; }
@@ -59,6 +61,9 @@ public:
 
     void SetDir(OBJ_DIR _Dir)   { m_Dir = _Dir; }
     OBJ_DIR GetDir()            { return m_Dir; }
+
+    void SetID(OBJ_ID _ID) { m_ID = _ID;  }
+    OBJ_ID GetID()         { return m_ID; }
 
     void SetInitPos(Vec3 _Pos) { m_InitPos = _Pos; }
     Vec3 GetInitPos()          { return m_InitPos; }

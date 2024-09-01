@@ -9,6 +9,10 @@ private:
 
     float        m_CamSpeed;
 
+    Vec2         m_BoundaryLT;
+    float        m_BoundaryRightWidth;
+    float        m_BoundaryBottomHeight;
+    
 private:
     void OrthoGraphicMove();
     void PerspectiveMove();

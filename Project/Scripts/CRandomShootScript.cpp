@@ -20,6 +20,8 @@ void CRandomShootScript::Begin()
 //	Collider2D()->SetActive(true);
 //#endif
 	Collider2D()->SetActive(false);
+
+	GetOwner()->SetID(OBJ_ID::RANDOMSHOOT);
 }
 
 void CRandomShootScript::Tick()

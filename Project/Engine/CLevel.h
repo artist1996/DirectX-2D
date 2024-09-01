@@ -24,6 +24,7 @@ public:
     void RegisterAsParent(int _LayerIdx, CGameObject* _Object);
     void ClearObject();
 
+    void SetCollisionMatrix(UINT* _Matrix);
     UINT GetCollisionMatrix(UINT _Idx) { return m_Matrix[_Idx]; }
 
     void CollisionCheck(UINT _Layer1, UINT _Layer2);
@@ -39,6 +40,7 @@ public:
     void Begin();
     void Tick();
     void FinalTick();
+    void Exit();
     
 public:
     virtual CLevel* Clone() { return new CLevel(*this); }

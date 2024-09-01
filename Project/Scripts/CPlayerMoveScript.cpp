@@ -2,6 +2,7 @@
 #include "CPlayerMoveScript.h"
 
 #include <Engine/CLevelMgr.h>
+#include <Engine/CObjectPoolMgr.h>
 
 #include <Engine/CTransform.h>
 #include <Engine/CAnimator2D.h>
@@ -18,6 +19,7 @@ CPlayerMoveScript::CPlayerMoveScript()
 	, m_MoveAble(true)
 	, m_TapMove(false)
 	, m_ForceTime(0.f)
+	, m_Init(true)
 {
 	SetName(L"CPlayerMoveScript");
 }
@@ -26,15 +28,26 @@ CPlayerMoveScript::~CPlayerMoveScript()
 {
 }
 
-void CPlayerMoveScript::Begin()
+void CPlayerMoveScript::Init()
 {
-	CGameObject* pObject = CLevelMgr::GetInst()->FindObjectByName(L"PlayerJump");
+	CGameObject* pObject = CObjectPoolMgr::GetInst()->GetPlayerJump();
 	m_JumpScript = (CPlayerJumpScript*)pObject->FindScriptByName(L"CPlayerJumpScript");
 
-	pObject = CLevelMgr::GetInst()->FindObjectByName(L"Player");
+	pObject = CObjectPoolMgr::GetInst()->GetPlayerEntity();
 	m_EntityScript = (CPlayerScript*)pObject->FindScriptByName(L"CPlayerScript");
+}
+
+void CPlayerMoveScript::Begin()
+{
+	GetOwner()->SetID(OBJ_ID::PLAYERMOVE);
 
 	Collider2D()->SetOffset(Vec3(0.15f, -4.f, 0.f));
+
+	if (m_Init)
+	{
+		Init();
+		m_Init = false;
+	}
 }
 
 void CPlayerMoveScript::Tick()
@@ -128,15 +141,15 @@ void CPlayerMoveScript::Move()
 		else if (KEY_RELEASED(KEY::RIGHT))
 			m_State = ST_IDLE;
 		if (KEY_PRESSED(KEY::UP) && bMoveable[(UINT)PLATFORM_TYPE::UP])
-			vPos += Vec3(0.f, 1.f, 1.f) * m_Speed * DT;
+			vPos += Vec3(0.f, 1.f, 0.f) * m_Speed * DT;
 		else if (KEY_RELEASED(KEY::UP))
 			m_State = ST_IDLE;
 		if (KEY_PRESSED(KEY::DOWN) && bMoveable[(UINT)PLATFORM_TYPE::BOTTOM])
-			vPos += Vec3(0.f, -1.f, -1.f) * m_Speed * DT;
+			vPos += Vec3(0.f, -1.f, 0.f) * m_Speed * DT;
 		else if (KEY_RELEASED(KEY::DOWN))
 			m_State = ST_IDLE;
 
-		Transform()->SetRelativePos(vPos);
+		Transform()->SetRelativePos(Vec3(vPos.x, vPos.y, vPos.y));
 	}
 }
 
@@ -175,13 +188,13 @@ void CPlayerMoveScript::Tackle()
 	if (OBJ_DIR::DIR_RIGHT == m_EntityScript->GetDir()
 		&& bMoveable[(UINT)PLATFORM_TYPE::RIGHT])
 	{
-		vPos += Vec3(1.f, 0.f, 0.f) * m_Speed * 2.5f * DT;
+		vPos += Vec3(1.f, 0.f, 0.f) * m_Speed * 1.5f * DT;
 	}
 
 	else if (OBJ_DIR::DIR_LEFT == m_EntityScript->GetDir()
 		&& bMoveable[(UINT)PLATFORM_TYPE::LEFT])
 	{
-		vPos += Vec3(-1.f, 0.f, 0.f) * m_Speed * 2.5f * DT;
+		vPos += Vec3(-1.f, 0.f, 0.f) * m_Speed * 1.5f * DT;
 	}
 
 	Transform()->SetRelativePos(vPos);

@@ -17,5 +17,6 @@ CPlayerMoveScript
 CPlayerScript
 CRandomShootScript
 CRisingShotScript
+CSeriaRoomGateScript
 CSeriaScript
 CWindmillScript

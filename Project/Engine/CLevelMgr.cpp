@@ -21,8 +21,8 @@ CLevelMgr::CLevelMgr()
 
 CLevelMgr::~CLevelMgr()
 {
-	if(nullptr != m_CurLevel)
-		delete m_CurLevel;
+	Delete_Vec(m_vecLevel);
+	//SAFE_DELETE(m_CurLevel);
 }
 
 CGameObject* CLevelMgr::FindObjectByName(const wstring& _strName)
@@ -71,7 +71,32 @@ bool CLevelMgr::ChangeLevel(CLevel* _NextLevel)
 	return true;
 }
 
+void CLevelMgr::ChangeCurLevel(LEVEL_TYPE _Type)
+{
+	m_CurLevel = m_vecLevel[(UINT)_Type];
+
+	LevelChanged();
+}
+
 void CLevelMgr::LevelChanged()
 {
 	CTaskMgr::GetInst()->AddTask(tTask{ TASK_TYPE::LEVEL_CHANGED });
+}
+
+CGameObject* CLevelMgr::GetPlayer()
+{
+	CGameObject* pObject = FindObjectByName(L"Player");
+	return pObject;
+}
+
+CGameObject* CLevelMgr::GetPlayerJump()
+{
+	CGameObject* pObject = FindObjectByName(L"PlayerJump");
+	return pObject;
+}
+
+CGameObject* CLevelMgr::GetPlayerMove()
+{
+	CGameObject* pObject = FindObjectByName(L"PlayerMove");
+	return pObject;
 }

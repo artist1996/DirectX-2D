@@ -3,7 +3,9 @@
 #include "CLevelMgr.h"
 
 #include "CLayer.h"
+#include "CCollisionMgr.h"
 #include "CGameObject.h"
+
 
 CLevel::CLevel()
 	: m_Layer{}
@@ -15,6 +17,15 @@ CLevel::CLevel()
 	{
 		m_Layer[i] = new CLayer(i);
 	}
+
+	m_Layer[0]->SetName(L"Default");
+	m_Layer[1]->SetName(L"Background");
+	m_Layer[2]->SetName(L"Tile");
+	m_Layer[3]->SetName(L"Platform");
+	m_Layer[4]->SetName(L"Player");
+	m_Layer[5]->SetName(L"Movement");
+	m_Layer[6]->SetName(L"Monster");
+	m_Layer[7]->SetName(L"PlayerProjectile");
 }
 
 CLevel::CLevel(const CLevel& _Origin)
@@ -48,6 +59,10 @@ void CLevel::Begin()
 
 	if(nullptr != m_BGM)
 		m_BGM->Play(0, 0.7f, false);
+
+	CCollisionMgr::GetInst()->CollisionCheckClear();
+
+	CCollisionMgr::GetInst()->SetCollisionMatrix(m_Matrix);
 }
 
 void CLevel::Tick()
@@ -64,6 +79,11 @@ void CLevel::FinalTick()
 	{
 		m_Layer[i]->FinalTick();
 	}
+}
+
+void CLevel::Exit()
+{
+	m_BGM->Stop();
 }
 
 CGameObject* CLevel::FindObjectByName(const wstring& _strName)
@@ -115,6 +135,14 @@ void CLevel::ClearObject()
 	for (UINT i = 0; i < MAX_LAYER; ++i)
 	{
 		m_Layer[i]->ClearObject();
+	}
+}
+
+void CLevel::SetCollisionMatrix(UINT* _Matrix)
+{
+	for (UINT i = 0; i < MAX_LAYER; ++i)
+	{
+		m_Matrix[i] = _Matrix[i];
 	}
 }
 

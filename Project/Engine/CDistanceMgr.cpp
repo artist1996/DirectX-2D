@@ -31,6 +31,10 @@ void CDistanceMgr::Tick()
 
 bool CDistanceMgr::CalculateDistance()
 {
+	if (PAUSE == CLevelMgr::GetInst()->GetCurrentLevel()->GetState()
+		|| STOP == CLevelMgr::GetInst()->GetCurrentLevel()->GetState())
+		return false;
+
 	CLayer* pLayer = CLevelMgr::GetInst()->GetCurrentLevel()->GetLayer(6);
 	const vector<CGameObject*>& vecMonsters = pLayer->GetParentObjects();
 

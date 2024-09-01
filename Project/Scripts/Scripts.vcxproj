@@ -177,6 +177,7 @@ call CodeGen.exe</Command>
     <ClInclude Include="CRandomShootScript.h" />
     <ClInclude Include="CRisingShotScript.h" />
     <ClInclude Include="CScriptMgr.h" />
+    <ClInclude Include="CSeriaRoomGateScript.h" />
     <ClInclude Include="CSeriaScript.h" />
     <ClInclude Include="CWindmillScript.h" />
     <ClInclude Include="framework.h" />
@@ -203,6 +204,7 @@ call CodeGen.exe</Command>
     <ClCompile Include="CRandomShootScript.cpp" />
     <ClCompile Include="CRisingShotScript.cpp" />
     <ClCompile Include="CScriptMgr.cpp" />
+    <ClCompile Include="CSeriaRoomGateScript.cpp" />
     <ClCompile Include="CSeriaScript.cpp" />
     <ClCompile Include="CWindmillScript.cpp" />
     <ClCompile Include="CGunHawkExplodeScript.cpp" />

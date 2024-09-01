@@ -5,6 +5,8 @@ void DeleteObject(CGameObject* _DeleteObject);
 void DisconnectObject(CGameObject* _DisconnetObject);
 void ChangeLevelState(LEVEL_STATE _State);
 void ChangeLevel(class CLevel* _NextLevel, LEVEL_STATE _NextLevelState);
+void ChangeCurLevel(LEVEL_TYPE _Type);
+
 
 bool IsValid(CGameObject*& _Object);
 

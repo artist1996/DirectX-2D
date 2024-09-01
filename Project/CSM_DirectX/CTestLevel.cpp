@@ -13,6 +13,7 @@
 #include <Engine/CCollisionMgr.h>
 #include <Engine/CSetColorCS.h>
 #include <Engine/CStructuredBuffer.h>
+#include <Engine/CObjectPoolMgr.h>
 
 #include <Scripts/CPlayerScript.h>
 #include <Scripts/CCameraMoveScript.h>
@@ -40,18 +41,31 @@ void CTestLevel::CreateTestLevel()
 	wstring strPath = CPathMgr::GetInst()->GetContentPath();
 
 	CLevel* pLevel = CLevelSaveLoad::LoadLevel(strPath + L"level\\seria_room.lv");
-	ChangeLevel(pLevel, LEVEL_STATE::STOP);
+	CLevelMgr::GetInst()->AddLevel(pLevel);
+	
+	//hangeLevel(pLevel, STOP);
+
+	
+	pLevel = CLevelSaveLoad::LoadLevel(strPath + L"level\\hendonmyer.lv");
+	CLevelMgr::GetInst()->AddLevel(pLevel);
+	//ChangeCurLevel(LEVEL_TYPE::HENDONMYER);
+	ChangeCurLevel(LEVEL_TYPE::SERIAROOM);
+
+	CGameObject* pEntity = CObjectPoolMgr::GetInst()->GetObj(OBJ_ID::PLAYER);
+	CGameObject* pMove = CObjectPoolMgr::GetInst()->GetObj(OBJ_ID::PLAYERMOVE);
+	CGameObject* pJump = CObjectPoolMgr::GetInst()->GetObj(OBJ_ID::PLAYERJUMP);
+	pMove->Transform()->SetRelativePos(Vec3(0.f, -40.f, -40.f));
+	CreateObject(pMove, 5);
+	CreateObject(pEntity, 4);
+	CreateObject(pJump, 4);
+	
+
+	//ChangeCurLevel(LEVEL_TYPE::SERIAROOM);
+	//ChangeLevel(pLevel, LEVEL_STATE::STOP);
+
 	//CLevel* pLevel = new CLevel;
 	//ChangeLevel(pLevel, LEVEL_STATE::STOP);
-	//
-	//CGameObject* BGSeria = new CGameObject;
-	//BGSeria->SetName(L"BG_Seria");
-	//BGSeria->AddComponent(new CTransform);
-	//BGSeria->AddComponent(new CMeshRender);
-	//BGSeria->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
-	//BGSeria->MeshRender()->SetMaterial(pMtrl);
-	//pLevel->AddObject(1, BGSeria);
-	//
+
 	//CGameObject* CamObj = new CGameObject;
 	//CamObj->SetName(L"MainCamera");
 	//CamObj->AddComponent(new CTransform);
@@ -65,7 +79,7 @@ void CTestLevel::CreateTestLevel()
 	//CamObj->Camera()->SetFar(100000.f);
 	//CamObj->Camera()->SetProjType(PROJ_TYPE::ORTHOGRAPHIC);
 	//////CamObj->Camera()->SetProjType(PROJ_TYPE::PERSPECTIVE);
-	//pLevel->AddObject(0, CamObj);
+	//pNewLevel->AddObject(0, CamObj);
 	////
 	//pLevel->GetLayer(0)->SetName(L"Default");
 	//pLevel->GetLayer(1)->SetName(L"Background");
@@ -75,8 +89,8 @@ void CTestLevel::CreateTestLevel()
 	//pLevel->GetLayer(5)->SetName(L"Movement");
 	//pLevel->GetLayer(6)->SetName(L"Monster");
 	//pLevel->GetLayer(7)->SetName(L"PlayerProjectile");
-	////
-	//////// Light2D Object
+	//
+	// Light2D Object
 	//CGameObject* pLight2D = new CGameObject;
 	//pLight2D->SetName(L"Directional");
 	//pLight2D->AddComponent(new CTransform);
@@ -85,10 +99,10 @@ void CTestLevel::CreateTestLevel()
 	//pLight2D->Transform()->SetRelativeScale(Vec3(1.f, 1.f, 1.f));
 	//pLight2D->Light2D()->SetLightColor(Vec4(1.f, 1.f, 1.f, 1.f));
 	//pLight2D->Light2D()->SetAngle(XM_PI / 2.f);
-	//pLight2D->Light2D()->SetLightType(LIGHT_TYPE::POINT);
+	//pLight2D->Light2D()->SetLightType(LIGHT_TYPE::DIRECTIONAL);
 	//pLight2D->Light2D()->SetRadius(500.f);
 	//
-	//pLevel->AddObject(0, pLight2D);
+	//pNewLevel->AddObject(0, pLight2D);
 	////
 	////// Player Object
 	//CGameObject* pPlayer = new CGameObject;

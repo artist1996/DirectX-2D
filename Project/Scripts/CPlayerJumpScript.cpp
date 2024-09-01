@@ -15,6 +15,7 @@ CPlayerJumpScript::~CPlayerJumpScript()
 
 void CPlayerJumpScript::Begin()
 {
+	GetOwner()->SetID(OBJ_ID::PLAYERJUMP);
 }
 
 void CPlayerJumpScript::Tick()

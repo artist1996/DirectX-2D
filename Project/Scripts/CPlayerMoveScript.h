@@ -14,6 +14,7 @@ private:
     float                     m_Speed;
     bool                      m_MoveAble;
     bool                      m_TapMove;
+    bool                      m_Init;
 
     float                     m_ForceTime;
 
@@ -33,6 +34,8 @@ public:
 
     void SetState(MOVE_STATE _State) { m_State = _State; }
     void SetSpeed(float _Speed) { m_Speed = _Speed; }
+
+    void Init();
 
 public:
     virtual void Begin() override;

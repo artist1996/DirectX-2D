@@ -71,7 +71,7 @@ CPlayerScript::~CPlayerScript()
 void CPlayerScript::Begin()
 {
 	MeshRender()->GetDynamicMaterial();
-
+	GetOwner()->SetID(OBJ_ID::PLAYER);
 	m_BuffPref = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\deathbyrevolver.pref");
 	m_RandomShootPref = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\skill_randomshoot.pref");
 	m_PistolPref = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\pistol.pref");
@@ -91,8 +91,8 @@ void CPlayerScript::Begin()
 	m_Prefabs.DiagonalPistolPref = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\diagonalpistol.pref");
 	m_Prefabs.DiagonalHeadShotPref = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\diagonalheadshot.pref");
 
-	m_MoveObject = CLevelMgr::GetInst()->FindObjectByName(L"PlayerMove");
-	m_JumpObject = CLevelMgr::GetInst()->FindObjectByName(L"PlayerJump");
+	m_MoveObject = CObjectPoolMgr::GetInst()->GetPlayerMove();
+	m_JumpObject = CObjectPoolMgr::GetInst()->GetPlayerJump();
 	
 	m_MoveScript = (CPlayerMoveScript*)m_MoveObject->FindScriptByName(L"CPlayerMoveScript");
 	m_JumpScript = (CPlayerJumpScript*)m_JumpObject->FindScriptByName(L"CPlayerJumpScript");
@@ -1056,13 +1056,13 @@ void CPlayerScript::CreateRandomShoot()
 
 	if (m_Spawn && CurIdx == 0)
 	{
-		CGameObject* pObject = CObjectPoolMgr::GetInst()->GetRandomShoot();
+		CGameObject* pObject = CObjectPoolMgr::GetInst()->GetObj(OBJ_ID::RANDOMSHOOT);
 		pObject->Transform()->SetRelativePos(Vec3(vPos.x - 150.f, vPos.y + 50.f, vPos.z));
 		pObject->Transform()->SetRelativeScale(Vec3(300.f, 300.f, 1.f));
 		pObject->Transform()->SetRelativeRotation(Vec3(0.f, XM_PI, 0.f));
 		CreateObject(pObject, 7);
 
-		pObject = CObjectPoolMgr::GetInst()->GetRandomShoot();
+		pObject = CObjectPoolMgr::GetInst()->GetObj(OBJ_ID::RANDOMSHOOT);
 		pObject->Transform()->SetRelativePos(Vec3(vPos.x + 150.f, vPos.y + 50.f, vPos.z));
 		pObject->Transform()->SetRelativeScale(Vec3(300.f, 300.f, 1.f));
 		pObject->Transform()->SetRelativeRotation(Vec3(0.f, XM_2PI, 0.f));
@@ -1077,13 +1077,13 @@ void CPlayerScript::CreateRandomShoot()
 
 	if (m_Spawn && CurIdx == 3)
 	{
-		CGameObject* pObject = CObjectPoolMgr::GetInst()->GetRandomShoot();
+		CGameObject* pObject = CObjectPoolMgr::GetInst()->GetObj(OBJ_ID::RANDOMSHOOT);
 		pObject->Transform()->SetRelativePos(Vec3(vPos.x - 60.f, vPos.y + 130.f, vPos.z));
 		pObject->Transform()->SetRelativeScale(Vec3(300.f, 300.f, 1.f));
 		pObject->Transform()->SetRelativeRotation(Vec3(0.f, XM_PI, XM_PI * 1.7f));
 		CreateObject(pObject, 7);
 
-		pObject = CObjectPoolMgr::GetInst()->GetRandomShoot();
+		pObject = CObjectPoolMgr::GetInst()->GetObj(OBJ_ID::RANDOMSHOOT);
 		pObject->Transform()->SetRelativePos(Vec3(vPos.x + 60.f, vPos.y - 130.f, vPos.z));
 		pObject->Transform()->SetRelativeScale(Vec3(300.f, 300.f, 1.f));
 		pObject->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, XM_PI * 1.7f));
@@ -1097,13 +1097,13 @@ void CPlayerScript::CreateRandomShoot()
 
 	if (m_Spawn && CurIdx == 6)
 	{
-		CGameObject* pObject = CObjectPoolMgr::GetInst()->GetRandomShoot();
+		CGameObject* pObject = CObjectPoolMgr::GetInst()->GetObj(OBJ_ID::RANDOMSHOOT);
 		pObject->Transform()->SetRelativePos(Vec3(vPos.x - 150.f, vPos.y + 100.f, vPos.z));
 		pObject->Transform()->SetRelativeScale(Vec3(300.f, 300.f, 1.f));
 		pObject->Transform()->SetRelativeRotation(Vec3(0.f, XM_PI, XM_PI * 1.75f));
 		CreateObject(pObject, 7);
 
-		pObject = CObjectPoolMgr::GetInst()->GetRandomShoot();
+		pObject = CObjectPoolMgr::GetInst()->GetObj(OBJ_ID::RANDOMSHOOT);
 		pObject->Transform()->SetRelativePos(Vec3(vPos.x + 150.f, vPos.y - 100.f, vPos.z));
 		pObject->Transform()->SetRelativeScale(Vec3(300.f, 300.f, 1.f));
 		pObject->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, XM_PI * 1.75f));
@@ -1117,13 +1117,13 @@ void CPlayerScript::CreateRandomShoot()
 
 	if (m_Spawn && CurIdx == 8)
 	{
-		CGameObject* pObject = CObjectPoolMgr::GetInst()->GetRandomShoot();
+		CGameObject* pObject = CObjectPoolMgr::GetInst()->GetObj(OBJ_ID::RANDOMSHOOT);
 		pObject->Transform()->SetRelativePos(Vec3(vPos.x - 150.f, vPos.y + 50.f, vPos.z));
 		pObject->Transform()->SetRelativeScale(Vec3(300.f, 300.f, 1.f));
 		pObject->Transform()->SetRelativeRotation(Vec3(0.f, XM_PI, 0.f));
 		CreateObject(pObject, 7);
 
-		pObject = CObjectPoolMgr::GetInst()->GetRandomShoot();
+		pObject = CObjectPoolMgr::GetInst()->GetObj(OBJ_ID::RANDOMSHOOT);
 		pObject->Transform()->SetRelativePos(Vec3(vPos.x + 150.f, vPos.y + 100.f, vPos.z));
 		pObject->Transform()->SetRelativeScale(Vec3(300.f, 300.f, 1.f));
 		pObject->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, XM_PI / 4.f));
@@ -1137,13 +1137,13 @@ void CPlayerScript::CreateRandomShoot()
 
 	if (m_Spawn && CurIdx == 12)
 	{
-		CGameObject* pObject = CObjectPoolMgr::GetInst()->GetRandomShoot();
+		CGameObject* pObject = CObjectPoolMgr::GetInst()->GetObj(OBJ_ID::RANDOMSHOOT);
 		pObject->Transform()->SetRelativePos(Vec3(vPos.x - 150.f, vPos.y + 50.f, vPos.z));
 		pObject->Transform()->SetRelativeScale(Vec3(300.f, 300.f, 1.f));
 		pObject->Transform()->SetRelativeRotation(Vec3(0.f, XM_PI, 0.f));
 		CreateObject(pObject, 7);
 
-		pObject = CObjectPoolMgr::GetInst()->GetRandomShoot();
+		pObject = CObjectPoolMgr::GetInst()->GetObj(OBJ_ID::RANDOMSHOOT);
 		pObject->Transform()->SetRelativePos(Vec3(vPos.x + 150.f, vPos.y + 50.f, vPos.z));
 		pObject->Transform()->SetRelativeScale(Vec3(300.f, 300.f, 1.f));
 		pObject->Transform()->SetRelativeRotation(Vec3(0.f, XM_2PI, 0.f));
@@ -1157,13 +1157,13 @@ void CPlayerScript::CreateRandomShoot()
 
 	if (m_Spawn && CurIdx == 15)
 	{
-		CGameObject* pObject = CObjectPoolMgr::GetInst()->GetRandomShoot();
+		CGameObject* pObject = CObjectPoolMgr::GetInst()->GetObj(OBJ_ID::RANDOMSHOOT);
 		pObject->Transform()->SetRelativePos(Vec3(vPos.x - 60.f, vPos.y + 130.f, vPos.z));
 		pObject->Transform()->SetRelativeScale(Vec3(300.f, 300.f, 1.f));
 		pObject->Transform()->SetRelativeRotation(Vec3(0.f, XM_PI, XM_PI * 1.7f));
 		CreateObject(pObject, 7);
 
-		pObject = CObjectPoolMgr::GetInst()->GetRandomShoot();
+		pObject = CObjectPoolMgr::GetInst()->GetObj(OBJ_ID::RANDOMSHOOT);
 		pObject->Transform()->SetRelativePos(Vec3(vPos.x + 60.f, vPos.y - 130.f, vPos.z));
 		pObject->Transform()->SetRelativeScale(Vec3(300.f, 300.f, 1.f));
 		pObject->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, XM_PI * 1.7f));
@@ -1177,13 +1177,13 @@ void CPlayerScript::CreateRandomShoot()
 
 	if (m_Spawn && CurIdx == 18)
 	{
-		CGameObject* pObject = CObjectPoolMgr::GetInst()->GetRandomShoot();
+		CGameObject* pObject = CObjectPoolMgr::GetInst()->GetObj(OBJ_ID::RANDOMSHOOT);
 		pObject->Transform()->SetRelativePos(Vec3(vPos.x - 150.f, vPos.y + 100.f, vPos.z));
 		pObject->Transform()->SetRelativeScale(Vec3(300.f, 300.f, 1.f));
 		pObject->Transform()->SetRelativeRotation(Vec3(0.f, XM_PI, XM_PI * 1.75f));
 		CreateObject(pObject, 7);
 
-		pObject = CObjectPoolMgr::GetInst()->GetRandomShoot();
+		pObject = CObjectPoolMgr::GetInst()->GetObj(OBJ_ID::RANDOMSHOOT);
 		pObject->Transform()->SetRelativePos(Vec3(vPos.x + 150.f, vPos.y - 100.f, vPos.z));
 		pObject->Transform()->SetRelativeScale(Vec3(300.f, 300.f, 1.f));
 		pObject->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, XM_PI * 1.75f));
@@ -1197,13 +1197,13 @@ void CPlayerScript::CreateRandomShoot()
 
 	if (m_Spawn && CurIdx == 20)
 	{
-		CGameObject* pObject = CObjectPoolMgr::GetInst()->GetRandomShoot();
+		CGameObject* pObject = CObjectPoolMgr::GetInst()->GetObj(OBJ_ID::RANDOMSHOOT);
 		pObject->Transform()->SetRelativePos(Vec3(vPos.x - 150.f, vPos.y + 50.f, vPos.z));
 		pObject->Transform()->SetRelativeScale(Vec3(300.f, 300.f, 1.f));
 		pObject->Transform()->SetRelativeRotation(Vec3(0.f, XM_PI, 0.f));
 		CreateObject(pObject, 7);
 
-		pObject = CObjectPoolMgr::GetInst()->GetRandomShoot();
+		pObject = CObjectPoolMgr::GetInst()->GetObj(OBJ_ID::RANDOMSHOOT);
 		pObject->Transform()->SetRelativePos(Vec3(vPos.x + 150.f, vPos.y + 100.f, vPos.z));
 		pObject->Transform()->SetRelativeScale(Vec3(300.f, 300.f, 1.f));
 		pObject->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, XM_PI / 4.f));
@@ -1217,13 +1217,13 @@ void CPlayerScript::CreateRandomShoot()
 
 	if (m_Spawn && CurIdx == 24)
 	{
-		CGameObject* pObject = CObjectPoolMgr::GetInst()->GetRandomShoot();
+		CGameObject* pObject = CObjectPoolMgr::GetInst()->GetObj(OBJ_ID::RANDOMSHOOT);
 		pObject->Transform()->SetRelativePos(Vec3(vPos.x - 150.f, vPos.y + 50.f, vPos.z));
 		pObject->Transform()->SetRelativeScale(Vec3(300.f, 300.f, 1.f));
 		pObject->Transform()->SetRelativeRotation(Vec3(0.f, XM_PI, 0.f));
 		CreateObject(pObject, 7);
 
-		pObject = CObjectPoolMgr::GetInst()->GetRandomShoot();
+		pObject = CObjectPoolMgr::GetInst()->GetObj(OBJ_ID::RANDOMSHOOT);
 		pObject->Transform()->SetRelativePos(Vec3(vPos.x + 150.f, vPos.y + 50.f, vPos.z));
 		pObject->Transform()->SetRelativeScale(Vec3(300.f, 300.f, 1.f));
 		pObject->Transform()->SetRelativeRotation(Vec3(0.f, XM_2PI, 0.f));
@@ -1237,13 +1237,13 @@ void CPlayerScript::CreateRandomShoot()
 
 	if (m_Spawn && CurIdx == 27)
 	{
-		CGameObject* pObject = CObjectPoolMgr::GetInst()->GetRandomShoot();
+		CGameObject* pObject = CObjectPoolMgr::GetInst()->GetObj(OBJ_ID::RANDOMSHOOT);
 		pObject->Transform()->SetRelativePos(Vec3(vPos.x - 60.f, vPos.y + 130.f, vPos.z));
 		pObject->Transform()->SetRelativeScale(Vec3(300.f, 300.f, 1.f));
 		pObject->Transform()->SetRelativeRotation(Vec3(0.f, XM_PI, XM_PI * 1.7f));
 		CreateObject(pObject, 7);
 
-		pObject = CObjectPoolMgr::GetInst()->GetRandomShoot();
+		pObject = CObjectPoolMgr::GetInst()->GetObj(OBJ_ID::RANDOMSHOOT);
 		pObject->Transform()->SetRelativePos(Vec3(vPos.x + 60.f, vPos.y - 130.f, vPos.z));
 		pObject->Transform()->SetRelativeScale(Vec3(300.f, 300.f, 1.f));
 		pObject->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, XM_PI * 1.7f));
@@ -1257,13 +1257,13 @@ void CPlayerScript::CreateRandomShoot()
 
 	if (m_Spawn && CurIdx == 30)
 	{
-		CGameObject* pObject = CObjectPoolMgr::GetInst()->GetRandomShoot();
+		CGameObject* pObject = CObjectPoolMgr::GetInst()->GetObj(OBJ_ID::RANDOMSHOOT);
 		pObject->Transform()->SetRelativePos(Vec3(vPos.x - 150.f, vPos.y + 100.f, vPos.z));
 		pObject->Transform()->SetRelativeScale(Vec3(300.f, 300.f, 1.f));
 		pObject->Transform()->SetRelativeRotation(Vec3(0.f, XM_PI, XM_PI * 1.75f));
 		CreateObject(pObject, 7);
 
-		pObject = CObjectPoolMgr::GetInst()->GetRandomShoot();
+		pObject = CObjectPoolMgr::GetInst()->GetObj(OBJ_ID::RANDOMSHOOT);
 		pObject->Transform()->SetRelativePos(Vec3(vPos.x + 150.f, vPos.y - 100.f, vPos.z));
 		pObject->Transform()->SetRelativeScale(Vec3(300.f, 300.f, 1.f));
 		pObject->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, XM_PI * 1.75f));
@@ -1277,13 +1277,13 @@ void CPlayerScript::CreateRandomShoot()
 
 	if (m_Spawn && CurIdx == 32)
 	{
-		CGameObject* pObject = CObjectPoolMgr::GetInst()->GetRandomShoot();
+		CGameObject* pObject = CObjectPoolMgr::GetInst()->GetObj(OBJ_ID::RANDOMSHOOT);
 		pObject->Transform()->SetRelativePos(Vec3(vPos.x - 150.f, vPos.y + 50.f, vPos.z));
 		pObject->Transform()->SetRelativeScale(Vec3(300.f, 300.f, 1.f));
 		pObject->Transform()->SetRelativeRotation(Vec3(0.f, XM_PI, 0.f));
 		CreateObject(pObject, 7);
 
-		pObject = CObjectPoolMgr::GetInst()->GetRandomShoot();
+		pObject = CObjectPoolMgr::GetInst()->GetObj(OBJ_ID::RANDOMSHOOT);
 		pObject->Transform()->SetRelativePos(Vec3(vPos.x + 150.f, vPos.y + 100.f, vPos.z));
 		pObject->Transform()->SetRelativeScale(Vec3(300.f, 300.f, 1.f));
 		pObject->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, XM_PI / 4.f));

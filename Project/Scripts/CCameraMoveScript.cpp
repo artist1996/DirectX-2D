@@ -9,7 +9,12 @@ CCameraMoveScript::CCameraMoveScript()
 	: CScript(SCRIPT_TYPE::CAMERAMOVESCRIPT)
 	, m_Target(nullptr)
 	, m_CamSpeed(500.f)
+	, m_BoundaryRightWidth(0.f)
+	, m_BoundaryBottomHeight(0.f)
 {
+	AddScriptParam(SCRIPT_PARAM::VEC2, "Boundary LT", &m_BoundaryLT);
+	AddScriptParam(SCRIPT_PARAM::FLOAT, "Boundary R Width", &m_BoundaryRightWidth);
+	AddScriptParam(SCRIPT_PARAM::FLOAT, "Boundary B Height", &m_BoundaryBottomHeight);
 }
 
 CCameraMoveScript::~CCameraMoveScript()
@@ -79,14 +84,20 @@ void CCameraMoveScript::OrthoGraphicMove()
 	//	vPos.x += DT * Speed;
 	//}
 
-	//if (vPos.x <= 0.f)
-	//	vPos.x = 0.f;
-	//
-	//if (vPos.y <= 0.f)
-	//	vPos.y = 0.f;
+	if (vPos.x <= 0.f)
+		vPos.x = 0.f;
+	
+	if (vPos.y <= 0.f)
+		vPos.y = 0.f;
 
-	//Transform()->SetRelativePos(vPos);
-	Transform()->SetRelativePos(Vec3(0.f,0.f,1.f));
+	if (vPos.x >= m_BoundaryRightWidth)
+		vPos.x = m_BoundaryRightWidth;
+	
+	if(vPos.y >= m_BoundaryBottomHeight)
+		vPos.y = m_BoundaryBottomHeight;
+
+	Transform()->SetRelativePos(vPos);
+	//Transform()->SetRelativePos(Vec3(0.f,0.f,1.f));
 }
 
 void CCameraMoveScript::PerspectiveMove()
@@ -147,9 +158,13 @@ void CCameraMoveScript::PerspectiveMove()
 void CCameraMoveScript::SaveToFile(FILE* _pFile)
 {
 	fwrite(&m_CamSpeed, sizeof(float), 1, _pFile);
+	fwrite(&m_BoundaryRightWidth, sizeof(float), 1, _pFile);
+	fwrite(&m_BoundaryBottomHeight, sizeof(float), 1, _pFile);
 }
 
 void CCameraMoveScript::LoadFromFile(FILE* _pFile)
 {
 	fread(&m_CamSpeed, sizeof(float), 1, _pFile);
+	fread(&m_BoundaryRightWidth, sizeof(float), 1, _pFile);
+	fread(&m_BoundaryBottomHeight, sizeof(float), 1, _pFile);
 }

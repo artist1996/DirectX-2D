@@ -20,6 +20,7 @@
 #include "CPlayerScript.h"
 #include "CRandomShootScript.h"
 #include "CRisingShotScript.h"
+#include "CSeriaRoomGateScript.h"
 #include "CSeriaScript.h"
 #include "CWindmillScript.h"
 
@@ -44,6 +45,7 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CPlayerScript");
 	_vec.push_back(L"CRandomShootScript");
 	_vec.push_back(L"CRisingShotScript");
+	_vec.push_back(L"CSeriaRoomGateScript");
 	_vec.push_back(L"CSeriaScript");
 	_vec.push_back(L"CWindmillScript");
 }
@@ -88,6 +90,8 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CRandomShootScript;
 	if (L"CRisingShotScript" == _strScriptName)
 		return new CRisingShotScript;
+	if (L"CSeriaRoomGateScript" == _strScriptName)
+		return new CSeriaRoomGateScript;
 	if (L"CSeriaScript" == _strScriptName)
 		return new CSeriaScript;
 	if (L"CWindmillScript" == _strScriptName)
@@ -155,6 +159,9 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 		break;
 	case (UINT)SCRIPT_TYPE::RISINGSHOTSCRIPT:
 		return new CRisingShotScript;
+		break;
+	case (UINT)SCRIPT_TYPE::SERIAROOMGATESCRIPT:
+		return new CSeriaRoomGateScript;
 		break;
 	case (UINT)SCRIPT_TYPE::SERIASCRIPT:
 		return new CSeriaScript;
@@ -244,6 +251,10 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 
 	case SCRIPT_TYPE::RISINGSHOTSCRIPT:
 		return L"CRisingShotScript";
+		break;
+
+	case SCRIPT_TYPE::SERIAROOMGATESCRIPT:
+		return L"CSeriaRoomGateScript";
 		break;
 
 	case SCRIPT_TYPE::SERIASCRIPT:

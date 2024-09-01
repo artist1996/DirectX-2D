@@ -19,6 +19,7 @@ CGameObject::CGameObject()
 	, m_Dead(false)
 	, m_Moveable{ true,true,true,true }
 	, m_Dir(OBJ_DIR::DIR_RIGHT)
+	, m_ID(OBJ_ID::END)
 {
 }
 
@@ -31,6 +32,8 @@ CGameObject::CGameObject(const CGameObject& _Origin)
 	, m_Dead(false)
 	, m_Moveable{ true,true,true,true }
 	, m_Dir(_Origin.m_Dir)
+	, m_ID(_Origin.m_ID)
+	, m_Owner(_Origin.m_Owner)
 {
 	// Component บนป็
 	for (UINT i = 0; i < (UINT)COMPONENT_TYPE::END; ++i)

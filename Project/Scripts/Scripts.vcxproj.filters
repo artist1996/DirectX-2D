@@ -177,6 +177,9 @@
     <ClInclude Include="CDiagonalHeadShotScript.h">
       <Filter>Scripts\02. PlayerSkillScript\07. HeadShot\02. Diagonal</Filter>
     </ClInclude>
+    <ClInclude Include="CSeriaRoomGateScript.h">
+      <Filter>Scripts\06. GateScript\01. SeriaRoomGate</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -250,6 +253,9 @@
     </ClCompile>
     <ClCompile Include="CDiagonalHeadShotScript.cpp">
       <Filter>Scripts\02. PlayerSkillScript\07. HeadShot\02. Diagonal</Filter>
+    </ClCompile>
+    <ClCompile Include="CSeriaRoomGateScript.cpp">
+      <Filter>Scripts\06. GateScript\01. SeriaRoomGate</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

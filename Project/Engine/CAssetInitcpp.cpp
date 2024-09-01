@@ -315,6 +315,8 @@ void CAssetMgr::CreateEngineGraphicShader()
 
 	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_TRANSPARENT);
 
+	pShader->AddTexParam(TEX_0, "OutputTexture");
+
 	AddAsset(L"Std2DAlphaBlendShader", pShader);
 
 	// HeadShot Shader

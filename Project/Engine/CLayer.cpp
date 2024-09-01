@@ -26,8 +26,6 @@ CLayer::~CLayer()
 		if (nullptr != m_Parents[i])
 			delete m_Parents[i];
 	}
-
-	//Delete_Vec(m_Parents);
 }
 
 void CLayer::Begin()

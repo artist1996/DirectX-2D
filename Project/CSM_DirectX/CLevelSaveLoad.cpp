@@ -137,7 +137,10 @@ CLevel* CLevelSaveLoad::LoadLevel(const wstring& _FilePath)
 		fread(&CollisionMatrix[i], sizeof(UINT), 1, pFile);
 	}
 	
-	CCollisionMgr::GetInst()->SetCollisionMatrix(CollisionMatrix);
+	
+	pLevel->SetCollisionMatrix(CollisionMatrix);
+	//CCollisionMgr::GetInst()->CollisionCheckClear();
+	//CCollisionMgr::GetInst()->SetCollisionMatrix(CollisionMatrix);
 
 	for (UINT i = 0; i < MAX_LAYER; ++i)
 	{
@@ -158,6 +161,8 @@ CLevel* CLevelSaveLoad::LoadLevel(const wstring& _FilePath)
 			pLayer->AddObject(pObject, false);
 		}
 	}
+
+	fclose(pFile);
 
 	return pLevel;
 }
