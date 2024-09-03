@@ -64,7 +64,7 @@ void CAnimator2D::FinalTick()
 	{
 		float MaxTime = 1.f / m_FPS;
 		
-		m_AccTime += DT;
+		m_AccTime += EngineDT;
 		
 		if (MaxTime < m_AccTime)
 		{
@@ -112,6 +112,11 @@ void CAnimator2D::Play(int _FlipBookIdx, float _FPS, bool _Repeat)
 	m_AccTime = 0.f;
 	m_FPS = _FPS;
 	m_Repeat = _Repeat;
+}
+
+void CAnimator2D::Stop()
+{
+	m_FPS = 0;
 }
 
 void CAnimator2D::Reset()

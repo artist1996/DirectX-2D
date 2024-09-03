@@ -344,12 +344,12 @@ int CDevice::CreateBlendState()
 	Desc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
 
 	// Src(Pixel RGB) * A + Dest(RenderTarget RGB) * (1 - A)
-	Desc.RenderTarget[0].BlendOp   = D3D11_BLEND_OP_ADD;
-	Desc.RenderTarget[0].SrcBlend  = D3D11_BLEND_SRC_ALPHA;			// 계수
+	Desc.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
+	Desc.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;			// 계수
 	Desc.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;		// 계수
-
-	Desc.RenderTarget[0].BlendOpAlpha   = D3D11_BLEND_OP_ADD;
-	Desc.RenderTarget[0].SrcBlendAlpha  = D3D11_BLEND_ONE;
+	
+	Desc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
+	Desc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;
 	Desc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ONE;
 
 	if (FAILED(DEVICE->CreateBlendState(&Desc, m_BSState[(UINT)BS_TYPE::ALPHABLEND].GetAddressOf())))
@@ -374,6 +374,27 @@ int CDevice::CreateBlendState()
 	Desc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ONE;
 
 	if (FAILED(DEVICE->CreateBlendState(&Desc, m_BSState[(UINT)BS_TYPE::ONE_ONE].GetAddressOf())))
+	{
+		return E_FAIL;
+	}
+
+	// Additive Blend
+	Desc.AlphaToCoverageEnable = false;
+	Desc.IndependentBlendEnable = false;
+
+	Desc.RenderTarget[0].BlendEnable = true;
+	Desc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+
+	// Src + Dest (Additive Blending)
+	Desc.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
+	Desc.RenderTarget[0].SrcBlend = D3D11_BLEND_ONE;
+	Desc.RenderTarget[0].DestBlend = D3D11_BLEND_ONE;
+
+	Desc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
+	Desc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ZERO;
+	Desc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ONE;
+
+	if (FAILED(DEVICE->CreateBlendState(&Desc, m_BSState[(UINT)BS_TYPE::ADDITIVE].GetAddressOf())))
 	{
 		return E_FAIL;
 	}

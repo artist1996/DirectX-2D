@@ -166,14 +166,14 @@
     <ClInclude Include="CFSM.h">
       <Filter>08. Component\09. FSM</Filter>
     </ClInclude>
-    <ClInclude Include="CState.h">
-      <Filter>Module</Filter>
-    </ClInclude>
     <ClInclude Include="CObjectPoolMgr.h">
       <Filter>04. Manager\10. ObjectPoolMgr</Filter>
     </ClInclude>
     <ClInclude Include="CDistanceMgr.h">
       <Filter>04. Manager\11. DistanceMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="CState.h">
+      <Filter>Module</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -321,14 +321,14 @@
     <ClCompile Include="CFSM.cpp">
       <Filter>08. Component\09. FSM</Filter>
     </ClCompile>
-    <ClCompile Include="CState.cpp">
-      <Filter>Module</Filter>
-    </ClCompile>
     <ClCompile Include="CObjectPoolMgr.cpp">
       <Filter>04. Manager\10. ObjectPoolMgr</Filter>
     </ClCompile>
     <ClCompile Include="CDistanceMgr.cpp">
       <Filter>04. Manager\11. DistanceMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="CState.cpp">
+      <Filter>Module</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -488,6 +488,18 @@
     <Filter Include="HLSL\03. Compute Shader\02. ParticleTick">
       <UniqueIdentifier>{40edd074-127a-4329-9753-b524971e6afc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04. Manager\09. FontMgr">
+      <UniqueIdentifier>{13f755ed-fdb1-4e7f-a842-7afbf067be57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="08. Component\09. FSM">
+      <UniqueIdentifier>{893487aa-3f50-4161-8c5f-38cb55d44684}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Manager\11. DistanceMgr">
+      <UniqueIdentifier>{599755b7-e2ae-4a57-8863-e4a4e5c260b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Manager\10. ObjectPoolMgr">
+      <UniqueIdentifier>{eeb1a8c5-4476-4398-b81e-a2c2753929f2}</UniqueIdentifier>
+    </Filter>
     <Filter Include="HLSL\02. Render">
       <UniqueIdentifier>{6f314835-5a03-4c91-a83b-7766e21b791b}</UniqueIdentifier>
     </Filter>
@@ -499,18 +511,6 @@
     </Filter>
     <Filter Include="HLSL\02. Render\03. PostProcess">
       <UniqueIdentifier>{1e562a1d-6dac-4001-9fb0-b5df1dc3409a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="04. Manager\09. FontMgr">
-      <UniqueIdentifier>{13f755ed-fdb1-4e7f-a842-7afbf067be57}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="08. Component\09. FSM">
-      <UniqueIdentifier>{893487aa-3f50-4161-8c5f-38cb55d44684}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="04. Manager\10. ObjectPoolMgr">
-      <UniqueIdentifier>{eeb1a8c5-4476-4398-b81e-a2c2753929f2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="04. Manager\11. DistanceMgr">
-      <UniqueIdentifier>{599755b7-e2ae-4a57-8863-e4a4e5c260b1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

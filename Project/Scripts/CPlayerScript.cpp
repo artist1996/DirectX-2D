@@ -28,7 +28,6 @@ CPlayerScript::CPlayerScript()
 	, m_HammerPref(nullptr)
 	, m_HeadShotEffectPref(nullptr)
 	, m_WindmillPref(nullptr)
-	, m_HeadShotPref(nullptr)
 	, m_GunHawkFirstUpPref(nullptr)
 	, m_GunHawkFirstDownPref(nullptr)
 	, m_GunHawkSecondUpPref(nullptr)
@@ -79,7 +78,7 @@ void CPlayerScript::Begin()
 	m_HammerPref = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\revolverhammer_normal.pref");
 	m_HeadShotEffectPref = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\headshoteffect.pref");
 	m_WindmillPref = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\windmilleffect.pref");
-	m_HeadShotPref = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\skill_headshot.pref");
+
 	m_GunHawkFirstUpPref = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\gunhawk0_up.pref");
 	m_GunHawkFirstDownPref = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\gunhawk0_down.pref");
 	m_GunHawkSecondUpPref = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\gunhawk1_up.pref");
@@ -1041,10 +1040,10 @@ void CPlayerScript::CreateDeathByRevolver()
 	Vec3 vPos = Transform()->GetWorldPos();
 	CGameObject* pCam = CLevelMgr::GetInst()->FindObjectByName(L"MainCamera");
 
-	pBuff->Transform()->SetRelativePos(Vec3(vPos.x, pCam->Transform()->GetWorldPos().y, vPos.z + 100.f));
+	pBuff->Transform()->SetRelativePos(Vec3(vPos.x, pCam->Transform()->GetWorldPos().y, vPos.z + 500.f));
 	pBuff->Transform()->SetRelativeScale(Vec3(470.f, 768.f, 1.f));
 	pBuff->Transform()->SetRelativeRotation(vRot);
-	pBuff->MeshRender()->GetMaterial()->SetShader(CAssetMgr::GetInst()->FindAsset<CGraphicShader>(L"Std2DAlphaBlendShader"));
+	//pBuff->MeshRender()->GetMaterial()->SetShader(CAssetMgr::GetInst()->FindAsset<CGraphicShader>(L"Std2DAdditiveShader"));
 
 	CreateObject(pBuff, 0);
 }
@@ -1057,238 +1056,252 @@ void CPlayerScript::CreateRandomShoot()
 	if (m_Spawn && CurIdx == 0)
 	{
 		CGameObject* pObject = CObjectPoolMgr::GetInst()->GetObj(OBJ_ID::RANDOMSHOOT);
-		pObject->Transform()->SetRelativePos(Vec3(vPos.x - 150.f, vPos.y + 50.f, vPos.z));
+	
+		if (OBJ_DIR::DIR_LEFT == m_Dir)
+		{
+			pObject->Transform()->SetRelativePos(Vec3(vPos.x - 130.f, vPos.y, vPos.z));
+			pObject->Transform()->SetRelativeRotation(Vec3(0.f, XM_PI, 0.f));
+		}
+	
+		else if (OBJ_DIR::DIR_RIGHT == m_Dir)
+		{
+			pObject->Transform()->SetRelativePos(Vec3(vPos.x + 130.f, vPos.y, vPos.z));
+			pObject->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, 0.f));
+		}
 		pObject->Transform()->SetRelativeScale(Vec3(300.f, 300.f, 1.f));
-		pObject->Transform()->SetRelativeRotation(Vec3(0.f, XM_PI, 0.f));
+	
 		CreateObject(pObject, 7);
-
-		pObject = CObjectPoolMgr::GetInst()->GetObj(OBJ_ID::RANDOMSHOOT);
-		pObject->Transform()->SetRelativePos(Vec3(vPos.x + 150.f, vPos.y + 50.f, vPos.z));
-		pObject->Transform()->SetRelativeScale(Vec3(300.f, 300.f, 1.f));
-		pObject->Transform()->SetRelativeRotation(Vec3(0.f, XM_2PI, 0.f));
-
-		CreateObject(pObject, 7);
-
+	
 		m_Spawn = false;
 	}
-
+	
 	if (CurIdx == 1)
 		m_Spawn = true;
-
+	
 	if (m_Spawn && CurIdx == 3)
 	{
 		CGameObject* pObject = CObjectPoolMgr::GetInst()->GetObj(OBJ_ID::RANDOMSHOOT);
-		pObject->Transform()->SetRelativePos(Vec3(vPos.x - 60.f, vPos.y + 130.f, vPos.z));
+		pObject->Transform()->SetRelativePos(Vec3(vPos.x - 100.f, vPos.y, vPos.z));
 		pObject->Transform()->SetRelativeScale(Vec3(300.f, 300.f, 1.f));
-		pObject->Transform()->SetRelativeRotation(Vec3(0.f, XM_PI, XM_PI * 1.7f));
+		pObject->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, XM_PI));
 		CreateObject(pObject, 7);
-
+	
 		pObject = CObjectPoolMgr::GetInst()->GetObj(OBJ_ID::RANDOMSHOOT);
-		pObject->Transform()->SetRelativePos(Vec3(vPos.x + 60.f, vPos.y - 130.f, vPos.z));
+		pObject->Transform()->SetRelativePos(Vec3(vPos.x + 110.f, vPos.y - 50.f, vPos.z));
 		pObject->Transform()->SetRelativeScale(Vec3(300.f, 300.f, 1.f));
-		pObject->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, XM_PI * 1.7f));
+		pObject->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, 0.f));
 		CreateObject(pObject, 7);
-
+	
 		m_Spawn = false;
 	}
-
+	
 	if (CurIdx == 4)
 		m_Spawn = true;
-
+	
 	if (m_Spawn && CurIdx == 6)
 	{
 		CGameObject* pObject = CObjectPoolMgr::GetInst()->GetObj(OBJ_ID::RANDOMSHOOT);
-		pObject->Transform()->SetRelativePos(Vec3(vPos.x - 150.f, vPos.y + 100.f, vPos.z));
+		pObject->Transform()->SetRelativePos(Vec3(vPos.x - 120.f, vPos.y - 30.f, vPos.z));
 		pObject->Transform()->SetRelativeScale(Vec3(300.f, 300.f, 1.f));
-		pObject->Transform()->SetRelativeRotation(Vec3(0.f, XM_PI, XM_PI * 1.75f));
+		pObject->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, XM_PI * 1.12f));
 		CreateObject(pObject, 7);
-
+		
 		pObject = CObjectPoolMgr::GetInst()->GetObj(OBJ_ID::RANDOMSHOOT);
-		pObject->Transform()->SetRelativePos(Vec3(vPos.x + 150.f, vPos.y - 100.f, vPos.z));
+		pObject->Transform()->SetRelativePos(Vec3(vPos.x + 110.f, vPos.y - 70.f, vPos.z));
 		pObject->Transform()->SetRelativeScale(Vec3(300.f, 300.f, 1.f));
 		pObject->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, XM_PI * 1.75f));
 		CreateObject(pObject, 7);
-
+		
 		m_Spawn = false;
 	}
-
+	
 	if (CurIdx == 7)
 		m_Spawn = true;
 
 	if (m_Spawn && CurIdx == 8)
 	{
 		CGameObject* pObject = CObjectPoolMgr::GetInst()->GetObj(OBJ_ID::RANDOMSHOOT);
-		pObject->Transform()->SetRelativePos(Vec3(vPos.x - 150.f, vPos.y + 50.f, vPos.z));
+		pObject->Transform()->SetRelativePos(Vec3(vPos.x - 110.f, vPos.y - 40.f, vPos.z));
 		pObject->Transform()->SetRelativeScale(Vec3(300.f, 300.f, 1.f));
-		pObject->Transform()->SetRelativeRotation(Vec3(0.f, XM_PI, 0.f));
+		pObject->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, XM_PI * 1.2f));
 		CreateObject(pObject, 7);
-
+	
 		pObject = CObjectPoolMgr::GetInst()->GetObj(OBJ_ID::RANDOMSHOOT);
-		pObject->Transform()->SetRelativePos(Vec3(vPos.x + 150.f, vPos.y + 100.f, vPos.z));
+		pObject->Transform()->SetRelativePos(Vec3(vPos.x + 70.f, vPos.y + 50.f, vPos.z));
 		pObject->Transform()->SetRelativeScale(Vec3(300.f, 300.f, 1.f));
-		pObject->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, XM_PI / 4.f));
+		pObject->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, XM_PI * 2.2f));
 		CreateObject(pObject, 7);
-
+	
 		m_Spawn = false;
 	}
 
 	if (CurIdx == 9)
 		m_Spawn = true;
-
+	
 	if (m_Spawn && CurIdx == 12)
 	{
 		CGameObject* pObject = CObjectPoolMgr::GetInst()->GetObj(OBJ_ID::RANDOMSHOOT);
-		pObject->Transform()->SetRelativePos(Vec3(vPos.x - 150.f, vPos.y + 50.f, vPos.z));
+	
+		if (OBJ_DIR::DIR_LEFT == m_Dir)
+		{
+			pObject->Transform()->SetRelativePos(Vec3(vPos.x - 110.f, vPos.y, vPos.z));
+			pObject->Transform()->SetRelativeRotation(Vec3(0.f, XM_PI, 0.f));
+		}
+	
+		else if (OBJ_DIR::DIR_RIGHT == m_Dir)
+		{
+			pObject->Transform()->SetRelativePos(Vec3(vPos.x + 150.f, vPos.y, vPos.z));
+			pObject->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, 0.f));
+		}
 		pObject->Transform()->SetRelativeScale(Vec3(300.f, 300.f, 1.f));
-		pObject->Transform()->SetRelativeRotation(Vec3(0.f, XM_PI, 0.f));
+	
 		CreateObject(pObject, 7);
-
-		pObject = CObjectPoolMgr::GetInst()->GetObj(OBJ_ID::RANDOMSHOOT);
-		pObject->Transform()->SetRelativePos(Vec3(vPos.x + 150.f, vPos.y + 50.f, vPos.z));
-		pObject->Transform()->SetRelativeScale(Vec3(300.f, 300.f, 1.f));
-		pObject->Transform()->SetRelativeRotation(Vec3(0.f, XM_2PI, 0.f));
-		CreateObject(pObject, 7);
-
+	
 		m_Spawn = false;
 	}
-
+	
 	if (CurIdx == 13)
 		m_Spawn = true;
-
+	
 	if (m_Spawn && CurIdx == 15)
 	{
 		CGameObject* pObject = CObjectPoolMgr::GetInst()->GetObj(OBJ_ID::RANDOMSHOOT);
-		pObject->Transform()->SetRelativePos(Vec3(vPos.x - 60.f, vPos.y + 130.f, vPos.z));
+		pObject->Transform()->SetRelativePos(Vec3(vPos.x - 120.f, vPos.y, vPos.z));
 		pObject->Transform()->SetRelativeScale(Vec3(300.f, 300.f, 1.f));
-		pObject->Transform()->SetRelativeRotation(Vec3(0.f, XM_PI, XM_PI * 1.7f));
+		pObject->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, XM_PI));
 		CreateObject(pObject, 7);
-
+	
 		pObject = CObjectPoolMgr::GetInst()->GetObj(OBJ_ID::RANDOMSHOOT);
-		pObject->Transform()->SetRelativePos(Vec3(vPos.x + 60.f, vPos.y - 130.f, vPos.z));
+		pObject->Transform()->SetRelativePos(Vec3(vPos.x + 140.f, vPos.y - 50.f, vPos.z));
 		pObject->Transform()->SetRelativeScale(Vec3(300.f, 300.f, 1.f));
-		pObject->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, XM_PI * 1.7f));
+		pObject->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, 0.f));
 		CreateObject(pObject, 7);
-
+	
 		m_Spawn = false;
 	}
-
+	
 	if (CurIdx == 16)
 		m_Spawn = true;
-
+	
 	if (m_Spawn && CurIdx == 18)
 	{
 		CGameObject* pObject = CObjectPoolMgr::GetInst()->GetObj(OBJ_ID::RANDOMSHOOT);
-		pObject->Transform()->SetRelativePos(Vec3(vPos.x - 150.f, vPos.y + 100.f, vPos.z));
+		pObject->Transform()->SetRelativePos(Vec3(vPos.x - 110.f, vPos.y + 20.f, vPos.z));
 		pObject->Transform()->SetRelativeScale(Vec3(300.f, 300.f, 1.f));
-		pObject->Transform()->SetRelativeRotation(Vec3(0.f, XM_PI, XM_PI * 1.75f));
+		pObject->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, XM_PI * 1.12f));
 		CreateObject(pObject, 7);
-
+	
 		pObject = CObjectPoolMgr::GetInst()->GetObj(OBJ_ID::RANDOMSHOOT);
-		pObject->Transform()->SetRelativePos(Vec3(vPos.x + 150.f, vPos.y - 100.f, vPos.z));
+		pObject->Transform()->SetRelativePos(Vec3(vPos.x + 120.f, vPos.y + 50.f, vPos.z));
 		pObject->Transform()->SetRelativeScale(Vec3(300.f, 300.f, 1.f));
-		pObject->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, XM_PI * 1.75f));
+		pObject->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, XM_PI * 2.2f));
 		CreateObject(pObject, 7);
-
+	
 		m_Spawn = false;
 	}
-
+	
 	if (CurIdx == 19)
 		m_Spawn = true;
-
+	
 	if (m_Spawn && CurIdx == 20)
 	{
 		CGameObject* pObject = CObjectPoolMgr::GetInst()->GetObj(OBJ_ID::RANDOMSHOOT);
-		pObject->Transform()->SetRelativePos(Vec3(vPos.x - 150.f, vPos.y + 50.f, vPos.z));
+		pObject->Transform()->SetRelativePos(Vec3(vPos.x - 80.f, vPos.y - 70.f, vPos.z));
 		pObject->Transform()->SetRelativeScale(Vec3(300.f, 300.f, 1.f));
-		pObject->Transform()->SetRelativeRotation(Vec3(0.f, XM_PI, 0.f));
+		pObject->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, XM_PI * 1.2f));
 		CreateObject(pObject, 7);
-
+	
 		pObject = CObjectPoolMgr::GetInst()->GetObj(OBJ_ID::RANDOMSHOOT);
-		pObject->Transform()->SetRelativePos(Vec3(vPos.x + 150.f, vPos.y + 100.f, vPos.z));
+		pObject->Transform()->SetRelativePos(Vec3(vPos.x + 120.f, vPos.y + 50.f, vPos.z));
 		pObject->Transform()->SetRelativeScale(Vec3(300.f, 300.f, 1.f));
-		pObject->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, XM_PI / 4.f));
+		pObject->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, XM_PI * 2.2f));
 		CreateObject(pObject, 7);
-
+	
 		m_Spawn = false;
 	}
-
+	
 	if (CurIdx == 21)
 		m_Spawn = true;
-
+	
 	if (m_Spawn && CurIdx == 24)
 	{
 		CGameObject* pObject = CObjectPoolMgr::GetInst()->GetObj(OBJ_ID::RANDOMSHOOT);
-		pObject->Transform()->SetRelativePos(Vec3(vPos.x - 150.f, vPos.y + 50.f, vPos.z));
+	
+		if (OBJ_DIR::DIR_LEFT == m_Dir)
+		{
+			pObject->Transform()->SetRelativePos(Vec3(vPos.x - 100.f, vPos.y, vPos.z));
+			pObject->Transform()->SetRelativeRotation(Vec3(0.f, XM_PI, 0.f));
+		}
+	
+		else if (OBJ_DIR::DIR_RIGHT == m_Dir)
+		{
+			pObject->Transform()->SetRelativePos(Vec3(vPos.x + 100.f, vPos.y, vPos.z));
+			pObject->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, 0.f));
+		}
 		pObject->Transform()->SetRelativeScale(Vec3(300.f, 300.f, 1.f));
-		pObject->Transform()->SetRelativeRotation(Vec3(0.f, XM_PI, 0.f));
+	
 		CreateObject(pObject, 7);
-
-		pObject = CObjectPoolMgr::GetInst()->GetObj(OBJ_ID::RANDOMSHOOT);
-		pObject->Transform()->SetRelativePos(Vec3(vPos.x + 150.f, vPos.y + 50.f, vPos.z));
-		pObject->Transform()->SetRelativeScale(Vec3(300.f, 300.f, 1.f));
-		pObject->Transform()->SetRelativeRotation(Vec3(0.f, XM_2PI, 0.f));
-		CreateObject(pObject, 7);
-
+	
 		m_Spawn = false;
 	}
-
+	
 	if (CurIdx == 25)
 		m_Spawn = true;
-
+	
 	if (m_Spawn && CurIdx == 27)
 	{
 		CGameObject* pObject = CObjectPoolMgr::GetInst()->GetObj(OBJ_ID::RANDOMSHOOT);
-		pObject->Transform()->SetRelativePos(Vec3(vPos.x - 60.f, vPos.y + 130.f, vPos.z));
+		pObject->Transform()->SetRelativePos(Vec3(vPos.x - 110.f, vPos.y + 20.f, vPos.z));
 		pObject->Transform()->SetRelativeScale(Vec3(300.f, 300.f, 1.f));
-		pObject->Transform()->SetRelativeRotation(Vec3(0.f, XM_PI, XM_PI * 1.7f));
+		pObject->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, XM_PI));
 		CreateObject(pObject, 7);
-
+	
 		pObject = CObjectPoolMgr::GetInst()->GetObj(OBJ_ID::RANDOMSHOOT);
-		pObject->Transform()->SetRelativePos(Vec3(vPos.x + 60.f, vPos.y - 130.f, vPos.z));
+		pObject->Transform()->SetRelativePos(Vec3(vPos.x + 130.f, vPos.y - 70.f, vPos.z));
 		pObject->Transform()->SetRelativeScale(Vec3(300.f, 300.f, 1.f));
-		pObject->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, XM_PI * 1.7f));
+		pObject->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, 0.f));
 		CreateObject(pObject, 7);
-
+	
 		m_Spawn = false;
 	}
-
+	
 	if (CurIdx == 28)
 		m_Spawn = true;
-
+	
 	if (m_Spawn && CurIdx == 30)
 	{
 		CGameObject* pObject = CObjectPoolMgr::GetInst()->GetObj(OBJ_ID::RANDOMSHOOT);
-		pObject->Transform()->SetRelativePos(Vec3(vPos.x - 150.f, vPos.y + 100.f, vPos.z));
+		pObject->Transform()->SetRelativePos(Vec3(vPos.x - 90.f, vPos.y + 10.f, vPos.z));
 		pObject->Transform()->SetRelativeScale(Vec3(300.f, 300.f, 1.f));
-		pObject->Transform()->SetRelativeRotation(Vec3(0.f, XM_PI, XM_PI * 1.75f));
+		pObject->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, XM_PI * 1.12f));
 		CreateObject(pObject, 7);
-
+	
 		pObject = CObjectPoolMgr::GetInst()->GetObj(OBJ_ID::RANDOMSHOOT);
-		pObject->Transform()->SetRelativePos(Vec3(vPos.x + 150.f, vPos.y - 100.f, vPos.z));
+		pObject->Transform()->SetRelativePos(Vec3(vPos.x + 140.f, vPos.y - 20.f, vPos.z));
 		pObject->Transform()->SetRelativeScale(Vec3(300.f, 300.f, 1.f));
 		pObject->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, XM_PI * 1.75f));
 		CreateObject(pObject, 7);
-
+	
 		m_Spawn = false;
 	}
-
+	
 	if (CurIdx == 31)
 		m_Spawn = true;
-
+	
 	if (m_Spawn && CurIdx == 32)
 	{
 		CGameObject* pObject = CObjectPoolMgr::GetInst()->GetObj(OBJ_ID::RANDOMSHOOT);
-		pObject->Transform()->SetRelativePos(Vec3(vPos.x - 150.f, vPos.y + 50.f, vPos.z));
+		pObject->Transform()->SetRelativePos(Vec3(vPos.x - 60.f, vPos.y - 40.f, vPos.z));
 		pObject->Transform()->SetRelativeScale(Vec3(300.f, 300.f, 1.f));
-		pObject->Transform()->SetRelativeRotation(Vec3(0.f, XM_PI, 0.f));
+		pObject->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, XM_PI * 1.2f));
 		CreateObject(pObject, 7);
-
+	
 		pObject = CObjectPoolMgr::GetInst()->GetObj(OBJ_ID::RANDOMSHOOT);
-		pObject->Transform()->SetRelativePos(Vec3(vPos.x + 150.f, vPos.y + 100.f, vPos.z));
+		pObject->Transform()->SetRelativePos(Vec3(vPos.x + 120.f, vPos.y + 60.f, vPos.z));
 		pObject->Transform()->SetRelativeScale(Vec3(300.f, 300.f, 1.f));
-		pObject->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, XM_PI / 4.f));
+		pObject->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, XM_PI * 2.25f));
 		CreateObject(pObject, 7);
-
+	
 		m_Spawn = false;
 	}
 }
@@ -1487,7 +1500,7 @@ void CPlayerScript::CreateDiagonalHeadShotEffect()
 
 void CPlayerScript::CreateHeadShot()
 {
-	CGameObject* pObject = m_HeadShotPref->Instantiate();
+	CGameObject* pObject = CObjectPoolMgr::GetInst()->GetObj(OBJ_ID::HEADSHOT);
 	Vec3 vPos = Transform()->GetWorldPos();
 
 	if (OBJ_DIR::DIR_LEFT == m_Dir)

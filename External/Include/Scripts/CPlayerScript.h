@@ -83,7 +83,6 @@ private:
     Ptr<CPrefab>             m_HammerPref;
     Ptr<CPrefab>             m_HeadShotEffectPref;
     Ptr<CPrefab>             m_WindmillPref;
-    Ptr<CPrefab>             m_HeadShotPref;
     Ptr<CPrefab>             m_GunHawkFirstUpPref;
     Ptr<CPrefab>             m_GunHawkFirstDownPref;
     Ptr<CPrefab>             m_GunHawkSecondUpPref;

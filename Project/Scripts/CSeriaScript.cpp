@@ -18,3 +18,7 @@ void CSeriaScript::Begin()
 void CSeriaScript::Tick()
 {
 }
+
+void CSeriaScript::BeginOverlap(CCollider2D* _OwnCollider, CGameObject* _OtherObj, CCollider2D* _OtherCollider)
+{
+}

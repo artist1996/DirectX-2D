@@ -25,7 +25,7 @@
 #include <Engine/global.h>
 #include <Engine/CEngine.h>
 
-
+#include <States/CStateMgr.h>
 #include "CScriptMgr.h"
 
 #endif //PCH_H

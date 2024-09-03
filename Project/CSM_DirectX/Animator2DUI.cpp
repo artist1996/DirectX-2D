@@ -175,6 +175,15 @@ void Animator2DUI::Update()
 		pAnimator2D->SetCurAnimation(nullptr);
 	}
 	
+	if (ImGui::Button("PLAY##Animator2DUI", ImVec2(65.f, 18.f)))
+	{
+		pAnimator2D->Play(m_SelectedIdx, 1.f, true);
+	}
+
+	if (ImGui::Button("STOP##Animator2DUI", ImVec2(65.f, 18.f)))
+	{
+		pAnimator2D->Stop();
+	}
 
 	// Cur Sprite
 	//Ptr<CSprite> pSprite = pAnimator2D->GetCurSprite();

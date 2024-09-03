@@ -99,6 +99,7 @@ enum class BS_TYPE
 	ALPHABLEND_COVERAGE,
 	ALPHABLEND,
 	ONE_ONE,
+	ADDITIVE,
 
 	END,
 };
@@ -233,6 +234,7 @@ enum class OBJ_ID
 	PLAYERJUMP,
 	RANDOMSHOOT,
 	HEADSHOT,
+	
 
 	END,
 };

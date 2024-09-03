@@ -83,7 +83,8 @@ void CLevel::FinalTick()
 
 void CLevel::Exit()
 {
-	m_BGM->Stop();
+	if(nullptr != m_BGM)
+		m_BGM->Stop();
 }
 
 CGameObject* CLevel::FindObjectByName(const wstring& _strName)

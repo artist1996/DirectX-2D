@@ -73,6 +73,13 @@ struct tTask
 	DWORD_PTR Param_1;
 };
 
+struct tObjInfo
+{
+	float fAttack;
+	float fHP;
+
+};
+
 struct tLight
 {
 	Vec4 Color;		// ºûÀÇ »ö»ó

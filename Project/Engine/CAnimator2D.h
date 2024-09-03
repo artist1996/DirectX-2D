@@ -24,6 +24,7 @@ public:
     void AddAnimation(int _Idx, Ptr<CAnimation> _FlipBook);
     Ptr<CAnimation> FindAnimation(const wstring& _Key);
     void Play(int _FlipBookIdx, float _FPS, bool _Repeat);
+    void Stop();
     void Reset();
     void Binding();
     

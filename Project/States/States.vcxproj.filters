@@ -10,6 +10,15 @@
     <Filter Include="States">
       <UniqueIdentifier>{8bb73e2c-f91a-4eab-91ec-6e7fc0d33968}</UniqueIdentifier>
     </Filter>
+    <Filter Include="States\01. Monster">
+      <UniqueIdentifier>{6c351ed3-c82a-4c3d-b20c-6555f738c3a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="States\02. Boss">
+      <UniqueIdentifier>{2b24a354-e8a4-4670-8561-201d43e8a851}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="States\01. Monster\01. MeltKnight">
+      <UniqueIdentifier>{999aa6b7-9eb8-4670-b61c-38699dca89a4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -21,6 +30,9 @@
     <ClInclude Include="CStateMgr.h">
       <Filter>Manager</Filter>
     </ClInclude>
+    <ClInclude Include="CMeltKnightIdleState.h">
+      <Filter>States\01. Monster\01. MeltKnight</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -31,6 +43,9 @@
     </ClCompile>
     <ClCompile Include="CStateMgr.cpp">
       <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="CMeltKnightIdleState.cpp">
+      <Filter>States\01. Monster\01. MeltKnight</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -86,7 +86,7 @@ void AnimationUI::Update()
 		ImGui::DragFloat2("##Offset", (float*)&vOffset);
 		ImGui::SameLine();
 
-		if (ImGui::Button("Apply to All", ImVec2(100.f, 18.f)))
+		if (ImGui::Button("Apply to All Offset", ImVec2(100.f, 18.f)))
 		{
 			const vector<Ptr<CSprite>> pSprites = pAnimation->GetSprites();
 
@@ -104,7 +104,7 @@ void AnimationUI::Update()
 
 		ImGui::SameLine();
 
-		if (ImGui::Button("Apply to All", ImVec2(100.f, 18.f)))
+		if (ImGui::Button("Apply to All BG", ImVec2(100.f, 18.f)))
 		{
 			const vector<Ptr<CSprite>> pSprites = pAnimation->GetSprites();
 

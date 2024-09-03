@@ -17,7 +17,7 @@ struct VTX_OUT
     float4 vPosition : SV_Position;
     float4 vColor    : COLOR;
     float2 vUV       : TEXCOORD;
-    float3 vWorldPos : POSITION;
+    float3 vWorldPos : POSITION;    
 };
 
 VTX_OUT VS_Std2D(VTX_IN _in)
@@ -129,66 +129,7 @@ float4 PS_Std2D_Alphablend(VTX_OUT _in) : SV_Target
             vColor = float4(1.f, 0.f, 1.f, 1.f);
         }
     }
-    
-    if(g_int_3)
-    {
-        vColor.r *= 2.f;
-        vColor.g *= 2.f;
-        vColor.b *= 2.f;
-    }
-    
-    return vColor;
-}
 
-float4 PS_HeadShot_AlphaBlend(VTX_OUT _in) : SV_Target
-{
-    float4 vColor = float4(0.f, 0.f, 0.f, 1.f);
-    
-    if (UseFlipBook)
-    {
-        // in.vUV : 스프라이트 를 참조할 위치를 비율로 환산한 값
-        
-        float2 BackGroundLeftTop = LeftTopUV - (BackGroundUV - SliceUV) / 2.f;
-        float2 vSpriteUV = BackGroundLeftTop + (_in.vUV * BackGroundUV);
-
-        vSpriteUV -= OffsetUV;
-        
-        
-        if (LeftTopUV.x <= vSpriteUV.x && vSpriteUV.x <= LeftTopUV.x + SliceUV.x
-            && LeftTopUV.y <= vSpriteUV.y && vSpriteUV.y <= LeftTopUV.y + SliceUV.y)
-        {
-            vColor = g_AtlasTex.Sample(g_sam_1, vSpriteUV);
-        }
-        else
-        {
-            discard;
-        }
-              
-        if (vColor.r <= 0.34f) // 검은색 처리
-        {
-            vColor.a = 0.5f;
-        }     
-        
-        if(vColor.r >= 0.27f && vColor.g < 0.5f)
-        {
-            vColor.a = 0.61f;           
-            vColor.r = saturate(vColor.r * 2.5f);
-            vColor.g = saturate(vColor.g * 2.f);
-        }  
-    }
-    
-    else
-    {
-        if (g_btex_0)
-        {
-            vColor = g_tex_0.Sample(g_sam_1, _in.vUV);
-        }
-        else
-        {
-            vColor = float4(1.f, 0.f, 1.f, 1.f);
-        }
-    }
-    
     vColor.r *= 1.5f;
     vColor.g *= 1.5f;
     vColor.b *= 1.5f;
@@ -196,7 +137,7 @@ float4 PS_HeadShot_AlphaBlend(VTX_OUT _in) : SV_Target
     return vColor;
 }
 
-float4 PS_DNF_AlphaBlend(VTX_OUT _in) : SV_Target
+float4 PS_Less_AlphaBlend(VTX_OUT _in) : SV_Target
 {
     float4 vColor = float4(0.f, 0.f, 0.f, 1.f);
     
@@ -208,7 +149,8 @@ float4 PS_DNF_AlphaBlend(VTX_OUT _in) : SV_Target
         float2 vSpriteUV = BackGroundLeftTop + (_in.vUV * BackGroundUV);
 
         vSpriteUV -= OffsetUV;
-         
+        
+        
         if (LeftTopUV.x <= vSpriteUV.x && vSpriteUV.x <= LeftTopUV.x + SliceUV.x
             && LeftTopUV.y <= vSpriteUV.y && vSpriteUV.y <= LeftTopUV.y + SliceUV.y)
         {
@@ -217,15 +159,9 @@ float4 PS_DNF_AlphaBlend(VTX_OUT _in) : SV_Target
         else
         {
             discard;
-        } 
-        
-        if(vColor.r <= 0.4f && vColor.g <= 0.4f && vColor.b <= 0.4f)
-            discard;
-            
-        vColor.b += 0.6f;
-        vColor.a = 0.501f;
+        }     
     }
-    // Animation 을 사용 하지 않는다.
+    
     else
     {
         if (g_btex_0)
@@ -238,10 +174,49 @@ float4 PS_DNF_AlphaBlend(VTX_OUT _in) : SV_Target
         }
     }
     
+    return vColor;
+}
+
+float4 PS_Std2D_Additive(VTX_OUT _in) : SV_Target
+{
+    float4 vColor = float4(0.f, 0.f, 0.f, 1.f);
     
-    vColor.r *= 3.f;
-    vColor.g *= 3.f;
-    vColor.b *= 3.f;
+    if (UseFlipBook)
+    {
+        // in.vUV : 스프라이트 를 참조할 위치를 비율로 환산한 값
+        
+        float2 BackGroundLeftTop = LeftTopUV - (BackGroundUV - SliceUV) / 2.f;
+        float2 vSpriteUV = BackGroundLeftTop + (_in.vUV * BackGroundUV);
+
+        vSpriteUV -= OffsetUV;
+        
+        
+        if (LeftTopUV.x <= vSpriteUV.x && vSpriteUV.x <= LeftTopUV.x + SliceUV.x
+            && LeftTopUV.y <= vSpriteUV.y && vSpriteUV.y <= LeftTopUV.y + SliceUV.y)
+        {
+            vColor = g_AtlasTex.Sample(g_sam_1, vSpriteUV);
+        }
+        else
+        {
+            discard;
+        }
+    }
+    // FlipBook 을 사용 하지 않는다.
+    else
+    {
+        if (g_btex_0)
+        {
+            vColor = g_tex_0.Sample(g_sam_1, _in.vUV);
+        }
+        else
+        {
+            vColor = float4(1.f, 0.f, 1.f, 1.f);
+        }
+    }
+    
+    vColor.r *= 2.f;
+    vColor.g *= 2.f;
+    vColor.b *= 2.f;
     
     return vColor;
 }

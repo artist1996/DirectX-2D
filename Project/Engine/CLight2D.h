@@ -35,4 +35,3 @@ public:
     CLight2D();
     virtual ~CLight2D();
 };
-

@@ -188,13 +188,13 @@ void CPlayerMoveScript::Tackle()
 	if (OBJ_DIR::DIR_RIGHT == m_EntityScript->GetDir()
 		&& bMoveable[(UINT)PLATFORM_TYPE::RIGHT])
 	{
-		vPos += Vec3(1.f, 0.f, 0.f) * m_Speed * 1.5f * DT;
+		vPos += Vec3(1.f, 0.f, 0.f) * m_Speed * DT;
 	}
 
 	else if (OBJ_DIR::DIR_LEFT == m_EntityScript->GetDir()
 		&& bMoveable[(UINT)PLATFORM_TYPE::LEFT])
 	{
-		vPos += Vec3(-1.f, 0.f, 0.f) * m_Speed * 1.5f * DT;
+		vPos += Vec3(-1.f, 0.f, 0.f) * m_Speed * DT;
 	}
 
 	Transform()->SetRelativePos(vPos);
@@ -205,9 +205,9 @@ void CPlayerMoveScript::Force()
 	m_ForceTime += DT;
 
 	if(OBJ_DIR::DIR_LEFT == m_EntityScript->GetDir())
-		Rigidbody()->AddForce(Vec3(1000.f, 0.f, 0.f));
+		Rigidbody()->AddForce(Vec3(1500.f, 0.f, 0.f));
 	else if(OBJ_DIR::DIR_RIGHT == m_EntityScript->GetDir())
-		Rigidbody()->AddForce(Vec3(-1000.f, 0.f, 0.f));
+		Rigidbody()->AddForce(Vec3(-1500.f, 0.f, 0.f));
 
 	if (0.1f < m_ForceTime)
 	{

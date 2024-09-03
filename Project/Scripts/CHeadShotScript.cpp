@@ -36,7 +36,7 @@ void CHeadShotScript::Tick()
 
 	if (800.f < fabs(GetOwner()->GetInitPos().x - vPos.x))
 	{
-		DeleteObject(GetOwner());
+		DisconnectObject(GetOwner());
 	}
 
 	Transform()->SetRelativePos(vPos);

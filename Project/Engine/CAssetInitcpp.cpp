@@ -149,13 +149,13 @@ void CAssetMgr::CreateEngineMaterial()
 
 	// Std2DHeadShotMtrl
 	pMtrl = new CMaterial(true);
-	pMtrl->SetShader(FindAsset<CGraphicShader>(L"Std2DHeadShotAlphaBlendShader"));
-	AddAsset(L"Std2DHeadShotAlphaBlendMtrl", pMtrl);
+	pMtrl->SetShader(FindAsset<CGraphicShader>(L"Std2DLessAlphaBlendShader"));
+	AddAsset(L"Std2DLessAlphaBlendMtrl", pMtrl);
 
 	// Std2D DNF Mtrl
 	pMtrl = new CMaterial(true);
-	pMtrl->SetShader(FindAsset<CGraphicShader>(L"Std2DDNFAlphaBlendShader"));
-	AddAsset(L"Std2DDNFAlphaBlendMtrl", pMtrl);
+	pMtrl->SetShader(FindAsset<CGraphicShader>(L"Std2DAdditiveShader"));
+	AddAsset(L"Std2DAdditiveMtrl", pMtrl);
 
 
 	// DebugShapeMtrl
@@ -310,8 +310,8 @@ void CAssetMgr::CreateEngineGraphicShader()
 	pShader->CreatePixelShader(L"shader\\std2d.fx", "PS_Std2D_Alphablend");
 
 	pShader->SetRSType(RS_TYPE::CULL_NONE);	
-	pShader->SetDSType(DS_TYPE::LESS);
-	pShader->SetBSType(BS_TYPE::ALPHABLEND_COVERAGE);
+	pShader->SetDSType(DS_TYPE::NO_TEST_NO_WRITE);
+	pShader->SetBSType(BS_TYPE::ALPHABLEND);
 
 	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_TRANSPARENT);
 
@@ -319,29 +319,29 @@ void CAssetMgr::CreateEngineGraphicShader()
 
 	AddAsset(L"Std2DAlphaBlendShader", pShader);
 
-	// HeadShot Shader
+	// Less AlphaBlend Shader
 	pShader = new CGraphicShader;
 	pShader->CreateVertexShader(L"shader\\std2d.fx", "VS_Std2D");
-	pShader->CreatePixelShader(L"shader\\std2d.fx", "PS_HeadShot_AlphaBlend");
+	pShader->CreatePixelShader(L"shader\\std2d.fx", "PS_Less_AlphaBlend");
 	
 	pShader->SetRSType(RS_TYPE::CULL_NONE);
-	pShader->SetDSType(DS_TYPE::NO_TEST_NO_WRITE);
+	pShader->SetDSType(DS_TYPE::LESS);
 	pShader->SetBSType(BS_TYPE::ALPHABLEND_COVERAGE);
 
 	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_TRANSPARENT);
-	AddAsset(L"Std2DHeadShotAlphaBlendShader", pShader);
+	AddAsset(L"Std2DLessAlphaBlendShader", pShader);
 
-	// DNF 이미지 바탕이 검은색인것들 전용
+	// DNF 이미지 바탕이 검은색인것들 전용 Additive Blending
 	pShader = new CGraphicShader;
 	pShader->CreateVertexShader(L"shader\\std2d.fx", "VS_Std2D");
-	pShader->CreatePixelShader(L"shader\\std2d.fx", "PS_DNF_AlphaBlend");
+	pShader->CreatePixelShader(L"shader\\std2d.fx", "PS_Std2D_Additive");
 
 	pShader->SetRSType(RS_TYPE::CULL_NONE);
-	pShader->SetDSType(DS_TYPE::NO_TEST_NO_WRITE);
-	pShader->SetBSType(BS_TYPE::ALPHABLEND_COVERAGE);
+	pShader->SetDSType(DS_TYPE::LESS);
+	pShader->SetBSType(BS_TYPE::ADDITIVE);
 
 	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_TRANSPARENT);
-	AddAsset(L"Std2DDNFAlphaBlendShader", pShader);
+	AddAsset(L"Std2DAdditiveShader", pShader);
 
 	// DebugShapeShader
 	pShader = new CGraphicShader;

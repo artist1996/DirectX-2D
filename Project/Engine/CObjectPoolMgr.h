@@ -6,7 +6,6 @@ class CObjectPoolMgr :
 {
 	SINGLE(CObjectPoolMgr);
 private:
-	vector<CGameObject*> m_vecRandomShootPool;
 	vector<CGameObject*> m_vecObjects[(UINT)OBJ_ID::END];
 
 	CGameObject* m_PlayerEntity;
@@ -17,7 +16,6 @@ public:
 	void Init();
 
 public:
-	CGameObject* GetRandomShoot();
 	CGameObject* GetObj(OBJ_ID _ID);
 	CGameObject* GetPlayerEntity() { return m_PlayerEntity; }
 	CGameObject* GetPlayerMove()   { return m_PlayerMove; }

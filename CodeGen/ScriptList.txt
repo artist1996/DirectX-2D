@@ -9,6 +9,7 @@ CHeadShotEffectScript
 CHeadShotScript
 CJackSpikeScript
 CMachKickScript
+CMeltKnightScript
 CMuzzleScript
 CPistolScript
 CPlatformScript

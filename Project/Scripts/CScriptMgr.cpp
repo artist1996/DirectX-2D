@@ -12,6 +12,7 @@
 #include "CHeadShotScript.h"
 #include "CJackSpikeScript.h"
 #include "CMachKickScript.h"
+#include "CMeltKnightScript.h"
 #include "CMuzzleScript.h"
 #include "CPistolScript.h"
 #include "CPlatformScript.h"
@@ -37,6 +38,7 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CHeadShotScript");
 	_vec.push_back(L"CJackSpikeScript");
 	_vec.push_back(L"CMachKickScript");
+	_vec.push_back(L"CMeltKnightScript");
 	_vec.push_back(L"CMuzzleScript");
 	_vec.push_back(L"CPistolScript");
 	_vec.push_back(L"CPlatformScript");
@@ -74,6 +76,8 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CJackSpikeScript;
 	if (L"CMachKickScript" == _strScriptName)
 		return new CMachKickScript;
+	if (L"CMeltKnightScript" == _strScriptName)
+		return new CMeltKnightScript;
 	if (L"CMuzzleScript" == _strScriptName)
 		return new CMuzzleScript;
 	if (L"CPistolScript" == _strScriptName)
@@ -135,6 +139,9 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 		break;
 	case (UINT)SCRIPT_TYPE::MACHKICKSCRIPT:
 		return new CMachKickScript;
+		break;
+	case (UINT)SCRIPT_TYPE::MELTKNIGHTSCRIPT:
+		return new CMeltKnightScript;
 		break;
 	case (UINT)SCRIPT_TYPE::MUZZLESCRIPT:
 		return new CMuzzleScript;
@@ -219,6 +226,10 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 
 	case SCRIPT_TYPE::MACHKICKSCRIPT:
 		return L"CMachKickScript";
+		break;
+
+	case SCRIPT_TYPE::MELTKNIGHTSCRIPT:
+		return L"CMeltKnightScript";
 		break;
 
 	case SCRIPT_TYPE::MUZZLESCRIPT:

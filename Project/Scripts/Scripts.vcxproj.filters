@@ -103,6 +103,12 @@
     <Filter Include="Scripts\06. GateScript\01. SeriaRoomGate">
       <UniqueIdentifier>{447b6b60-5e50-424c-a2a4-8019c24c70a6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scripts\07. MonsterScript">
+      <UniqueIdentifier>{dbad4e44-9b58-4d4d-8475-d9a41d51e867}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\07. MonsterScript\01. MeltKnight">
+      <UniqueIdentifier>{09582a77-4129-4ae5-8251-96ad029a520d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -180,6 +186,9 @@
     <ClInclude Include="CSeriaRoomGateScript.h">
       <Filter>Scripts\06. GateScript\01. SeriaRoomGate</Filter>
     </ClInclude>
+    <ClInclude Include="CMeltKnightScript.h">
+      <Filter>Scripts\07. MonsterScript\01. MeltKnight</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -256,6 +265,9 @@
     </ClCompile>
     <ClCompile Include="CSeriaRoomGateScript.cpp">
       <Filter>Scripts\06. GateScript\01. SeriaRoomGate</Filter>
+    </ClCompile>
+    <ClCompile Include="CMeltKnightScript.cpp">
+      <Filter>Scripts\07. MonsterScript\01. MeltKnight</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

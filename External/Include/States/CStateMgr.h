@@ -5,6 +5,7 @@
 
 enum STATE_TYPE
 {
+	MELTKNIGHTIDLESTATE,
 };
 
 using namespace std;

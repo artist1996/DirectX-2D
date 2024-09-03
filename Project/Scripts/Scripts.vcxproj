@@ -168,6 +168,7 @@ call CodeGen.exe</Command>
     <ClInclude Include="CHeadShotEffectScript.h" />
     <ClInclude Include="CJackSpikeScript.h" />
     <ClInclude Include="CMachKickScript.h" />
+    <ClInclude Include="CMeltKnightScript.h" />
     <ClInclude Include="CMuzzleScript.h" />
     <ClInclude Include="CPistolScript.h" />
     <ClInclude Include="CPlatformScript.h" />
@@ -195,6 +196,7 @@ call CodeGen.exe</Command>
     <ClCompile Include="CHeadShotEffectScript.cpp" />
     <ClCompile Include="CJackSpikeScript.cpp" />
     <ClCompile Include="CMachKickScript.cpp" />
+    <ClCompile Include="CMeltKnightScript.cpp" />
     <ClCompile Include="CMuzzleScript.cpp" />
     <ClCompile Include="CPistolScript.cpp" />
     <ClCompile Include="CPlatformScript.cpp" />

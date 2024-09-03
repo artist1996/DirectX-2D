@@ -341,6 +341,20 @@ void MenuUI::AddComponent()
 			}
 		}
 
+		if (ImGui::MenuItem("State Machine"))
+		{
+			Inspector* pInspector = (Inspector*)CEditorMgr::GetInst()->FindEditorUI("Inspector");
+			CGameObject* pObject = pInspector->GetTargetObject();
+
+			if (nullptr == pObject)
+			{
+				ImGui::EndMenu();
+				return;
+			}
+
+			pObject->AddComponent(new CFSM);
+		}
+
 		ImGui::EndMenu();
 	}
 }

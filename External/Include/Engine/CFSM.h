@@ -8,7 +8,8 @@ class CFSM :
 {
 private:
     map<wstring, CState*> m_mapState;
-    CState*               m_CurState;
+    CState*                   m_CurState;
+
 
 public:
     virtual void FinalTick() override;

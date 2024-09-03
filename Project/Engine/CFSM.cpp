@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "CFSM.h"
 
+#include "CAssetMgr.h"
+
 #include "CState.h"
 
 CFSM::CFSM()
@@ -28,6 +30,7 @@ void CFSM::AddState(const wstring& _strName, CState* _State)
 	assert(!FindState(_strName));
 
 	_State->m_Owner = this;
+	_State->SetName(_strName);
 
 	m_mapState.insert(make_pair(_strName, _State));
 }
@@ -49,7 +52,7 @@ void CFSM::ChangeState(const wstring& _strName)
 
 CState* CFSM::FindState(const wstring& _strName)
 {
-	map<wstring,CState*>::iterator iter = m_mapState.find(_strName);
+	map<wstring, CState*>::iterator iter = m_mapState.find(_strName);
 
 	if (iter == m_mapState.end())
 		return nullptr;

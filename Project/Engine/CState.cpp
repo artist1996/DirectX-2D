@@ -3,7 +3,7 @@
 
 CState::CState(UINT _Type)
 	: m_Owner(nullptr)
-	, m_Type(_Type)
+	, m_StateType(_Type)
 {
 }
 

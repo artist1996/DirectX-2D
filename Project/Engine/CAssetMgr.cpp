@@ -46,7 +46,7 @@ Ptr<CTexture> CAssetMgr::CreateTexture(const wstring& _strKey, UINT _Width, UINT
 	pTexture->m_Key = _strKey;
 	pTexture->SetEngineAsset();
 	m_mapAsset[(UINT)ASSET_TYPE::TEXTURE].insert(make_pair(_strKey, pTexture.Get()));
-		
+	
 	return pTexture;
 }
 
