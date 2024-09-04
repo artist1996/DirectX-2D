@@ -23,7 +23,7 @@ CCameraMoveScript::~CCameraMoveScript()
 
 void CCameraMoveScript::Begin()
 {
-	m_Target = CLevelMgr::GetInst()->FindObjectByName(L"PlayerMove");
+	m_Target = CLevelMgr::GetInst()->FindObjectByName(L"Player");
 }
 
 void CCameraMoveScript::Tick()

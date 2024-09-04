@@ -7,15 +7,13 @@
 #include "CTransform.h"
 
 CObjectPoolMgr::CObjectPoolMgr()
-	: m_PlayerEntity(nullptr)
-	, m_PlayerMove(nullptr)
-	, m_PlayerJump(nullptr)
+	: m_Player(nullptr)
 {
 }
 
 CObjectPoolMgr::~CObjectPoolMgr()
 {
-	for (UINT i = 3; i < (UINT)OBJ_ID::END; ++i)
+	for (UINT i = 1; i < (UINT)OBJ_ID::END; ++i)
 	{
 		Delete_Vec(m_vecObjects[i]);
 	}
@@ -24,24 +22,15 @@ CObjectPoolMgr::~CObjectPoolMgr()
 void CObjectPoolMgr::Init()
 {
 	Ptr<CPrefab> RandomShootPref = CAssetMgr::GetInst()->Load<CPrefab>(L"prefab\\skill_randomshoot.pref", L"prefab\\skill_randomshoot.pref");
-	Ptr<CPrefab> PlayerMovePref = CAssetMgr::GetInst()->Load<CPrefab>(L"prefab\\PlayerMove.pref", L"prefab\\PlayerMove.pref");
+
 	Ptr<CPrefab> PlayerEntityPref = CAssetMgr::GetInst()->Load<CPrefab>(L"prefab\\Player.pref", L"prefab\\Player.pref");
-	Ptr<CPrefab> PlayerJumpPref = CAssetMgr::GetInst()->Load<CPrefab>(L"prefab\\PlayerJump.pref", L"prefab\\PlayerJump.pref");
 	Ptr<CPrefab> HeadShotPref = CAssetMgr::GetInst()->Load<CPrefab>(L"prefab\\skill_headshot.pref", L"prefab\\skill_headshot.pref");
 
-	m_PlayerEntity = PlayerEntityPref->Instantiate();
-	m_PlayerMove = PlayerMovePref->Instantiate();
-	m_PlayerJump = PlayerJumpPref->Instantiate();
+	m_Player = PlayerEntityPref->Instantiate();
 
-	m_PlayerEntity->m_LayerIdx = -1;
-	m_PlayerMove->m_LayerIdx = -1;
-	m_PlayerJump->m_LayerIdx = -1;
+	m_Player->m_LayerIdx = -1;
 
-	m_PlayerMove->Transform()->SetRelativePos(Vec3(0.f, 0.f, 0.f));
-
-	m_vecObjects[(UINT)OBJ_ID::PLAYERMOVE].push_back(m_PlayerMove);
-	m_vecObjects[(UINT)OBJ_ID::PLAYER].push_back(m_PlayerEntity);
-	m_vecObjects[(UINT)OBJ_ID::PLAYERJUMP].push_back(m_PlayerJump);
+	m_vecObjects[(UINT)OBJ_ID::PLAYER].push_back(m_Player);
 
 	for (UINT i = 0; i < 50; ++i)
 	{

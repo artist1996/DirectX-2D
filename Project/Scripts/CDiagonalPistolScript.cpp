@@ -4,6 +4,7 @@
 CDiagonalPistolScript::CDiagonalPistolScript()
 	: CScript(SCRIPT_TYPE::DIAGONALPISTOLSCRIPT)
 	, m_Speed(700.f)
+	, m_DestroyPos(0.f)
 {
 }
 
@@ -25,7 +26,7 @@ void CDiagonalPistolScript::Begin()
 		Transform()->SetRelativeRotation(Vec3(0.f, 0.f, XM_PI * 1.75f));
 	}
 
-	m_DestroyPos = GetOwner()->GetOwner()->Collider2D()->GetWorldPos();
+	m_DestroyPos = GetOwner()->GetOwner()->Collider2D()->GetWorldPos().y - GetOwner()->GetOwner()->Collider2D()->GetScale().y * 0.5f;
 }
 
 void CDiagonalPistolScript::Tick()
@@ -34,17 +35,17 @@ void CDiagonalPistolScript::Tick()
 
 	switch (GetOwner()->GetDir())
 	{
-	case DIR_LEFT:
+	case OBJ_DIR::DIR_LEFT:
 		vPos.x -= m_Speed * DT;
 		vPos.y -= 400.f * DT;
 		break;
-	case DIR_RIGHT:
+	case OBJ_DIR::DIR_RIGHT:
 		vPos.x += m_Speed * DT;
 		vPos.y -= 400.f * DT;
 		break;
 	}
 
-	if (vPos.y <= m_DestroyPos.y - 10.f)
+	if (vPos.y <= m_DestroyPos)
 		DeleteObject(GetOwner());
 
 	Transform()->SetRelativePos(vPos);

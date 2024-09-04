@@ -34,15 +34,6 @@
     <Filter Include="Scripts\02. PlayerSkillScript\03. Pistol">
       <UniqueIdentifier>{6087766c-003e-41af-8271-7b91ffc20793}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Scripts\01. PlayerScript\01. PlayerEntityScript">
-      <UniqueIdentifier>{411b4e33-e519-480d-bd2b-d45403f5be65}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Scripts\01. PlayerScript\02. PlayerJumpScript">
-      <UniqueIdentifier>{b3e00048-f6a0-4781-9982-bb20337f4b7d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Scripts\01. PlayerScript\03. PlayerMoveScript">
-      <UniqueIdentifier>{57cb2e6a-940f-47ba-bbfe-ab012bf646a6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Scripts\03. PlayerEffectScript\02. RevolverHammerScript">
       <UniqueIdentifier>{398a200a-1848-4862-b253-f4ca96844cd9}</UniqueIdentifier>
     </Filter>
@@ -109,6 +100,15 @@
     <Filter Include="Scripts\07. MonsterScript\01. MeltKnight">
       <UniqueIdentifier>{09582a77-4129-4ae5-8251-96ad029a520d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scripts\07. MonsterScript\00. Move">
+      <UniqueIdentifier>{ecad5b4d-8259-49bc-a1d1-e11154f8cf4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\01. PlayerScript\01. PlayerScript">
+      <UniqueIdentifier>{411b4e33-e519-480d-bd2b-d45403f5be65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\01. PlayerScript\02. PlayerMoveScript">
+      <UniqueIdentifier>{57cb2e6a-940f-47ba-bbfe-ab012bf646a6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -121,13 +121,10 @@
       <Filter>Manager</Filter>
     </ClInclude>
     <ClInclude Include="CPlayerScript.h">
-      <Filter>Scripts\01. PlayerScript\01. PlayerEntityScript</Filter>
+      <Filter>Scripts\01. PlayerScript\01. PlayerScript</Filter>
     </ClInclude>
     <ClInclude Include="CPlayerMoveScript.h">
-      <Filter>Scripts\01. PlayerScript\03. PlayerMoveScript</Filter>
-    </ClInclude>
-    <ClInclude Include="CPlayerJumpScript.h">
-      <Filter>Scripts\01. PlayerScript\02. PlayerJumpScript</Filter>
+      <Filter>Scripts\01. PlayerScript\02. PlayerMoveScript</Filter>
     </ClInclude>
     <ClInclude Include="CCameraMoveScript.h">
       <Filter>Scripts\00. CameraScript</Filter>
@@ -189,6 +186,9 @@
     <ClInclude Include="CMeltKnightScript.h">
       <Filter>Scripts\07. MonsterScript\01. MeltKnight</Filter>
     </ClInclude>
+    <ClInclude Include="CMonsterMoveScript.h">
+      <Filter>Scripts\07. MonsterScript\00. Move</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -201,13 +201,10 @@
       <Filter>Manager</Filter>
     </ClCompile>
     <ClCompile Include="CPlayerScript.cpp">
-      <Filter>Scripts\01. PlayerScript\01. PlayerEntityScript</Filter>
+      <Filter>Scripts\01. PlayerScript\01. PlayerScript</Filter>
     </ClCompile>
     <ClCompile Include="CPlayerMoveScript.cpp">
-      <Filter>Scripts\01. PlayerScript\03. PlayerMoveScript</Filter>
-    </ClCompile>
-    <ClCompile Include="CPlayerJumpScript.cpp">
-      <Filter>Scripts\01. PlayerScript\02. PlayerJumpScript</Filter>
+      <Filter>Scripts\01. PlayerScript\02. PlayerMoveScript</Filter>
     </ClCompile>
     <ClCompile Include="CCameraMoveScript.cpp">
       <Filter>Scripts\00. CameraScript</Filter>
@@ -268,6 +265,9 @@
     </ClCompile>
     <ClCompile Include="CMeltKnightScript.cpp">
       <Filter>Scripts\07. MonsterScript\01. MeltKnight</Filter>
+    </ClCompile>
+    <ClCompile Include="CMonsterMoveScript.cpp">
+      <Filter>Scripts\07. MonsterScript\00. Move</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

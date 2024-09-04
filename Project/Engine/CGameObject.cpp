@@ -19,6 +19,8 @@ CGameObject::CGameObject()
 	, m_Dead(false)
 	, m_Moveable{ true,true,true,true }
 	, m_Dir(OBJ_DIR::DIR_RIGHT)
+	, m_TBDir(OBJ_DIR::END)
+	, m_PrevDir(OBJ_DIR::END)
 	, m_ID(OBJ_ID::END)
 {
 }
@@ -32,6 +34,8 @@ CGameObject::CGameObject(const CGameObject& _Origin)
 	, m_Dead(false)
 	, m_Moveable{ true,true,true,true }
 	, m_Dir(_Origin.m_Dir)
+	, m_TBDir(_Origin.m_TBDir)
+	, m_PrevDir(_Origin.m_PrevDir)
 	, m_ID(_Origin.m_ID)
 	, m_Owner(_Origin.m_Owner)
 {

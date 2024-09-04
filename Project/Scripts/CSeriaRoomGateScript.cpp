@@ -26,20 +26,15 @@ void CSeriaRoomGateScript::BeginOverlap(CCollider2D* _OwnCollider, CGameObject* 
 {
 	if (L"PlayerMove" == _OtherObj->GetName())
 	{
-		CGameObject* pMove = CObjectPoolMgr::GetInst()->GetPlayerMove();
 		CGameObject* pPlayer = CObjectPoolMgr::GetInst()->GetPlayerEntity();
-		CGameObject* pJump = CObjectPoolMgr::GetInst()->GetPlayerJump();
-		DisconnectObject(pMove);
+
 		DisconnectObject(pPlayer);
-		DisconnectObject(pJump);
 
 		ChangeCurLevel(LEVEL_TYPE::HENDONMYER);
 
 		_OtherObj->Transform()->SetRelativePos(-50.f, 0.f, 0.f);
-		pPlayer->Transform()->SetRelativePos(pMove->Transform()->GetWorldPos());
-		CreateObject(pMove, 5);
+
 		CreateObject(pPlayer, 4);
-		CreateObject(pJump, 4);
 		
 		ChangeLevelState(PLAY);
 	}

@@ -13,10 +13,10 @@
 #include "CJackSpikeScript.h"
 #include "CMachKickScript.h"
 #include "CMeltKnightScript.h"
+#include "CMonsterMoveScript.h"
 #include "CMuzzleScript.h"
 #include "CPistolScript.h"
 #include "CPlatformScript.h"
-#include "CPlayerJumpScript.h"
 #include "CPlayerMoveScript.h"
 #include "CPlayerScript.h"
 #include "CRandomShootScript.h"
@@ -39,10 +39,10 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CJackSpikeScript");
 	_vec.push_back(L"CMachKickScript");
 	_vec.push_back(L"CMeltKnightScript");
+	_vec.push_back(L"CMonsterMoveScript");
 	_vec.push_back(L"CMuzzleScript");
 	_vec.push_back(L"CPistolScript");
 	_vec.push_back(L"CPlatformScript");
-	_vec.push_back(L"CPlayerJumpScript");
 	_vec.push_back(L"CPlayerMoveScript");
 	_vec.push_back(L"CPlayerScript");
 	_vec.push_back(L"CRandomShootScript");
@@ -78,14 +78,14 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CMachKickScript;
 	if (L"CMeltKnightScript" == _strScriptName)
 		return new CMeltKnightScript;
+	if (L"CMonsterMoveScript" == _strScriptName)
+		return new CMonsterMoveScript;
 	if (L"CMuzzleScript" == _strScriptName)
 		return new CMuzzleScript;
 	if (L"CPistolScript" == _strScriptName)
 		return new CPistolScript;
 	if (L"CPlatformScript" == _strScriptName)
 		return new CPlatformScript;
-	if (L"CPlayerJumpScript" == _strScriptName)
-		return new CPlayerJumpScript;
 	if (L"CPlayerMoveScript" == _strScriptName)
 		return new CPlayerMoveScript;
 	if (L"CPlayerScript" == _strScriptName)
@@ -143,6 +143,9 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 	case (UINT)SCRIPT_TYPE::MELTKNIGHTSCRIPT:
 		return new CMeltKnightScript;
 		break;
+	case (UINT)SCRIPT_TYPE::MONSTERMOVESCRIPT:
+		return new CMonsterMoveScript;
+		break;
 	case (UINT)SCRIPT_TYPE::MUZZLESCRIPT:
 		return new CMuzzleScript;
 		break;
@@ -151,9 +154,6 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 		break;
 	case (UINT)SCRIPT_TYPE::PLATFORMSCRIPT:
 		return new CPlatformScript;
-		break;
-	case (UINT)SCRIPT_TYPE::PLAYERJUMPSCRIPT:
-		return new CPlayerJumpScript;
 		break;
 	case (UINT)SCRIPT_TYPE::PLAYERMOVESCRIPT:
 		return new CPlayerMoveScript;
@@ -232,6 +232,10 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 		return L"CMeltKnightScript";
 		break;
 
+	case SCRIPT_TYPE::MONSTERMOVESCRIPT:
+		return L"CMonsterMoveScript";
+		break;
+
 	case SCRIPT_TYPE::MUZZLESCRIPT:
 		return L"CMuzzleScript";
 		break;
@@ -242,10 +246,6 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 
 	case SCRIPT_TYPE::PLATFORMSCRIPT:
 		return L"CPlatformScript";
-		break;
-
-	case SCRIPT_TYPE::PLAYERJUMPSCRIPT:
-		return L"CPlayerJumpScript";
 		break;
 
 	case SCRIPT_TYPE::PLAYERMOVESCRIPT:

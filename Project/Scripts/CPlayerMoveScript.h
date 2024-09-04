@@ -1,41 +1,10 @@
 #pragma once
 #include <Engine/CScript.h>
 
-enum MOVE_STATE { ST_IDLE, ST_MOVE, ST_RUN, ST_TACKLE, ST_FORCE, ST_END, };
-
 class CPlayerMoveScript :
     public CScript
 {
 private:
-    class CPlayerScript*      m_EntityScript;
-    class CPlayerJumpScript*  m_JumpScript;
-    MOVE_STATE                m_State;
-                             
-    float                     m_Speed;
-    bool                      m_MoveAble;
-    bool                      m_TapMove;
-    bool                      m_Init;
-
-    float                     m_ForceTime;
-
-private:
-    void Idle();
-    void Move();
-    void Run();
-    void Tackle();
-    void Force();
-
-private:
-    void CorrectionSpeed();
-    
-public:
-    void SetMoveable(bool _Set) { m_MoveAble = _Set; }
-    bool IsMoveable()           { return m_MoveAble; }
-
-    void SetState(MOVE_STATE _State) { m_State = _State; }
-    void SetSpeed(float _Speed) { m_Speed = _Speed; }
-
-    void Init();
 
 public:
     virtual void Begin() override;
@@ -46,8 +15,9 @@ public:
     virtual void LoadFromFile(FILE* _pFile) override;
 
 public:
-    virtual void BeginOverlap(CCollider2D* _OwnCollider, CGameObject* _OtherObj, CCollider2D* _OtherCollider);
-    virtual void EndOverlap(CCollider2D* _OwnCollider, CGameObject* _OtherObj, CCollider2D* _OtherCollider);
+    virtual void BeginOverlap(CCollider2D* _OwnCollider, CGameObject* _OtherObj, CCollider2D* _OtherCollider) override;
+    virtual void Overlap(CCollider2D* _OwnCollider, CGameObject* _OtherObj, CCollider2D* _OtherCollider)      override;
+    virtual void EndOverlap(CCollider2D* _OwnCollider, CGameObject* _OtherObj, CCollider2D* _OtherCollider)   override;
 
 public:
     CLONE(CPlayerMoveScript);

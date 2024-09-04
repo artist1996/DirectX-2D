@@ -25,10 +25,10 @@ void CRisingShotScript::Tick()
 
 	switch (Dir)
 	{
-	case DIR_LEFT:
+	case OBJ_DIR::DIR_LEFT:
 		vPos += Vec3(-1.f, 0.f, 0.f) * 1000.f * DT;
 		break;
-	case DIR_RIGHT:
+	case OBJ_DIR::DIR_RIGHT:
 		vPos += Vec3(1.f, 0.f, 0.f) * 1000.f * DT;
 		break;
 	}

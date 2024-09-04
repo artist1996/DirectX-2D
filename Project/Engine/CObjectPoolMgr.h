@@ -8,18 +8,14 @@ class CObjectPoolMgr :
 private:
 	vector<CGameObject*> m_vecObjects[(UINT)OBJ_ID::END];
 
-	CGameObject* m_PlayerEntity;
-	CGameObject* m_PlayerMove;
-	CGameObject* m_PlayerJump;
+	CGameObject* m_Player;
 
 public:
 	void Init();
 
 public:
 	CGameObject* GetObj(OBJ_ID _ID);
-	CGameObject* GetPlayerEntity() { return m_PlayerEntity; }
-	CGameObject* GetPlayerMove()   { return m_PlayerMove; }
-	CGameObject* GetPlayerJump()   { return m_PlayerJump; }
+	CGameObject* GetPlayerEntity() { return m_Player; }
 	void RetrieveObject(OBJ_ID _ID, CGameObject* _Object);
 };
 

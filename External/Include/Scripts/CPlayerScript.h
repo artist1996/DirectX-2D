@@ -68,12 +68,6 @@ private:
                                JACKSPIKE, RANDOMSHOT, DEATHBYREVOLVER, WINDMILL, MACHKICK, TACKLE, GUNHAWKSHOOT, GUNHAWKSTANDBY, };
 
 private:
-    class CPlayerMoveScript* m_MoveScript;
-    class CPlayerJumpScript* m_JumpScript;
-
-    class CGameObject*       m_MoveObject;
-    class CGameObject*       m_JumpObject;
-
     Ptr<CTexture>            m_Texture;
 
     Ptr<CPrefab>             m_BuffPref;
@@ -99,7 +93,7 @@ private:
     tPlayerPrefab            m_Prefabs;
 
     float                    m_Speed;
-    float                    m_JumpHeight;
+    float                    m_GroundPosY;
                              
     float                    m_Time;
                              
@@ -110,12 +104,22 @@ private:
     bool                     m_Muzzel;
     bool                     m_CheckRange;
 
-private:
-    void SetState(STATE _State) { m_State = _State; }
+    bool                     m_GunHawkStandby;
 
 private:
-    void Idle();
-    void Move();
+    void SetState(STATE _State)         { m_State = _State; }
+    void SetDirection(OBJ_DIR _Dir)     { GetOwner()->SetDir(_Dir); }
+    void SetTBDirection(OBJ_DIR _Dir)   { GetOwner()->SetTBDir(_Dir); }
+    void SetPrevDirection(OBJ_DIR _Dir) { GetOwner()->SetPrevDir(_Dir); }
+    void SetSpeed(float _Speed)         { m_Speed = _Speed; }
+    void RunTimeCheck();
+    void AddForce();
+    void SetGroundPos(float _PosY)  { m_GroundPosY = _PosY; }
+    bool GroundCheck(Vec3& _Pos);
+
+private:
+    void Idle(Vec3& _Pos);
+    void Move(Vec3& _Pos);
     void AT1();
     void AT2();
     void AT3();
@@ -126,10 +130,10 @@ private:
     void AT_DG3();
     void AT_DG4();
 
-    void Tackle();
+    void Tackle(Vec3& _Pos);
 
-    void Run();
-    void Jump();
+    void Run(Vec3& _Pos);
+    void Jump(Vec3& _Pos);
     void Landing();
     void Dead();
 
@@ -181,16 +185,17 @@ public:
 public:
     virtual void SaveToFile(FILE* _pFile) override;
     virtual void LoadFromFile(FILE* _pFile) override;
-    
-    void SetMoveable(bool _Set);
-    OBJ_DIR GetDir() { return m_Dir; }
+
+    OBJ_DIR      GetDir()   { return GetOwner()->GetDir(); }
+    OBJ_DIR      GetTBDir() { return GetOwner()->GetPrevDir(); }
 
 public:
     virtual void BeginOverlap(CCollider2D* _OwnCollider, CGameObject* _OtherObj, CCollider2D* _OtherCollider) override;
+    virtual void Overlap(CCollider2D* _OwnCollider, CGameObject* _OtherObj, CCollider2D* _OtherCollider)      override;
+    virtual void EndOverlap(CCollider2D* _OwnCollider, CGameObject* _OtherObj, CCollider2D* _OtherCollider)   override;
 
 public:
     CLONE(CPlayerScript);
     CPlayerScript();
     virtual ~CPlayerScript();
 };
-

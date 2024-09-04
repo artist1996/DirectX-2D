@@ -5,7 +5,7 @@ class CDiagonalPistolScript :
     public CScript
 {
 private:
-    Vec3    m_DestroyPos;
+    float   m_DestroyPos;
     float   m_Speed;
 
 public:

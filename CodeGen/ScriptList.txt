@@ -10,10 +10,10 @@ CHeadShotScript
 CJackSpikeScript
 CMachKickScript
 CMeltKnightScript
+CMonsterMoveScript
 CMuzzleScript
 CPistolScript
 CPlatformScript
-CPlayerJumpScript
 CPlayerMoveScript
 CPlayerScript
 CRandomShootScript

@@ -21,6 +21,8 @@ private:
     vector<CGameObject*> m_vecChildren;
 
     OBJ_DIR              m_Dir;
+    OBJ_DIR              m_PrevDir;
+    OBJ_DIR              m_TBDir;
 
     int                  m_LayerIdx;    // 소속 레이어의 인덱스 번호
     bool                 m_Dead;        // Object Dead
@@ -61,6 +63,12 @@ public:
 
     void SetDir(OBJ_DIR _Dir)   { m_Dir = _Dir; }
     OBJ_DIR GetDir()            { return m_Dir; }
+
+    void SetTBDir(OBJ_DIR _Dir) { m_TBDir = _Dir; }
+    OBJ_DIR GetTBDir()          { return m_TBDir; }
+
+    void SetPrevDir(OBJ_DIR _Dir) { m_PrevDir = _Dir; }
+    OBJ_DIR GetPrevDir()          { return m_PrevDir; }
 
     void SetID(OBJ_ID _ID) { m_ID = _ID;  }
     OBJ_ID GetID()         { return m_ID; }

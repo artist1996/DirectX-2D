@@ -19,6 +19,15 @@ void CMeltKnightIdleState::Enter()
 void CMeltKnightIdleState::FinalTick()
 {
 	// Logic
+	CGameObject* pTarget = nullptr;
+
+	Vec3 vPos = GetOwner()->Transform()->GetRelativePos();
+	Vec3 vTargetPos = pTarget->Transform()->GetRelativePos();
+
+	if (500.f > fabs(vPos.x - vTargetPos.x))
+	{
+		GetFSM()->ChangeState(L"Trace");
+	}
 }
 
 void CMeltKnightIdleState::Exit()

@@ -3,7 +3,7 @@
 
 CPlatformScript::CPlatformScript()
 	: CScript(SCRIPT_TYPE::PLATFORMSCRIPT)
-
+	, m_PrevFrame(false)
 {
 }
 
@@ -21,78 +21,91 @@ void CPlatformScript::BeginOverlap(CCollider2D* _OwnCollider, CGameObject* _Othe
 	{
 		Vec3 vPos = _OwnCollider->GetWorldPos();
 		Vec3 vScale = Transform()->GetWorldScale();
-		Vec3 vPlayerPos = _OtherCollider->GetWorldPos();
-		Vec3 vPlayerScale = _OtherCollider->GetScale();
-	
+		Vec3 vOtherPos = _OtherCollider->GetWorldPos();
+		Vec3 vOtherScale = _OtherObj->Transform()->GetWorldScale();
+
 		bool* bMoveable = _OtherObj->GetMoveable();
-		if (vPlayerPos.x + vPlayerScale.x * 0.5f < vPos.x - vScale.x * 0.5f - 10.f
-			&& bMoveable[(UINT)PLATFORM_TYPE::RIGHT])
+
+		if (vOtherPos.x + vOtherScale.x * 0.5f < vPos.x - vScale.x * 0.5f + 10.f
+			&& vOtherPos.y + vOtherScale.y * 0.5f > vPos.y - vScale.y * 0.5f
+			&& vOtherPos.y - vOtherScale.y * 0.5f < vPos.y + vScale.y * 0.5f)
 		{
-			_OtherObj->SetMoveable(PLATFORM_TYPE::RIGHT, false);
+			_OtherObj->GetParent()->SetMoveable(PLATFORM_TYPE::RIGHT, false);
 		}
-	
-		else if (vPlayerPos.x - vPlayerScale.x * 0.5f > vPos.x + vScale.x * 0.5f + 10.f
-			&& bMoveable[(UINT)PLATFORM_TYPE::LEFT])
+
+		else if (vOtherPos.x - vOtherScale.x * 0.5f > vPos.x + vScale.x * 0.5f - 10.f
+			&& vOtherPos.y + vOtherScale.y * 0.5f > vPos.y - vScale.y * 0.5f
+			&& vOtherPos.y - vOtherScale.y * 0.5f < vPos.y + vScale.y * 0.5f)
 		{
-			_OtherObj->SetMoveable(PLATFORM_TYPE::LEFT, false);
+			_OtherObj->GetParent()->SetMoveable(PLATFORM_TYPE::LEFT, false);
 		}
-	
-		else if (vPlayerPos.y - vPlayerScale.y * 0.5f > vPos.y + vScale.y * 0.5f
-			&& bMoveable[(UINT)PLATFORM_TYPE::BOTTOM])
+		
+		else if (vOtherPos.y - vOtherScale.y * 0.5f < vPos.y + vScale.y * 0.5f - 10.f
+			&& vOtherPos.x - vOtherScale.x * 0.5f > vPos.x - vScale.x * 0.5f
+			&& vOtherPos.x + vOtherScale.x * 0.5f < vPos.x + vScale.x * 0.5f)
 		{
-			_OtherObj->SetMoveable(PLATFORM_TYPE::BOTTOM, false);
+			_OtherObj->GetParent()->SetMoveable(PLATFORM_TYPE::UP, false);
 		}
-	
-		else if (vPlayerPos.y + vPlayerScale.y * 0.5f < vPos.y - vScale.y * 0.5f
-			&& bMoveable[(UINT)PLATFORM_TYPE::UP])
+
+		else if (vOtherPos.y + vOtherScale.y * 0.5f > vPos.y - vScale.y * 0.5f + 10.f
+			&& vOtherPos.x - vOtherScale.x * 0.5f > vPos.x - vScale.x * 0.5f
+			&& vOtherPos.x + vOtherScale.x * 0.5f < vPos.x + vScale.x * 0.5f)
 		{
-			_OtherObj->SetMoveable(PLATFORM_TYPE::UP, false);
+			_OtherObj->GetParent()->SetMoveable(PLATFORM_TYPE::BOTTOM, false);
 		}
 	}
 }
 
 void CPlatformScript::Overlap(CCollider2D* _OwnCollider, CGameObject* _OtherObj, CCollider2D* _OtherCollider)
-{
+{	
 	if (L"PlayerMove" == _OtherObj->GetName())
 	{
 		Vec3 vPos = _OwnCollider->GetWorldPos();
 		Vec3 vScale = Transform()->GetWorldScale();
-		Vec3 vPlayerPos = _OtherCollider->GetWorldPos();
-		Vec3 vPlayerScale = _OtherCollider->GetScale();
-
+		Vec3 vOtherPos = _OtherCollider->GetWorldPos();
+		Vec3 vOtherScale = _OtherObj->Transform()->GetWorldScale();
+		
 		bool* bMoveable = _OtherObj->GetMoveable();
-		if (vPlayerPos.x + vPlayerScale.x * 0.5f < vPos.x - vScale.x * 0.5f - 10.f
-			&& bMoveable[(UINT)PLATFORM_TYPE::RIGHT])
+		
+		if (vOtherPos.x + vOtherScale.x * 0.5f < vPos.x - vScale.x * 0.5f + 10.f
+			&& vOtherPos.y + vOtherScale.y * 0.5f > vPos.y - vScale.y * 0.5f
+			&& vOtherPos.y - vOtherScale.y * 0.5f < vPos.y + vScale.y * 0.5f)
 		{
-			_OtherObj->SetMoveable(PLATFORM_TYPE::RIGHT, false);
+			_OtherObj->GetParent()->SetMoveable(PLATFORM_TYPE::RIGHT, false);
 		}
-
-		else if (vPlayerPos.x - vPlayerScale.x * 0.5f > vPos.x + vScale.x * 0.5f + 10.f
-			&& bMoveable[(UINT)PLATFORM_TYPE::LEFT])
+		
+		else if (vOtherPos.x - vOtherScale.x * 0.5f > vPos.x + vScale.x * 0.5f - 10.f
+			&& vOtherPos.y + vOtherScale.y * 0.5f > vPos.y - vScale.y * 0.5f
+			&& vOtherPos.y - vOtherScale.y * 0.5f < vPos.y + vScale.y * 0.5f)
 		{
-			_OtherObj->SetMoveable(PLATFORM_TYPE::LEFT, false);
+			_OtherObj->GetParent()->SetMoveable(PLATFORM_TYPE::LEFT, false);
 		}
-
-		else if (vPlayerPos.y - vPlayerScale.y * 0.5f > vPos.y + vScale.y * 0.5f
-			&& bMoveable[(UINT)PLATFORM_TYPE::BOTTOM])
+		
+		else if (vOtherPos.y - vOtherScale.y * 0.5f < vPos.y + vScale.y * 0.5f - 10.f
+			&& vOtherPos.x - vOtherScale.x * 0.5f > vPos.x - vScale.x * 0.5f
+			&& vOtherPos.x + vOtherScale.x * 0.5f < vPos.x + vScale.x * 0.5f)
 		{
-			_OtherObj->SetMoveable(PLATFORM_TYPE::BOTTOM, false);
+			_OtherObj->GetParent()->SetMoveable(PLATFORM_TYPE::UP, false);
 		}
-
-		else if (vPlayerPos.y + vPlayerScale.y * 0.5f < vPos.y - vScale.y * 0.5f
-			&& bMoveable[(UINT)PLATFORM_TYPE::UP])
+		
+		else if (vOtherPos.y + vOtherScale.y * 0.5f > vPos.y - vScale.y * 0.5f + 10.f
+			&& vOtherPos.x - vOtherScale.x * 0.5f > vPos.x - vScale.x * 0.5f
+			&& vOtherPos.x + vOtherScale.x * 0.5f < vPos.x + vScale.x * 0.5f)
 		{
-			_OtherObj->SetMoveable(PLATFORM_TYPE::UP, false);
+			_OtherObj->GetParent()->SetMoveable(PLATFORM_TYPE::BOTTOM, false);
 		}
 	}
 }
 
 void CPlatformScript::EndOverlap(CCollider2D* _OwnCollider, CGameObject* _OtherObj, CCollider2D* _OtherCollider)
 {
-	_OtherObj->SetMoveable(PLATFORM_TYPE::LEFT, true);
-	_OtherObj->SetMoveable(PLATFORM_TYPE::RIGHT, true);
-	_OtherObj->SetMoveable(PLATFORM_TYPE::BOTTOM, true);
-	_OtherObj->SetMoveable(PLATFORM_TYPE::UP, true);
+	if (L"PlayerMove" == _OtherObj->GetName())
+	{
+		_OtherObj->GetParent()->SetMoveable(PLATFORM_TYPE::LEFT, true);
+		_OtherObj->GetParent()->SetMoveable(PLATFORM_TYPE::RIGHT, true);
+		_OtherObj->GetParent()->SetMoveable(PLATFORM_TYPE::BOTTOM, true);
+		_OtherObj->GetParent()->SetMoveable(PLATFORM_TYPE::UP, true);
+	}
 }
 
 void CPlatformScript::SaveToFile(FILE* _pFile)

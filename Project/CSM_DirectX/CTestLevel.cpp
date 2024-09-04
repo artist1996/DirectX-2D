@@ -19,7 +19,6 @@
 #include <Scripts/CCameraMoveScript.h>
 #include <Scripts/CPlatformScript.h>
 #include <Scripts/CPlayerMoveScript.h>
-#include <Scripts/CPlayerJumpScript.h>
 
 #include "CLevelSaveLoad.h"
 
@@ -52,13 +51,11 @@ void CTestLevel::CreateTestLevel()
 	ChangeCurLevel(LEVEL_TYPE::SERIAROOM);
 
 	CGameObject* pEntity = CObjectPoolMgr::GetInst()->GetObj(OBJ_ID::PLAYER);
-	CGameObject* pMove = CObjectPoolMgr::GetInst()->GetObj(OBJ_ID::PLAYERMOVE);
-	CGameObject* pJump = CObjectPoolMgr::GetInst()->GetObj(OBJ_ID::PLAYERJUMP);
-	pMove->Transform()->SetRelativePos(Vec3(0.f, -40.f, -40.f));
-	CreateObject(pMove, 5);
+
+	//pMove->Transform()->SetRelativePos(Vec3(0.f, -40.f, -40.f));
+	//CreateObject(pMove, 5);
 	CreateObject(pEntity, 4);
-	CreateObject(pJump, 4);
-	
+
 
 	//ChangeCurLevel(LEVEL_TYPE::SERIAROOM);
 	//ChangeLevel(pLevel, LEVEL_STATE::STOP);

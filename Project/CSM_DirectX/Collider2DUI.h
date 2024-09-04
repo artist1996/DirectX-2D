@@ -4,6 +4,7 @@ class Collider2DUI :
     public ComponentUI
 {
 private:
+    bool m_IS;
 
 public:
     virtual void Update() override;

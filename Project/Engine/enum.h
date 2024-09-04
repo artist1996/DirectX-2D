@@ -64,10 +64,24 @@ enum DIR
 	FRONT,
 };
 
-enum OBJ_DIR
+enum class OBJ_DIR
 {
 	DIR_LEFT,
 	DIR_RIGHT,
+	DIR_UP,
+	DIR_DOWN,
+
+	END,
+};
+
+enum class MONSTER_STATE
+{
+	IDLE,
+	TRACE,
+	ATTACK,
+	DEAD,
+
+	END,
 };
 
 enum class RS_TYPE
@@ -230,8 +244,6 @@ enum class PARTICLE_MODULE
 enum class OBJ_ID
 {
 	PLAYER,
-	PLAYERMOVE,
-	PLAYERJUMP,
 	RANDOMSHOOT,
 	HEADSHOT,
 	

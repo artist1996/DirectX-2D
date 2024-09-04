@@ -5,6 +5,7 @@ class CPlatformScript :
     public CScript
 {
 private:
+    bool m_PrevFrame;
 
 public:
     virtual void Tick() override;

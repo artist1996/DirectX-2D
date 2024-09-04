@@ -159,12 +159,14 @@ call CodeGen.exe</Command>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="CMeltKnightIdleState.h" />
+    <ClInclude Include="CMeltKnightTraceState.h" />
     <ClInclude Include="CStateMgr.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CMeltKnightIdleState.cpp" />
+    <ClCompile Include="CMeltKnightTraceState.cpp" />
     <ClCompile Include="CStateMgr.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
