@@ -92,9 +92,9 @@ void GS_Particle(point VS_OUT _in[1], inout TriangleStream<GS_OUT> _OutStream)
     
     for (int i = 0; i < 4; ++i)
     {
-        output[i].vPosition.xyz += vViewPos;
+        output[i].vPosition.xyz += vViewPos;    
         output[i].vPosition.w    = 1.f;
-        output[i].vPosition      = mul(output[i].vPosition, matProj);
+        output[i].vPosition = mul(output[i].vPosition, matProj);
         output[i].InstID         = _in[0].InstID;
     }
     
@@ -152,12 +152,27 @@ float4 PS_Particle(GS_OUT _in) : SV_Target
 {
     float4 vColor = float4(1.f, 0.f, 0.f, 1.f);
     
-    if(g_btex_0)
+    tParticle Particle = ParticleBuffer[_in.InstID];
+    
+    
+    if (Particle.Life - Particle.Age >= 0.6f)
     {
-        vColor  = g_tex_0.Sample(g_sam_0, _in.vUV);
-        vColor *= ParticleBuffer[_in.InstID].vColor;
+        if (g_btex_0)
+        {
+            vColor = g_tex_0.Sample(g_sam_0, _in.vUV);
+            vColor *= ParticleBuffer[_in.InstID].vColor;
+        }
     }
     
+    else
+    {
+        if (g_btex_1)
+        {
+            vColor = g_tex_1.Sample(g_sam_0, _in.vUV);
+            vColor *= ParticleBuffer[_in.InstID].vColor;
+        }
+    }
+  
     return vColor;
 }
 

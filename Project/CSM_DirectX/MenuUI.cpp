@@ -355,6 +355,20 @@ void MenuUI::AddComponent()
 			pObject->AddComponent(new CFSM);
 		}
 
+		if (ImGui::MenuItem("Particle System"))
+		{
+			Inspector* pInspector = (Inspector*)CEditorMgr::GetInst()->FindEditorUI("Inspector");
+			CGameObject* pObject = pInspector->GetTargetObject();
+
+			if (nullptr == pObject)
+			{
+				ImGui::EndMenu();
+				return;
+			}
+
+			pObject->AddComponent(new CParticleSystem);
+		}
+
 		ImGui::EndMenu();
 	}
 }

@@ -35,8 +35,12 @@ void LevelEditor::Update()
 
 	ImGui::Text("Level Name");
 	ImGui::SameLine(120);
-	if (ImGui::InputText("##LevelName", (char*)m_strName.c_str(), 255))
+
+	static char szBuff[255] = {};
+
+	if (ImGui::InputText("##LevelName", szBuff, 255))
 	{
+		m_strName = szBuff;
 		m_CurLevel->SetName(wstring(m_strName.begin(), m_strName.end()));
 	}	
 

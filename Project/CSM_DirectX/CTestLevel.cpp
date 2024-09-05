@@ -48,14 +48,18 @@ void CTestLevel::CreateTestLevel()
 	pLevel = CLevelSaveLoad::LoadLevel(strPath + L"level\\hendonmyer.lv");
 	CLevelMgr::GetInst()->AddLevel(pLevel);
 	//ChangeCurLevel(LEVEL_TYPE::HENDONMYER);
-	ChangeCurLevel(LEVEL_TYPE::SERIAROOM);
+	//ChangeCurLevel(LEVEL_TYPE::SERIAROOM);
 
+	pLevel = CLevelSaveLoad::LoadLevel(strPath + L"level\\leshphon1.lv");
+	CLevelMgr::GetInst()->AddLevel(pLevel);
+	ChangeCurLevel(LEVEL_TYPE::LESHPHON1);
 	CGameObject* pEntity = CObjectPoolMgr::GetInst()->GetObj(OBJ_ID::PLAYER);
+	pEntity->Transform()->SetRelativePos(Vec3(800.f, -50.f, 0.f));
+	pEntity->Transform()->SetRelativeRotation(Vec3(0.f, XM_PI, 0.f));
 
-	//pMove->Transform()->SetRelativePos(Vec3(0.f, -40.f, -40.f));
-	//CreateObject(pMove, 5);
 	CreateObject(pEntity, 4);
-
+	//CLevel* pNewLevel = new CLevel;
+	//ChangeLevel(pNewLevel, LEVEL_STATE::STOP);
 
 	//ChangeCurLevel(LEVEL_TYPE::SERIAROOM);
 	//ChangeLevel(pLevel, LEVEL_STATE::STOP);
@@ -87,7 +91,7 @@ void CTestLevel::CreateTestLevel()
 	//pLevel->GetLayer(6)->SetName(L"Monster");
 	//pLevel->GetLayer(7)->SetName(L"PlayerProjectile");
 	//
-	// Light2D Object
+	//// Light2D Object
 	//CGameObject* pLight2D = new CGameObject;
 	//pLight2D->SetName(L"Directional");
 	//pLight2D->AddComponent(new CTransform);
@@ -100,7 +104,7 @@ void CTestLevel::CreateTestLevel()
 	//pLight2D->Light2D()->SetRadius(500.f);
 	//
 	//pNewLevel->AddObject(0, pLight2D);
-	////
+	//
 	////// Player Object
 	//CGameObject* pPlayer = new CGameObject;
 	//pPlayer->SetName(L"Player");

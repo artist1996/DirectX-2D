@@ -163,6 +163,7 @@ call CodeGen.exe</Command>
     <ClInclude Include="CDiagonalHeadShotScript.h" />
     <ClInclude Include="CDiagonalPistolScript.h" />
     <ClInclude Include="CDoubleGunHawkScript.h" />
+    <ClInclude Include="CDummyScript.h" />
     <ClInclude Include="CHammerScript.h" />
     <ClInclude Include="CHeadShotScript.h" />
     <ClInclude Include="CHeadShotEffectScript.h" />
@@ -171,6 +172,7 @@ call CodeGen.exe</Command>
     <ClInclude Include="CMeltKnightScript.h" />
     <ClInclude Include="CMonsterMoveScript.h" />
     <ClInclude Include="CMuzzleScript.h" />
+    <ClInclude Include="CParticleScript.h" />
     <ClInclude Include="CPistolScript.h" />
     <ClInclude Include="CPlatformScript.h" />
     <ClInclude Include="CPlayerMoveScript.h" />
@@ -191,6 +193,7 @@ call CodeGen.exe</Command>
     <ClCompile Include="CDiagonalHeadShotScript.cpp" />
     <ClCompile Include="CDiagonalPistolScript.cpp" />
     <ClCompile Include="CDoubleGunHawkScript.cpp" />
+    <ClCompile Include="CDummyScript.cpp" />
     <ClCompile Include="CHammerScript.cpp" />
     <ClCompile Include="CHeadShotScript.cpp" />
     <ClCompile Include="CHeadShotEffectScript.cpp" />
@@ -199,6 +202,7 @@ call CodeGen.exe</Command>
     <ClCompile Include="CMeltKnightScript.cpp" />
     <ClCompile Include="CMonsterMoveScript.cpp" />
     <ClCompile Include="CMuzzleScript.cpp" />
+    <ClCompile Include="CParticleScript.cpp" />
     <ClCompile Include="CPistolScript.cpp" />
     <ClCompile Include="CPlatformScript.cpp" />
     <ClCompile Include="CPlayerMoveScript.cpp" />

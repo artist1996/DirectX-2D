@@ -73,12 +73,14 @@ struct tTask
 	DWORD_PTR Param_1;
 };
 
-struct tObjInfo
+typedef struct tObjInfo
 {
-	float fAttack;
-	float fHP;
-
-};
+	float MaxHP;
+	float HP;
+	float MinAttack;
+	float MaxAttack;
+	float Defense;
+}INFO;
 
 struct tLight
 {

@@ -129,10 +129,6 @@ float4 PS_Std2D_Alphablend(VTX_OUT _in) : SV_Target
             vColor = float4(1.f, 0.f, 1.f, 1.f);
         }
     }
-
-    vColor.r *= 1.5f;
-    vColor.g *= 1.5f;
-    vColor.b *= 1.5f;
     
     return vColor;
 }

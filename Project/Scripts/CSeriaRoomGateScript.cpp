@@ -32,10 +32,10 @@ void CSeriaRoomGateScript::BeginOverlap(CCollider2D* _OwnCollider, CGameObject* 
 
 		ChangeCurLevel(LEVEL_TYPE::HENDONMYER);
 
-		_OtherObj->Transform()->SetRelativePos(-50.f, 0.f, 0.f);
-
+		//_OtherObj->Transform()->SetRelativePos(-82.f, 24.f, 0.f);
+		pPlayer->Transform()->SetRelativePos(-82.f, 24.f, 0.f);
 		CreateObject(pPlayer, 4);
 		
-		ChangeLevelState(PLAY);
+		//ChangeLevelState(PLAY);
 	}
 }

@@ -28,8 +28,14 @@
     <Filter Include="States\01. Monster\01. MeltKnight\03. Attack">
       <UniqueIdentifier>{048ea468-94fc-40f4-9053-69275eb58a0d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="States\01. Monster\01. MeltKnight\04. Dead">
+    <Filter Include="States\01. Monster\01. MeltKnight\04. StandBy">
       <UniqueIdentifier>{8698996f-a42b-4fb5-8dfa-339c2cbe819a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="States\01. Monster\01. MeltKnight\05. Dead">
+      <UniqueIdentifier>{1c9ff8a2-8fc6-4d1e-87b8-f750c52fabbb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="States\01. Monster\02. Divol">
+      <UniqueIdentifier>{d301de92-ead8-4906-8b71-5ce79505005c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -48,6 +54,15 @@
     <ClInclude Include="CMeltKnightTraceState.h">
       <Filter>States\01. Monster\01. MeltKnight\02. Trace</Filter>
     </ClInclude>
+    <ClInclude Include="CMeltKnightAttackState.h">
+      <Filter>States\01. Monster\01. MeltKnight\03. Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="CMeltKnightStandByState.h">
+      <Filter>States\01. Monster\01. MeltKnight\04. StandBy</Filter>
+    </ClInclude>
+    <ClInclude Include="CMeltKnightDeadState.h">
+      <Filter>States\01. Monster\01. MeltKnight\05. Dead</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -64,6 +79,15 @@
     </ClCompile>
     <ClCompile Include="CMeltKnightTraceState.cpp">
       <Filter>States\01. Monster\01. MeltKnight\02. Trace</Filter>
+    </ClCompile>
+    <ClCompile Include="CMeltKnightAttackState.cpp">
+      <Filter>States\01. Monster\01. MeltKnight\03. Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="CMeltKnightStandByState.cpp">
+      <Filter>States\01. Monster\01. MeltKnight\04. StandBy</Filter>
+    </ClCompile>
+    <ClCompile Include="CMeltKnightDeadState.cpp">
+      <Filter>States\01. Monster\01. MeltKnight\05. Dead</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

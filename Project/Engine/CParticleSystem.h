@@ -22,6 +22,7 @@ private:
     CStructuredBuffer*   m_ModuleBuffer;        // Module Data Buffer
 
     Ptr<CTexture>        m_ParticleTex;
+    Ptr<CTexture>        m_EndTex;
 
     float                m_Time;                // 누적 시간
     float                m_BurstTime;           // SpawnBurst 체크용 변수
@@ -29,6 +30,8 @@ private:
     int                  m_MaxParticleCount;    // 파티클 최대 개수
 
     tParticleModule      m_Module;              // 파티클의 기능 정의
+
+    
 
 public:
     void SetParticleTexture(Ptr<CTexture> _Texture) { m_ParticleTex = _Texture; }

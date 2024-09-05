@@ -41,6 +41,7 @@ CPlayerScript::CPlayerScript()
 	, m_Muzzel(true)
 	, m_CheckRange(false)
 	, m_GunHawkStandby(false)
+	, m_HeadShotSpawn(true)
 	, m_CoolTime{}
 	, m_UseSkill{}
 	, m_Prefabs{}
@@ -91,8 +92,6 @@ void CPlayerScript::Begin()
 	Animator2D()->Play((int)IDLE, 5.f, true);
 
 	Collider2D()->SetOffset(Vec3(0.f, -0.5f, 1.f));
-	SetDirection(OBJ_DIR::DIR_LEFT);
-	//const vector<CGameObject*>& Children = GetOwner()->GetChildren();
 
 	SetSpeed(350.f);
 }
@@ -189,8 +188,16 @@ void CPlayerScript::Tick()
 
 	RunTimeCheck();
 	SkillTimeCheck();
-	
-	Transform()->SetRelativePos(Vec3(vPos.x, vPos.y, vPos.y));
+	float JumpHeight = Rigidbody()->GetGravityVelocity().y;
+	Vec3 vColliderScale = Collider2D()->GetScale();
+	if (STATE::JUMP == m_State)
+	{
+		Transform()->SetRelativePos(Vec3(vPos.x, vPos.y, m_GroundPosY - vColliderScale.y * 0.5f));
+	}
+	else
+	{
+		Transform()->SetRelativePos(Vec3(vPos.x, vPos.y, vPos.y - vColliderScale.y * 0.5f));
+	}
 }
 
 void CPlayerScript::RunTimeCheck()
@@ -208,9 +215,9 @@ void CPlayerScript::RunTimeCheck()
 void CPlayerScript::AddForce()
 {
 	if (OBJ_DIR::DIR_RIGHT == m_Dir)
-		Rigidbody()->AddForce(Vec3(-150000.f, 0.f, 0.f));
+		Rigidbody()->AddForce(Vec3(-120000.f, 0.f, 0.f));
 	else if (OBJ_DIR::DIR_LEFT == m_Dir)
-		Rigidbody()->AddForce(Vec3(150000.f, 0.f, 0.f));
+		Rigidbody()->AddForce(Vec3(120000.f, 0.f, 0.f));
 }
 
 bool CPlayerScript::GroundCheck(Vec3& _Pos)
@@ -580,6 +587,15 @@ void CPlayerScript::AT_DG2()
 
 	if (m_NextAttack && Animator2D()->IsFinish())
 	{
+		if (m_CheckRange)
+		{
+			SetState(STATE::DG_AT3);
+			Animator2D()->Play((int)STATE::DG_AT2, 10.f, true);
+			CreateDiagonalPistol();
+			CreateMuzzelOfRevolverDiagonal();
+			m_NextAttack = false;
+		}
+
 		if (KEY_PRESSED(KEY::DOWN))
 		{
 			SetState(STATE::DG_AT3);
@@ -667,12 +683,12 @@ void CPlayerScript::Tackle(Vec3& _Pos)
 {
 	if (m_Dir == OBJ_DIR::DIR_LEFT)
 	{
-		_Pos += Vec3(-1.f, 0.f, 0.f) * m_Speed * DT;
+		_Pos += Vec3(-1.f, 0.f, 0.f) * m_Speed * 2.f * DT;
 	}
 
 	else if (m_Dir == OBJ_DIR::DIR_RIGHT)
 	{
-		_Pos += Vec3(1.f, 0.f, 0.f) * m_Speed * DT;
+		_Pos += Vec3(1.f, 0.f, 0.f) * m_Speed * 2.f * DT;
 	}
 
 	if (Animator2D()->IsFinish())
@@ -702,7 +718,8 @@ void CPlayerScript::Landing()
 
 void CPlayerScript::Run(Vec3& _Pos)
 {
-	Collider2D()->SetOffset(Vec3(-0.5f, -48.f, 1.f));
+	Collider2D()->SetScale(Vec3(75.f, 136.f, 1.f));
+	Collider2D()->SetOffset(Vec3(-8.f, -48.f, 1.f));
 
 	bool* bMoveable = GetOwner()->GetMoveable();
 
@@ -806,27 +823,27 @@ void CPlayerScript::RisingShot()
 
 void CPlayerScript::HeadShot()
 {
-	if (m_Spawn && 3 <= Animator2D()->GetCurFrameIndex())
+	if (m_HeadShotSpawn && 3 <= Animator2D()->GetCurFrameIndex())
 	{
 		if (m_CheckRange)
 		{
 			CreateDiagonalHeadShot();
 			CreateDiagonalHeadShotEffect();
-			m_Spawn = false;
+			m_HeadShotSpawn = false;
 		}
 
 		else if (KEY_PRESSED(KEY::DOWN))
 		{
 			CreateDiagonalHeadShot();
 			CreateDiagonalHeadShotEffect();
-			m_Spawn = false;
+			m_HeadShotSpawn = false;
 		}
 
 		else
 		{
 			CreateHeadShot();
 			CreateHeadShotEffect();
-			m_Spawn = false;
+			m_HeadShotSpawn = false;
 		}
 	}
 
@@ -834,7 +851,7 @@ void CPlayerScript::HeadShot()
 	{
 		SetState(STATE::IDLE);
 		Animator2D()->Play((int)ANIMATION_NUM::IDLE, 5.f, true);
-		m_Spawn = true;
+		m_HeadShotSpawn = true;
 	}
 }
 
@@ -1501,13 +1518,13 @@ void CPlayerScript::CreateHeadShotEffect()
 
 	if (OBJ_DIR::DIR_LEFT == m_Dir)
 	{
-		pObject->Transform()->SetRelativePos(Vec3(vPos.x - 250.f, vPos.y + 38.f, vPos.z + 100.f));
+		pObject->Transform()->SetRelativePos(Vec3(vPos.x - 250.f, vPos.y + 38.f, -100000.f));
 		pObject->Transform()->SetRelativeRotation(Vec3(0.f, XM_PI, 0.f));
 	}
 
 	else if (OBJ_DIR::DIR_RIGHT == m_Dir)
 	{
-		pObject->Transform()->SetRelativePos(Vec3(vPos.x + 250.f, vPos.y + 38.f, vPos.z + 100.f));
+		pObject->Transform()->SetRelativePos(Vec3(vPos.x + 250.f, vPos.y + 38.f, -100000.f));
 	}
 
 	CreateObject(pObject, 0);
@@ -1520,13 +1537,13 @@ void CPlayerScript::CreateDiagonalHeadShotEffect()
 
 	if (OBJ_DIR::DIR_LEFT == m_Dir)
 	{
-		pObject->Transform()->SetRelativePos(Vec3(vPos.x - 230.f, vPos.y - 50.f, vPos.z + 100.f));
+		pObject->Transform()->SetRelativePos(Vec3(vPos.x - 230.f, vPos.y - 50.f, 0.f));
 		pObject->Transform()->SetRelativeRotation(Vec3(0.f, XM_PI, XM_PI * 2.15f));
 	}
 
 	else if (OBJ_DIR::DIR_RIGHT == m_Dir)
 	{
-		pObject->Transform()->SetRelativePos(Vec3(vPos.x + 250.f, vPos.y - 50.f, vPos.z + 100.f));
+		pObject->Transform()->SetRelativePos(Vec3(vPos.x + 250.f, vPos.y - 50.f, 0.f));
 		pObject->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, XM_PI * 1.75f));
 	}
 

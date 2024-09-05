@@ -6,6 +6,7 @@
 #include "CDiagonalHeadShotScript.h"
 #include "CDiagonalPistolScript.h"
 #include "CDoubleGunHawkScript.h"
+#include "CDummyScript.h"
 #include "CGunHawkExplodeScript.h"
 #include "CHammerScript.h"
 #include "CHeadShotEffectScript.h"
@@ -15,6 +16,7 @@
 #include "CMeltKnightScript.h"
 #include "CMonsterMoveScript.h"
 #include "CMuzzleScript.h"
+#include "CParticleScript.h"
 #include "CPistolScript.h"
 #include "CPlatformScript.h"
 #include "CPlayerMoveScript.h"
@@ -32,6 +34,7 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CDiagonalHeadShotScript");
 	_vec.push_back(L"CDiagonalPistolScript");
 	_vec.push_back(L"CDoubleGunHawkScript");
+	_vec.push_back(L"CDummyScript");
 	_vec.push_back(L"CGunHawkExplodeScript");
 	_vec.push_back(L"CHammerScript");
 	_vec.push_back(L"CHeadShotEffectScript");
@@ -41,6 +44,7 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CMeltKnightScript");
 	_vec.push_back(L"CMonsterMoveScript");
 	_vec.push_back(L"CMuzzleScript");
+	_vec.push_back(L"CParticleScript");
 	_vec.push_back(L"CPistolScript");
 	_vec.push_back(L"CPlatformScript");
 	_vec.push_back(L"CPlayerMoveScript");
@@ -64,6 +68,8 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CDiagonalPistolScript;
 	if (L"CDoubleGunHawkScript" == _strScriptName)
 		return new CDoubleGunHawkScript;
+	if (L"CDummyScript" == _strScriptName)
+		return new CDummyScript;
 	if (L"CGunHawkExplodeScript" == _strScriptName)
 		return new CGunHawkExplodeScript;
 	if (L"CHammerScript" == _strScriptName)
@@ -82,6 +88,8 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CMonsterMoveScript;
 	if (L"CMuzzleScript" == _strScriptName)
 		return new CMuzzleScript;
+	if (L"CParticleScript" == _strScriptName)
+		return new CParticleScript;
 	if (L"CPistolScript" == _strScriptName)
 		return new CPistolScript;
 	if (L"CPlatformScript" == _strScriptName)
@@ -122,6 +130,9 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 	case (UINT)SCRIPT_TYPE::DOUBLEGUNHAWKSCRIPT:
 		return new CDoubleGunHawkScript;
 		break;
+	case (UINT)SCRIPT_TYPE::DUMMYSCRIPT:
+		return new CDummyScript;
+		break;
 	case (UINT)SCRIPT_TYPE::GUNHAWKEXPLODESCRIPT:
 		return new CGunHawkExplodeScript;
 		break;
@@ -148,6 +159,9 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 		break;
 	case (UINT)SCRIPT_TYPE::MUZZLESCRIPT:
 		return new CMuzzleScript;
+		break;
+	case (UINT)SCRIPT_TYPE::PARTICLESCRIPT:
+		return new CParticleScript;
 		break;
 	case (UINT)SCRIPT_TYPE::PISTOLSCRIPT:
 		return new CPistolScript;
@@ -204,6 +218,10 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 		return L"CDoubleGunHawkScript";
 		break;
 
+	case SCRIPT_TYPE::DUMMYSCRIPT:
+		return L"CDummyScript";
+		break;
+
 	case SCRIPT_TYPE::GUNHAWKEXPLODESCRIPT:
 		return L"CGunHawkExplodeScript";
 		break;
@@ -238,6 +256,10 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 
 	case SCRIPT_TYPE::MUZZLESCRIPT:
 		return L"CMuzzleScript";
+		break;
+
+	case SCRIPT_TYPE::PARTICLESCRIPT:
+		return L"CParticleScript";
 		break;
 
 	case SCRIPT_TYPE::PISTOLSCRIPT:

@@ -59,3 +59,23 @@ CState* CFSM::FindState(const wstring& _strName)
 
 	return iter->second;
 }
+
+void CFSM::SetBlackboardData(const wstring& _strKey, DATA_TYPE _Type, void* _pData)
+{
+	tBlackboardData tData = { _Type, _pData };
+
+	if (m_mapData.find(_strKey) != m_mapData.end())
+		return;
+
+	m_mapData.insert(make_pair(_strKey, tData));
+}
+
+void* CFSM::GetBlackboardData(const wstring& _strKey)
+{
+	map<wstring, tBlackboardData>::iterator iter = m_mapData.find(_strKey);
+
+	if (iter == m_mapData.end())
+		return nullptr;
+
+	return iter->second.pData;
+}

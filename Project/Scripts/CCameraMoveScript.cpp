@@ -24,6 +24,11 @@ CCameraMoveScript::~CCameraMoveScript()
 void CCameraMoveScript::Begin()
 {
 	m_Target = CLevelMgr::GetInst()->FindObjectByName(L"Player");
+
+	CLevel* pLevel = CLevelMgr::GetInst()->GetCurrentLevel();
+
+	if (L"leshphon1" == pLevel->GetName())
+		m_BoundaryLT = Vec2(223.f, 39.f);
 }
 
 void CCameraMoveScript::Tick()
@@ -84,11 +89,11 @@ void CCameraMoveScript::OrthoGraphicMove()
 	//	vPos.x += DT * Speed;
 	//}
 
-	if (vPos.x <= 0.f)
-		vPos.x = 0.f;
+	if (vPos.x <= m_BoundaryLT.x)
+		vPos.x = m_BoundaryLT.x;
 	
-	if (vPos.y <= 0.f)
-		vPos.y = 0.f;
+	if (vPos.y <= m_BoundaryLT.y)
+		vPos.y = m_BoundaryLT.y;
 
 	if (vPos.x >= m_BoundaryRightWidth)
 		vPos.x = m_BoundaryRightWidth;

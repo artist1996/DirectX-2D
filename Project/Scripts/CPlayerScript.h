@@ -101,6 +101,7 @@ private:
     bool                     m_Run;
 
     bool                     m_Spawn;
+    bool                     m_HeadShotSpawn;
     bool                     m_Muzzel;
     bool                     m_CheckRange;
 

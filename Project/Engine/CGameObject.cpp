@@ -82,7 +82,7 @@ void CGameObject::AddComponent(CComponent* _Component)
 
 	else
 	{
-		assert(nullptr == m_arrCom[(UINT)Type]);
+		//assert(nullptr == m_arrCom[(UINT)Type]);
 
 		m_arrCom[(UINT)Type] = _Component;
 		m_arrCom[(UINT)Type]->SetOwner(this);

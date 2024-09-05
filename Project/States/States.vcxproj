@@ -158,14 +158,20 @@ call CodeGen.exe</Command>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CMeltKnightAttackState.h" />
+    <ClInclude Include="CMeltKnightDeadState.h" />
     <ClInclude Include="CMeltKnightIdleState.h" />
+    <ClInclude Include="CMeltKnightStandByState.h" />
     <ClInclude Include="CMeltKnightTraceState.h" />
     <ClInclude Include="CStateMgr.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CMeltKnightAttackState.cpp" />
+    <ClCompile Include="CMeltKnightDeadState.cpp" />
     <ClCompile Include="CMeltKnightIdleState.cpp" />
+    <ClCompile Include="CMeltKnightStandByState.cpp" />
     <ClCompile Include="CMeltKnightTraceState.cpp" />
     <ClCompile Include="CStateMgr.cpp" />
     <ClCompile Include="pch.cpp">

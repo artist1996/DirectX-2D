@@ -3,6 +3,7 @@ CCameraMoveScript
 CDiagonalHeadShotScript
 CDiagonalPistolScript
 CDoubleGunHawkScript
+CDummyScript
 CGunHawkExplodeScript
 CHammerScript
 CHeadShotEffectScript
@@ -12,6 +13,7 @@ CMachKickScript
 CMeltKnightScript
 CMonsterMoveScript
 CMuzzleScript
+CParticleScript
 CPistolScript
 CPlatformScript
 CPlayerMoveScript

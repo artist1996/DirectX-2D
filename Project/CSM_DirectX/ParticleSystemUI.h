@@ -6,9 +6,6 @@ class ParticleSystemUI :
 private:
     bool m_bChange;
 
-private:
-    void Spawn();
-    void Spawn_Burst();
 
 public:
     virtual void Update() override;

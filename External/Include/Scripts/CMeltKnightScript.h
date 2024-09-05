@@ -5,6 +5,10 @@ class CMeltKnightScript :
     public CScript
 {
 private:
+    INFO m_Info;
+
+private:
+    void InitInfo();
 
 public:
     virtual void Begin() override;
@@ -12,7 +16,9 @@ public:
 
 public:
     virtual void BeginOverlap(CCollider2D* _OwnCollider, CGameObject* _OtherObj, CCollider2D* _OtherCollider) override;
-    
+    virtual void Overlap(CCollider2D* _OwnCollider, CGameObject* _OtherObj, CCollider2D* _OtherCollider)      override;
+    virtual void EndOverlap(CCollider2D* _OwnCollider, CGameObject* _OtherObj, CCollider2D* _OtherCollider)   override;
+
 public:
     virtual void SaveToFile(FILE* _pFile)   override {}
     virtual void LoadFromFile(FILE* _pFile) override {}

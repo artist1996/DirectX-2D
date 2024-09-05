@@ -109,6 +109,12 @@
     <Filter Include="Scripts\01. PlayerScript\02. PlayerMoveScript">
       <UniqueIdentifier>{57cb2e6a-940f-47ba-bbfe-ab012bf646a6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scripts\08. DummyScript">
+      <UniqueIdentifier>{6645b588-5969-4148-88ec-5bd7096b4b06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\09. ParticleScript">
+      <UniqueIdentifier>{42ab8cec-ec06-414f-94ce-5c0240819079}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -189,6 +195,12 @@
     <ClInclude Include="CMonsterMoveScript.h">
       <Filter>Scripts\07. MonsterScript\00. Move</Filter>
     </ClInclude>
+    <ClInclude Include="CDummyScript.h">
+      <Filter>Scripts\08. DummyScript</Filter>
+    </ClInclude>
+    <ClInclude Include="CParticleScript.h">
+      <Filter>Scripts\09. ParticleScript</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -268,6 +280,12 @@
     </ClCompile>
     <ClCompile Include="CMonsterMoveScript.cpp">
       <Filter>Scripts\07. MonsterScript\00. Move</Filter>
+    </ClCompile>
+    <ClCompile Include="CDummyScript.cpp">
+      <Filter>Scripts\08. DummyScript</Filter>
+    </ClCompile>
+    <ClCompile Include="CParticleScript.cpp">
+      <Filter>Scripts\09. ParticleScript</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

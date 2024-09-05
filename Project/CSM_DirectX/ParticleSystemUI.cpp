@@ -4,6 +4,8 @@
 #include <Engine/CGameObject.h>
 #include <Engine/CParticleSystem.h>
 
+#include "TreeUI.h"
+
 ParticleSystemUI::ParticleSystemUI()
 	: ComponentUI(COMPONENT_TYPE::PARTICLESYSTEM)
 	, m_bChange(false)
@@ -33,6 +35,24 @@ void ParticleSystemUI::Update()
 
 	ImGui::Image(ParticleTex->GetSRV().Get(), ImVec2(100.f, 100.f), uv_min, uv_max, tint_col, border_col);
 
+	if (ImGui::BeginDragDropTarget())
+	{
+		const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ContentTree");
+		if (payload)
+		{
+			TreeNode** ppNode = (TreeNode**)payload->Data;
+			TreeNode* pNode = *ppNode;
+
+			Ptr<CAsset> pAsset = (CAsset*)pNode->GetData();
+			if (ASSET_TYPE::TEXTURE == pAsset->GetAssetType())
+			{
+				pParticleSys->SetParticleTexture((CTexture*)pAsset.Get());
+			}
+		}
+
+		ImGui::EndDragDropTarget();
+	}
+
 	ImGui::Separator();
 	// Spawn
 	ImGui::Text("Spawn Module");
@@ -51,8 +71,8 @@ void ParticleSystemUI::Update()
 
 	ImGui::Text("Spawn Color");
 	ImGui::SameLine(130);
-	ImGui::ColorEdit3("##SpawnColor", Module.vSpawnColor);
-
+	ImGui::ColorEdit4("##SpawnColor", Module.vSpawnColor);
+	
 	ImGui::Text("Min Scale");
 	ImGui::SameLine(130);
 	ImGui::DragFloat4("##SpawnMinScale", Module.vSpawnMinScale);

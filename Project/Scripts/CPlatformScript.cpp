@@ -82,15 +82,15 @@ void CPlatformScript::Overlap(CCollider2D* _OwnCollider, CGameObject* _OtherObj,
 		}
 		
 		else if (vOtherPos.y - vOtherScale.y * 0.5f < vPos.y + vScale.y * 0.5f - 10.f
-			&& vOtherPos.x - vOtherScale.x * 0.5f > vPos.x - vScale.x * 0.5f
-			&& vOtherPos.x + vOtherScale.x * 0.5f < vPos.x + vScale.x * 0.5f)
+			&& vOtherPos.x - vOtherScale.x * 0.5f > vPos.x - vScale.x * 0.5 - 100.f
+			&& vOtherPos.x + vOtherScale.x * 0.5f < vPos.x + vScale.x * 0.5f + 100.f)
 		{
 			_OtherObj->GetParent()->SetMoveable(PLATFORM_TYPE::UP, false);
 		}
 		
 		else if (vOtherPos.y + vOtherScale.y * 0.5f > vPos.y - vScale.y * 0.5f + 10.f
-			&& vOtherPos.x - vOtherScale.x * 0.5f > vPos.x - vScale.x * 0.5f
-			&& vOtherPos.x + vOtherScale.x * 0.5f < vPos.x + vScale.x * 0.5f)
+			&& vOtherPos.x - vOtherScale.x * 0.5f > vPos.x - vScale.x * 0.5f - 100.f
+			&& vOtherPos.x + vOtherScale.x * 0.5f < vPos.x + vScale.x * 0.5f + 100.f)
 		{
 			_OtherObj->GetParent()->SetMoveable(PLATFORM_TYPE::BOTTOM, false);
 		}

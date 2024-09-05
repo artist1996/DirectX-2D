@@ -8,6 +8,7 @@ class CParticleTickCS :
 {
 private:
     Ptr<CTexture>      m_NoiseTex;
+    Ptr<CTexture>      m_Tex;
 
     CStructuredBuffer* m_ParticleBuffer;
     CStructuredBuffer* m_SpawnCountBuffer;

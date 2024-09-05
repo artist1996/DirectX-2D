@@ -28,6 +28,7 @@ CParticleSystem::CParticleSystem()
 	
 	// Particle Texture
 	m_ParticleTex = CAssetMgr::GetInst()->FindAsset<CTexture>(L"texture\\particle\\FX_Flare.png");
+	m_EndTex = CAssetMgr::GetInst()->FindAsset<CTexture>(L"texture\\particle\\Ripple.png");
 	
 	m_ParticleBuffer = new CStructuredBuffer;
 	m_ParticleBuffer->Create(sizeof(tParticle), m_MaxParticleCount, SB_TYPE::SRV_UAV, true, nullptr);
@@ -99,12 +100,13 @@ CParticleSystem::CParticleSystem(const CParticleSystem& _Origin)
 	, m_SpawnCountBuffer(nullptr)
 	, m_ModuleBuffer(nullptr)
 	, m_ParticleTex(_Origin.m_ParticleTex)
+	, m_EndTex(_Origin.m_EndTex)
 	, m_Time(0.f)
 	, m_BurstTime(0.f)
 	, m_MaxParticleCount(_Origin.m_MaxParticleCount)
 	, m_Module(_Origin.m_Module)
 {
-	assert(m_ParticleBuffer && m_SpawnCountBuffer && m_ModuleBuffer);
+	assert(_Origin.m_ParticleBuffer && _Origin.m_SpawnCountBuffer && _Origin.m_ModuleBuffer);
 	
 	m_ParticleBuffer   = new CStructuredBuffer(*_Origin.m_ParticleBuffer);
 	m_SpawnCountBuffer = new CStructuredBuffer(*_Origin.m_SpawnCountBuffer);
@@ -127,7 +129,7 @@ void CParticleSystem::CreateModuleBuffer()
 void CParticleSystem::FinalTick()
 {
 	CarculateSpawnCount();
-
+	CreateModuleBuffer();
 	// Compute Shader
 	m_TickCS->SetParticleWorldPos(Transform()->GetWorldPos());
 	m_TickCS->SetParticleBuffer(m_ParticleBuffer);
@@ -146,9 +148,11 @@ void CParticleSystem::Render()
 
 	// Module Buffer Binding
 	m_ModuleBuffer->Binding(21);	 // t21
-	
 	// Material Binding
+
 	GetMaterial()->SetTexParam(TEX_0, m_ParticleTex);
+	GetMaterial()->SetTexParam(TEX_1, m_EndTex);
+
 	GetMaterial()->Binding();
 
 	// Rendering

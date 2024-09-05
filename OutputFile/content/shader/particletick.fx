@@ -10,6 +10,7 @@ RWStructuredBuffer<tParticle>     ParticleBuffer   : register(u0);
 RWStructuredBuffer<tSpawnCount>   SpawnCountBuffer : register(u1);
 Texture2D                         NoiseTex         : register(t20);
 StructuredBuffer<tParticleModule> Module           : register(t21);
+Texture2D                         FallTex          : register(t22);
 
 #define ParticleObjectPos   g_vec4_0.xyz
 #define MAX_COUNT           g_int_0
@@ -97,7 +98,7 @@ void CS_ParticleTick(int3 _ID : SV_DispatchThreadID)
                 PARTICLE.vWorldInitScale = (Module[0].vSpawnMaxScale - Module[0].vSpawnMinScale.x) * vRandom0.x + Module[0].vSpawnMinScale;
                
                 PARTICLE.vColor          = Module[0].vSpawnColor;
-               
+    
                 PARTICLE.Mass            = 1.f;
                 PARTICLE.Age             = 0.f;
                 PARTICLE.NormalizedAge   = 0.f;
@@ -135,7 +136,18 @@ void CS_ParticleTick(int3 _ID : SV_DispatchThreadID)
         float3 vAccel = PARTICLE.vForce / PARTICLE.Mass;
         
         // 가속도에 따른 속도의 변화
-        PARTICLE.vVelocity += vAccel * g_EngineDT;
+        if (PARTICLE.Life - PARTICLE.Age <= 0.5f)
+        {
+             // 수명이 0.5초 남았을 때 속도를 0으로 설정하여 멈추게 함
+             PARTICLE.vVelocity = float3(0.f, 0.f, 0.f);
+        }
+        else
+        {
+             // 가속도에 따른 속도의 변화
+             PARTICLE.vVelocity += vAccel * g_EngineDT;
+        }
+        
+        //PARTICLE.vVelocity += vAccel * g_EngineDT;
         
         // Velocity 에 따른 이동 구현
         if(0 == Module[0].SpaceType)
@@ -146,8 +158,8 @@ void CS_ParticleTick(int3 _ID : SV_DispatchThreadID)
         }
         else
         {
-            PARTICLE.vLocalPos += PARTICLE.vVelocity * g_EngineDT;
-            PARTICLE.vWorldPos += PARTICLE.vVelocity * g_EngineDT;
+           PARTICLE.vLocalPos += PARTICLE.vVelocity * g_EngineDT;
+           PARTICLE.vWorldPos += PARTICLE.vVelocity * g_EngineDT;
         }
        
         // Scale Module 에 따른 현재 크기 계산
@@ -176,7 +188,8 @@ void CS_ParticleTick(int3 _ID : SV_DispatchThreadID)
                 //}
             }
         }
-        PARTICLE.vWorldPos += PARTICLE.vVelocity * g_EngineDT;
+
+        PARTICLE.vWorldPos += PARTICLE.vVelocity * g_EngineDT;  
         PARTICLE.Age += g_EngineDT;
         
         if (PARTICLE.Life <= PARTICLE.Age)
@@ -203,9 +216,6 @@ void CS_ParticleTick(int3 _ID : SV_DispatchThreadID)
     {
         PARTICLE.Active = 0;
     }
-    //ParticleBuffer[_ID.x].vWorldPos.y += g_EngineDT * 100.f;
 }
-
-
 
 #endif
