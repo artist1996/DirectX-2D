@@ -13,7 +13,6 @@ CMeltKnightScript::CMeltKnightScript()
 	: CScript(SCRIPT_TYPE::MELTKNIGHTSCRIPT)
 	, m_Info{}
 {
-	InitInfo();
 }
 
 CMeltKnightScript::~CMeltKnightScript()
@@ -27,12 +26,14 @@ void CMeltKnightScript::InitInfo()
 	m_Info.Defense = 0;
 	m_Info.MinAttack = 10;
 	m_Info.MaxAttack = 20;
+
+	GetOwner()->SetInfo(m_Info);
 }
 
 void CMeltKnightScript::Begin()
 {
 	//GetOwner()->AddComponent(new CFSM);
-
+	InitInfo();
 
 	FSM()->SetBlackboardData(L"Target", DATA_TYPE::OBJECT, CObjectPoolMgr::GetInst()->GetPlayerEntity());
 	FSM()->AddState(L"Idle", new CMeltKnightIdleState);
@@ -56,7 +57,13 @@ void CMeltKnightScript::BeginOverlap(CCollider2D* _OwnCollider, CGameObject* _Ot
 {
 	if (7 == _OtherObj->GetLayerIdx())
 	{
-		m_Info.HP -= 10;
+		Vec3 vPos = Transform()->GetRelativePos();
+		Vec3 vOtherPos = _OtherObj->Transform()->GetRelativePos();
+
+		if(100.f > fabs(vPos.z - vOtherPos.z))
+			m_Info.HP -= 10;
+
+		GetOwner()->SetInfo(m_Info);
 	}
 
 	if (3 == _OtherObj->GetLayerIdx())
@@ -74,7 +81,7 @@ void CMeltKnightScript::BeginOverlap(CCollider2D* _OwnCollider, CGameObject* _Ot
 		{
 			GetOwner()->SetMoveable(PLATFORM_TYPE::RIGHT, false);
 		}
-
+		
 		else if (vOtherPos.x - vOtherScale.x * 0.5f > vPos.x + vScale.x * 0.5f - 10.f
 			&& vOtherPos.y + vOtherScale.y * 0.5f > vPos.y - vScale.y * 0.5f
 			&& vOtherPos.y - vOtherScale.y * 0.5f < vPos.y + vScale.y * 0.5f)

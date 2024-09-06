@@ -4,10 +4,13 @@ CDiagonalHeadShotScript
 CDiagonalPistolScript
 CDoubleGunHawkScript
 CDummyScript
+CEffectScript
 CGunHawkExplodeScript
 CHammerScript
 CHeadShotEffectScript
 CHeadShotScript
+CHyungteoScript
+CIroncageScript
 CJackSpikeScript
 CMachKickScript
 CMeltKnightScript
@@ -23,3 +26,4 @@ CRisingShotScript
 CSeriaRoomGateScript
 CSeriaScript
 CWindmillScript
+LeshphonGateScript

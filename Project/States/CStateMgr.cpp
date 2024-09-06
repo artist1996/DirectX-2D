@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "CStateMgr.h"
 
+#include "CHyungteoEatState.h"
+#include "CHyungteoLookState.h"
 #include "CMeltKnightAttackState.h"
 #include "CMeltKnightDeadState.h"
 #include "CMeltKnightIdleState.h"
@@ -9,6 +11,8 @@
 
 void CStateMgr::GetStateInfo(vector<wstring>& _vec)
 {
+	_vec.push_back(L"CHyungteoEatState");
+	_vec.push_back(L"CHyungteoLookState");
 	_vec.push_back(L"CMeltKnightAttackState");
 	_vec.push_back(L"CMeltKnightDeadState");
 	_vec.push_back(L"CMeltKnightIdleState");
@@ -18,6 +22,10 @@ void CStateMgr::GetStateInfo(vector<wstring>& _vec)
 
 CState * CStateMgr::GetState(const wstring& _strStateName)
 {
+	if (L"CHyungteoEatState" == _strStateName)
+		return new CHyungteoEatState;
+	if (L"CHyungteoLookState" == _strStateName)
+		return new CHyungteoLookState;
 	if (L"CMeltKnightAttackState" == _strStateName)
 		return new CMeltKnightAttackState;
 	if (L"CMeltKnightDeadState" == _strStateName)
@@ -35,6 +43,12 @@ CState * CStateMgr::GetState(UINT _iStateType)
 {
 	switch (_iStateType)
 	{
+	case (UINT)STATE_TYPE::HYUNGTEOEATSTATE:
+		return new CHyungteoEatState;
+		break;
+	case (UINT)STATE_TYPE::HYUNGTEOLOOKSTATE:
+		return new CHyungteoLookState;
+		break;
 	case (UINT)STATE_TYPE::MELTKNIGHTATTACKSTATE:
 		return new CMeltKnightAttackState;
 		break;
@@ -58,6 +72,14 @@ const wchar_t * CStateMgr::GetStateName(CState * _pState)
 {
 	switch ((STATE_TYPE)_pState->GetStateType())
 	{
+	case STATE_TYPE::HYUNGTEOEATSTATE:
+		return L"CHyungteoEatState";
+		break;
+
+	case STATE_TYPE::HYUNGTEOLOOKSTATE:
+		return L"CHyungteoLookState";
+		break;
+
 	case STATE_TYPE::MELTKNIGHTATTACKSTATE:
 		return L"CMeltKnightAttackState";
 		break;

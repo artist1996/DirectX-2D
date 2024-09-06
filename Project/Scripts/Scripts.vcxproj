@@ -164,9 +164,12 @@ call CodeGen.exe</Command>
     <ClInclude Include="CDiagonalPistolScript.h" />
     <ClInclude Include="CDoubleGunHawkScript.h" />
     <ClInclude Include="CDummyScript.h" />
+    <ClInclude Include="CEffectScript.h" />
     <ClInclude Include="CHammerScript.h" />
     <ClInclude Include="CHeadShotScript.h" />
     <ClInclude Include="CHeadShotEffectScript.h" />
+    <ClInclude Include="CHyungteoScript.h" />
+    <ClInclude Include="CIroncageScript.h" />
     <ClInclude Include="CJackSpikeScript.h" />
     <ClInclude Include="CMachKickScript.h" />
     <ClInclude Include="CMeltKnightScript.h" />
@@ -185,6 +188,7 @@ call CodeGen.exe</Command>
     <ClInclude Include="CWindmillScript.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="CGunHawkExplodeScript.h" />
+    <ClInclude Include="LeshphonGateScript.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
@@ -194,9 +198,12 @@ call CodeGen.exe</Command>
     <ClCompile Include="CDiagonalPistolScript.cpp" />
     <ClCompile Include="CDoubleGunHawkScript.cpp" />
     <ClCompile Include="CDummyScript.cpp" />
+    <ClCompile Include="CEffectScript.cpp" />
     <ClCompile Include="CHammerScript.cpp" />
     <ClCompile Include="CHeadShotScript.cpp" />
     <ClCompile Include="CHeadShotEffectScript.cpp" />
+    <ClCompile Include="CHyungteoScript.cpp" />
+    <ClCompile Include="CIroncageScript.cpp" />
     <ClCompile Include="CJackSpikeScript.cpp" />
     <ClCompile Include="CMachKickScript.cpp" />
     <ClCompile Include="CMeltKnightScript.cpp" />
@@ -214,6 +221,7 @@ call CodeGen.exe</Command>
     <ClCompile Include="CSeriaScript.cpp" />
     <ClCompile Include="CWindmillScript.cpp" />
     <ClCompile Include="CGunHawkExplodeScript.cpp" />
+    <ClCompile Include="LeshphonGateScript.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

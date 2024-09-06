@@ -34,6 +34,8 @@ private:
 
     OBJ_ID               m_ID;
 
+    INFO                 m_Info;
+
 public:
     void AddComponent(CComponent* _Component);
     CComponent* GetComponent(COMPONENT_TYPE _Type) { return m_arrCom[(UINT)_Type]; }
@@ -51,6 +53,9 @@ public:
 
     void SetMoveable(PLATFORM_TYPE _Type, bool _Set) { m_Moveable[(UINT)_Type] = _Set; }
     bool* GetMoveable()                              { return m_Moveable; }
+   
+    void  SetInfo(INFO _Info) { m_Info = _Info; }
+    INFO& GetInfo()           { return m_Info; }
 
     void DisconnectWithLayer();
 

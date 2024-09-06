@@ -122,7 +122,7 @@ void CMeltKnightTraceState::FinalTick()
 
 
 	if (100.f > fabs(fDist) 
-		&& 20.f > fYDist)
+		&& 20.f > fabs(fYDist))
 	{
 		GetFSM()->ChangeState(L"Attack");
 	}

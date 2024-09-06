@@ -1,3 +1,5 @@
+CHyungteoEatState
+CHyungteoLookState
 CMeltKnightAttackState
 CMeltKnightDeadState
 CMeltKnightIdleState

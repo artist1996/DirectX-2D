@@ -42,31 +42,30 @@ void CTestLevel::CreateTestLevel()
 	CLevel* pLevel = CLevelSaveLoad::LoadLevel(strPath + L"level\\seria_room.lv");
 	CLevelMgr::GetInst()->AddLevel(pLevel);
 	
-	//hangeLevel(pLevel, STOP);
+	//ChangeLevel(pLevel, STOP);
 
 	
 	pLevel = CLevelSaveLoad::LoadLevel(strPath + L"level\\hendonmyer.lv");
 	CLevelMgr::GetInst()->AddLevel(pLevel);
-	//ChangeCurLevel(LEVEL_TYPE::HENDONMYER);
-	//ChangeCurLevel(LEVEL_TYPE::SERIAROOM);
 
 	pLevel = CLevelSaveLoad::LoadLevel(strPath + L"level\\leshphon1.lv");
 	CLevelMgr::GetInst()->AddLevel(pLevel);
-	ChangeCurLevel(LEVEL_TYPE::LESHPHON1);
-	CGameObject* pEntity = CObjectPoolMgr::GetInst()->GetObj(OBJ_ID::PLAYER);
-	pEntity->Transform()->SetRelativePos(Vec3(800.f, -50.f, 0.f));
-	pEntity->Transform()->SetRelativeRotation(Vec3(0.f, XM_PI, 0.f));
 
-	CreateObject(pEntity, 4);
+	pLevel = CLevelSaveLoad::LoadLevel(strPath + L"level\\leshphon2.lv");
+	CLevelMgr::GetInst()->AddLevel(pLevel);
+
+	//ChangeCurLevel(LEVEL_TYPE::LESHPHON1);
+	ChangeCurLevel(LEVEL_TYPE::LESHPHON2);
+	//ChangeCurLevel(LEVEL_TYPE::HENDONMYER);
+	//ChangeCurLevel(LEVEL_TYPE::SERIAROOM);
+	//CGameObject* pEntity = CObjectPoolMgr::GetInst()->GetObj(OBJ_ID::PLAYER);
+	//pEntity->Transform()->SetRelativePos(Vec3(800.f, -50.f, 0.f));
+	//pEntity->Transform()->SetRelativeRotation(Vec3(0.f, XM_PI, 0.f));
+	//
+	//CreateObject(pEntity, 4);
 	//CLevel* pNewLevel = new CLevel;
 	//ChangeLevel(pNewLevel, LEVEL_STATE::STOP);
-
-	//ChangeCurLevel(LEVEL_TYPE::SERIAROOM);
-	//ChangeLevel(pLevel, LEVEL_STATE::STOP);
-
-	//CLevel* pLevel = new CLevel;
-	//ChangeLevel(pLevel, LEVEL_STATE::STOP);
-
+	//
 	//CGameObject* CamObj = new CGameObject;
 	//CamObj->SetName(L"MainCamera");
 	//CamObj->AddComponent(new CTransform);
@@ -74,14 +73,14 @@ void CTestLevel::CreateTestLevel()
 	//CamObj->AddComponent(new CCameraMoveScript);
 	//
 	//CamObj->Camera()->SetPriority(0);
-	////
+	//
 	//CamObj->Camera()->SetLayerAll();
 	//CamObj->Camera()->SetLayer(31, false);
 	//CamObj->Camera()->SetFar(100000.f);
 	//CamObj->Camera()->SetProjType(PROJ_TYPE::ORTHOGRAPHIC);
-	//////CamObj->Camera()->SetProjType(PROJ_TYPE::PERSPECTIVE);
+	//CamObj->Camera()->SetProjType(PROJ_TYPE::PERSPECTIVE);
 	//pNewLevel->AddObject(0, CamObj);
-	////
+	//
 	//pLevel->GetLayer(0)->SetName(L"Default");
 	//pLevel->GetLayer(1)->SetName(L"Background");
 	//pLevel->GetLayer(2)->SetName(L"Tile");
@@ -90,6 +89,7 @@ void CTestLevel::CreateTestLevel()
 	//pLevel->GetLayer(5)->SetName(L"Movement");
 	//pLevel->GetLayer(6)->SetName(L"Monster");
 	//pLevel->GetLayer(7)->SetName(L"PlayerProjectile");
+	//pLevel->GetLayer(8)->SetName(L"Gate");
 	//
 	//// Light2D Object
 	//CGameObject* pLight2D = new CGameObject;

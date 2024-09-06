@@ -17,6 +17,8 @@ CObjectPoolMgr::~CObjectPoolMgr()
 	{
 		Delete_Vec(m_vecObjects[i]);
 	}
+
+	SAFE_DELETE(m_Player);
 }
 
 void CObjectPoolMgr::Init()

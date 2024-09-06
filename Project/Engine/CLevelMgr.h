@@ -20,6 +20,8 @@ public:
 	void LevelChanged();
 	bool IsLevelChanged() { return m_LevelChanged; }
 
+	bool CheckMonster();
+
 	CGameObject* GetPlayer();
 	CGameObject* GetPlayerJump();
 	CGameObject* GetPlayerMove();

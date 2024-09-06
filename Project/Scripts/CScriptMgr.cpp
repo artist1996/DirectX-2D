@@ -7,10 +7,13 @@
 #include "CDiagonalPistolScript.h"
 #include "CDoubleGunHawkScript.h"
 #include "CDummyScript.h"
+#include "CEffectScript.h"
 #include "CGunHawkExplodeScript.h"
 #include "CHammerScript.h"
 #include "CHeadShotEffectScript.h"
 #include "CHeadShotScript.h"
+#include "CHyungteoScript.h"
+#include "CIroncageScript.h"
 #include "CJackSpikeScript.h"
 #include "CMachKickScript.h"
 #include "CMeltKnightScript.h"
@@ -26,6 +29,7 @@
 #include "CSeriaRoomGateScript.h"
 #include "CSeriaScript.h"
 #include "CWindmillScript.h"
+#include "LeshphonGateScript.h"
 
 void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 {
@@ -35,10 +39,13 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CDiagonalPistolScript");
 	_vec.push_back(L"CDoubleGunHawkScript");
 	_vec.push_back(L"CDummyScript");
+	_vec.push_back(L"CEffectScript");
 	_vec.push_back(L"CGunHawkExplodeScript");
 	_vec.push_back(L"CHammerScript");
 	_vec.push_back(L"CHeadShotEffectScript");
 	_vec.push_back(L"CHeadShotScript");
+	_vec.push_back(L"CHyungteoScript");
+	_vec.push_back(L"CIroncageScript");
 	_vec.push_back(L"CJackSpikeScript");
 	_vec.push_back(L"CMachKickScript");
 	_vec.push_back(L"CMeltKnightScript");
@@ -54,6 +61,7 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CSeriaRoomGateScript");
 	_vec.push_back(L"CSeriaScript");
 	_vec.push_back(L"CWindmillScript");
+	_vec.push_back(L"LeshphonGateScript");
 }
 
 CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
@@ -70,6 +78,8 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CDoubleGunHawkScript;
 	if (L"CDummyScript" == _strScriptName)
 		return new CDummyScript;
+	if (L"CEffectScript" == _strScriptName)
+		return new CEffectScript;
 	if (L"CGunHawkExplodeScript" == _strScriptName)
 		return new CGunHawkExplodeScript;
 	if (L"CHammerScript" == _strScriptName)
@@ -78,6 +88,10 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CHeadShotEffectScript;
 	if (L"CHeadShotScript" == _strScriptName)
 		return new CHeadShotScript;
+	if (L"CHyungteoScript" == _strScriptName)
+		return new CHyungteoScript;
+	if (L"CIroncageScript" == _strScriptName)
+		return new CIroncageScript;
 	if (L"CJackSpikeScript" == _strScriptName)
 		return new CJackSpikeScript;
 	if (L"CMachKickScript" == _strScriptName)
@@ -108,6 +122,8 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CSeriaScript;
 	if (L"CWindmillScript" == _strScriptName)
 		return new CWindmillScript;
+	if (L"LeshphonGateScript" == _strScriptName)
+		return new LeshphonGateScript;
 	return nullptr;
 }
 
@@ -133,6 +149,9 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 	case (UINT)SCRIPT_TYPE::DUMMYSCRIPT:
 		return new CDummyScript;
 		break;
+	case (UINT)SCRIPT_TYPE::EFFECTSCRIPT:
+		return new CEffectScript;
+		break;
 	case (UINT)SCRIPT_TYPE::GUNHAWKEXPLODESCRIPT:
 		return new CGunHawkExplodeScript;
 		break;
@@ -144,6 +163,12 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 		break;
 	case (UINT)SCRIPT_TYPE::HEADSHOTSCRIPT:
 		return new CHeadShotScript;
+		break;
+	case (UINT)SCRIPT_TYPE::HYUNGTEOSCRIPT:
+		return new CHyungteoScript;
+		break;
+	case (UINT)SCRIPT_TYPE::IRONCAGESCRIPT:
+		return new CIroncageScript;
 		break;
 	case (UINT)SCRIPT_TYPE::JACKSPIKESCRIPT:
 		return new CJackSpikeScript;
@@ -190,6 +215,9 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 	case (UINT)SCRIPT_TYPE::WINDMILLSCRIPT:
 		return new CWindmillScript;
 		break;
+	case (UINT)SCRIPT_TYPE::ESHPHONGATESCRIPT:
+		return new LeshphonGateScript;
+		break;
 	}
 	return nullptr;
 }
@@ -222,6 +250,10 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 		return L"CDummyScript";
 		break;
 
+	case SCRIPT_TYPE::EFFECTSCRIPT:
+		return L"CEffectScript";
+		break;
+
 	case SCRIPT_TYPE::GUNHAWKEXPLODESCRIPT:
 		return L"CGunHawkExplodeScript";
 		break;
@@ -236,6 +268,14 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 
 	case SCRIPT_TYPE::HEADSHOTSCRIPT:
 		return L"CHeadShotScript";
+		break;
+
+	case SCRIPT_TYPE::HYUNGTEOSCRIPT:
+		return L"CHyungteoScript";
+		break;
+
+	case SCRIPT_TYPE::IRONCAGESCRIPT:
+		return L"CIroncageScript";
 		break;
 
 	case SCRIPT_TYPE::JACKSPIKESCRIPT:
@@ -296,6 +336,10 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 
 	case SCRIPT_TYPE::WINDMILLSCRIPT:
 		return L"CWindmillScript";
+		break;
+
+	case SCRIPT_TYPE::ESHPHONGATESCRIPT:
+		return L"LeshphonGateScript";
 		break;
 
 	}

@@ -1537,13 +1537,13 @@ void CPlayerScript::CreateDiagonalHeadShotEffect()
 
 	if (OBJ_DIR::DIR_LEFT == m_Dir)
 	{
-		pObject->Transform()->SetRelativePos(Vec3(vPos.x - 230.f, vPos.y - 50.f, 0.f));
+		pObject->Transform()->SetRelativePos(Vec3(vPos.x - 230.f, vPos.y - 50.f, -100000.f));
 		pObject->Transform()->SetRelativeRotation(Vec3(0.f, XM_PI, XM_PI * 2.15f));
 	}
 
 	else if (OBJ_DIR::DIR_RIGHT == m_Dir)
 	{
-		pObject->Transform()->SetRelativePos(Vec3(vPos.x + 250.f, vPos.y - 50.f, 0.f));
+		pObject->Transform()->SetRelativePos(Vec3(vPos.x + 250.f, vPos.y - 50.f, -100000.f));
 		pObject->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, XM_PI * 1.75f));
 	}
 

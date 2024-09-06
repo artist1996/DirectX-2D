@@ -83,6 +83,18 @@ void CLevelMgr::LevelChanged()
 	CTaskMgr::GetInst()->AddTask(tTask{ TASK_TYPE::LEVEL_CHANGED });
 }
 
+bool CLevelMgr::CheckMonster()
+{
+	CLayer* pLayer = m_CurLevel->GetLayer(6);
+
+	vector<CGameObject*> vecMonsters = pLayer->GetParentObjects();
+
+	if (vecMonsters.empty())
+		return true;
+
+	return false;
+}
+
 CGameObject* CLevelMgr::GetPlayer()
 {
 	CGameObject* pObject = FindObjectByName(L"Player");

@@ -5,8 +5,9 @@ class CDiagonalHeadShotScript :
     public CScript
 {
 private:
-    float   m_DestroyPos;
-    float   m_Speed;
+    Ptr<CPrefab> m_HitEffectPref;
+    float        m_DestroyPos;
+    float        m_Speed;
 
 public:
     virtual void Begin() override;
@@ -15,6 +16,9 @@ public:
 public:
     virtual void SaveToFile(FILE* _pFile)   override {}
     virtual void LoadFromFile(FILE* _pFile) override {}
+
+public:
+    virtual void BeginOverlap(CCollider2D* _OwnCollider, CGameObject* _OtherObj, CCollider2D* _OtherCollider) override;
 
 public:
     CLONE(CDiagonalHeadShotScript);

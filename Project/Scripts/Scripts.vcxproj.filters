@@ -115,6 +115,18 @@
     <Filter Include="Scripts\09. ParticleScript">
       <UniqueIdentifier>{42ab8cec-ec06-414f-94ce-5c0240819079}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scripts\10. EffectScript">
+      <UniqueIdentifier>{ee8691e5-2fcf-4054-b94c-c9b1c78cfed9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\07. MonsterScript\02. Hyungteo">
+      <UniqueIdentifier>{4df7c792-7170-43a3-9ecb-ab5076ee81c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\06. GateScript\02. LeshphonGate">
+      <UniqueIdentifier>{f3d785db-1e4d-4501-bc9c-e75f4d69c735}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\11. IronCageScript">
+      <UniqueIdentifier>{6bad0db4-4281-474f-b7d9-cf5c8b9829e7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -201,6 +213,18 @@
     <ClInclude Include="CParticleScript.h">
       <Filter>Scripts\09. ParticleScript</Filter>
     </ClInclude>
+    <ClInclude Include="CEffectScript.h">
+      <Filter>Scripts\10. EffectScript</Filter>
+    </ClInclude>
+    <ClInclude Include="CHyungteoScript.h">
+      <Filter>Scripts\07. MonsterScript\02. Hyungteo</Filter>
+    </ClInclude>
+    <ClInclude Include="LeshphonGateScript.h">
+      <Filter>Scripts\06. GateScript\02. LeshphonGate</Filter>
+    </ClInclude>
+    <ClInclude Include="CIroncageScript.h">
+      <Filter>Scripts\11. IronCageScript</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -286,6 +310,18 @@
     </ClCompile>
     <ClCompile Include="CParticleScript.cpp">
       <Filter>Scripts\09. ParticleScript</Filter>
+    </ClCompile>
+    <ClCompile Include="CEffectScript.cpp">
+      <Filter>Scripts\10. EffectScript</Filter>
+    </ClCompile>
+    <ClCompile Include="CHyungteoScript.cpp">
+      <Filter>Scripts\07. MonsterScript\02. Hyungteo</Filter>
+    </ClCompile>
+    <ClCompile Include="LeshphonGateScript.cpp">
+      <Filter>Scripts\06. GateScript\02. LeshphonGate</Filter>
+    </ClCompile>
+    <ClCompile Include="CIroncageScript.cpp">
+      <Filter>Scripts\11. IronCageScript</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

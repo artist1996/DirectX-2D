@@ -34,8 +34,26 @@
     <Filter Include="States\01. Monster\01. MeltKnight\05. Dead">
       <UniqueIdentifier>{1c9ff8a2-8fc6-4d1e-87b8-f750c52fabbb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="States\01. Monster\02. Divol">
+    <Filter Include="States\01. Monster\02. Hyungteo">
       <UniqueIdentifier>{d301de92-ead8-4906-8b71-5ce79505005c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="States\01. Monster\02. Hyungteo\01. Eat">
+      <UniqueIdentifier>{13a4b558-432f-4afd-af78-d7cc88fb2888}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="States\01. Monster\02. Hyungteo\02. Look">
+      <UniqueIdentifier>{94824e24-8d68-4fed-aa66-a3fccc0f40e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="States\01. Monster\02. Hyungteo\03. Idle">
+      <UniqueIdentifier>{e67d1c7f-1860-4573-ad86-9d0f6fa0b578}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="States\01. Monster\02. Hyungteo\04. Trace">
+      <UniqueIdentifier>{20161edf-0452-4b6b-ba79-aad9eff3ecb5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="States\01. Monster\02. Hyungteo\05. Attack">
+      <UniqueIdentifier>{7c0990d6-1664-4b4b-83f0-3ee1466b5ffa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="States\01. Monster\02. Hyungteo\06. Dead">
+      <UniqueIdentifier>{c893bb09-9530-4e4d-969b-27350318abe3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -63,6 +81,12 @@
     <ClInclude Include="CMeltKnightDeadState.h">
       <Filter>States\01. Monster\01. MeltKnight\05. Dead</Filter>
     </ClInclude>
+    <ClInclude Include="CHyungteoEatState.h">
+      <Filter>States\01. Monster\02. Hyungteo\01. Eat</Filter>
+    </ClInclude>
+    <ClInclude Include="CHyungteoLookState.h">
+      <Filter>States\01. Monster\02. Hyungteo\02. Look</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -88,6 +112,12 @@
     </ClCompile>
     <ClCompile Include="CMeltKnightDeadState.cpp">
       <Filter>States\01. Monster\01. MeltKnight\05. Dead</Filter>
+    </ClCompile>
+    <ClCompile Include="CHyungteoEatState.cpp">
+      <Filter>States\01. Monster\02. Hyungteo\01. Eat</Filter>
+    </ClCompile>
+    <ClCompile Include="CHyungteoLookState.cpp">
+      <Filter>States\01. Monster\02. Hyungteo\02. Look</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

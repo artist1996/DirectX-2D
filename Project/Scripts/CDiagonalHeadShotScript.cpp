@@ -3,6 +3,7 @@
 
 CDiagonalHeadShotScript::CDiagonalHeadShotScript()
 	: CScript(SCRIPT_TYPE::DIAGONALHEADSHOTSCRIPT)
+	, m_HitEffectPref(nullptr)
 	, m_Speed(700.f)
 	, m_DestroyPos(0.f)
 {
@@ -14,6 +15,7 @@ CDiagonalHeadShotScript::~CDiagonalHeadShotScript()
 
 void CDiagonalHeadShotScript::Begin()
 {
+	m_HitEffectPref = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\headshothiteffect.pref");
 	Animator2D()->Play(0, 10.f, true);
 
 	if (OBJ_DIR::DIR_LEFT == GetOwner()->GetDir())
@@ -49,4 +51,33 @@ void CDiagonalHeadShotScript::Tick()
 		DeleteObject(GetOwner());
 
 	Transform()->SetRelativePos(vPos);
+}
+
+void CDiagonalHeadShotScript::BeginOverlap(CCollider2D* _OwnCollider, CGameObject* _OtherObj, CCollider2D* _OtherCollider)
+{
+	if (6 == _OtherObj->GetLayerIdx())
+	{
+		Vec3 vPos = Transform()->GetWorldPos();
+		Vec3 vOtherPos = _OtherObj->Transform()->GetWorldPos();
+
+		if (50.f > fabs(vPos.z - vOtherPos.z))
+		{
+			CGameObject* pObject = m_HitEffectPref->Instantiate();
+
+			if (GetOwner()->GetDir() == OBJ_DIR::DIR_LEFT)
+			{
+				pObject->Transform()->SetRelativePos(Vec3(vOtherPos.x - 100.f, vOtherPos.y, vOtherPos.z - 50.f));
+				pObject->Transform()->SetRelativeRotation(Vec3(0.f, XM_PI, 0.f));
+
+			}
+			else if (GetOwner()->GetDir() == OBJ_DIR::DIR_RIGHT)
+			{
+				pObject->Transform()->SetRelativePos(Vec3(vOtherPos.x + 100.f, vOtherPos.y, vOtherPos.z - 50.f));
+				pObject->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, 0.f));
+			}
+
+			CreateObject(pObject, 0);
+			DeleteObject(GetOwner());
+		}
+	}
 }

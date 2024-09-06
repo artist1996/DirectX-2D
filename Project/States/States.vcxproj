@@ -158,6 +158,8 @@ call CodeGen.exe</Command>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CHyungteoEatState.h" />
+    <ClInclude Include="CHyungteoLookState.h" />
     <ClInclude Include="CMeltKnightAttackState.h" />
     <ClInclude Include="CMeltKnightDeadState.h" />
     <ClInclude Include="CMeltKnightIdleState.h" />
@@ -168,6 +170,8 @@ call CodeGen.exe</Command>
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CHyungteoEatState.cpp" />
+    <ClCompile Include="CHyungteoLookState.cpp" />
     <ClCompile Include="CMeltKnightAttackState.cpp" />
     <ClCompile Include="CMeltKnightDeadState.cpp" />
     <ClCompile Include="CMeltKnightIdleState.cpp" />
