@@ -58,11 +58,11 @@ void CTestLevel::CreateTestLevel()
 	ChangeCurLevel(LEVEL_TYPE::LESHPHON2);
 	//ChangeCurLevel(LEVEL_TYPE::HENDONMYER);
 	//ChangeCurLevel(LEVEL_TYPE::SERIAROOM);
-	//CGameObject* pEntity = CObjectPoolMgr::GetInst()->GetObj(OBJ_ID::PLAYER);
-	//pEntity->Transform()->SetRelativePos(Vec3(800.f, -50.f, 0.f));
-	//pEntity->Transform()->SetRelativeRotation(Vec3(0.f, XM_PI, 0.f));
-	//
-	//CreateObject(pEntity, 4);
+	CGameObject* pEntity = CObjectPoolMgr::GetInst()->GetObj(OBJ_ID::PLAYER);
+	pEntity->Transform()->SetRelativePos(Vec3(650.f, -50.f, 0.f));
+	pEntity->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, 0.f));
+	
+	CreateObject(pEntity, 4);
 	//CLevel* pNewLevel = new CLevel;
 	//ChangeLevel(pNewLevel, LEVEL_STATE::STOP);
 	//

@@ -61,6 +61,21 @@ void CDiagonalPistolScript::LoadFromFile(FILE* _pFile)
 
 void CDiagonalPistolScript::BeginOverlap(CCollider2D* _OwnCollider, CGameObject* _OtherObj, CCollider2D* _OtherCollider)
 {
+	if (6 == _OtherObj->GetLayerIdx())
+	{
+		Vec3 vPos = Transform()->GetWorldPos();
+		Vec3 vOtherPos = _OtherObj->Transform()->GetWorldPos();
+
+		float heightDiff = vPos.y - vOtherPos.y;
+
+		if (100.f > heightDiff && heightDiff > -20.f)
+		{
+			INFO& info = _OtherObj->GetInfo();
+
+			DeleteObject(GetOwner());
+			info.HP -= 10.f;
+		}
+	}
 }
 
 void CDiagonalPistolScript::Overlap(CCollider2D* _OwnCollider, CGameObject* _OtherObj, CCollider2D* _OtherCollider)

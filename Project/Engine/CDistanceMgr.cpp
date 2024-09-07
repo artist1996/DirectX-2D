@@ -40,6 +40,8 @@ bool CDistanceMgr::CalculateDistance()
 
 	Vec3 vPlayerPos = m_Player->Transform()->GetWorldPos();
 	
+	OBJ_DIR Dir = m_Player->GetDir();
+
 	for (size_t i = 0; i < vecMonsters.size(); ++i)
 	{
 		if (nullptr == vecMonsters[i])
@@ -47,9 +49,10 @@ bool CDistanceMgr::CalculateDistance()
 
 		Vec3 vMonsterPos = vecMonsters[i]->Transform()->GetWorldPos();
 
-		if (300.f > fabs(vPlayerPos.x - vMonsterPos.x)
-			&& 50.f < (vPlayerPos.y - vMonsterPos.y))
-		{
+		if (500.f > fabs(vPlayerPos.x - vMonsterPos.x)
+			&& 100.f > fabs(vPlayerPos.y - vMonsterPos.y)
+			&& 30.f < fabs(vPlayerPos.y - vMonsterPos.y))
+		{		
 			return true;
 		}
 	}

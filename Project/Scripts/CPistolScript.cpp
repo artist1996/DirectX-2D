@@ -47,9 +47,15 @@ void CPistolScript::Tick()
 
 void CPistolScript::BeginOverlap(CCollider2D* _OwnCollider, CGameObject* _OtherObj, CCollider2D* _OtherCollider)
 {
-	if (L"Monster" == _OtherObj->GetName())
+	if (6 == _OtherObj->GetLayerIdx())
 	{
-		DeleteObject(_OtherObj);
+		Vec3 vPos = Transform()->GetWorldPos();
+		Vec3 vOtherPos = _OtherObj->Transform()->GetWorldPos();
+
+		if (-30.f > vOtherPos.y - vPos.y || 30.f < vPos.y - vOtherPos.y)
+		{
+			DeleteObject(GetOwner());
+		}
 	}
 }
 

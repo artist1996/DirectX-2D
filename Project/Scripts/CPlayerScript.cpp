@@ -91,7 +91,7 @@ void CPlayerScript::Begin()
 
 	Animator2D()->Play((int)IDLE, 5.f, true);
 
-	Collider2D()->SetOffset(Vec3(0.f, -0.5f, 1.f));
+	//Collider2D()->SetOffset(Vec3(0.f, -0.5f, 1.f));
 
 	SetSpeed(350.f);
 }
@@ -190,6 +190,7 @@ void CPlayerScript::Tick()
 	SkillTimeCheck();
 	float JumpHeight = Rigidbody()->GetGravityVelocity().y;
 	Vec3 vColliderScale = Collider2D()->GetScale();
+
 	if (STATE::JUMP == m_State)
 	{
 		Transform()->SetRelativePos(Vec3(vPos.x, vPos.y, m_GroundPosY - vColliderScale.y * 0.5f));
@@ -215,9 +216,9 @@ void CPlayerScript::RunTimeCheck()
 void CPlayerScript::AddForce()
 {
 	if (OBJ_DIR::DIR_RIGHT == m_Dir)
-		Rigidbody()->AddForce(Vec3(-120000.f, 0.f, 0.f));
+		Rigidbody()->AddForce(Vec3(-90000.f, 0.f, 0.f));
 	else if (OBJ_DIR::DIR_LEFT == m_Dir)
-		Rigidbody()->AddForce(Vec3(120000.f, 0.f, 0.f));
+		Rigidbody()->AddForce(Vec3(90000.f, 0.f, 0.f));
 }
 
 bool CPlayerScript::GroundCheck(Vec3& _Pos)
@@ -240,7 +241,7 @@ void CPlayerScript::Idle(Vec3& _Pos)
 	Vec3 vOffset = Collider2D()->GetOffset();
 
 	Collider2D()->SetScale(Vec3(75.f, 136.f, 1.f));
-	Collider2D()->SetOffset(Vec3(-8.f, -48.f, 1.f));
+	Collider2D()->SetOffset(Vec3(-8.f, -76.f, 1.f));
 
 	if (KEY_TAP(KEY::LEFT))
 	{
@@ -719,7 +720,7 @@ void CPlayerScript::Landing()
 void CPlayerScript::Run(Vec3& _Pos)
 {
 	Collider2D()->SetScale(Vec3(75.f, 136.f, 1.f));
-	Collider2D()->SetOffset(Vec3(-8.f, -48.f, 1.f));
+	Collider2D()->SetOffset(Vec3(-8.f, -76.f, 1.f));
 
 	bool* bMoveable = GetOwner()->GetMoveable();
 
@@ -1604,16 +1605,12 @@ void CPlayerScript::CreateGunHawkFirst()
 	{
 		GunHawkUp->Transform()->SetRelativePos(Vec3(vPos.x + 50.f, vPos.y, vPos.z));
 		GunHawkDown->Transform()->SetRelativePos(Vec3(vPos.x + 50.f, vPos.y, vPos.z));
-		GunHawkUp->Transform()->SetRelativeRotation(Vec3(XM_PI / 1.5f, 0.f, 0.f));
-		GunHawkDown->Transform()->SetRelativeRotation(Vec3(XM_PI / 1.5f, 0.f, 0.f));
 	}
 
 	else if (OBJ_DIR::DIR_RIGHT == m_Dir)
 	{
 		GunHawkUp->Transform()->SetRelativePos(Vec3(vPos.x + 50.f, vPos.y, vPos.z));
 		GunHawkDown->Transform()->SetRelativePos(Vec3(vPos.x + 50.f, vPos.y, vPos.z));
-		GunHawkUp->Transform()->SetRelativeRotation(Vec3(XM_PI / 1.5f, 0.f, 0.f));
-		GunHawkDown->Transform()->SetRelativeRotation(Vec3(XM_PI / 1.5f, 0.f, 0.f));
 	}
 
 	GunHawkUp->SetDir(m_Dir);
@@ -1635,16 +1632,12 @@ void CPlayerScript::CreateGunHawkSecond()
 	{
 		GunHawkUp->Transform()->SetRelativePos(Vec3(vPos.x + 50.f, vPos.y, vPos.z));
 		GunHawkDown->Transform()->SetRelativePos(Vec3(vPos.x + 50.f, vPos.y, vPos.z));
-		GunHawkUp->Transform()->SetRelativeRotation(Vec3(XM_PI / 1.6f, 0.f, 0.f));
-		GunHawkDown->Transform()->SetRelativeRotation(Vec3(XM_PI / 1.6f, 0.f, 0.f));
 	}
 
 	else if (OBJ_DIR::DIR_RIGHT == m_Dir)
 	{
 		GunHawkUp->Transform()->SetRelativePos(Vec3(vPos.x + 50.f, vPos.y, vPos.z));
 		GunHawkDown->Transform()->SetRelativePos(Vec3(vPos.x + 50.f, vPos.y, vPos.z));
-		GunHawkUp->Transform()->SetRelativeRotation(Vec3(XM_PI / 1.55f, 0.f, 0.f));
-		GunHawkDown->Transform()->SetRelativeRotation(Vec3(XM_PI / 1.55f, 0.f, 0.f));
 	}
 
 	GunHawkUp->SetDir(m_Dir);

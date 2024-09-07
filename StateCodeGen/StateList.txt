@@ -1,5 +1,15 @@
+CHyungteoBuffEaterState
+CHyungteoDeadState
 CHyungteoEatState
+CHyungteoFallState
+CHyungteoFlyState
+CHyungteoHitState
+CHyungteoIdleState
 CHyungteoLookState
+CHyungteoPunchState
+CHyungteoStingState
+CHyungteoTraceState
+CHyungteoWakeUpState
 CMeltKnightAttackState
 CMeltKnightDeadState
 CMeltKnightIdleState

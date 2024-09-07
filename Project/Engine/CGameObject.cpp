@@ -13,6 +13,7 @@
 CGameObject::CGameObject()
 	: m_arrCom{}
 	, m_Owner(nullptr)
+	, m_Target(nullptr)
 	, m_RenderCom(nullptr)
 	, m_Parent(nullptr)
 	, m_LayerIdx(-1)	// 최초 생성 시 어느 레이어 소속도 아니다(레벨안에 있지 않은 상태)
@@ -22,6 +23,7 @@ CGameObject::CGameObject()
 	, m_TBDir(OBJ_DIR::END)
 	, m_PrevDir(OBJ_DIR::END)
 	, m_ID(OBJ_ID::END)
+	, m_Info{}
 {
 }
 
@@ -38,6 +40,8 @@ CGameObject::CGameObject(const CGameObject& _Origin)
 	, m_PrevDir(_Origin.m_PrevDir)
 	, m_ID(_Origin.m_ID)
 	, m_Owner(_Origin.m_Owner)
+	, m_Target(_Origin.m_Target)
+	, m_Info(_Origin.m_Info)
 {
 	// Component 복사
 	for (UINT i = 0; i < (UINT)COMPONENT_TYPE::END; ++i)

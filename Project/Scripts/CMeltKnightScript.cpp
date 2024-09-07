@@ -49,22 +49,24 @@ void CMeltKnightScript::Begin()
 
 void CMeltKnightScript::Tick()
 {
+	m_Info = GetOwner()->GetInfo();
+
 	if (0 >= m_Info.HP)
 		FSM()->ChangeState(L"Dead");
 }
 
 void CMeltKnightScript::BeginOverlap(CCollider2D* _OwnCollider, CGameObject* _OtherObj, CCollider2D* _OtherCollider)
 {
-	if (7 == _OtherObj->GetLayerIdx())
-	{
-		Vec3 vPos = Transform()->GetRelativePos();
-		Vec3 vOtherPos = _OtherObj->Transform()->GetRelativePos();
-
-		if(100.f > fabs(vPos.z - vOtherPos.z))
-			m_Info.HP -= 10;
-
-		GetOwner()->SetInfo(m_Info);
-	}
+	//if (7 == _OtherObj->GetLayerIdx())
+	//{
+	//	Vec3 vPos = Transform()->GetRelativePos();
+	//	Vec3 vOtherPos = _OtherObj->Transform()->GetRelativePos();
+	//
+	//	if(100.f > fabs(vPos.z - vOtherPos.z))
+	//		m_Info.HP -= 10;
+	//
+	//	GetOwner()->SetInfo(m_Info);
+	//}
 
 	if (3 == _OtherObj->GetLayerIdx())
 	{

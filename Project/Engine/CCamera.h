@@ -35,6 +35,9 @@ private:
     vector<CGameObject*> m_vecPostProcess;  // ÈÄÃ³¸®
     vector<CGameObject*> m_vecUI;           // UI
 
+    bool                 m_ZoomIn;
+    bool                 m_ZoomOut;
+
 public:
     void SetPriority(int _Priority) { m_Priority = _Priority; }
     void SetLayer(UINT _LayerIdx, bool _bCheck)
@@ -64,6 +67,9 @@ public:
     
     bool GetLayerCheck(int _LayerIdx) { return m_LayerCheck & (1 << _LayerIdx); }
 
+    void SetZoomIn(bool _Set) { m_ZoomIn = _Set; }
+    void SetZoomOut(bool _Set) { m_ZoomOut = _Set; }
+
 public:
     virtual void SaveToFile(FILE* _pFile) override;
     virtual void LoadFromFile(FILE* _pFile) override;
@@ -74,6 +80,8 @@ public:
 
 private:
     void SortGameObject();
+    void ZoomIn();
+    void ZoomOut();
 
 public:
     void Render();

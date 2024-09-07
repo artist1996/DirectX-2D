@@ -12,7 +12,9 @@ private:
     Vec2         m_BoundaryLT;
     float        m_BoundaryRightWidth;
     float        m_BoundaryBottomHeight;
-    
+
+    bool         m_TargetMove;
+  
 private:
     void OrthoGraphicMove();
     void PerspectiveMove();

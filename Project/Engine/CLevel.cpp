@@ -26,6 +26,8 @@ CLevel::CLevel()
 	m_Layer[5]->SetName(L"Movement");
 	m_Layer[6]->SetName(L"Monster");
 	m_Layer[7]->SetName(L"PlayerProjectile");
+	m_Layer[8]->SetName(L"MonsterProjectile");
+	m_Layer[9]->SetName(L"Gate");
 }
 
 CLevel::CLevel(const CLevel& _Origin)
@@ -83,7 +85,7 @@ void CLevel::FinalTick()
 
 void CLevel::Exit()
 {
-	if(nullptr != m_BGM)
+	if(L"leshphon1" != GetName())
 		m_BGM->Stop();
 }
 

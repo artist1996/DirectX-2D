@@ -168,7 +168,9 @@ call CodeGen.exe</Command>
     <ClInclude Include="CHammerScript.h" />
     <ClInclude Include="CHeadShotScript.h" />
     <ClInclude Include="CHeadShotEffectScript.h" />
+    <ClInclude Include="CHyungteoPunchScript.h" />
     <ClInclude Include="CHyungteoScript.h" />
+    <ClInclude Include="CHyungteoStingScript.h" />
     <ClInclude Include="CIroncageScript.h" />
     <ClInclude Include="CJackSpikeScript.h" />
     <ClInclude Include="CMachKickScript.h" />
@@ -202,7 +204,9 @@ call CodeGen.exe</Command>
     <ClCompile Include="CHammerScript.cpp" />
     <ClCompile Include="CHeadShotScript.cpp" />
     <ClCompile Include="CHeadShotEffectScript.cpp" />
+    <ClCompile Include="CHyungteoPunchScript.cpp" />
     <ClCompile Include="CHyungteoScript.cpp" />
+    <ClCompile Include="CHyungteoStingScript.cpp" />
     <ClCompile Include="CIroncageScript.cpp" />
     <ClCompile Include="CJackSpikeScript.cpp" />
     <ClCompile Include="CMachKickScript.cpp" />

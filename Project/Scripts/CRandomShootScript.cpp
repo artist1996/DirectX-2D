@@ -40,3 +40,13 @@ void CRandomShootScript::SaveToFile(FILE* _pFile)
 void CRandomShootScript::LoadFromFile(FILE* _pFile)
 {
 }
+
+void CRandomShootScript::BeginOverlap(CCollider2D* _OwnCollider, CGameObject* _OtherObj, CCollider2D* _OtherCollider)
+{
+	if (6 == _OtherObj->GetLayerIdx())
+	{
+		INFO& info = _OtherObj->GetInfo();
+
+		info.HP -= 10.f;
+	}
+}

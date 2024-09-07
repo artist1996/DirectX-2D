@@ -32,7 +32,12 @@ void LeshphonGateScript::BeginOverlap(CCollider2D* _OwnCollider, CGameObject* _O
 		case GATE_TYPE::LESHPHON1:
 		{
 			DisconnectObject(pPlayer);
+			
 			ChangeCurLevel(LEVEL_TYPE::LESHPHON2);
+			
+			pPlayer->Transform()->SetRelativePos(Vec3(650.f, -50.f, 0.f));
+			CreateObject(pPlayer, 4);
+			ChangeLevelState(LEVEL_STATE::PLAY);
 		}
 			break;
 		case GATE_TYPE::LESHPHON2:

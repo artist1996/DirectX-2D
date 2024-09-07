@@ -12,7 +12,9 @@
 #include "CHammerScript.h"
 #include "CHeadShotEffectScript.h"
 #include "CHeadShotScript.h"
+#include "CHyungteoPunchScript.h"
 #include "CHyungteoScript.h"
+#include "CHyungteoStingScript.h"
 #include "CIroncageScript.h"
 #include "CJackSpikeScript.h"
 #include "CMachKickScript.h"
@@ -44,7 +46,9 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CHammerScript");
 	_vec.push_back(L"CHeadShotEffectScript");
 	_vec.push_back(L"CHeadShotScript");
+	_vec.push_back(L"CHyungteoPunchScript");
 	_vec.push_back(L"CHyungteoScript");
+	_vec.push_back(L"CHyungteoStingScript");
 	_vec.push_back(L"CIroncageScript");
 	_vec.push_back(L"CJackSpikeScript");
 	_vec.push_back(L"CMachKickScript");
@@ -88,8 +92,12 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CHeadShotEffectScript;
 	if (L"CHeadShotScript" == _strScriptName)
 		return new CHeadShotScript;
+	if (L"CHyungteoPunchScript" == _strScriptName)
+		return new CHyungteoPunchScript;
 	if (L"CHyungteoScript" == _strScriptName)
 		return new CHyungteoScript;
+	if (L"CHyungteoStingScript" == _strScriptName)
+		return new CHyungteoStingScript;
 	if (L"CIroncageScript" == _strScriptName)
 		return new CIroncageScript;
 	if (L"CJackSpikeScript" == _strScriptName)
@@ -164,8 +172,14 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 	case (UINT)SCRIPT_TYPE::HEADSHOTSCRIPT:
 		return new CHeadShotScript;
 		break;
+	case (UINT)SCRIPT_TYPE::HYUNGTEOPUNCHSCRIPT:
+		return new CHyungteoPunchScript;
+		break;
 	case (UINT)SCRIPT_TYPE::HYUNGTEOSCRIPT:
 		return new CHyungteoScript;
+		break;
+	case (UINT)SCRIPT_TYPE::HYUNGTEOSTINGSCRIPT:
+		return new CHyungteoStingScript;
 		break;
 	case (UINT)SCRIPT_TYPE::IRONCAGESCRIPT:
 		return new CIroncageScript;
@@ -270,8 +284,16 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 		return L"CHeadShotScript";
 		break;
 
+	case SCRIPT_TYPE::HYUNGTEOPUNCHSCRIPT:
+		return L"CHyungteoPunchScript";
+		break;
+
 	case SCRIPT_TYPE::HYUNGTEOSCRIPT:
 		return L"CHyungteoScript";
+		break;
+
+	case SCRIPT_TYPE::HYUNGTEOSTINGSCRIPT:
+		return L"CHyungteoStingScript";
 		break;
 
 	case SCRIPT_TYPE::IRONCAGESCRIPT:

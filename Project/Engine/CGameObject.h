@@ -31,6 +31,7 @@ private:
     bool                 m_Moveable[(UINT)PLATFORM_TYPE::END];
 
     CGameObject*         m_Owner;
+    CGameObject*         m_Target;
 
     OBJ_ID               m_ID;
 
@@ -83,6 +84,9 @@ public:
 
     void SetOwner(CGameObject* _Owner) { m_Owner = _Owner; }
     CGameObject* GetOwner()            { return m_Owner; }
+
+    void SetTarget(CGameObject* _Target) { m_Target = _Target; }
+    CGameObject* GetTarget()             { return m_Target; }
 
     GET_COMPONENT(Transform, TRANSFORM);
     GET_COMPONENT(MeshRender, MESHRENDER);

@@ -27,6 +27,7 @@ VTX_OUT VS_Std2D(VTX_IN _in)
     // float 3 x float4x4(matrix)
     // float3 를 float4 로 차수를 맞추어준다.
     // 동차좌표를 1로 설정, 상태행렬 4행에 들어있는 이동을 적용받겠다는 뜻
+
     
     output.vPosition = mul(float4(_in.vPos, 1.f), matWVP);
     output.vColor    = _in.vColor;
@@ -129,7 +130,7 @@ float4 PS_Std2D_Alphablend(VTX_OUT _in) : SV_Target
             vColor = float4(1.f, 0.f, 1.f, 1.f);
         }
     }
-    
+        
     return vColor;
 }
 
@@ -210,9 +211,9 @@ float4 PS_Std2D_Additive(VTX_OUT _in) : SV_Target
         }
     }
     
-    vColor.r *= 2.f;
-    vColor.g *= 2.f;
-    vColor.b *= 2.f;
+   //vColor.r *= 2.f;
+   //vColor.g *= 2.f;
+   //vColor.b *= 2.f;
     
     return vColor;
 }

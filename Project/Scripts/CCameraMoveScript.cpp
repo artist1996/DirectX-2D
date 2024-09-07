@@ -11,6 +11,7 @@ CCameraMoveScript::CCameraMoveScript()
 	, m_CamSpeed(500.f)
 	, m_BoundaryRightWidth(0.f)
 	, m_BoundaryBottomHeight(0.f)
+	, m_TargetMove(false)
 {
 	AddScriptParam(SCRIPT_PARAM::VEC2, "Boundary LT", &m_BoundaryLT);
 	AddScriptParam(SCRIPT_PARAM::FLOAT, "Boundary R Width", &m_BoundaryRightWidth);
@@ -24,15 +25,21 @@ CCameraMoveScript::~CCameraMoveScript()
 void CCameraMoveScript::Begin()
 {
 	m_Target = CLevelMgr::GetInst()->FindObjectByName(L"Player");
+	GetOwner()->SetTarget(m_Target);
 
 	CLevel* pLevel = CLevelMgr::GetInst()->GetCurrentLevel();
 
 	if (L"leshphon1" == pLevel->GetName())
 		m_BoundaryLT = Vec2(223.f, 39.f);
+
+	else if (L"leshphon2" == pLevel->GetName())
+		m_BoundaryLT = Vec2(0.f, 40.f);
 }
 
 void CCameraMoveScript::Tick()
 {
+	m_Target = GetOwner()->GetTarget();
+	
 	if (PROJ_TYPE::ORTHOGRAPHIC == Camera()->GetProjType())
 	{
 		// 직교 투영 카메라 무브
@@ -63,46 +70,24 @@ void CCameraMoveScript::OrthoGraphicMove()
 {
 	float Speed = m_CamSpeed;
 
+	Vec3 vPos = m_Target->Transform()->GetWorldPos();
+
 	if (KEY_PRESSED(KEY::LSHIFT))
 		Speed *= 3.f;
 
-	//Transform()->SetRelativeRotation(Vec3(0.f, 0.f, 0.f));
-	Vec3 vPos = m_Target->Transform()->GetWorldPos();
-
-	//if (KEY_PRESSED(KEY::W))
-	//{
-	//	vPos.y += DT * Speed;
-	//}
-	//
-	//if (KEY_PRESSED(KEY::S))
-	//{
-	//	vPos.y -= DT * Speed;
-	//}
-	//
-	//if (KEY_PRESSED(KEY::A))
-	//{
-	//	vPos.x -= DT * Speed;
-	//}
-	//
-	//if (KEY_PRESSED(KEY::D))
-	//{
-	//	vPos.x += DT * Speed;
-	//}
-
 	if (vPos.x <= m_BoundaryLT.x)
 		vPos.x = m_BoundaryLT.x;
-	
+
 	if (vPos.y <= m_BoundaryLT.y)
 		vPos.y = m_BoundaryLT.y;
-
+	
 	if (vPos.x >= m_BoundaryRightWidth)
 		vPos.x = m_BoundaryRightWidth;
 	
-	if(vPos.y >= m_BoundaryBottomHeight)
+	if (vPos.y >= m_BoundaryBottomHeight)
 		vPos.y = m_BoundaryBottomHeight;
 
 	Transform()->SetRelativePos(vPos);
-	//Transform()->SetRelativePos(Vec3(0.f,0.f,1.f));
 }
 
 void CCameraMoveScript::PerspectiveMove()

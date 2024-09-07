@@ -59,25 +59,38 @@ void CDiagonalHeadShotScript::BeginOverlap(CCollider2D* _OwnCollider, CGameObjec
 	{
 		Vec3 vPos = Transform()->GetWorldPos();
 		Vec3 vOtherPos = _OtherObj->Transform()->GetWorldPos();
+		
+		//Vec3 vPos = Transform()->GetWorldPos();
+		//Vec3 vOtherPos = _OtherCollider->GetWorldMatrix().Translation();
 
-		if (50.f > fabs(vPos.z - vOtherPos.z))
+		float heightDiff = vPos.y - vOtherPos.y;
+		if (100.f > heightDiff && heightDiff > -20.f)
 		{
+			INFO& info = _OtherObj->GetInfo();
+			info.HP -= 10.f;
+
 			CGameObject* pObject = m_HitEffectPref->Instantiate();
 
 			if (GetOwner()->GetDir() == OBJ_DIR::DIR_LEFT)
 			{
-				pObject->Transform()->SetRelativePos(Vec3(vOtherPos.x - 100.f, vOtherPos.y, vOtherPos.z - 50.f));
+				pObject->Transform()->SetRelativePos(Vec3(vOtherPos.x - 150.f, vOtherPos.y, -10000.f));
 				pObject->Transform()->SetRelativeRotation(Vec3(0.f, XM_PI, 0.f));
 
 			}
 			else if (GetOwner()->GetDir() == OBJ_DIR::DIR_RIGHT)
 			{
-				pObject->Transform()->SetRelativePos(Vec3(vOtherPos.x + 100.f, vOtherPos.y, vOtherPos.z - 50.f));
+				pObject->Transform()->SetRelativePos(Vec3(vOtherPos.x + 150.f, vOtherPos.y, -10000.f));
 				pObject->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, 0.f));
 			}
 
 			CreateObject(pObject, 0);
 			DeleteObject(GetOwner());
+
+			if (L"hyungteo" == _OtherObj->GetName())
+			{
+				if (_OtherObj->Rigidbody()->IsGround())
+					_OtherObj->FSM()->ChangeState(L"Hit");
+			}
 		}
 	}
 }

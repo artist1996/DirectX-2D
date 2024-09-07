@@ -158,8 +158,18 @@ call CodeGen.exe</Command>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CHyungteoBuffEaterState.h" />
+    <ClInclude Include="CHyungteoDeadState.h" />
     <ClInclude Include="CHyungteoEatState.h" />
+    <ClInclude Include="CHyungteoFallState.h" />
+    <ClInclude Include="CHyungteoFlyState.h" />
+    <ClInclude Include="CHyungteoHitState.h" />
+    <ClInclude Include="CHyungteoIdleState.h" />
     <ClInclude Include="CHyungteoLookState.h" />
+    <ClInclude Include="CHyungteoPunchState.h" />
+    <ClInclude Include="CHyungteoStingState.h" />
+    <ClInclude Include="CHyungteoTraceState.h" />
+    <ClInclude Include="CHyungteoWakeUpState.h" />
     <ClInclude Include="CMeltKnightAttackState.h" />
     <ClInclude Include="CMeltKnightDeadState.h" />
     <ClInclude Include="CMeltKnightIdleState.h" />
@@ -170,8 +180,18 @@ call CodeGen.exe</Command>
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CHyungteoBuffEaterState.cpp" />
+    <ClCompile Include="CHyungteoDeadState.cpp" />
     <ClCompile Include="CHyungteoEatState.cpp" />
+    <ClCompile Include="CHyungteoFallState.cpp" />
+    <ClCompile Include="CHyungteoFlyState.cpp" />
+    <ClCompile Include="CHyungteoHitState.cpp" />
+    <ClCompile Include="CHyungteoIdleState.cpp" />
     <ClCompile Include="CHyungteoLookState.cpp" />
+    <ClCompile Include="CHyungteoPunchState.cpp" />
+    <ClCompile Include="CHyungteoStingState.cpp" />
+    <ClCompile Include="CHyungteoTraceState.cpp" />
+    <ClCompile Include="CHyungteoWakeUpState.cpp" />
     <ClCompile Include="CMeltKnightAttackState.cpp" />
     <ClCompile Include="CMeltKnightDeadState.cpp" />
     <ClCompile Include="CMeltKnightIdleState.cpp" />

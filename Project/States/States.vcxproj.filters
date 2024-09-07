@@ -52,8 +52,32 @@
     <Filter Include="States\01. Monster\02. Hyungteo\05. Attack">
       <UniqueIdentifier>{7c0990d6-1664-4b4b-83f0-3ee1466b5ffa}</UniqueIdentifier>
     </Filter>
-    <Filter Include="States\01. Monster\02. Hyungteo\06. Dead">
+    <Filter Include="States\01. Monster\02. Hyungteo\05. Attack\01. BuffEater">
+      <UniqueIdentifier>{4bb4f690-6d38-4746-b253-a0bcf3fdcc4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="States\01. Monster\02. Hyungteo\05. Attack\02. Punch">
+      <UniqueIdentifier>{4f46072c-ba22-4dbb-b1d4-5a93502127a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="States\01. Monster\02. Hyungteo\05. Attack\03. Sting">
+      <UniqueIdentifier>{aa14cf7b-45d3-40f4-a3d5-f4726e342ad7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="States\01. Monster\02. Hyungteo\06. Hit">
+      <UniqueIdentifier>{347e8980-78ac-45a8-bc1e-e10a1b1c592b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="States\01. Monster\02. Hyungteo\07. Fly">
+      <UniqueIdentifier>{d58c2798-1322-45a5-b369-298b93246b43}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="States\01. Monster\02. Hyungteo\08. WakeUp">
+      <UniqueIdentifier>{d9cc31fe-9aad-456e-8a3e-3a39f606e3cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="States\01. Monster\02. Hyungteo\06. Hit\01. GroundHit">
+      <UniqueIdentifier>{1fa4ceff-6ead-4c79-adbc-70d664525529}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="States\01. Monster\02. Hyungteo\10. Dead">
       <UniqueIdentifier>{c893bb09-9530-4e4d-969b-27350318abe3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="States\01. Monster\02. Hyungteo\09. Fall">
+      <UniqueIdentifier>{a12fbad9-111e-4293-89cd-c9b2154deae9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -87,6 +111,36 @@
     <ClInclude Include="CHyungteoLookState.h">
       <Filter>States\01. Monster\02. Hyungteo\02. Look</Filter>
     </ClInclude>
+    <ClInclude Include="CHyungteoIdleState.h">
+      <Filter>States\01. Monster\02. Hyungteo\03. Idle</Filter>
+    </ClInclude>
+    <ClInclude Include="CHyungteoTraceState.h">
+      <Filter>States\01. Monster\02. Hyungteo\04. Trace</Filter>
+    </ClInclude>
+    <ClInclude Include="CHyungteoPunchState.h">
+      <Filter>States\01. Monster\02. Hyungteo\05. Attack\02. Punch</Filter>
+    </ClInclude>
+    <ClInclude Include="CHyungteoStingState.h">
+      <Filter>States\01. Monster\02. Hyungteo\05. Attack\03. Sting</Filter>
+    </ClInclude>
+    <ClInclude Include="CHyungteoBuffEaterState.h">
+      <Filter>States\01. Monster\02. Hyungteo\05. Attack\01. BuffEater</Filter>
+    </ClInclude>
+    <ClInclude Include="CHyungteoWakeUpState.h">
+      <Filter>States\01. Monster\02. Hyungteo\08. WakeUp</Filter>
+    </ClInclude>
+    <ClInclude Include="CHyungteoFlyState.h">
+      <Filter>States\01. Monster\02. Hyungteo\07. Fly</Filter>
+    </ClInclude>
+    <ClInclude Include="CHyungteoHitState.h">
+      <Filter>States\01. Monster\02. Hyungteo\06. Hit\01. GroundHit</Filter>
+    </ClInclude>
+    <ClInclude Include="CHyungteoFallState.h">
+      <Filter>States\01. Monster\02. Hyungteo\09. Fall</Filter>
+    </ClInclude>
+    <ClInclude Include="CHyungteoDeadState.h">
+      <Filter>States\01. Monster\02. Hyungteo\10. Dead</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -118,6 +172,36 @@
     </ClCompile>
     <ClCompile Include="CHyungteoLookState.cpp">
       <Filter>States\01. Monster\02. Hyungteo\02. Look</Filter>
+    </ClCompile>
+    <ClCompile Include="CHyungteoIdleState.cpp">
+      <Filter>States\01. Monster\02. Hyungteo\03. Idle</Filter>
+    </ClCompile>
+    <ClCompile Include="CHyungteoTraceState.cpp">
+      <Filter>States\01. Monster\02. Hyungteo\04. Trace</Filter>
+    </ClCompile>
+    <ClCompile Include="CHyungteoPunchState.cpp">
+      <Filter>States\01. Monster\02. Hyungteo\05. Attack\02. Punch</Filter>
+    </ClCompile>
+    <ClCompile Include="CHyungteoStingState.cpp">
+      <Filter>States\01. Monster\02. Hyungteo\05. Attack\03. Sting</Filter>
+    </ClCompile>
+    <ClCompile Include="CHyungteoBuffEaterState.cpp">
+      <Filter>States\01. Monster\02. Hyungteo\05. Attack\01. BuffEater</Filter>
+    </ClCompile>
+    <ClCompile Include="CHyungteoWakeUpState.cpp">
+      <Filter>States\01. Monster\02. Hyungteo\08. WakeUp</Filter>
+    </ClCompile>
+    <ClCompile Include="CHyungteoFlyState.cpp">
+      <Filter>States\01. Monster\02. Hyungteo\07. Fly</Filter>
+    </ClCompile>
+    <ClCompile Include="CHyungteoHitState.cpp">
+      <Filter>States\01. Monster\02. Hyungteo\06. Hit\01. GroundHit</Filter>
+    </ClCompile>
+    <ClCompile Include="CHyungteoFallState.cpp">
+      <Filter>States\01. Monster\02. Hyungteo\09. Fall</Filter>
+    </ClCompile>
+    <ClCompile Include="CHyungteoDeadState.cpp">
+      <Filter>States\01. Monster\02. Hyungteo\10. Dead</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

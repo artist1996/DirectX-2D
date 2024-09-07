@@ -6,6 +6,7 @@ class CHyungteoEatState :
 {
 private:
     float m_Time;
+    bool  m_CamMove;
 
 public:
     virtual void Enter() override;

@@ -40,3 +40,37 @@ void CRisingShotScript::Tick()
 
 	Transform()->SetRelativePos(vPos);
 }
+
+void CRisingShotScript::BeginOverlap(CCollider2D* _OwnCollider, CGameObject* _OtherObj, CCollider2D* _OtherCollider)
+{
+	if (L"hyungteo" == _OtherObj->GetName())
+	{
+		Vec3 vPos = Transform()->GetWorldPos();
+		Vec3 vOtherPos = _OtherObj->Transform()->GetWorldPos();
+
+		Vec3 vDist = vOtherPos - vPos;
+
+		if (100.f > fabs(vDist.z)
+			&& 20.f < fabs(vDist.z))
+		{
+			CRigidbody* pRB = _OtherObj->Rigidbody();
+
+			if (pRB->IsGround())
+			{
+				pRB->Rigidbody()->SetMaxGravitySpeed(800.f);
+				pRB->Rigidbody()->SetJumpSpeed(700.f);
+			}
+
+			else
+			{
+				pRB->SetGround(true);
+				pRB->Rigidbody()->SetGravityVelocity(Vec3(0.f, 0.f, 0.f));
+				pRB->Rigidbody()->SetMaxGravitySpeed(600.f);
+				pRB->Rigidbody()->SetJumpSpeed(600.f);
+				pRB->Jump();
+			}
+
+			_OtherObj->FSM()->ChangeState(L"Fly");
+		}
+	}
+}

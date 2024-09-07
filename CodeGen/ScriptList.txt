@@ -9,7 +9,9 @@ CGunHawkExplodeScript
 CHammerScript
 CHeadShotEffectScript
 CHeadShotScript
+CHyungteoPunchScript
 CHyungteoScript
+CHyungteoStingScript
 CIroncageScript
 CJackSpikeScript
 CMachKickScript

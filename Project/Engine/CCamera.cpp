@@ -27,6 +27,8 @@ CCamera::CCamera()
 	, m_FOV(XM_PI / 2.f)
 	, m_ProjectionScale(1.f)
 	, m_AspectRatio(0.f)
+	, m_ZoomIn(false)
+	, m_ZoomOut(false)
 {
 	Vec2 vResolution = CDevice::GetInst()->GetResolution();
 	m_Width = vResolution.x;
@@ -70,6 +72,16 @@ void CCamera::FinalTick()
 	matRot._31 = vR.z; matRot._32 = vU.z; matRot._33 = vF.z;
 
 	m_matView = matTrans * matRot;
+
+	if (m_ZoomIn)
+	{
+		ZoomIn();
+	}
+
+	else if (m_ZoomOut)
+	{
+		ZoomOut();
+	}
 	
 	// Projection Space Åõ¿µ ÁÂÇ¥°è(NDC)
 	if (PROJ_TYPE::ORTHOGRAPHIC == m_ProjType)
@@ -139,6 +151,28 @@ void CCamera::SortGameObject()
 				break;
 			}
 		}
+	}
+}
+
+void CCamera::ZoomIn()
+{
+	m_ProjectionScale -= DT;
+	
+	if (0.5f > m_ProjectionScale)
+	{
+		m_ProjectionScale = 0.5f;
+		m_ZoomIn = false;
+	}
+}
+
+void CCamera::ZoomOut()
+{
+	m_ProjectionScale += DT * 2.f;
+
+	if (1.f < m_ProjectionScale)
+	{
+		m_ProjectionScale = 1.f;
+		m_ZoomOut = false;
 	}
 }
 

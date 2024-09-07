@@ -16,6 +16,9 @@ public:
     virtual void LoadFromFile(FILE* _pFile) override {}
 
 public:
+    virtual void BeginOverlap(CCollider2D* _OwnCollider, CGameObject* _OtherObj, CCollider2D* _OtherCollider) override;
+
+public:
     CLONE(CJackSpikeScript);
     CJackSpikeScript();
     virtual ~CJackSpikeScript();

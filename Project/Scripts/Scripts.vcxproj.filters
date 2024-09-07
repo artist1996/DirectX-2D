@@ -127,6 +127,18 @@
     <Filter Include="Scripts\11. IronCageScript">
       <UniqueIdentifier>{6bad0db4-4281-474f-b7d9-cf5c8b9829e7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scripts\07. MonsterScript\02. Hyungteo\01. Entity">
+      <UniqueIdentifier>{238a1c98-775d-4aac-9bcb-1d4ddd28b07b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\07. MonsterScript\02. Hyungteo\02. Punch">
+      <UniqueIdentifier>{93b2082d-d27a-416d-803d-1387f650b111}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\07. MonsterScript\02. Hyungteo\03. Sting">
+      <UniqueIdentifier>{ab580214-ede8-40e1-972e-fd17d4983f6e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\07. MonsterScript\02. Hyungteo\04. BuffEater">
+      <UniqueIdentifier>{b65c4907-305f-4b7d-a761-315443bae7ff}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -216,14 +228,20 @@
     <ClInclude Include="CEffectScript.h">
       <Filter>Scripts\10. EffectScript</Filter>
     </ClInclude>
-    <ClInclude Include="CHyungteoScript.h">
-      <Filter>Scripts\07. MonsterScript\02. Hyungteo</Filter>
-    </ClInclude>
     <ClInclude Include="LeshphonGateScript.h">
       <Filter>Scripts\06. GateScript\02. LeshphonGate</Filter>
     </ClInclude>
     <ClInclude Include="CIroncageScript.h">
       <Filter>Scripts\11. IronCageScript</Filter>
+    </ClInclude>
+    <ClInclude Include="CHyungteoScript.h">
+      <Filter>Scripts\07. MonsterScript\02. Hyungteo\01. Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="CHyungteoPunchScript.h">
+      <Filter>Scripts\07. MonsterScript\02. Hyungteo\02. Punch</Filter>
+    </ClInclude>
+    <ClInclude Include="CHyungteoStingScript.h">
+      <Filter>Scripts\07. MonsterScript\02. Hyungteo\03. Sting</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -314,14 +332,20 @@
     <ClCompile Include="CEffectScript.cpp">
       <Filter>Scripts\10. EffectScript</Filter>
     </ClCompile>
-    <ClCompile Include="CHyungteoScript.cpp">
-      <Filter>Scripts\07. MonsterScript\02. Hyungteo</Filter>
-    </ClCompile>
     <ClCompile Include="LeshphonGateScript.cpp">
       <Filter>Scripts\06. GateScript\02. LeshphonGate</Filter>
     </ClCompile>
     <ClCompile Include="CIroncageScript.cpp">
       <Filter>Scripts\11. IronCageScript</Filter>
+    </ClCompile>
+    <ClCompile Include="CHyungteoScript.cpp">
+      <Filter>Scripts\07. MonsterScript\02. Hyungteo\01. Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="CHyungteoPunchScript.cpp">
+      <Filter>Scripts\07. MonsterScript\02. Hyungteo\02. Punch</Filter>
+    </ClCompile>
+    <ClCompile Include="CHyungteoStingScript.cpp">
+      <Filter>Scripts\07. MonsterScript\02. Hyungteo\03. Sting</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
