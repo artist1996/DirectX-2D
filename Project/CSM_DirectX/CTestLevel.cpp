@@ -47,19 +47,23 @@ void CTestLevel::CreateTestLevel()
 	
 	pLevel = CLevelSaveLoad::LoadLevel(strPath + L"level\\hendonmyer.lv");
 	CLevelMgr::GetInst()->AddLevel(pLevel);
-
+	
 	pLevel = CLevelSaveLoad::LoadLevel(strPath + L"level\\leshphon1.lv");
 	CLevelMgr::GetInst()->AddLevel(pLevel);
-
+	
 	pLevel = CLevelSaveLoad::LoadLevel(strPath + L"level\\leshphon2.lv");
 	CLevelMgr::GetInst()->AddLevel(pLevel);
 
+	pLevel = CLevelSaveLoad::LoadLevel(strPath + L"level\\leshphon3.lv");
+	CLevelMgr::GetInst()->AddLevel(pLevel);
+
 	//ChangeCurLevel(LEVEL_TYPE::LESHPHON1);
-	ChangeCurLevel(LEVEL_TYPE::LESHPHON2);
+	//ChangeCurLevel(LEVEL_TYPE::LESHPHON2);
+	ChangeCurLevel(LEVEL_TYPE::LESHPHON3);
 	//ChangeCurLevel(LEVEL_TYPE::HENDONMYER);
 	//ChangeCurLevel(LEVEL_TYPE::SERIAROOM);
 	CGameObject* pEntity = CObjectPoolMgr::GetInst()->GetObj(OBJ_ID::PLAYER);
-	pEntity->Transform()->SetRelativePos(Vec3(650.f, -50.f, 0.f));
+	pEntity->Transform()->SetRelativePos(Vec3(650.f, 0.f, 0.f));
 	pEntity->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, 0.f));
 	
 	CreateObject(pEntity, 4);

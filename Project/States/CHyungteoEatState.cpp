@@ -23,11 +23,6 @@ void CHyungteoEatState::Enter()
 void CHyungteoEatState::FinalTick()
 {
 	m_Time += DT;
-	Vec3 vPos = GetOwner()->Transform()->GetWorldPos();
-	Vec3 vColScale = GetOwner()->Collider2D()->GetScale();
-	Vec3 vScale = GetOwner()->Transform()->GetWorldScale();
-
-	Vec3 vFinalScale = vScale * vColScale;
 
 	if (1.5f < m_Time && m_CamMove)
 	{
@@ -40,9 +35,6 @@ void CHyungteoEatState::FinalTick()
 	{
 		GetFSM()->ChangeState(L"Look");
 	}
-
-	vPos.z = vPos.y - vFinalScale.y * 0.5f;
-	GetOwner()->Transform()->SetRelativePos(vPos);
 }
 
 void CHyungteoEatState::Exit()

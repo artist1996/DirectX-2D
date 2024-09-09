@@ -17,7 +17,7 @@ void CHeadShotScript::Begin()
 	m_HitEffectPref = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\headshothiteffect.pref");
 
 	Animator2D()->Play(0, 10.f, true);
-	Collider2D()->SetActive(true);
+	Collider2D()->SetRender(true);
 
 	if (OBJ_DIR::DIR_LEFT == GetOwner()->GetDir())
 		Transform()->SetRelativeRotation(Vec3(0.f, XM_PI, 0.f));
@@ -25,55 +25,61 @@ void CHeadShotScript::Begin()
 
 void CHeadShotScript::Tick()
 {
-	Vec3 vPos = Transform()->GetRelativePos();
-	OBJ_DIR Dir = GetOwner()->GetDir();
+	Vec3 vPos = GetOwner()->GetParent()->Transform()->GetRelativePos();
+	Vec3 vInitPos = GetOwner()->GetParent()->GetInitPos();
 
-	switch (Dir)
+	switch (GetOwner()->GetParent()->GetDir())
 	{
 	case OBJ_DIR::DIR_LEFT:
-		vPos += Vec3(-1.f, 0.f,0.f) * 1000.f * DT;
+		vPos.x -= 1000.f * DT;
 		break;
+
 	case OBJ_DIR::DIR_RIGHT:
-		vPos += Vec3(1.f, 0.f, 0.f) * 1000.f * DT;
+		vPos.x += 1000.f * DT;
 		break;
 	}
 
-	if (800.f < fabs(GetOwner()->GetInitPos().x - vPos.x))
+	if (650.f < fabs(vPos.x - vInitPos.x))
 	{
-		DisconnectObject(GetOwner());
+		DisconnectObject(GetOwner()->GetParent());
 	}
 
-	Transform()->SetRelativePos(vPos);
+
+	GetOwner()->GetParent()->Transform()->SetRelativePos(vPos);
 }
 
 void CHeadShotScript::BeginOverlap(CCollider2D* _OwnCollider, CGameObject* _OtherObj, CCollider2D* _OtherCollider)
 {
-	if (6 == _OtherObj->GetLayerIdx())
+	if (6 == _OtherObj->GetLayerIdx() || L"Platform" == _OtherObj->GetName())
 	{
 		Vec3 vPos = Transform()->GetWorldPos();
 		Vec3 vOtherPos = _OtherObj->Transform()->GetWorldPos();
 
-		if (-30.f > vOtherPos.y - vPos.y && 30.f < vPos.y - vOtherPos.y)
+		if (GetOwner()->GetParent()->GetGroundCollision())
 		{
 			CGameObject* pObject = m_HitEffectPref->Instantiate();
 
-			if (GetOwner()->GetDir() == OBJ_DIR::DIR_LEFT)
+			if (GetOwner()->GetParent()->GetDir() == OBJ_DIR::DIR_LEFT)
 			{
 				pObject->Transform()->SetRelativePos(Vec3(vOtherPos.x - 150.f, vOtherPos.y, vOtherPos.z - 50.f));
 				pObject->Transform()->SetRelativeRotation(Vec3(0.f, XM_PI, 0.f));
 			}
-			else if (GetOwner()->GetDir() == OBJ_DIR::DIR_RIGHT)
+			else if (GetOwner()->GetParent()->GetDir() == OBJ_DIR::DIR_RIGHT)
 			{
 				pObject->Transform()->SetRelativePos(Vec3(vOtherPos.x + 150.f, vOtherPos.y, vOtherPos.z - 50.f));
 				pObject->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, 0.f));
 			}
 			CreateObject(pObject, 0);
-			DisconnectObject(GetOwner());
+			DisconnectObject(GetOwner()->GetParent());
 
 			if (L"hyungteo" == _OtherObj->GetName())
 			{
 				if(_OtherObj->Rigidbody()->IsGround())
 					_OtherObj->FSM()->ChangeState(L"Hit");
+			}
+			else if (L"juris" == _OtherObj->GetName())
+			{
+				_OtherObj->FSM()->ChangeState(L"Hit");
 			}
 		}
 	}

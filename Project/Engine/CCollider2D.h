@@ -10,6 +10,7 @@ private:
     int     m_OverlapCount;
 
     bool    m_IndependentScale; // 오브젝트의 크기에 영향을 받을지 여부
+    bool    m_bRender;
     bool    m_bActive;
     
 public:
@@ -30,6 +31,7 @@ public:
 
     bool IsIndependentScale() { return m_IndependentScale; }
 
+    void SetRender(bool _Set) { m_bRender = _Set; }
     void SetActive(bool _Set) { m_bActive = _Set; }
 
 public:

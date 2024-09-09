@@ -139,6 +139,12 @@
     <Filter Include="Scripts\07. MonsterScript\02. Hyungteo\04. BuffEater">
       <UniqueIdentifier>{b65c4907-305f-4b7d-a761-315443bae7ff}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scripts\07. MonsterScript\03. Juris">
+      <UniqueIdentifier>{0edb668c-ea20-4085-9e4f-3bc29efcdc08}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\02. PlayerSkillScript\00. Ground">
+      <UniqueIdentifier>{73eaa73c-96df-48d5-b45b-d286e2b31046}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -243,6 +249,12 @@
     <ClInclude Include="CHyungteoStingScript.h">
       <Filter>Scripts\07. MonsterScript\02. Hyungteo\03. Sting</Filter>
     </ClInclude>
+    <ClInclude Include="CJurisScript.h">
+      <Filter>Scripts\07. MonsterScript\03. Juris</Filter>
+    </ClInclude>
+    <ClInclude Include="CSkillGroundScript.h">
+      <Filter>Scripts\02. PlayerSkillScript\00. Ground</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -346,6 +358,12 @@
     </ClCompile>
     <ClCompile Include="CHyungteoStingScript.cpp">
       <Filter>Scripts\07. MonsterScript\02. Hyungteo\03. Sting</Filter>
+    </ClCompile>
+    <ClCompile Include="CJurisScript.cpp">
+      <Filter>Scripts\07. MonsterScript\03. Juris</Filter>
+    </ClCompile>
+    <ClCompile Include="CSkillGroundScript.cpp">
+      <Filter>Scripts\02. PlayerSkillScript\00. Ground</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

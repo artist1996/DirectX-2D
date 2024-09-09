@@ -55,6 +55,7 @@ private:
 public:
 	void Init();
 	void Tick();
+	void Render();
 
 public:
 	KEY_STATE GetKeyState(KEY _Key) { return m_vecKeyInfo[(UINT)_Key].eKeyState; }

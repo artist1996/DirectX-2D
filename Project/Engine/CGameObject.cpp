@@ -24,6 +24,7 @@ CGameObject::CGameObject()
 	, m_PrevDir(OBJ_DIR::END)
 	, m_ID(OBJ_ID::END)
 	, m_Info{}
+	, m_GroundCollision(false)
 {
 }
 
@@ -42,6 +43,7 @@ CGameObject::CGameObject(const CGameObject& _Origin)
 	, m_Owner(_Origin.m_Owner)
 	, m_Target(_Origin.m_Target)
 	, m_Info(_Origin.m_Info)
+	, m_GroundCollision(false)
 {
 	// Component บนป็
 	for (UINT i = 0; i < (UINT)COMPONENT_TYPE::END; ++i)

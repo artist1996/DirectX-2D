@@ -37,8 +37,8 @@ void CFSM::AddState(const wstring& _strName, CState* _State)
 
 void CFSM::ChangeState(const wstring& _strName)
 {
-	if (m_CurState && (_strName == m_CurState->GetName()))
-		return;
+	//if (m_CurState && (_strName == m_CurState->GetName()))
+	//	return;
 
 	if (nullptr != m_CurState)
 		m_CurState->Exit();

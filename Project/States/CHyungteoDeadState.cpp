@@ -18,6 +18,8 @@ void CHyungteoDeadState::Enter()
 
 void CHyungteoDeadState::FinalTick()
 {
+	if (GetOwner()->Animator2D()->IsFinish())
+		DeleteObject(GetOwner()->GetParent());
 }
 
 void CHyungteoDeadState::Exit()

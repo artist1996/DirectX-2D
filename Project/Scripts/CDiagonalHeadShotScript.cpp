@@ -27,69 +27,65 @@ void CDiagonalHeadShotScript::Begin()
 	{
 		Transform()->SetRelativeRotation(Vec3(0.f, 0.f, XM_PI * 1.75f));
 	}
-
-	m_DestroyPos = GetOwner()->GetOwner()->Collider2D()->GetWorldPos().y - GetOwner()->GetOwner()->Collider2D()->GetScale().y * 0.5f;
 }
 
 void CDiagonalHeadShotScript::Tick()
 {
 	Vec3 vPos = Transform()->GetRelativePos();
+	Vec3 vParentPos = GetOwner()->GetParent()->Transform()->GetRelativePos();
 
-	switch (GetOwner()->GetDir())
+	switch (GetOwner()->GetParent()->GetDir())
 	{
 	case OBJ_DIR::DIR_LEFT:
-		vPos.x -= m_Speed * DT;
-		vPos.y -= 400.f * DT;
+		vParentPos += Vec3(-1.f, 0.f, 0.f) * 1000.f * DT;
+		vPos.y -= 500.f * DT;
 		break;
 	case OBJ_DIR::DIR_RIGHT:
-		vPos.x += m_Speed * DT;
-		vPos.y -= 400.f * DT;
+		vParentPos += Vec3(1.f, 0.f, 0.f) * 1000.f * DT;
+		vPos.y -= 500.f * DT;
 		break;
 	}
 
-	if (vPos.y <= m_DestroyPos)
-		DeleteObject(GetOwner());
+	if (vPos.y < 0.f)
+		DeleteObject(GetOwner()->GetParent());
 
 	Transform()->SetRelativePos(vPos);
+	GetOwner()->GetParent()->Transform()->SetRelativePos(vParentPos);
 }
 
 void CDiagonalHeadShotScript::BeginOverlap(CCollider2D* _OwnCollider, CGameObject* _OtherObj, CCollider2D* _OtherCollider)
 {
-	if (6 == _OtherObj->GetLayerIdx())
+	if (6 == _OtherObj->GetLayerIdx() || L"Platform" == _OtherObj->GetName())
 	{
 		Vec3 vPos = Transform()->GetWorldPos();
 		Vec3 vOtherPos = _OtherObj->Transform()->GetWorldPos();
-		
-		//Vec3 vPos = Transform()->GetWorldPos();
-		//Vec3 vOtherPos = _OtherCollider->GetWorldMatrix().Translation();
 
-		float heightDiff = vPos.y - vOtherPos.y;
-		if (100.f > heightDiff && heightDiff > -20.f)
+		if (GetOwner()->GetParent()->GetGroundCollision() && L"MonsterMove" != _OtherObj->GetName())
 		{
+			CGameObject* pObject = m_HitEffectPref->Instantiate();
 			INFO& info = _OtherObj->GetInfo();
 			info.HP -= 10.f;
-
-			CGameObject* pObject = m_HitEffectPref->Instantiate();
-
-			if (GetOwner()->GetDir() == OBJ_DIR::DIR_LEFT)
+			if (GetOwner()->GetParent()->GetDir() == OBJ_DIR::DIR_LEFT)
 			{
-				pObject->Transform()->SetRelativePos(Vec3(vOtherPos.x - 150.f, vOtherPos.y, -10000.f));
+				pObject->Transform()->SetRelativePos(Vec3(vOtherPos.x - 150.f, vOtherPos.y, vOtherPos.z - 50.f));
 				pObject->Transform()->SetRelativeRotation(Vec3(0.f, XM_PI, 0.f));
-
 			}
-			else if (GetOwner()->GetDir() == OBJ_DIR::DIR_RIGHT)
+			else if (GetOwner()->GetParent()->GetDir() == OBJ_DIR::DIR_RIGHT)
 			{
-				pObject->Transform()->SetRelativePos(Vec3(vOtherPos.x + 150.f, vOtherPos.y, -10000.f));
+				pObject->Transform()->SetRelativePos(Vec3(vOtherPos.x + 150.f, vOtherPos.y, vOtherPos.z - 50.f));
 				pObject->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, 0.f));
 			}
-
 			CreateObject(pObject, 0);
-			DeleteObject(GetOwner());
+			//DeleteObject(GetOwner()->GetParent());
 
 			if (L"hyungteo" == _OtherObj->GetName())
 			{
 				if (_OtherObj->Rigidbody()->IsGround())
 					_OtherObj->FSM()->ChangeState(L"Hit");
+			}
+			else if (L"juris" == _OtherObj->GetName())
+			{
+				_OtherObj->FSM()->ChangeState(L"Hit");
 			}
 		}
 	}

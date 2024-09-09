@@ -55,6 +55,8 @@ using namespace std::filesystem;
 #pragma comment(lib, "FMOD/fmod64_vc.lib")
 #endif
 
+#include <random>
+
 #include "singleton.h"
 #include "define.h"
 #include "enum.h"

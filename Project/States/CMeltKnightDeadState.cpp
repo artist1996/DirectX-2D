@@ -19,7 +19,7 @@ void CMeltKnightDeadState::Enter()
 void CMeltKnightDeadState::FinalTick()
 {
 	if (GetOwner()->Animator2D()->IsFinish())
-		DeleteObject(GetOwner());
+		DeleteObject(GetOwner()->GetParent());
 }
 
 void CMeltKnightDeadState::Exit()

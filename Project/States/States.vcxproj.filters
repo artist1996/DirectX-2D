@@ -73,11 +73,50 @@
     <Filter Include="States\01. Monster\02. Hyungteo\06. Hit\01. GroundHit">
       <UniqueIdentifier>{1fa4ceff-6ead-4c79-adbc-70d664525529}</UniqueIdentifier>
     </Filter>
-    <Filter Include="States\01. Monster\02. Hyungteo\10. Dead">
-      <UniqueIdentifier>{c893bb09-9530-4e4d-969b-27350318abe3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="States\01. Monster\02. Hyungteo\09. Fall">
       <UniqueIdentifier>{a12fbad9-111e-4293-89cd-c9b2154deae9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="States\01. Monster\03. Juris">
+      <UniqueIdentifier>{ad37faad-e30e-4211-97fc-126ff31d64c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="States\01. Monster\03. Juris\01. Idle">
+      <UniqueIdentifier>{158defde-fd8d-4847-82fe-0355be02db37}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="States\01. Monster\03. Juris\02. Trace">
+      <UniqueIdentifier>{08de4e47-dce4-445a-9044-a5b9cb7d94e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="States\01. Monster\03. Juris\04. Hide">
+      <UniqueIdentifier>{793dc7c9-212f-4944-90fc-d6ffff3bd111}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="States\01. Monster\03. Juris\06. Hit">
+      <UniqueIdentifier>{fa996b41-7b5c-46a6-b21d-a59acc3bad4d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="States\01. Monster\03. Juris\03. Attack">
+      <UniqueIdentifier>{566c88cd-b73f-457a-96fe-c2d817957720}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="States\01. Monster\03. Juris\05. BackAttack">
+      <UniqueIdentifier>{27c21bd7-1fb2-4f03-bf0a-8f862c798aa0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="States\01. Monster\02. Hyungteo\11. Dead">
+      <UniqueIdentifier>{c893bb09-9530-4e4d-969b-27350318abe3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="States\01. Monster\02. Hyungteo\10. Recoil">
+      <UniqueIdentifier>{4a476e1f-c2db-48fb-bd5f-f06ea5c01ea7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="States\01. Monster\02. Hyungteo\06. Hit\02. AirHit">
+      <UniqueIdentifier>{c6649f8b-39e3-4640-a852-7ff2aaf5cd4a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="States\01. Monster\02. Hyungteo\06. Hit\03. Stiffness">
+      <UniqueIdentifier>{b21c1710-77da-4c8d-9972-8fe33c2a4a92}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="States\01. Monster\03. Juris\08. Dead">
+      <UniqueIdentifier>{8b52b1e1-cebc-4d1e-821a-7cd7f38a960a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="States\01. Monster\03. Juris\06. Hit\01. Hit">
+      <UniqueIdentifier>{eaad0ace-9ca5-4c50-b13e-a81f33929a39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="States\01. Monster\03. Juris\06. Hit\02. Stiffness">
+      <UniqueIdentifier>{4b522c1e-9b40-4aca-b23b-fba79bdcfb64}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -139,7 +178,40 @@
       <Filter>States\01. Monster\02. Hyungteo\09. Fall</Filter>
     </ClInclude>
     <ClInclude Include="CHyungteoDeadState.h">
-      <Filter>States\01. Monster\02. Hyungteo\10. Dead</Filter>
+      <Filter>States\01. Monster\02. Hyungteo\11. Dead</Filter>
+    </ClInclude>
+    <ClInclude Include="CJurisIdleState.h">
+      <Filter>States\01. Monster\03. Juris\01. Idle</Filter>
+    </ClInclude>
+    <ClInclude Include="CJurisTraceState.h">
+      <Filter>States\01. Monster\03. Juris\02. Trace</Filter>
+    </ClInclude>
+    <ClInclude Include="CJurisHideState.h">
+      <Filter>States\01. Monster\03. Juris\04. Hide</Filter>
+    </ClInclude>
+    <ClInclude Include="CJurisAttackState.h">
+      <Filter>States\01. Monster\03. Juris\03. Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="CJurisBackAttackState.h">
+      <Filter>States\01. Monster\03. Juris\05. BackAttack</Filter>
+    </ClInclude>
+    <ClInclude Include="CJurisDeadState.h">
+      <Filter>States\01. Monster\03. Juris\08. Dead</Filter>
+    </ClInclude>
+    <ClInclude Include="CHyungteoRecoilState.h">
+      <Filter>States\01. Monster\02. Hyungteo\10. Recoil</Filter>
+    </ClInclude>
+    <ClInclude Include="CHyungteoAirHitState.h">
+      <Filter>States\01. Monster\02. Hyungteo\06. Hit\02. AirHit</Filter>
+    </ClInclude>
+    <ClInclude Include="CHyungteoStiffnessState.h">
+      <Filter>States\01. Monster\02. Hyungteo\06. Hit\03. Stiffness</Filter>
+    </ClInclude>
+    <ClInclude Include="CJurisHitState.h">
+      <Filter>States\01. Monster\03. Juris\06. Hit\01. Hit</Filter>
+    </ClInclude>
+    <ClInclude Include="CJurisStiffnessState.h">
+      <Filter>States\01. Monster\03. Juris\06. Hit\02. Stiffness</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -201,7 +273,40 @@
       <Filter>States\01. Monster\02. Hyungteo\09. Fall</Filter>
     </ClCompile>
     <ClCompile Include="CHyungteoDeadState.cpp">
-      <Filter>States\01. Monster\02. Hyungteo\10. Dead</Filter>
+      <Filter>States\01. Monster\02. Hyungteo\11. Dead</Filter>
+    </ClCompile>
+    <ClCompile Include="CJurisIdleState.cpp">
+      <Filter>States\01. Monster\03. Juris\01. Idle</Filter>
+    </ClCompile>
+    <ClCompile Include="CJurisTraceState.cpp">
+      <Filter>States\01. Monster\03. Juris\02. Trace</Filter>
+    </ClCompile>
+    <ClCompile Include="CJurisHideState.cpp">
+      <Filter>States\01. Monster\03. Juris\04. Hide</Filter>
+    </ClCompile>
+    <ClCompile Include="CJurisAttackState.cpp">
+      <Filter>States\01. Monster\03. Juris\03. Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="CJurisBackAttackState.cpp">
+      <Filter>States\01. Monster\03. Juris\05. BackAttack</Filter>
+    </ClCompile>
+    <ClCompile Include="CJurisDeadState.cpp">
+      <Filter>States\01. Monster\03. Juris\08. Dead</Filter>
+    </ClCompile>
+    <ClCompile Include="CHyungteoRecoilState.cpp">
+      <Filter>States\01. Monster\02. Hyungteo\10. Recoil</Filter>
+    </ClCompile>
+    <ClCompile Include="CHyungteoAirHitState.cpp">
+      <Filter>States\01. Monster\02. Hyungteo\06. Hit\02. AirHit</Filter>
+    </ClCompile>
+    <ClCompile Include="CHyungteoStiffnessState.cpp">
+      <Filter>States\01. Monster\02. Hyungteo\06. Hit\03. Stiffness</Filter>
+    </ClCompile>
+    <ClCompile Include="CJurisHitState.cpp">
+      <Filter>States\01. Monster\03. Juris\06. Hit\01. Hit</Filter>
+    </ClCompile>
+    <ClCompile Include="CJurisStiffnessState.cpp">
+      <Filter>States\01. Monster\03. Juris\06. Hit\02. Stiffness</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

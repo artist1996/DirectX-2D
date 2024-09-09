@@ -29,6 +29,8 @@ private:
     bool         m_Stop;
     bool         m_ReverseMove;
 
+    float        m_HitTime;
+
 public:
     virtual void Begin() override;
     virtual void Tick() override;

@@ -13,9 +13,14 @@
 #include <States/CHyungteoFlyState.h>
 #include <States/CHyungteoWakeUpState.h>
 #include <States/CHyungteoFallState.h>
+#include <States/CHyungteoDeadState.h>
+#include <States/CHyungteoRecoilState.h>
+#include <States/CHyungteoAirHitState.h>
+#include <States/CHyungteoStiffnessState.h>
 
 CHyungteoScript::CHyungteoScript()
 	: CScript(SCRIPT_TYPE::HYUNGTEOSCRIPT)
+	, m_Dead(false)
 {
 }
 
@@ -26,7 +31,7 @@ CHyungteoScript::~CHyungteoScript()
 void CHyungteoScript::InitInfo()
 {
 	INFO Info = {};
-	Info.MaxHP = 600;
+	Info.MaxHP = 2500;
 	Info.HP = Info.MaxHP;
 	Info.Defense = 0;
 	Info.MinAttack = 30;
@@ -39,7 +44,7 @@ void CHyungteoScript::Begin()
 {
 	InitInfo();
 
-	FSM()->SetBlackboardData(L"Target", DATA_TYPE::OBJECT, CLevelMgr::GetInst()->FindObjectByName(L"Player"));
+	FSM()->SetBlackboardData(L"Target", DATA_TYPE::OBJECT, CLevelMgr::GetInst()->FindObjectByName(L"PlayerMove"));
 
 	FSM()->AddState(L"Eat", new CHyungteoEatState);
 	FSM()->AddState(L"Look", new CHyungteoLookState);
@@ -51,16 +56,32 @@ void CHyungteoScript::Begin()
 	FSM()->AddState(L"Fly", new CHyungteoFlyState);
 	FSM()->AddState(L"WakeUp", new CHyungteoWakeUpState);
 	FSM()->AddState(L"Fall", new CHyungteoFallState);
+	FSM()->AddState(L"Dead", new CHyungteoDeadState);
+	FSM()->AddState(L"Recoil", new CHyungteoRecoilState);
+	FSM()->AddState(L"AirHit", new CHyungteoAirHitState);
+	FSM()->AddState(L"Stiffness", new CHyungteoStiffnessState);
 
 	FSM()->ChangeState(L"Eat");
 }
 
 void CHyungteoScript::Tick()
 {
+	INFO& info = GetOwner()->GetInfo();
+
+	if (0 >= info.HP && !m_Dead)
+	{
+		FSM()->ChangeState(L"Dead");
+		m_Dead = true;
+	}
 }
 
 void CHyungteoScript::BeginOverlap(CCollider2D* _OwnCollider, CGameObject* _OtherObj, CCollider2D* _OtherCollider)
 {
+	if (7 == _OtherObj->GetLayerIdx())
+	{
+		INFO& info = GetOwner()->GetInfo();
+		info.HP -= 10.f;
+	}
 }
 
 void CHyungteoScript::Overlap(CCollider2D* _OwnCollider, CGameObject* _OtherObj, CCollider2D* _OtherCollider)

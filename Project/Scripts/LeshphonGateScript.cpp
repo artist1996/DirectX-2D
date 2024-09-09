@@ -2,6 +2,8 @@
 #include "LeshphonGateScript.h"
 #include <Engine/CObjectPoolMgr.h>
 
+#include <Engine/CLevelMgr.h>
+
 LeshphonGateScript::LeshphonGateScript()
 	: CScript(SCRIPT_TYPE::ESHPHONGATESCRIPT)
 	, m_Type(GATE_TYPE::END)
@@ -19,7 +21,6 @@ void LeshphonGateScript::Begin()
 
 void LeshphonGateScript::Tick()
 {
-	
 }
 
 void LeshphonGateScript::BeginOverlap(CCollider2D* _OwnCollider, CGameObject* _OtherObj, CCollider2D* _OtherCollider)
@@ -44,6 +45,9 @@ void LeshphonGateScript::BeginOverlap(CCollider2D* _OwnCollider, CGameObject* _O
 		{
 			DisconnectObject(pPlayer);
 			ChangeCurLevel(LEVEL_TYPE::LESHPHON3);
+			pPlayer->Transform()->SetRelativePos(Vec3(650.f, -50.f, 0.f));
+			CreateObject(pPlayer, 4);
+			ChangeLevelState(LEVEL_STATE::PLAY);
 		}
 			break;
 		case GATE_TYPE::LESHPHON3:

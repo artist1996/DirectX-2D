@@ -28,7 +28,6 @@ VTX_OUT VS_Std2D(VTX_IN _in)
     // float3 를 float4 로 차수를 맞추어준다.
     // 동차좌표를 1로 설정, 상태행렬 4행에 들어있는 이동을 적용받겠다는 뜻
 
-    
     output.vPosition = mul(float4(_in.vPos, 1.f), matWVP);
     output.vColor    = _in.vColor;
     output.vUV       = _in.vUV;

@@ -175,6 +175,9 @@
     <ClInclude Include="CState.h">
       <Filter>Module</Filter>
     </ClInclude>
+    <ClInclude Include="CRandomMgr.h">
+      <Filter>04. Manager\12. RandomMgr</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CEngine.cpp">
@@ -329,6 +332,9 @@
     </ClCompile>
     <ClCompile Include="CState.cpp">
       <Filter>Module</Filter>
+    </ClCompile>
+    <ClCompile Include="CRandomMgr.cpp">
+      <Filter>04. Manager\12. RandomMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -511,6 +517,12 @@
     </Filter>
     <Filter Include="HLSL\02. Render\03. PostProcess">
       <UniqueIdentifier>{1e562a1d-6dac-4001-9fb0-b5df1dc3409a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Manager\12. RandomMgr">
+      <UniqueIdentifier>{271755b3-f56b-4594-9c34-44f78cceefdc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="08. Component\10. Font">
+      <UniqueIdentifier>{b4c7b94c-47e4-4605-bca4-70cd54e3bf8e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

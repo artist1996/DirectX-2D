@@ -5,6 +5,10 @@ class CPlayerMoveScript :
     public CScript
 {
 private:
+    float m_Speed;
+
+private:
+    void AddForce();
 
 public:
     virtual void Begin() override;

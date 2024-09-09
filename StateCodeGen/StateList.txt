@@ -1,3 +1,4 @@
+CHyungteoAirHitState
 CHyungteoBuffEaterState
 CHyungteoDeadState
 CHyungteoEatState
@@ -7,9 +8,19 @@ CHyungteoHitState
 CHyungteoIdleState
 CHyungteoLookState
 CHyungteoPunchState
+CHyungteoRecoilState
+CHyungteoStiffnessState
 CHyungteoStingState
 CHyungteoTraceState
 CHyungteoWakeUpState
+CJurisAttackState
+CJurisBackAttackState
+CJurisDeadState
+CJurisHideState
+CJurisHitState
+CJurisIdleState
+CJurisStiffnessState
+CJurisTraceState
 CMeltKnightAttackState
 CMeltKnightDeadState
 CMeltKnightIdleState

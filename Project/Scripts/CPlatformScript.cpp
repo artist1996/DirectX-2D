@@ -17,7 +17,7 @@ void CPlatformScript::Tick()
 
 void CPlatformScript::BeginOverlap(CCollider2D* _OwnCollider, CGameObject* _OtherObj, CCollider2D* _OtherCollider)
 {
-	if (L"PlayerMove" == _OtherObj->GetName())
+	if (L"PlayerMove" == _OtherObj->GetName() || L"MonsterMove" == _OtherObj->GetName())
 	{
 		Vec3 vPos = _OwnCollider->GetWorldPos();
 		Vec3 vScale = Transform()->GetWorldScale();
@@ -30,35 +30,35 @@ void CPlatformScript::BeginOverlap(CCollider2D* _OwnCollider, CGameObject* _Othe
 			&& vOtherPos.y + vOtherScale.y * 0.5f > vPos.y - vScale.y * 0.5f
 			&& vOtherPos.y - vOtherScale.y * 0.5f < vPos.y + vScale.y * 0.5f)
 		{
-			_OtherObj->GetParent()->SetMoveable(PLATFORM_TYPE::RIGHT, false);
+			_OtherObj->SetMoveable(PLATFORM_TYPE::RIGHT, false);
 		}
 
 		else if (vOtherPos.x - vOtherScale.x * 0.5f > vPos.x + vScale.x * 0.5f - 10.f
 			&& vOtherPos.y + vOtherScale.y * 0.5f > vPos.y - vScale.y * 0.5f
 			&& vOtherPos.y - vOtherScale.y * 0.5f < vPos.y + vScale.y * 0.5f)
 		{
-			_OtherObj->GetParent()->SetMoveable(PLATFORM_TYPE::LEFT, false);
+			_OtherObj->SetMoveable(PLATFORM_TYPE::LEFT, false);
 		}
 		
 		else if (vOtherPos.y - vOtherScale.y * 0.5f < vPos.y + vScale.y * 0.5f - 10.f
 			&& vOtherPos.x - vOtherScale.x * 0.5f > vPos.x - vScale.x * 0.5f
 			&& vOtherPos.x + vOtherScale.x * 0.5f < vPos.x + vScale.x * 0.5f)
 		{
-			_OtherObj->GetParent()->SetMoveable(PLATFORM_TYPE::UP, false);
+			_OtherObj->SetMoveable(PLATFORM_TYPE::UP, false);
 		}
 
 		else if (vOtherPos.y + vOtherScale.y * 0.5f > vPos.y - vScale.y * 0.5f + 10.f
 			&& vOtherPos.x - vOtherScale.x * 0.5f > vPos.x - vScale.x * 0.5f
 			&& vOtherPos.x + vOtherScale.x * 0.5f < vPos.x + vScale.x * 0.5f)
 		{
-			_OtherObj->GetParent()->SetMoveable(PLATFORM_TYPE::BOTTOM, false);
+			_OtherObj->SetMoveable(PLATFORM_TYPE::BOTTOM, false);
 		}
 	}
 }
 
 void CPlatformScript::Overlap(CCollider2D* _OwnCollider, CGameObject* _OtherObj, CCollider2D* _OtherCollider)
 {	
-	if (L"PlayerMove" == _OtherObj->GetName())
+	if (L"PlayerMove" == _OtherObj->GetName() || L"MonsterMove" == _OtherObj->GetName())
 	{
 		Vec3 vPos = _OwnCollider->GetWorldPos();
 		Vec3 vScale = Transform()->GetWorldScale();
@@ -71,40 +71,40 @@ void CPlatformScript::Overlap(CCollider2D* _OwnCollider, CGameObject* _OtherObj,
 			&& vOtherPos.y + vOtherScale.y * 0.5f > vPos.y - vScale.y * 0.5f
 			&& vOtherPos.y - vOtherScale.y * 0.5f < vPos.y + vScale.y * 0.5f)
 		{
-			_OtherObj->GetParent()->SetMoveable(PLATFORM_TYPE::RIGHT, false);
+			_OtherObj->SetMoveable(PLATFORM_TYPE::RIGHT, false);
 		}
 		
 		else if (vOtherPos.x - vOtherScale.x * 0.5f > vPos.x + vScale.x * 0.5f - 10.f
 			&& vOtherPos.y + vOtherScale.y * 0.5f > vPos.y - vScale.y * 0.5f
 			&& vOtherPos.y - vOtherScale.y * 0.5f < vPos.y + vScale.y * 0.5f)
 		{
-			_OtherObj->GetParent()->SetMoveable(PLATFORM_TYPE::LEFT, false);
+			_OtherObj->SetMoveable(PLATFORM_TYPE::LEFT, false);
 		}
 		
 		else if (vOtherPos.y - vOtherScale.y * 0.5f < vPos.y + vScale.y * 0.5f - 10.f
 			&& vOtherPos.x - vOtherScale.x * 0.5f > vPos.x - vScale.x * 0.5 - 100.f
 			&& vOtherPos.x + vOtherScale.x * 0.5f < vPos.x + vScale.x * 0.5f + 100.f)
 		{
-			_OtherObj->GetParent()->SetMoveable(PLATFORM_TYPE::UP, false);
+			_OtherObj->SetMoveable(PLATFORM_TYPE::UP, false);
 		}
 		
 		else if (vOtherPos.y + vOtherScale.y * 0.5f > vPos.y - vScale.y * 0.5f + 10.f
 			&& vOtherPos.x - vOtherScale.x * 0.5f > vPos.x - vScale.x * 0.5f - 100.f
 			&& vOtherPos.x + vOtherScale.x * 0.5f < vPos.x + vScale.x * 0.5f + 100.f)
 		{
-			_OtherObj->GetParent()->SetMoveable(PLATFORM_TYPE::BOTTOM, false);
+			_OtherObj->SetMoveable(PLATFORM_TYPE::BOTTOM, false);
 		}
 	}
 }
 
 void CPlatformScript::EndOverlap(CCollider2D* _OwnCollider, CGameObject* _OtherObj, CCollider2D* _OtherCollider)
 {
-	if (L"PlayerMove" == _OtherObj->GetName())
+	if (L"PlayerMove" == _OtherObj->GetName() || L"MonsterMove" == _OtherObj->GetName())
 	{
-		_OtherObj->GetParent()->SetMoveable(PLATFORM_TYPE::LEFT, true);
-		_OtherObj->GetParent()->SetMoveable(PLATFORM_TYPE::RIGHT, true);
-		_OtherObj->GetParent()->SetMoveable(PLATFORM_TYPE::BOTTOM, true);
-		_OtherObj->GetParent()->SetMoveable(PLATFORM_TYPE::UP, true);
+		_OtherObj->SetMoveable(PLATFORM_TYPE::LEFT, true);
+		_OtherObj->SetMoveable(PLATFORM_TYPE::RIGHT, true);
+		_OtherObj->SetMoveable(PLATFORM_TYPE::BOTTOM, true);
+		_OtherObj->SetMoveable(PLATFORM_TYPE::UP, true);
 	}
 }
 

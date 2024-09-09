@@ -17,16 +17,14 @@ void CHyungteoFallState::Enter()
 
 void CHyungteoFallState::FinalTick()
 {
-	Vec3 vPos = GetOwner()->Transform()->GetWorldPos();
+	Vec3 vPos = GetOwner()->Transform()->GetRelativePos();
 
-	//if (_Pos.y <= m_GroundPosY)
-	//{
-	//	Rigidbody()->SetGround(true);
-	//	_Pos.y = m_GroundPosY;
-	//
-	//	return true;
-	//}
-
+	if (82.f < vPos.y)
+	{
+		GetOwner()->Rigidbody()->SetGround(true);
+		GetOwner()->Transform()->SetRelativePos(Vec3(0.f, 82.f, 0.f));
+		GetFSM()->ChangeState(L"WakeUp");
+	}
 }
 
 void CHyungteoFallState::Exit()

@@ -21,15 +21,15 @@ void CMeltKnightIdleState::FinalTick()
 	// Logic
 	CGameObject* pTarget = (CGameObject*)GetFSM()->GetBlackboardData(L"Target");
 
-	Vec3 vPos = GetOwner()->Transform()->GetRelativePos();
+	Vec3 vPos = GetOwner()->GetParent()->Transform()->GetRelativePos();
 	Vec3 vTargetPos = pTarget->Transform()->GetRelativePos();
 	
 	Vec3 vDist = vTargetPos - vPos;
 
 	if (0.f < vDist.x)
-		GetOwner()->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, 0.f));
+		GetOwner()->GetParent()->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, 0.f));
 	else
-		GetOwner()->Transform()->SetRelativeRotation(Vec3(0.f, XM_PI, 0.f));
+		GetOwner()->GetParent()->Transform()->SetRelativeRotation(Vec3(0.f, XM_PI, 0.f));
 
 	if (500.f > fabs(vPos.x - vTargetPos.x))
 	{

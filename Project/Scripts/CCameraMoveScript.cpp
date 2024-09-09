@@ -24,7 +24,7 @@ CCameraMoveScript::~CCameraMoveScript()
 
 void CCameraMoveScript::Begin()
 {
-	m_Target = CLevelMgr::GetInst()->FindObjectByName(L"Player");
+	m_Target = CLevelMgr::GetInst()->FindObjectByName(L"PlayerMove");
 	GetOwner()->SetTarget(m_Target);
 
 	CLevel* pLevel = CLevelMgr::GetInst()->GetCurrentLevel();
@@ -34,11 +34,18 @@ void CCameraMoveScript::Begin()
 
 	else if (L"leshphon2" == pLevel->GetName())
 		m_BoundaryLT = Vec2(0.f, 40.f);
+
+	else if(L"leshphon3" == pLevel->GetName())
+		m_BoundaryLT = Vec2(0.f, 44.f);
 }
 
 void CCameraMoveScript::Tick()
 {
 	m_Target = GetOwner()->GetTarget();
+	//if (KEY_TAP(KEY::_1))
+	//	Camera()->SetProjType(PROJ_TYPE::ORTHOGRAPHIC);
+	//else if(KEY_TAP(KEY::_2))
+	//	Camera()->SetProjType(PROJ_TYPE::PERSPECTIVE);
 	
 	if (PROJ_TYPE::ORTHOGRAPHIC == Camera()->GetProjType())
 	{
@@ -102,27 +109,27 @@ void CCameraMoveScript::PerspectiveMove()
 
 	Vec3 vPos = Transform()->GetRelativePos();
 
-	//if (KEY_PRESSED(KEY::W))
-	//{
-	//	vPos += vFront * Speed * DT;
-	//}
-	//
-	//if (KEY_PRESSED(KEY::S))
-	//{
-	//	vPos -= vFront * Speed * DT;
-	//}
-	//
-	//if (KEY_PRESSED(KEY::A))
-	//{
-	//	vPos -= vRight * DT * Speed;
-	//}
-	//
-	//if (KEY_PRESSED(KEY::D))
-	//{
-	//	vPos += vRight * DT * Speed;
-	//}
-	//
-	//Transform()->SetRelativePos(vPos);
+	if (KEY_PRESSED(KEY::W))
+	{
+		vPos += vFront * Speed * DT;
+	}
+	
+	if (KEY_PRESSED(KEY::S))
+	{
+		vPos -= vFront * Speed * DT;
+	}
+	
+	if (KEY_PRESSED(KEY::A))
+	{
+		vPos -= vRight * DT * Speed;
+	}
+	
+	if (KEY_PRESSED(KEY::D))
+	{
+		vPos += vRight * DT * Speed;
+	}
+	
+	Transform()->SetRelativePos(vPos);
 	//
 	//if (KEY_PRESSED(KEY::LBTN))
 	//{

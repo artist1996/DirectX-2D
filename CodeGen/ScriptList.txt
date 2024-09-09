@@ -14,6 +14,7 @@ CHyungteoScript
 CHyungteoStingScript
 CIroncageScript
 CJackSpikeScript
+CJurisScript
 CMachKickScript
 CMeltKnightScript
 CMonsterMoveScript
@@ -27,5 +28,6 @@ CRandomShootScript
 CRisingShotScript
 CSeriaRoomGateScript
 CSeriaScript
+CSkillGroundScript
 CWindmillScript
 LeshphonGateScript

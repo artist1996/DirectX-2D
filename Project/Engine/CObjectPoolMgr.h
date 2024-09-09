@@ -8,7 +8,7 @@ class CObjectPoolMgr :
 private:
 	vector<CGameObject*> m_vecObjects[(UINT)OBJ_ID::END];
 
-	CGameObject* m_Player;
+	CGameObject*		 m_Player;
 
 public:
 	void Init();

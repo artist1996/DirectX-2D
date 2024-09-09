@@ -158,6 +158,7 @@ call CodeGen.exe</Command>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CHyungteoAirHitState.h" />
     <ClInclude Include="CHyungteoBuffEaterState.h" />
     <ClInclude Include="CHyungteoDeadState.h" />
     <ClInclude Include="CHyungteoEatState.h" />
@@ -167,9 +168,19 @@ call CodeGen.exe</Command>
     <ClInclude Include="CHyungteoIdleState.h" />
     <ClInclude Include="CHyungteoLookState.h" />
     <ClInclude Include="CHyungteoPunchState.h" />
+    <ClInclude Include="CHyungteoRecoilState.h" />
+    <ClInclude Include="CHyungteoStiffnessState.h" />
     <ClInclude Include="CHyungteoStingState.h" />
     <ClInclude Include="CHyungteoTraceState.h" />
     <ClInclude Include="CHyungteoWakeUpState.h" />
+    <ClInclude Include="CJurisAttackState.h" />
+    <ClInclude Include="CJurisBackAttackState.h" />
+    <ClInclude Include="CJurisDeadState.h" />
+    <ClInclude Include="CJurisHideState.h" />
+    <ClInclude Include="CJurisHitState.h" />
+    <ClInclude Include="CJurisIdleState.h" />
+    <ClInclude Include="CJurisStiffnessState.h" />
+    <ClInclude Include="CJurisTraceState.h" />
     <ClInclude Include="CMeltKnightAttackState.h" />
     <ClInclude Include="CMeltKnightDeadState.h" />
     <ClInclude Include="CMeltKnightIdleState.h" />
@@ -180,6 +191,7 @@ call CodeGen.exe</Command>
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CHyungteoAirHitState.cpp" />
     <ClCompile Include="CHyungteoBuffEaterState.cpp" />
     <ClCompile Include="CHyungteoDeadState.cpp" />
     <ClCompile Include="CHyungteoEatState.cpp" />
@@ -189,9 +201,19 @@ call CodeGen.exe</Command>
     <ClCompile Include="CHyungteoIdleState.cpp" />
     <ClCompile Include="CHyungteoLookState.cpp" />
     <ClCompile Include="CHyungteoPunchState.cpp" />
+    <ClCompile Include="CHyungteoRecoilState.cpp" />
+    <ClCompile Include="CHyungteoStiffnessState.cpp" />
     <ClCompile Include="CHyungteoStingState.cpp" />
     <ClCompile Include="CHyungteoTraceState.cpp" />
     <ClCompile Include="CHyungteoWakeUpState.cpp" />
+    <ClCompile Include="CJurisAttackState.cpp" />
+    <ClCompile Include="CJurisBackAttackState.cpp" />
+    <ClCompile Include="CJurisDeadState.cpp" />
+    <ClCompile Include="CJurisHideState.cpp" />
+    <ClCompile Include="CJurisHitState.cpp" />
+    <ClCompile Include="CJurisIdleState.cpp" />
+    <ClCompile Include="CJurisStiffnessState.cpp" />
+    <ClCompile Include="CJurisTraceState.cpp" />
     <ClCompile Include="CMeltKnightAttackState.cpp" />
     <ClCompile Include="CMeltKnightDeadState.cpp" />
     <ClCompile Include="CMeltKnightIdleState.cpp" />

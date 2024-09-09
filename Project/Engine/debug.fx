@@ -18,7 +18,7 @@ struct VS_OUT
 VS_OUT VS_DebugShape(VS_IN _in)
 {
     VS_OUT output = (VS_OUT) 0.f;
-    
+
     output.vPosition = mul(float4(_in.vPos, 1.f), matWVP);
     output.vUV = _in.vUV;
     

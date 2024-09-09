@@ -23,12 +23,12 @@ void CHyungteoPunchState::Enter()
 	CGameObject* pObject = m_PunchPref->Instantiate();
 	Vec3 vPos = GetOwner()->Transform()->GetWorldPos();
 
-	if (OBJ_DIR::DIR_LEFT == GetOwner()->GetDir())
+	if (OBJ_DIR::DIR_LEFT == GetOwner()->GetParent()->GetDir())
 	{
 		pObject->Transform()->SetRelativePos(Vec3(vPos.x - 75.f, vPos.y, vPos.z));
 	}
 
-	else if (OBJ_DIR::DIR_RIGHT == GetOwner()->GetDir())
+	else if (OBJ_DIR::DIR_RIGHT == GetOwner()->GetParent()->GetDir())
 	{
 		pObject->Transform()->SetRelativePos(Vec3(vPos.x + 75.f, vPos.y, vPos.z));
 	}

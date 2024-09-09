@@ -13,7 +13,7 @@ CWindmillScript::~CWindmillScript()
 void CWindmillScript::Begin()
 {
 	Animator2D()->Play(0, 20.f, false);
-	Collider2D()->SetActive(false);
+	Collider2D()->SetRender(false);
 }
 
 void CWindmillScript::Tick()

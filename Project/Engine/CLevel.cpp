@@ -85,8 +85,11 @@ void CLevel::FinalTick()
 
 void CLevel::Exit()
 {
-	if(L"leshphon1" != GetName())
-		m_BGM->Stop();
+	if (L"leshphon1" != GetName())
+	{
+		if(nullptr != m_BGM)
+			m_BGM->Stop();
+	}
 }
 
 CGameObject* CLevel::FindObjectByName(const wstring& _strName)

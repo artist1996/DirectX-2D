@@ -60,6 +60,7 @@ void CTransform::FinalTick()
 			Matrix matParentScaleInv = XMMatrixInverse(nullptr, matParentScale);
 
 			m_matWorld = m_matWorld * matParentScaleInv * matParentWorldMat;
+			//m_matWorld = m_matWorld * matParentWorldMat * matParentScaleInv;
 		}
 
 		else

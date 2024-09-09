@@ -173,6 +173,7 @@ call CodeGen.exe</Command>
     <ClInclude Include="CHyungteoStingScript.h" />
     <ClInclude Include="CIroncageScript.h" />
     <ClInclude Include="CJackSpikeScript.h" />
+    <ClInclude Include="CJurisScript.h" />
     <ClInclude Include="CMachKickScript.h" />
     <ClInclude Include="CMeltKnightScript.h" />
     <ClInclude Include="CMonsterMoveScript.h" />
@@ -187,6 +188,7 @@ call CodeGen.exe</Command>
     <ClInclude Include="CScriptMgr.h" />
     <ClInclude Include="CSeriaRoomGateScript.h" />
     <ClInclude Include="CSeriaScript.h" />
+    <ClInclude Include="CSkillGroundScript.h" />
     <ClInclude Include="CWindmillScript.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="CGunHawkExplodeScript.h" />
@@ -209,6 +211,7 @@ call CodeGen.exe</Command>
     <ClCompile Include="CHyungteoStingScript.cpp" />
     <ClCompile Include="CIroncageScript.cpp" />
     <ClCompile Include="CJackSpikeScript.cpp" />
+    <ClCompile Include="CJurisScript.cpp" />
     <ClCompile Include="CMachKickScript.cpp" />
     <ClCompile Include="CMeltKnightScript.cpp" />
     <ClCompile Include="CMonsterMoveScript.cpp" />
@@ -223,6 +226,7 @@ call CodeGen.exe</Command>
     <ClCompile Include="CScriptMgr.cpp" />
     <ClCompile Include="CSeriaRoomGateScript.cpp" />
     <ClCompile Include="CSeriaScript.cpp" />
+    <ClCompile Include="CSkillGroundScript.cpp" />
     <ClCompile Include="CWindmillScript.cpp" />
     <ClCompile Include="CGunHawkExplodeScript.cpp" />
     <ClCompile Include="LeshphonGateScript.cpp" />

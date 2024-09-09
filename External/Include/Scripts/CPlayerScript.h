@@ -116,11 +116,11 @@ private:
     void RunTimeCheck();
     void AddForce();
     void SetGroundPos(float _PosY)  { m_GroundPosY = _PosY; }
-    bool GroundCheck(Vec3& _Pos);
+    bool GroundCheck();
 
 private:
-    void Idle(Vec3& _Pos);
-    void Move(Vec3& _Pos);
+    void Idle();
+    void Move();
     void AT1();
     void AT2();
     void AT3();
@@ -131,10 +131,10 @@ private:
     void AT_DG3();
     void AT_DG4();
 
-    void Tackle(Vec3& _Pos);
+    void Tackle();
 
-    void Run(Vec3& _Pos);
-    void Jump(Vec3& _Pos);
+    void Run();
+    void Jump();
     void Landing();
     void Dead();
 

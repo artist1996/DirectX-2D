@@ -70,7 +70,7 @@ void CPlayerScript::Begin()
 	GetOwner()->SetID(OBJ_ID::PLAYER);
 	m_BuffPref = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\deathbyrevolver.pref");
 	m_RandomShootPref = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\skill_randomshoot.pref");
-	m_PistolPref = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\pistol.pref");
+	m_PistolPref = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\pistolground.pref");
 	m_MuzzlePref = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\muzzle.pref");
 	m_HammerPref = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\revolverhammer_normal.pref");
 	m_HeadShotEffectPref = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\headshoteffect.pref");
@@ -80,18 +80,16 @@ void CPlayerScript::Begin()
 	m_GunHawkFirstDownPref = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\gunhawk0_down.pref");
 	m_GunHawkSecondUpPref = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\gunhawk1_up.pref");
 	m_GunHawkSecondDownPref = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\gunhawk1_down.pref");
-	m_MachKickPref = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\skill_machkick.pref");
-	m_JackSpikePref = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\skill_jackspike.pref");
-	m_RisingShotPref = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\skill_risingshot.pref");
+	m_MachKickPref = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\machkickground.pref");
+	m_JackSpikePref = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\jackspikeground.pref");
+	m_RisingShotPref = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\risingshotground.pref");
 
-	m_Prefabs.DiagonalPistolPref = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\diagonalpistol.pref");
-	m_Prefabs.DiagonalHeadShotPref = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\diagonalheadshot.pref");
+	m_Prefabs.DiagonalPistolPref = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\diagonalpistolground.pref");
+	m_Prefabs.DiagonalHeadShotPref = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\diagonalheadshotground.pref");
 	
 	CDistanceMgr::GetInst()->Init();
 
 	Animator2D()->Play((int)IDLE, 5.f, true);
-
-	//Collider2D()->SetOffset(Vec3(0.f, -0.5f, 1.f));
 
 	SetSpeed(350.f);
 }
@@ -101,24 +99,24 @@ void CPlayerScript::Tick()
 	Vec3 vPos = Transform()->GetRelativePos();
 
 	m_CheckRange = CDistanceMgr::GetInst()->IsInRange();
-	m_Dir = GetOwner()->GetDir();
-	SetPrevDirection(m_Dir);
+	m_Dir = GetOwner()->GetParent()->GetDir();
+
 	switch (m_State)
 	{
 	case CPlayerScript::STATE::IDLE:
-		Idle(vPos);
+		Idle();
 		break;
 	case CPlayerScript::STATE::MOVE:
-		Move(vPos);
+		Move();
 		break;
 	case CPlayerScript::STATE::JUMP:
-		Jump(vPos);
+		Jump();
 		break;
 	case CPlayerScript::STATE::LANDING:
 		Landing();
 		break;
 	case CPlayerScript::STATE::RUN:
-		Run(vPos);
+		Run();
 		break;
 	case CPlayerScript::STATE::DEAD:
 		Dead();
@@ -173,7 +171,7 @@ void CPlayerScript::Tick()
 	case CPlayerScript::STATE::SK_9:
 		break;
 	case CPlayerScript::STATE::TACKLE:
-		Tackle(vPos);
+		Tackle();
 		break;
 	case CPlayerScript::STATE::GUNHAWKSHOOT:
 		GunHawkShoot();
@@ -188,17 +186,6 @@ void CPlayerScript::Tick()
 
 	RunTimeCheck();
 	SkillTimeCheck();
-	float JumpHeight = Rigidbody()->GetGravityVelocity().y;
-	Vec3 vColliderScale = Collider2D()->GetScale();
-
-	if (STATE::JUMP == m_State)
-	{
-		Transform()->SetRelativePos(Vec3(vPos.x, vPos.y, m_GroundPosY - vColliderScale.y * 0.5f));
-	}
-	else
-	{
-		Transform()->SetRelativePos(Vec3(vPos.x, vPos.y, vPos.y - vColliderScale.y * 0.5f));
-	}
 }
 
 void CPlayerScript::RunTimeCheck()
@@ -221,27 +208,27 @@ void CPlayerScript::AddForce()
 		Rigidbody()->AddForce(Vec3(90000.f, 0.f, 0.f));
 }
 
-bool CPlayerScript::GroundCheck(Vec3& _Pos)
+bool CPlayerScript::GroundCheck()
 {
-	if (_Pos.y <= m_GroundPosY)
+	Vec3 vPos = Transform()->GetRelativePos();
+
+	if (vPos.y < 0.f)
 	{
 		Rigidbody()->SetGround(true);
-		_Pos.y = m_GroundPosY;
-
+		Transform()->SetRelativePos(Vec3(0.f, 0.f, 0.f));
 		return true;
 	}
 
 	return false;
 }
 
-void CPlayerScript::Idle(Vec3& _Pos)
+void CPlayerScript::Idle()
 {
 	Vec3 vRot = Transform()->GetRelativeRotation();
 
 	Vec3 vOffset = Collider2D()->GetOffset();
 
 	Collider2D()->SetScale(Vec3(75.f, 136.f, 1.f));
-	Collider2D()->SetOffset(Vec3(-8.f, -76.f, 1.f));
 
 	if (KEY_TAP(KEY::LEFT))
 	{
@@ -301,14 +288,12 @@ void CPlayerScript::Idle(Vec3& _Pos)
 	if (KEY_TAP(KEY::UP))
 	{
 		SetState(STATE::MOVE);
-		//SetDirection(OBJ_DIR::DIR_UP);
 		SetTBDirection(OBJ_DIR::DIR_UP);
 		Animator2D()->Play((int)STATE::MOVE, 8.f, true);
 	}
 	else if (KEY_PRESSED(KEY::UP))
 	{
 		SetState(STATE::MOVE);
-		//SetDirection(OBJ_DIR::DIR_UP);
 		SetTBDirection(OBJ_DIR::DIR_UP);
 		Animator2D()->Play((int)STATE::MOVE, 8.f, true);
 	}
@@ -316,14 +301,12 @@ void CPlayerScript::Idle(Vec3& _Pos)
 	if (KEY_TAP(KEY::DOWN))
 	{
 		SetState(STATE::MOVE);
-		//SetDirection(OBJ_DIR::DIR_DOWN);
 		SetTBDirection(OBJ_DIR::DIR_DOWN);
 		Animator2D()->Play((int)STATE::MOVE, 8.f, true);
 	}
 	else if (KEY_PRESSED(KEY::DOWN))
 	{
 		SetState(STATE::MOVE);
-		//SetDirection(OBJ_DIR::DIR_DOWN);
 		SetTBDirection(OBJ_DIR::DIR_DOWN);
 		Animator2D()->Play((int)STATE::MOVE, 8.f, true);
 	}
@@ -357,61 +340,60 @@ void CPlayerScript::Idle(Vec3& _Pos)
 		SetState(STATE::JUMP);
 		Animator2D()->Play((int)STATE::JUMP, 5.f, false);
 		Rigidbody()->Jump();
-		SetGroundPos(_Pos.y);
 	}
 
 	// Skill
 	Stylish();
 
-	Transform()->SetRelativeRotation(vRot);
+	//Transform()->SetRelativeRotation(vRot);
 }
 
-void CPlayerScript::Move(Vec3& _Pos)
+void CPlayerScript::Move()
 {
 	bool* bMoveable = GetOwner()->GetMoveable();
 
 	// ATTACK
-	if (KEY_PRESSED(KEY::LEFT)
-	 && bMoveable[(UINT)PLATFORM_TYPE::LEFT])
-	{
-		_Pos += Vec3(-1.f, 0.f, 0.f) * m_Speed * DT;
-	}
+	//if (KEY_PRESSED(KEY::LEFT)
+	// && bMoveable[(UINT)PLATFORM_TYPE::LEFT])
+	//{
+	//	_Pos += Vec3(-1.f, 0.f, 0.f) * m_Speed * DT;
+	//}
 
-	else if (KEY_RELEASED(KEY::LEFT))
+	if (KEY_RELEASED(KEY::LEFT))
 	{
 		SetState(STATE::IDLE);
 		Animator2D()->Play((int)IDLE, 5.f, true);
 	}
 
-	if (KEY_PRESSED(KEY::RIGHT)
-		&& bMoveable[(UINT)PLATFORM_TYPE::RIGHT])
-	{
-		_Pos += Vec3(1.f, 0.f, 0.f) * m_Speed * DT;
-	}
+	//if (KEY_PRESSED(KEY::RIGHT)
+	//	&& bMoveable[(UINT)PLATFORM_TYPE::RIGHT])
+	//{
+	//	_Pos += Vec3(1.f, 0.f, 0.f) * m_Speed * DT;
+	//}
 
-	else if (KEY_RELEASED(KEY::RIGHT))
+	if (KEY_RELEASED(KEY::RIGHT))
 	{
 		SetState(STATE::IDLE);
 		Animator2D()->Play((int)IDLE, 5.f, true);
 	}
-	if (KEY_PRESSED(KEY::UP)
-		&& bMoveable[(UINT)PLATFORM_TYPE::UP])
-	{
-		_Pos += Vec3(0.f, 1.f, 0.f) * m_Speed * DT;
-	}
+	//if (KEY_PRESSED(KEY::UP)
+	//	&& bMoveable[(UINT)PLATFORM_TYPE::UP])
+	//{
+	//	_Pos += Vec3(0.f, 1.f, 0.f) * m_Speed * DT;
+	//}
 
-	else if (KEY_RELEASED(KEY::UP))
+	if (KEY_RELEASED(KEY::UP))
 	{
 		SetState(STATE::IDLE);
 		Animator2D()->Play((int)IDLE, 5.f, true);
 	}
-	if (KEY_PRESSED(KEY::DOWN)
-		&& bMoveable[(UINT)PLATFORM_TYPE::BOTTOM])
-	{
-		_Pos += Vec3(0.f, -1.f, 0.f) * m_Speed * DT;
-	}
+	//if (KEY_PRESSED(KEY::DOWN)
+	//	&& bMoveable[(UINT)PLATFORM_TYPE::BOTTOM])
+	//{
+	//	_Pos += Vec3(0.f, -1.f, 0.f) * m_Speed * DT;
+	//}
 
-	else if (KEY_RELEASED(KEY::DOWN))
+	if (KEY_RELEASED(KEY::DOWN))
 	{
 		SetState(STATE::IDLE);
 		Animator2D()->Play((int)IDLE, 5.f, true);
@@ -423,12 +405,14 @@ void CPlayerScript::Move(Vec3& _Pos)
 		Animator2D()->Play((int)STATE::DG_AT1, 15.f, true);
 		CreateMuzzelOfRevolverDiagonal();
 		CreateDiagonalPistol();
+		GetOwner()->GetParent()->SetMove(false);
 	}
 
 	else if (KEY_TAP(KEY::X))
 	{
 		SetState(STATE::AT_1);
 		Animator2D()->Play((int)STATE::AT_1, 15.f, false);
+		GetOwner()->GetParent()->SetMove(false);
 	}
 
 	// JUMP
@@ -437,7 +421,6 @@ void CPlayerScript::Move(Vec3& _Pos)
 		SetState(STATE::JUMP);
 		Animator2D()->Play((int)STATE::JUMP, 5.f, false);
 		Rigidbody()->Jump();
-		SetGroundPos(_Pos.y);
 	}
 
 	// SKILL
@@ -446,6 +429,7 @@ void CPlayerScript::Move(Vec3& _Pos)
 
 void CPlayerScript::AT1()
 {
+	GetOwner()->GetParent()->SetMove(false);
 	if (KEY_TAP(KEY::X))
 	{
 		m_NextAttack = true;
@@ -455,6 +439,7 @@ void CPlayerScript::AT1()
 	{
 		Animator2D()->Play((int)IDLE, 5.f, true);
 		SetState(STATE::IDLE);
+		GetOwner()->GetParent()->SetMove(true);
 	}
 	
 	else if (m_NextAttack && Animator2D()->IsFinish())
@@ -471,6 +456,8 @@ void CPlayerScript::AT1()
 
 void CPlayerScript::AT2()
 {
+	GetOwner()->GetParent()->SetMove(false);
+
 	if (KEY_TAP(KEY::X) && !Animator2D()->IsFinish())
 	{
 		m_NextAttack = true;
@@ -489,6 +476,7 @@ void CPlayerScript::AT2()
 	{
 		Animator2D()->Play((int)IDLE, 5.f, true);
 		SetState(STATE::IDLE);
+		GetOwner()->GetParent()->SetMove(true);
 	}
 
 	Stylish();
@@ -496,6 +484,7 @@ void CPlayerScript::AT2()
 
 void CPlayerScript::AT3()
 {
+	GetOwner()->GetParent()->SetMove(false);
 	if (KEY_TAP(KEY::X) && !Animator2D()->IsFinish() && !m_NextAttack)
 	{
 		m_NextAttack = true;
@@ -512,6 +501,7 @@ void CPlayerScript::AT3()
 	{
 		Animator2D()->Play((int)IDLE, 5.f, true);
 		SetState(STATE::IDLE);
+		GetOwner()->GetParent()->SetMove(true);
 	}
 
 	Stylish();
@@ -519,6 +509,7 @@ void CPlayerScript::AT3()
 
 void CPlayerScript::AT4()
 {
+	GetOwner()->GetParent()->SetMove(false);
 	if (m_NextAttack && 5 == Animator2D()->GetCurFrameIndex())
 	{
 		CreatePistol();
@@ -530,6 +521,7 @@ void CPlayerScript::AT4()
 	{
 		SetState(STATE::IDLE);
 		Animator2D()->Play((int)IDLE, 5.f, true);
+		GetOwner()->GetParent()->SetMove(true);
 	}
 
 	Stylish();
@@ -537,6 +529,7 @@ void CPlayerScript::AT4()
 
 void CPlayerScript::AT_DG1()
 {
+	GetOwner()->GetParent()->SetMove(false);
 	if (KEY_TAP(KEY::X))
 	{
 		m_NextAttack = true;
@@ -574,6 +567,7 @@ void CPlayerScript::AT_DG1()
 	{
 		SetState(STATE::IDLE);
 		Animator2D()->Play((int)STATE::IDLE, 5.f, true);
+		GetOwner()->GetParent()->SetMove(true);
 	}
 
 	Stylish();
@@ -581,6 +575,7 @@ void CPlayerScript::AT_DG1()
 
 void CPlayerScript::AT_DG2()
 {
+	GetOwner()->GetParent()->SetMove(false);
 	if (KEY_TAP(KEY::X))
 	{
 		m_NextAttack = true;
@@ -617,6 +612,7 @@ void CPlayerScript::AT_DG2()
 	{
 		SetState(STATE::IDLE);
 		Animator2D()->Play((int)IDLE, 5.f, true);
+		GetOwner()->GetParent()->SetMove(true);
 	}
 
 	Stylish();
@@ -624,6 +620,7 @@ void CPlayerScript::AT_DG2()
 
 void CPlayerScript::AT_DG3()
 {
+	GetOwner()->GetParent()->SetMove(false);
 	if (KEY_TAP(KEY::X))
 	{
 		m_NextAttack = true;
@@ -657,6 +654,7 @@ void CPlayerScript::AT_DG3()
 	{
 		SetState(STATE::IDLE);
 		Animator2D()->Play((int)IDLE, 5.f, true);
+		GetOwner()->GetParent()->SetMove(true);
 	}
 
 	Stylish();
@@ -664,6 +662,7 @@ void CPlayerScript::AT_DG3()
 
 void CPlayerScript::AT_DG4()
 {
+	GetOwner()->GetParent()->SetMove(false);
 	if (m_NextAttack && 5 == Animator2D()->GetCurFrameIndex())
 	{
 		CreateDiagonalPistol();
@@ -675,33 +674,31 @@ void CPlayerScript::AT_DG4()
 	{
 		SetState(STATE::IDLE);
 		Animator2D()->Play((int)IDLE, 5.f, true);
+		GetOwner()->GetParent()->SetMove(true);
 	}
 
 	Stylish();
 }
 
-void CPlayerScript::Tackle(Vec3& _Pos)
+void CPlayerScript::Tackle()
 {
-	if (m_Dir == OBJ_DIR::DIR_LEFT)
-	{
-		_Pos += Vec3(-1.f, 0.f, 0.f) * m_Speed * 2.f * DT;
-	}
+	INFO& info = GetOwner()->GetParent()->GetInfo();
 
-	else if (m_Dir == OBJ_DIR::DIR_RIGHT)
-	{
-		_Pos += Vec3(1.f, 0.f, 0.f) * m_Speed * 2.f * DT;
-	}
+	info.bTackle = true;
 
 	if (Animator2D()->IsFinish())
 	{
 		SetState(STATE::IDLE);
 		Animator2D()->Play((int)IDLE, 5.f, true);
+		GetOwner()->GetParent()->SetMove(true);
+
+		info.bTackle = false;
 	}
 }
 
-void CPlayerScript::Jump(Vec3& _Pos)
+void CPlayerScript::Jump()
 {
-	if (GroundCheck(_Pos))
+	if (GroundCheck())
 	{
 		SetState(STATE::LANDING);
 		Animator2D()->Play((int)LANDING, 3.f, false);
@@ -717,45 +714,44 @@ void CPlayerScript::Landing()
 	}
 }
 
-void CPlayerScript::Run(Vec3& _Pos)
+void CPlayerScript::Run()
 {
 	Collider2D()->SetScale(Vec3(75.f, 136.f, 1.f));
-	Collider2D()->SetOffset(Vec3(-8.f, -76.f, 1.f));
 
-	bool* bMoveable = GetOwner()->GetMoveable();
+	//bool* bMoveable = GetOwner()->GetMoveable();
 
-	if (KEY_PRESSED(KEY::UP)
-		&& bMoveable[(UINT)PLATFORM_TYPE::UP])
-	{
-		_Pos += Vec3(0.f, 1.f, 0.f) * m_Speed * DT;
-	}
-	
-	if (KEY_PRESSED(KEY::DOWN)
-		&& bMoveable[(UINT)PLATFORM_TYPE::BOTTOM])
-	{
-		_Pos += Vec3(0.f, -1.f, 0.f) * m_Speed * DT;
-	}
+	//if (KEY_PRESSED(KEY::UP)
+	//	&& bMoveable[(UINT)PLATFORM_TYPE::UP])
+	//{
+	//	_Pos += Vec3(0.f, 1.f, 0.f) * m_Speed * DT;
+	//}
+	//
+	//if (KEY_PRESSED(KEY::DOWN)
+	//	&& bMoveable[(UINT)PLATFORM_TYPE::BOTTOM])
+	//{
+	//	_Pos += Vec3(0.f, -1.f, 0.f) * m_Speed * DT;
+	//}
+	//
+	//if (KEY_PRESSED(KEY::LEFT)
+	//	&& bMoveable[(UINT)PLATFORM_TYPE::LEFT])
+	//{
+	//	_Pos += Vec3(-1.f, 0.f, 0.f) * m_Speed * DT;
+	//}
 
-	if (KEY_PRESSED(KEY::LEFT)
-		&& bMoveable[(UINT)PLATFORM_TYPE::LEFT])
-	{
-		_Pos += Vec3(-1.f, 0.f, 0.f) * m_Speed * DT;
-	}
-
-	else if (KEY_RELEASED(KEY::LEFT))
+	if (KEY_RELEASED(KEY::LEFT))
 	{
 		SetState(STATE::IDLE);
 		SetSpeed(350.f);
 		Animator2D()->Play((int)IDLE, 5.f, true);
 	}
 
-	if (KEY_PRESSED(KEY::RIGHT)
-		&& bMoveable[(UINT)PLATFORM_TYPE::RIGHT])
-	{
-		_Pos += Vec3(1.f, 0.f, 0.f) * m_Speed * DT;
-	}
+	//if (KEY_PRESSED(KEY::RIGHT)
+	//	&& bMoveable[(UINT)PLATFORM_TYPE::RIGHT])
+	//{
+	//	_Pos += Vec3(1.f, 0.f, 0.f) * m_Speed * DT;
+	//}
 
-	else if (KEY_RELEASED(KEY::RIGHT))
+	if (KEY_RELEASED(KEY::RIGHT))
 	{
 		SetState(STATE::IDLE);
 		SetSpeed(350.f);
@@ -767,13 +763,13 @@ void CPlayerScript::Run(Vec3& _Pos)
 		SetState(STATE::JUMP);
 		Animator2D()->Play((int)STATE::JUMP, 5.f, false);
 		Rigidbody()->Jump();
-		SetGroundPos(_Pos.y);
 	}
 
 	if (KEY_TAP(KEY::X))
 	{
 		SetState(STATE::TACKLE);
 		Animator2D()->Play((int)ANIMATION_NUM::TACKLE, 7.f, false);
+		GetOwner()->GetParent()->SetMove(false);
 	}
 
 	Stylish();
@@ -785,19 +781,25 @@ void CPlayerScript::Dead()
 
 void CPlayerScript::DeathByRevolver()
 {
+	GetOwner()->GetParent()->SetMove(false);
+
 	if (Animator2D()->IsFinish())
 	{
 		SetState(STATE::IDLE);
 		Animator2D()->Play((int)ANIMATION_NUM::IDLE, 5.f, true);
+		GetOwner()->GetParent()->SetMove(true);
 	}
 }
 
 void CPlayerScript::JackSpike()
 {
+	GetOwner()->GetParent()->SetMove(false);
+
 	if (Animator2D()->IsFinish())
 	{
 		SetState(STATE::IDLE);
 		Animator2D()->Play((int)ANIMATION_NUM::IDLE, 5.f, true);
+		GetOwner()->GetParent()->SetMove(true);
 	}
 
 	Stylish();
@@ -805,6 +807,8 @@ void CPlayerScript::JackSpike()
 
 void CPlayerScript::RisingShot()
 {
+	GetOwner()->GetParent()->SetMove(false);
+
 	if (m_Spawn && 3 <= Animator2D()->GetCurFrameIndex())
 	{
 		CreateRisingShot();
@@ -817,6 +821,7 @@ void CPlayerScript::RisingShot()
 		SetState(STATE::IDLE);
 		Animator2D()->Play((int)ANIMATION_NUM::IDLE, 5.f, true);
 		m_Spawn = true;
+		GetOwner()->GetParent()->SetMove(true);
 	}
 
 	Stylish();
@@ -824,6 +829,8 @@ void CPlayerScript::RisingShot()
 
 void CPlayerScript::HeadShot()
 {
+	GetOwner()->GetParent()->SetMove(false);
+
 	if (m_HeadShotSpawn && 3 <= Animator2D()->GetCurFrameIndex())
 	{
 		if (m_CheckRange)
@@ -853,11 +860,13 @@ void CPlayerScript::HeadShot()
 		SetState(STATE::IDLE);
 		Animator2D()->Play((int)ANIMATION_NUM::IDLE, 5.f, true);
 		m_HeadShotSpawn = true;
+		GetOwner()->GetParent()->SetMove(true);
 	}
 }
 
 void CPlayerScript::RandomShot()
 {
+	GetOwner()->GetParent()->SetMove(false);
 	CreateRandomShoot();
 
 	if (Animator2D()->IsFinish())
@@ -865,15 +874,18 @@ void CPlayerScript::RandomShot()
 		SetState(STATE::IDLE);
 		Animator2D()->Play((int)ANIMATION_NUM::IDLE, 5.f, true);
 		m_Spawn = true;
+		GetOwner()->GetParent()->SetMove(true);
 	}
 }
 
 void CPlayerScript::WindMill()
 {
+	GetOwner()->GetParent()->SetMove(false);
 	if (Animator2D()->IsFinish())
 	{
 		SetState(STATE::IDLE);
 		Animator2D()->Play((int)ANIMATION_NUM::IDLE, 5.f, true);
+		GetOwner()->GetParent()->SetMove(true);
 	}
 
 	Stylish();
@@ -881,19 +893,23 @@ void CPlayerScript::WindMill()
 
 void CPlayerScript::MachKick()
 {
+	GetOwner()->GetParent()->SetMove(false);
 	if (Animator2D()->IsFinish())
 	{
 		SetState(STATE::IDLE);
 		Animator2D()->Play((int)ANIMATION_NUM::IDLE, 5.f, true);
+		GetOwner()->GetParent()->SetMove(true);
 	}
 }
 
 void CPlayerScript::GunHawkShoot()
 {
+	GetOwner()->GetParent()->SetMove(false);
 	if (Animator2D()->IsFinish())
 	{
 		SetState(STATE::IDLE);
 		Animator2D()->Play((int)ANIMATION_NUM::IDLE, 5.f, true);
+		GetOwner()->GetParent()->SetMove(true);
 	}
 
 	Stylish();
@@ -901,9 +917,12 @@ void CPlayerScript::GunHawkShoot()
 
 void CPlayerScript::GunHawkStandBy()
 {
+	GetOwner()->GetParent()->SetMove(false);
+
 	if (m_GunHawkStandby)
 	{
-		AddForce();
+		GetOwner()->GetParent()->SetForce(true);
+		//AddForce();
 		m_GunHawkStandby = false;
 	}
 
@@ -911,22 +930,27 @@ void CPlayerScript::GunHawkStandBy()
 	{
 		SetState(STATE::GUNHAWKLASTSHOOT);
 		Animator2D()->Play((int)ANIMATION_NUM::GUNHAWKSHOOT, 7.f, true);
+		GetOwner()->GetParent()->SetForce(false);
 		CreateGunHawkSecond();
 	}
 
 	else if (Animator2D()->IsFinish())
 	{
+		GetOwner()->GetParent()->SetForce(false);
 		SetState(STATE::IDLE);
 		Animator2D()->Play((int)ANIMATION_NUM::IDLE, 5.f, true);
+		GetOwner()->GetParent()->SetMove(true);
 	}
 }
 
 void CPlayerScript::GunHawkLastShoot()
 {
+	GetOwner()->GetParent()->SetMove(false);
 	if (Animator2D()->IsFinish())
 	{
 		SetState(STATE::IDLE);
 		Animator2D()->Play((int)ANIMATION_NUM::IDLE, 5.f, true);
+		GetOwner()->GetParent()->SetMove(true);
 	}
 
 	Stylish();
@@ -1362,19 +1386,20 @@ void CPlayerScript::CreateRandomShoot()
 void CPlayerScript::CreatePistol()
 {
 	CGameObject* pObject = m_PistolPref->Instantiate();
-	Vec3 vPos = Transform()->GetWorldPos();
+	Vec3 vPos = Collider2D()->GetWorldPos();
+	Vec3 vScale = Collider2D()->GetScale();
 
 	if (0 <= Animator2D()->GetCurFrameIndex())
 	{
 		if (OBJ_DIR::DIR_LEFT == m_Dir)
 		{
-			pObject->Transform()->SetRelativePos(Vec3(vPos.x - 175.f, vPos.y + 40.f, vPos.z));
+			pObject->Transform()->SetRelativePos(Vec3(vPos.x - 175.f, vPos.y - vScale.y * 0.5f, vPos.z));
 			pObject->SetDir(OBJ_DIR::DIR_LEFT);
 		}
 
 		else if (OBJ_DIR::DIR_RIGHT == m_Dir)
 		{
-			pObject->Transform()->SetRelativePos(Vec3(vPos.x + 175.f, vPos.y + 40.f, vPos.z));
+			pObject->Transform()->SetRelativePos(Vec3(vPos.x + 175.f, vPos.y - vScale.y * 0.5f, vPos.z));
 			pObject->SetDir(OBJ_DIR::DIR_RIGHT);
 		}
 
@@ -1386,18 +1411,19 @@ void CPlayerScript::CreatePistol()
 
 void CPlayerScript::CreateDiagonalPistol()
 {
-	Vec3 vPos = Transform()->GetWorldPos();
-
+	Vec3 vPos = Collider2D()->GetWorldPos();
+	Vec3 vScale = Collider2D()->GetScale();
+	
 	CGameObject* pObject = m_Prefabs.DiagonalPistolPref->Instantiate();
 
 	if (OBJ_DIR::DIR_LEFT == m_Dir)
 	{
-		pObject->Transform()->SetRelativePos(Vec3(vPos.x - 175.f, vPos.y - 35.f, vPos.z));
+		pObject->Transform()->SetRelativePos(Vec3(vPos.x - 175.f, vPos.y - vScale.y * 0.5f, vPos.z));
 	}
 
 	else if (OBJ_DIR::DIR_RIGHT == m_Dir)
 	{
-		pObject->Transform()->SetRelativePos(Vec3(vPos.x + 175.f, vPos.y - 35.f, vPos.z));
+		pObject->Transform()->SetRelativePos(Vec3(vPos.x + 175.f, vPos.y - vScale.y * 0.5f, vPos.z));
 	}
 
 	pObject->SetDir(m_Dir);
@@ -1554,39 +1580,62 @@ void CPlayerScript::CreateDiagonalHeadShotEffect()
 void CPlayerScript::CreateHeadShot()
 {
 	CGameObject* pObject = CObjectPoolMgr::GetInst()->GetObj(OBJ_ID::HEADSHOT);
-	Vec3 vPos = Transform()->GetWorldPos();
 
-	if (OBJ_DIR::DIR_LEFT == m_Dir)
+	Vec3 vPos = Collider2D()->GetWorldPos();
+	Vec3 vScale = Collider2D()->GetScale();
+
+	if (0 <= Animator2D()->GetCurFrameIndex())
 	{
-		pObject->Transform()->SetRelativePos(Vec3(vPos.x - 175.f, vPos.y + 40.f, vPos.z));
-		pObject->SetDir(OBJ_DIR::DIR_LEFT);
+		if (OBJ_DIR::DIR_LEFT == m_Dir)
+		{
+			pObject->Transform()->SetRelativePos(Vec3(vPos.x - 175.f, vPos.y - vScale.y * 0.5f, vPos.z));
+			pObject->SetDir(OBJ_DIR::DIR_LEFT);
+		}
+
+		else if (OBJ_DIR::DIR_RIGHT == m_Dir)
+		{
+			pObject->Transform()->SetRelativePos(Vec3(vPos.x + 175.f, vPos.y - vScale.y * 0.5f, vPos.z));
+			pObject->SetDir(OBJ_DIR::DIR_RIGHT);
+		}
+
+		pObject->SetInitPos(vPos);
+
+		CreateObject(pObject, 7);
 	}
-
-	else if (OBJ_DIR::DIR_RIGHT == m_Dir)
-	{
-		pObject->Transform()->SetRelativePos(Vec3(vPos.x + 175.f, vPos.y + 40.f, vPos.z));
-		pObject->SetDir(OBJ_DIR::DIR_RIGHT);
-	}
-
-	pObject->SetInitPos(vPos);
-
-	CreateObject(pObject, 7);
 }
 
 void CPlayerScript::CreateDiagonalHeadShot()
 {
-	Vec3 vPos = Transform()->GetWorldPos();
+	//Vec3 vPos = Transform()->GetWorldPos();
+	//
+	//CGameObject* pObject = m_Prefabs.DiagonalHeadShotPref->Instantiate();
+	//
+	//if (OBJ_DIR::DIR_LEFT == m_Dir)
+	//{
+	//	pObject->Transform()->SetRelativePos(Vec3(vPos.x - 175.f, vPos.y - 35.f, vPos.z));
+	//}
+	//
+	//else if (OBJ_DIR::DIR_RIGHT == m_Dir)
+	//{
+	//	pObject->Transform()->SetRelativePos(Vec3(vPos.x + 175.f, vPos.y - 35.f, vPos.z));
+	//}
+	//
+	//pObject->SetDir(m_Dir);
+	//pObject->SetOwner(GetOwner());
+	//CreateObject(pObject, 7);
+	Vec3 vPos = Collider2D()->GetWorldPos();
+	Vec3 vScale = Collider2D()->GetScale();
 
 	CGameObject* pObject = m_Prefabs.DiagonalHeadShotPref->Instantiate();
 
 	if (OBJ_DIR::DIR_LEFT == m_Dir)
 	{
-		pObject->Transform()->SetRelativePos(Vec3(vPos.x - 175.f, vPos.y - 35.f, vPos.z));
+		pObject->Transform()->SetRelativePos(Vec3(vPos.x - 175.f, vPos.y - vScale.y * 0.5f, vPos.z));
 	}
 
 	else if (OBJ_DIR::DIR_RIGHT == m_Dir)
 	{
-		pObject->Transform()->SetRelativePos(Vec3(vPos.x + 175.f, vPos.y - 35.f, vPos.z));
+		pObject->Transform()->SetRelativePos(Vec3(vPos.x + 175.f, vPos.y - vScale.y * 0.5f, vPos.z));
 	}
 
 	pObject->SetDir(m_Dir);
@@ -1617,6 +1666,8 @@ void CPlayerScript::CreateGunHawkFirst()
 	GunHawkDown->SetDir(m_Dir);
 	GunHawkUp->SetInitPos(vPos);
 	GunHawkDown->SetInitPos(vPos);
+	GunHawkUp->Transform()->SetRelativeScale(Vec3(150.f, 75.f, 1.f));
+	GunHawkDown->Transform()->SetRelativeScale(Vec3(150.f, 75.f, 1.f));
 	CreateObject(GunHawkUp, 7);
 	CreateObject(GunHawkDown, 7);
 }
@@ -1644,6 +1695,9 @@ void CPlayerScript::CreateGunHawkSecond()
 	GunHawkDown->SetDir(m_Dir);
 	GunHawkUp->SetInitPos(vPos);
 	GunHawkDown->SetInitPos(vPos);
+	GunHawkUp->Transform()->SetRelativeScale(Vec3(150.f, 75.f, 1.f));
+	GunHawkDown->Transform()->SetRelativeScale(Vec3(150.f, 75.f, 1.f));
+
 	CreateObject(GunHawkUp, 7);
 	CreateObject(GunHawkDown, 7);
 }
@@ -1652,19 +1706,21 @@ void CPlayerScript::CreateMachKick()
 {
 	CGameObject* pObject = m_MachKickPref->Instantiate();
 
+	Vec3 vColPos = Collider2D()->GetWorldPos();
+	Vec3 vScale = Collider2D()->GetScale();
 	Vec3 vPos = Transform()->GetWorldPos();
 
 	if (OBJ_DIR::DIR_LEFT == m_Dir)
 	{
-		pObject->Transform()->SetRelativePos(Vec3(vPos.x - 50.f, vPos.y - 50.f, vPos.z));
+		pObject->Transform()->SetRelativePos(Vec3(vPos.x - 75.f, vColPos.y - vScale.y * 0.5f, vPos.z));
 	}
 
 	else if (OBJ_DIR::DIR_RIGHT == m_Dir)
 	{
-		pObject->Transform()->SetRelativePos(Vec3(vPos.x + 50.f, vPos.y - 50.f, vPos.z));
+		pObject->Transform()->SetRelativePos(Vec3(vPos.x + 75.f, vColPos.y - vScale.y * 0.5f, vPos.z));
 	}
 
-	pObject->Transform()->SetRelativeScale(Vec3(100.f, 100.f, 1.f));
+	//pObject->Transform()->SetRelativeScale(Vec3(100.f, 100.f, 1.f));
 
 	CreateObject(pObject, 7);
 }
@@ -1672,17 +1728,18 @@ void CPlayerScript::CreateMachKick()
 void CPlayerScript::CreateJackSpike()
 {
 	CGameObject* pObject = m_JackSpikePref->Instantiate();
-
+	Vec3 vColPos = Collider2D()->GetWorldPos();
+	Vec3 vScale = Collider2D()->GetScale();
 	Vec3 vPos = Transform()->GetWorldPos();
 
 	if (OBJ_DIR::DIR_LEFT == m_Dir)
 	{
-		pObject->Transform()->SetRelativePos(Vec3(vPos.x - 45.f, vPos.y - 20.f, vPos.z));
+		pObject->Transform()->SetRelativePos(Vec3(vPos.x - 50.f, vColPos.y - vScale.y * 0.5f, vPos.z));
 	}
 
 	else if (OBJ_DIR::DIR_RIGHT == m_Dir)
 	{
-		pObject->Transform()->SetRelativePos(Vec3(vPos.x + 45.f, vPos.y - 20.f, vPos.z));
+		pObject->Transform()->SetRelativePos(Vec3(vPos.x + 50.f, vColPos.y - vScale.y * 0.5f, vPos.z));
 	}
 
 	CreateObject(pObject, 7);
@@ -1690,23 +1747,23 @@ void CPlayerScript::CreateJackSpike()
 
 void CPlayerScript::CreateRisingShot()
 {
+	Vec3 vPos = Collider2D()->GetWorldPos();
+	Vec3 vScale = Collider2D()->GetScale();
+
 	CGameObject* pObject = m_RisingShotPref->Instantiate();
-	Vec3 vPos = Transform()->GetWorldPos();
 
 	if (OBJ_DIR::DIR_LEFT == m_Dir)
 	{
-		pObject->Transform()->SetRelativePos(Vec3(vPos.x - 175.f, vPos.y + 40.f, vPos.z));
-		pObject->SetDir(OBJ_DIR::DIR_LEFT);
+		pObject->Transform()->SetRelativePos(Vec3(vPos.x - 175.f, vPos.y - vScale.y * 0.5f, vPos.z));
 	}
 
 	else if (OBJ_DIR::DIR_RIGHT == m_Dir)
 	{
-		pObject->Transform()->SetRelativePos(Vec3(vPos.x + 175.f, vPos.y + 40.f, vPos.z));
-		pObject->SetDir(OBJ_DIR::DIR_RIGHT);
+		pObject->Transform()->SetRelativePos(Vec3(vPos.x + 175.f, vPos.y - vScale.y * 0.5f, vPos.z));
 	}
 
-	pObject->SetInitPos(vPos);
-
+	pObject->SetDir(m_Dir);
+	pObject->SetOwner(GetOwner());
 	CreateObject(pObject, 7);
 }
 

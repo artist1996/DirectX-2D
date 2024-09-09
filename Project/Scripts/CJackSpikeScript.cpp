@@ -21,7 +21,7 @@ void CJackSpikeScript::Tick()
 
 	if (0.15f < m_Time)
 	{
-		DeleteObject(GetOwner());
+		DeleteObject(GetOwner()->GetParent());
 	}
 }
 
@@ -34,7 +34,7 @@ void CJackSpikeScript::BeginOverlap(CCollider2D* _OwnCollider, CGameObject* _Oth
 
 		Vec3 vDist = vPos - vOtherPos;
 
-		if (30.f > fabs(vDist.z))
+		if (GetOwner()->GetParent()->GetGroundCollision())
 		{
 			CRigidbody* pRB = _OtherObj->Rigidbody();
 

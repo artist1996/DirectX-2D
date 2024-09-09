@@ -2,6 +2,7 @@
 #include "CKeyMgr.h"
 
 #include "CEngine.h"
+#include "CFontMgr.h"
 
 UINT g_RealKey[(UINT)KEY::KEY_END] =
 {

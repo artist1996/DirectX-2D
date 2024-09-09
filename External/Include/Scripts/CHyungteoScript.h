@@ -5,6 +5,9 @@ class CHyungteoScript :
     public CScript
 {
 private:
+    bool m_Dead;
+
+private:
     void InitInfo();
 
 public:

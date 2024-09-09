@@ -25,8 +25,8 @@ void CObjectPoolMgr::Init()
 {
 	Ptr<CPrefab> RandomShootPref = CAssetMgr::GetInst()->Load<CPrefab>(L"prefab\\skill_randomshoot.pref", L"prefab\\skill_randomshoot.pref");
 
-	Ptr<CPrefab> PlayerEntityPref = CAssetMgr::GetInst()->Load<CPrefab>(L"prefab\\Player.pref", L"prefab\\Player.pref");
-	Ptr<CPrefab> HeadShotPref = CAssetMgr::GetInst()->Load<CPrefab>(L"prefab\\skill_headshot.pref", L"prefab\\skill_headshot.pref");
+	Ptr<CPrefab> PlayerEntityPref = CAssetMgr::GetInst()->Load<CPrefab>(L"prefab\\Player.pref", L"prefab\\PlayerMove.pref");
+	Ptr<CPrefab> HeadShotPref = CAssetMgr::GetInst()->Load<CPrefab>(L"prefab\\headshotground.pref", L"prefab\\headshotground.pref");
 
 	m_Player = PlayerEntityPref->Instantiate();
 

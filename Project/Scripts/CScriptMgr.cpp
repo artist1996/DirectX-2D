@@ -17,6 +17,7 @@
 #include "CHyungteoStingScript.h"
 #include "CIroncageScript.h"
 #include "CJackSpikeScript.h"
+#include "CJurisScript.h"
 #include "CMachKickScript.h"
 #include "CMeltKnightScript.h"
 #include "CMonsterMoveScript.h"
@@ -30,6 +31,7 @@
 #include "CRisingShotScript.h"
 #include "CSeriaRoomGateScript.h"
 #include "CSeriaScript.h"
+#include "CSkillGroundScript.h"
 #include "CWindmillScript.h"
 #include "LeshphonGateScript.h"
 
@@ -51,6 +53,7 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CHyungteoStingScript");
 	_vec.push_back(L"CIroncageScript");
 	_vec.push_back(L"CJackSpikeScript");
+	_vec.push_back(L"CJurisScript");
 	_vec.push_back(L"CMachKickScript");
 	_vec.push_back(L"CMeltKnightScript");
 	_vec.push_back(L"CMonsterMoveScript");
@@ -64,6 +67,7 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CRisingShotScript");
 	_vec.push_back(L"CSeriaRoomGateScript");
 	_vec.push_back(L"CSeriaScript");
+	_vec.push_back(L"CSkillGroundScript");
 	_vec.push_back(L"CWindmillScript");
 	_vec.push_back(L"LeshphonGateScript");
 }
@@ -102,6 +106,8 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CIroncageScript;
 	if (L"CJackSpikeScript" == _strScriptName)
 		return new CJackSpikeScript;
+	if (L"CJurisScript" == _strScriptName)
+		return new CJurisScript;
 	if (L"CMachKickScript" == _strScriptName)
 		return new CMachKickScript;
 	if (L"CMeltKnightScript" == _strScriptName)
@@ -128,6 +134,8 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CSeriaRoomGateScript;
 	if (L"CSeriaScript" == _strScriptName)
 		return new CSeriaScript;
+	if (L"CSkillGroundScript" == _strScriptName)
+		return new CSkillGroundScript;
 	if (L"CWindmillScript" == _strScriptName)
 		return new CWindmillScript;
 	if (L"LeshphonGateScript" == _strScriptName)
@@ -187,6 +195,9 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 	case (UINT)SCRIPT_TYPE::JACKSPIKESCRIPT:
 		return new CJackSpikeScript;
 		break;
+	case (UINT)SCRIPT_TYPE::JURISSCRIPT:
+		return new CJurisScript;
+		break;
 	case (UINT)SCRIPT_TYPE::MACHKICKSCRIPT:
 		return new CMachKickScript;
 		break;
@@ -225,6 +236,9 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 		break;
 	case (UINT)SCRIPT_TYPE::SERIASCRIPT:
 		return new CSeriaScript;
+		break;
+	case (UINT)SCRIPT_TYPE::SKILLGROUNDSCRIPT:
+		return new CSkillGroundScript;
 		break;
 	case (UINT)SCRIPT_TYPE::WINDMILLSCRIPT:
 		return new CWindmillScript;
@@ -304,6 +318,10 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 		return L"CJackSpikeScript";
 		break;
 
+	case SCRIPT_TYPE::JURISSCRIPT:
+		return L"CJurisScript";
+		break;
+
 	case SCRIPT_TYPE::MACHKICKSCRIPT:
 		return L"CMachKickScript";
 		break;
@@ -354,6 +372,10 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 
 	case SCRIPT_TYPE::SERIASCRIPT:
 		return L"CSeriaScript";
+		break;
+
+	case SCRIPT_TYPE::SKILLGROUNDSCRIPT:
+		return L"CSkillGroundScript";
 		break;
 
 	case SCRIPT_TYPE::WINDMILLSCRIPT:

@@ -80,11 +80,14 @@ typedef struct tObjInfo
 	float MinAttack;
 	float MaxAttack;
 	float Defense;
-
+	bool  bTackle;
+	bool  bMoveable;
 	bool  bHit;
 	bool  bDead;
 	bool  bJump;
 	bool  bHitFly;
+	bool  bForce;
+	bool  bAirHit;
 }INFO;
 
 struct tLight

@@ -14,7 +14,7 @@ CPistolScript::~CPistolScript()
 void CPistolScript::Begin()
 {
 	Animator2D()->Play(0, 10.f, true);
-	Collider2D()->SetActive(true);
+	Collider2D()->SetRender(true);
 
 	if (OBJ_DIR::DIR_LEFT == GetOwner()->GetDir())
 		Transform()->SetRelativeRotation(Vec3(0.f, XM_PI, 0.f));
@@ -22,10 +22,10 @@ void CPistolScript::Begin()
 
 void CPistolScript::Tick()
 {
-	Vec3 vPos = Transform()->GetRelativePos();
-	Vec3 vInitPos = GetOwner()->GetInitPos();
+	Vec3 vPos = GetOwner()->GetParent()->Transform()->GetRelativePos();
+	Vec3 vInitPos = GetOwner()->GetParent()->GetInitPos();
 
-	switch (GetOwner()->GetDir())
+	switch (GetOwner()->GetParent()->GetDir())
 	{
 	case OBJ_DIR::DIR_LEFT:
 		vPos.x -= m_Speed * DT;
@@ -38,29 +38,29 @@ void CPistolScript::Tick()
 
 	if (650.f < fabs(vPos.x - vInitPos.x))
 	{
-		DeleteObject(GetOwner());
+		DeleteObject(GetOwner()->GetParent());
 	}
 
 
-	Transform()->SetRelativePos(vPos);
+	GetOwner()->GetParent()->Transform()->SetRelativePos(vPos);
 }
 
 void CPistolScript::BeginOverlap(CCollider2D* _OwnCollider, CGameObject* _OtherObj, CCollider2D* _OtherCollider)
 {
-	if (6 == _OtherObj->GetLayerIdx())
-	{
-		Vec3 vPos = Transform()->GetWorldPos();
-		Vec3 vOtherPos = _OtherObj->Transform()->GetWorldPos();
-
-		if (-30.f > vOtherPos.y - vPos.y || 30.f < vPos.y - vOtherPos.y)
-		{
-			DeleteObject(GetOwner());
-		}
-	}
 }
 
 void CPistolScript::Overlap(CCollider2D* _OwnCollider, CGameObject* _OtherObj, CCollider2D* _OtherCollider)
 {
+	if (6 == _OtherObj->GetLayerIdx()
+		|| L"Platform" == _OtherObj->GetName())
+	{
+		if (GetOwner()->GetParent()->GetGroundCollision())
+		{
+			INFO& info = _OtherObj->GetInfo();
+			info.HP -= 10.f;
+			DeleteObject(GetOwner()->GetParent());
+		}
+	}
 }
 
 void CPistolScript::EndOverlap(CCollider2D* _OwnCollider, CGameObject* _OtherObj, CCollider2D* _OtherCollider)

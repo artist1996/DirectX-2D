@@ -29,6 +29,7 @@ private:
 
     Vec3                 m_InitPos;
     bool                 m_Moveable[(UINT)PLATFORM_TYPE::END];
+    bool                 m_GroundCollision;
 
     CGameObject*         m_Owner;
     CGameObject*         m_Target;
@@ -55,8 +56,14 @@ public:
     void SetMoveable(PLATFORM_TYPE _Type, bool _Set) { m_Moveable[(UINT)_Type] = _Set; }
     bool* GetMoveable()                              { return m_Moveable; }
    
+    void SetMove(bool _Set)   { m_Info.bMoveable = _Set; }
     void  SetInfo(INFO _Info) { m_Info = _Info; }
     INFO& GetInfo()           { return m_Info; }
+
+    void SetForce(bool _Set)  { m_Info.bForce = _Set; }
+    
+    void SetGroundCollision(bool _Set) { m_GroundCollision = _Set; }
+    bool GetGroundCollision()          { return m_GroundCollision; }
 
     void DisconnectWithLayer();
 
@@ -83,7 +90,7 @@ public:
     Vec3 GetInitPos()          { return m_InitPos; }
 
     void SetOwner(CGameObject* _Owner) { m_Owner = _Owner; }
-    CGameObject* GetOwner()            { return m_Owner; }
+    CGameObject* Get_Owner()            { return m_Owner; }
 
     void SetTarget(CGameObject* _Target) { m_Target = _Target; }
     CGameObject* GetTarget()             { return m_Target; }

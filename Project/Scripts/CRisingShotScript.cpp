@@ -20,29 +20,42 @@ void CRisingShotScript::Begin()
 
 void CRisingShotScript::Tick()
 {
-	Vec3 vPos = Transform()->GetRelativePos();
-	OBJ_DIR Dir = GetOwner()->GetDir();
+	Vec3 vPos = GetOwner()->GetParent()->Transform()->GetRelativePos();
+	Vec3 vInitPos = GetOwner()->GetParent()->GetInitPos();
 
-	switch (Dir)
+	switch (GetOwner()->GetParent()->GetDir())
 	{
 	case OBJ_DIR::DIR_LEFT:
-		vPos += Vec3(-1.f, 0.f, 0.f) * 1000.f * DT;
+		vPos.x -= 1000.f * DT;
 		break;
+
 	case OBJ_DIR::DIR_RIGHT:
-		vPos += Vec3(1.f, 0.f, 0.f) * 1000.f * DT;
+		vPos.x += 1000.f * DT;
 		break;
 	}
 
-	if (800.f < fabs(GetOwner()->GetInitPos().x - vPos.x))
+	if (650.f < fabs(vPos.x - vInitPos.x))
 	{
-		DeleteObject(GetOwner());
+		DeleteObject(GetOwner()->GetParent());
 	}
 
-	Transform()->SetRelativePos(vPos);
+
+	GetOwner()->GetParent()->Transform()->SetRelativePos(vPos);
 }
 
 void CRisingShotScript::BeginOverlap(CCollider2D* _OwnCollider, CGameObject* _OtherObj, CCollider2D* _OtherCollider)
 {
+	if (6 == _OtherObj->GetLayerIdx() || L"Platform" == _OtherObj->GetName())
+	{
+		Vec3 vPos = Transform()->GetWorldPos();
+		Vec3 vOtherPos = _OtherObj->Transform()->GetWorldPos();
+
+		if (GetOwner()->GetParent()->GetGroundCollision())
+		{
+			DeleteObject(GetOwner()->GetParent());
+		}
+	}
+
 	if (L"hyungteo" == _OtherObj->GetName())
 	{
 		Vec3 vPos = Transform()->GetWorldPos();
@@ -50,8 +63,7 @@ void CRisingShotScript::BeginOverlap(CCollider2D* _OwnCollider, CGameObject* _Ot
 
 		Vec3 vDist = vOtherPos - vPos;
 
-		if (100.f > fabs(vDist.z)
-			&& 20.f < fabs(vDist.z))
+		if (GetOwner()->GetParent()->GetGroundCollision())
 		{
 			CRigidbody* pRB = _OtherObj->Rigidbody();
 

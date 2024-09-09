@@ -17,6 +17,7 @@ CDoubleGunHawkScript::CDoubleGunHawkScript()
 	, m_Move(true)
 	, m_ReverseMove(false)
 	, m_Stop(false)
+	, m_HitTime(0.f)
 {
 	AddScriptParam(SCRIPT_PARAM::VEC3, "DIRECTION", &m_Dir);
 	AddScriptParam(SCRIPT_PARAM::INT, "Type", &m_Type);
@@ -102,6 +103,9 @@ void CDoubleGunHawkScript::Tick()
 		m_Accel -= m_Friction * DT;
 	}
 
+	if (0.2f < m_HitTime)
+		m_HitTime = 0.f;
+
 	Transform()->SetRelativePos(vPos);
 }
 
@@ -123,6 +127,33 @@ void CDoubleGunHawkScript::BeginOverlap(CCollider2D* _OwnCollider, CGameObject* 
 
 void CDoubleGunHawkScript::Overlap(CCollider2D* _OwnCollider, CGameObject* _OtherObj, CCollider2D* _OtherCollider)
 {
+	if (L"juris" == _OtherObj->GetName())
+	{
+		m_HitTime += DT;
+
+		if (0.15f < m_HitTime)
+			_OtherObj->FSM()->ChangeState(L"Stiffness");
+	}
+
+	if (L"hyungteo" == _OtherObj->GetName())
+	{
+		m_HitTime += DT;
+		CRigidbody* pRB = _OtherObj->Rigidbody();
+
+		if (pRB->IsGround())
+		{
+			if(0.15f < m_HitTime)
+				_OtherObj->FSM()->ChangeState(L"Stiffness");
+		}
+		else
+		{
+			pRB->SetGround(true);
+			pRB->SetJumpSpeed(100.f);
+			pRB->SetMaxGravitySpeed(200.f);
+			pRB->Jump();
+			_OtherObj->FSM()->ChangeState(L"AirHit");
+		}
+	}
 }
 
 void CDoubleGunHawkScript::EndOverlap(CCollider2D* _OwnCollider, CGameObject* _OtherObj, CCollider2D* _OtherCollider)

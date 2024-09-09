@@ -19,7 +19,7 @@ void CRandomShootScript::Begin()
 //#ifdef _DEBUG
 //	Collider2D()->SetActive(true);
 //#endif
-	Collider2D()->SetActive(false);
+	Collider2D()->SetRender(false);
 
 	GetOwner()->SetID(OBJ_ID::RANDOMSHOOT);
 }
@@ -48,5 +48,26 @@ void CRandomShootScript::BeginOverlap(CCollider2D* _OwnCollider, CGameObject* _O
 		INFO& info = _OtherObj->GetInfo();
 
 		info.HP -= 10.f;
+
+		if (L"juris" == _OtherObj->GetName())
+		{			
+			_OtherObj->FSM()->ChangeState(L"Stiffness");
+		}
+
+		else if (L"hyungteo" == _OtherObj->GetName())
+		{
+			CRigidbody* pRB = _OtherObj->Rigidbody();
+
+			if (pRB->IsGround())
+				_OtherObj->FSM()->ChangeState(L"Stiffness");
+			else
+			{
+				pRB->SetGround(true);
+				pRB->SetJumpSpeed(100.f);
+				pRB->SetMaxGravitySpeed(200.f);
+				pRB->Jump();
+ 				_OtherObj->FSM()->ChangeState(L"AirHit");
+			}
+		}
 	}
 }
