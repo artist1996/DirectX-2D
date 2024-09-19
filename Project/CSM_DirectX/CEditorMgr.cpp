@@ -48,6 +48,9 @@ void CEditorMgr::Init()
 
 void CEditorMgr::Tick()
 {
+	if (m_mapUI.empty())
+		return;
+
 	ShortCut();
 
 	// Editor Object

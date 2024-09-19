@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "CDiagonalPistolScript.h"
+#include "CDirezieScript.h"
 
 CDiagonalPistolScript::CDiagonalPistolScript()
 	: CScript(SCRIPT_TYPE::DIAGONALPISTOLSCRIPT)

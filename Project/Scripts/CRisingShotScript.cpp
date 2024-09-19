@@ -45,6 +45,8 @@ void CRisingShotScript::Tick()
 
 void CRisingShotScript::BeginOverlap(CCollider2D* _OwnCollider, CGameObject* _OtherObj, CCollider2D* _OtherCollider)
 {
+	INFO& info = _OtherObj->GetInfo();
+
 	if (6 == _OtherObj->GetLayerIdx() || L"Platform" == _OtherObj->GetName())
 	{
 		Vec3 vPos = Transform()->GetWorldPos();
@@ -56,12 +58,9 @@ void CRisingShotScript::BeginOverlap(CCollider2D* _OwnCollider, CGameObject* _Ot
 		}
 	}
 
-	if (L"hyungteo" == _OtherObj->GetName())
+	if (L"hyungteo" == _OtherObj->GetName() || L"direzie" == _OtherObj->GetName() && !info.bSuperArmor)
 	{
-		Vec3 vPos = Transform()->GetWorldPos();
-		Vec3 vOtherPos = _OtherObj->Transform()->GetWorldPos();
-
-		Vec3 vDist = vOtherPos - vPos;
+		info.HP -= 10.f;
 
 		if (GetOwner()->GetParent()->GetGroundCollision())
 		{

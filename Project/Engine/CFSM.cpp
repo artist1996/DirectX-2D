@@ -16,7 +16,6 @@ CFSM::~CFSM()
 	Delete_Map(m_mapState);
 }
 
-
 void CFSM::FinalTick()
 {
 	if (!m_CurState)

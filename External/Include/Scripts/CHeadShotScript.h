@@ -5,6 +5,7 @@ class CHeadShotScript :
 {
 private:
     Ptr<CPrefab> m_HitEffectPref;
+    bool         m_Hit;
 
 public:
     virtual void Begin() override;
@@ -16,6 +17,7 @@ public:
 
 public:
     virtual void BeginOverlap(CCollider2D* _OwnCollider, CGameObject* _OtherObj, CCollider2D* _OtherCollider) override;
+    virtual void Overlap(CCollider2D* _OwnCollider, CGameObject* _OtherObj, CCollider2D* _OtherCollider) override;
 
 public:
     CLONE(CHeadShotScript);

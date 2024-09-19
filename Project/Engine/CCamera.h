@@ -38,6 +38,11 @@ private:
     bool                 m_ZoomIn;
     bool                 m_ZoomOut;
 
+    bool                 m_ShakingIn;
+    bool                 m_ShakingOut;
+
+    bool                 m_UI;
+
 public:
     void SetPriority(int _Priority) { m_Priority = _Priority; }
     void SetLayer(UINT _LayerIdx, bool _bCheck)
@@ -56,6 +61,7 @@ public:
     void SetFar(float _Far)           { m_Far = _Far; }
     void SetFOV(float _FOV)           { m_FOV = _FOV; }
     void SetProjScale(float _Scale)   { m_ProjectionScale = _Scale; }
+    void SetUI(bool _Set)   { m_UI = _Set; }
 
     PROJ_TYPE GetProjType() { return m_ProjType; }
     float GetWidth()        { return m_Width; }
@@ -70,6 +76,11 @@ public:
     void SetZoomIn(bool _Set) { m_ZoomIn = _Set; }
     void SetZoomOut(bool _Set) { m_ZoomOut = _Set; }
 
+    void SetShaking(bool _Set) { m_ShakingIn = _Set; m_ShakingOut = _Set; }
+
+    const Matrix& GetViewMatrix() { return m_matView; }
+    const Matrix& GetProjMatrix() { return m_matProj; }
+
 public:
     virtual void SaveToFile(FILE* _pFile) override;
     virtual void LoadFromFile(FILE* _pFile) override;
@@ -82,6 +93,8 @@ private:
     void SortGameObject();
     void ZoomIn();
     void ZoomOut();
+    void ShakingIn();
+    void ShakingOut();
 
 public:
     void Render();

@@ -28,8 +28,10 @@ private:
     bool         m_Move;
     bool         m_Stop;
     bool         m_ReverseMove;
+    bool         m_Hit;
 
     float        m_HitTime;
+    float        m_DamageTime;
 
 public:
     virtual void Begin() override;

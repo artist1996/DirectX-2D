@@ -30,6 +30,7 @@ private:
     Vec3                 m_InitPos;
     bool                 m_Moveable[(UINT)PLATFORM_TYPE::END];
     bool                 m_GroundCollision;
+    bool                 m_Active;
 
     CGameObject*         m_Owner;
     CGameObject*         m_Target;
@@ -37,6 +38,11 @@ private:
     OBJ_ID               m_ID;
 
     INFO                 m_Info;
+
+    wstring              m_strFont;
+    UINT                 m_Color;
+    float                m_FontScale;
+    Vec2                 m_FontOffset;
 
 public:
     void AddComponent(CComponent* _Component);
@@ -48,6 +54,7 @@ public:
     const vector<CScript*>& GetScripts()      { return m_vecScript; }
 
     CScript* FindScriptByName(const wstring& _strName);
+    CGameObject* FindChildByName(const wstring& _strName);
 
     void ChangeLayer(CGameObject* _Object, int _Idx);
     int GetLayerIdx() { return m_LayerIdx; }
@@ -64,6 +71,9 @@ public:
     
     void SetGroundCollision(bool _Set) { m_GroundCollision = _Set; }
     bool GetGroundCollision()          { return m_GroundCollision; }
+
+    void SetActive(bool _Set);
+    bool IsActive()           { return m_Active; }
 
     void DisconnectWithLayer();
 
@@ -94,6 +104,15 @@ public:
 
     void SetTarget(CGameObject* _Target) { m_Target = _Target; }
     CGameObject* GetTarget()             { return m_Target; }
+
+    void SetSpeed(float _Speed)          { m_Info.Speed = _Speed; }
+
+    void SetFontScale(float _Scale)       { m_FontScale = _Scale; }
+    void SetFont(const wstring& _strFont) { m_strFont = _strFont; }
+    void SetFontColor(UINT _Color)        { m_Color = _Color; }
+    void SetFontOffset(Vec2 _Offset)      { m_FontOffset = _Offset; }
+
+    Vec3 CarculatePosition();
 
     GET_COMPONENT(Transform, TRANSFORM);
     GET_COMPONENT(MeshRender, MESHRENDER);

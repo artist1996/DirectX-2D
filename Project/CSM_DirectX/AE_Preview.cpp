@@ -93,7 +93,7 @@ void AE_Preview::Preview()
 	ImVec2 Offset = ImVec2(m_Sprite->GetOffsetUV().x, m_Sprite->GetOffsetUV().y);
 
 	ImGui::Image(pTexture->GetSRV().Get(), BackGroundSize
-		, ImVec2(uv_min.x - Offset.x, uv_min.y - Offset.y)
-		, ImVec2(uv_max.x - Offset.x, uv_max.y - Offset.y)
+		, ImVec2(uv_min.x + Offset.x, uv_min.y + Offset.y)
+		, ImVec2(uv_max.x + Offset.x, uv_max.y + Offset.y)
 		, tint_col, border_col);
 }

@@ -21,7 +21,7 @@ void CMeshRender::FinalTick()
 
 void CMeshRender::Render()
 {
-	if (!GetMesh() || !GetMaterial() || !GetMaterial()->GetShader())
+	if (!GetMesh() || !GetMaterial() || !GetMaterial()->GetShader() || !GetOwner()->IsActive())
 		return;
 
 	if (Animator2D())

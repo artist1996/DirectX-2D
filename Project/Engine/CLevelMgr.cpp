@@ -74,6 +74,7 @@ bool CLevelMgr::ChangeLevel(CLevel* _NextLevel)
 void CLevelMgr::ChangeCurLevel(LEVEL_TYPE _Type)
 {
 	m_CurLevel = m_vecLevel[(UINT)_Type];
+	m_CurLevel->Enter();
 
 	LevelChanged();
 }

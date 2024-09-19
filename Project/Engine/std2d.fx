@@ -48,15 +48,15 @@ float4 PS_Std2D(VTX_OUT _in) : SV_Target
         
         float2 BackGroundLeftTop = LeftTopUV - (BackGroundUV - SliceUV) / 2.f;
         float2 vSpriteUV = BackGroundLeftTop + (_in.vUV * BackGroundUV);
-
-        vSpriteUV -= OffsetUV;
-        
+    
+        vSpriteUV -= OffsetUV;       
         
         if (LeftTopUV.x <= vSpriteUV.x && vSpriteUV.x <= LeftTopUV.x + SliceUV.x
             && LeftTopUV.y <= vSpriteUV.y && vSpriteUV.y <= LeftTopUV.y + SliceUV.y)
         {
-            vColor = g_AtlasTex.Sample(g_sam_1, vSpriteUV);           
+            vColor = g_AtlasTex.Sample(g_sam_1, vSpriteUV);
         }
+          
         else
         {
            discard;
@@ -74,8 +74,8 @@ float4 PS_Std2D(VTX_OUT _in) : SV_Target
             vColor = float4(1.f, 0.f, 1.f, 1.f);
         }
     } 
-    
-    if(vColor.a == 0.f)
+     
+    if (vColor.a == 0.f)
     {
         discard;
     }
@@ -210,9 +210,13 @@ float4 PS_Std2D_Additive(VTX_OUT _in) : SV_Target
         }
     }
     
-   //vColor.r *= 2.f;
-   //vColor.g *= 2.f;
-   //vColor.b *= 2.f;
+    
+    if (0.03f >= vColor.r && 0.03f >= vColor.g && 0.03f >= vColor.b)
+        discard;
+    
+    //vColor.r *= 2.f;
+    //vColor.g *= 2.f;
+    //vColor.b *= 2.f;
     
     return vColor;
 }

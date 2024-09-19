@@ -141,7 +141,6 @@ void CAssetMgr::CreateEngineMaterial()
 	Ptr<CMaterial> pMtrl = nullptr;
 
 	// Std2DMtrl
-	//Load<CMaterial>(L"Std2DMtrl", L"material\\std2d.mtrl");
 	pMtrl = new CMaterial(true);
 	pMtrl->SetShader(FindAsset<CGraphicShader>(L"Std2DShader"));
 	AddAsset(L"Std2DMtrl", pMtrl);
@@ -151,16 +150,15 @@ void CAssetMgr::CreateEngineMaterial()
 	pMtrl->SetShader(FindAsset<CGraphicShader>(L"Std2DAlphaBlendShader"));
 	AddAsset(L"Std2DAlphaBlendMtrl", pMtrl);
 
-	// Std2DHeadShotMtrl
+	// Std2DLessAlphaMtrl
 	pMtrl = new CMaterial(true);
 	pMtrl->SetShader(FindAsset<CGraphicShader>(L"Std2DLessAlphaBlendShader"));
 	AddAsset(L"Std2DLessAlphaBlendMtrl", pMtrl);
 
-	// Std2D DNF Mtrl
+	// Std2D Addtive Mtrl
 	pMtrl = new CMaterial(true);
 	pMtrl->SetShader(FindAsset<CGraphicShader>(L"Std2DAdditiveShader"));
 	AddAsset(L"Std2DAdditiveMtrl", pMtrl);
-
 
 	// DebugShapeMtrl
 	pMtrl = new CMaterial(true);
@@ -194,6 +192,28 @@ void CAssetMgr::CreateEngineMaterial()
 	pMtrl->SetTexParam(TEX_2, FindAsset<CTexture>(L"texture\\noise\\noise_02.png"));
 	pMtrl->SetTexParam(TEX_3, FindAsset<CTexture>(L"texture\\noise\\noise_03.jpg"));
 	AddAsset(L"DistortionMtrl", pMtrl);
+
+	// LoadingMtrl
+	pMtrl = new CMaterial(true);
+	pMtrl->SetShader(FindAsset<CGraphicShader>(L"Std2DLoadingShader"));
+	pMtrl->SetTexParam(TEX_0, FindAsset<CTexture>(L"texture\\background\\loading.png"));
+	AddAsset(L"LoadingMtrl", pMtrl);
+
+	// LoadingGageMtrl
+	pMtrl = new CMaterial(true);
+	pMtrl->SetShader(FindAsset<CGraphicShader>(L"Std2DAdditiveShader"));
+	pMtrl->SetTexParam(TEX_0, FindAsset<CTexture>(L"texture\\loading\\loadinggage.png"));
+	AddAsset(L"LoadingGageMtrl", pMtrl);
+
+	// UIMtrl
+	pMtrl = new CMaterial(true);
+	pMtrl->SetShader(FindAsset<CGraphicShader>(L"UIShader"));
+	AddAsset(L"UIMtrl", pMtrl);
+
+	// ButtonMtrl
+	pMtrl = new CMaterial(true);
+	pMtrl->SetShader(FindAsset<CGraphicShader>(L"PlayerButtonHUDShader"));
+	AddAsset(L"PlayerButtonMtrl", pMtrl);
 }
 
 void CAssetMgr::CreateEngineTexture()
@@ -208,6 +228,8 @@ void CAssetMgr::CreateEngineTexture()
 	Load<CTexture>(L"texture\\noise\\noise_01.png", L"texture\\noise\\noise_01.png");
 	Load<CTexture>(L"texture\\noise\\noise_02.png", L"texture\\noise\\noise_02.png");
 	Load<CTexture>(L"texture\\noise\\noise_03.jpg", L"texture\\noise\\noise_03.jpg");
+	Load<CTexture>(L"texture\\background\\loading.png", L"texture\\background\\loading.png");
+	Load<CTexture>(L"texture\\loading\\loadinggage.png", L"texture\\loading\\loadinggage.png");
 }
 
 void CAssetMgr::CreateEngineSprite()
@@ -341,11 +363,22 @@ void CAssetMgr::CreateEngineGraphicShader()
 	pShader->CreatePixelShader(L"shader\\std2d.fx", "PS_Std2D_Additive");
 
 	pShader->SetRSType(RS_TYPE::CULL_NONE);
-	pShader->SetDSType(DS_TYPE::LESS);
+	pShader->SetDSType(DS_TYPE::NO_TEST_NO_WRITE);
 	pShader->SetBSType(BS_TYPE::ADDITIVE);
 
 	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_TRANSPARENT);
 	AddAsset(L"Std2DAdditiveShader", pShader);
+
+	pShader = new CGraphicShader;
+	pShader->CreateVertexShader(L"shader\\std2d.fx", "VS_Std2D");
+	pShader->CreatePixelShader(L"shader\\std2d.fx", "PS_Std2D");
+	
+	pShader->SetRSType(RS_TYPE::CULL_NONE);
+	pShader->SetDSType(DS_TYPE::LESS);
+	pShader->SetBSType(BS_TYPE::DEFAULT);
+	
+	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_MASKED);
+	AddAsset(L"Std2DLoadingShader", pShader);
 
 	// DebugShapeShader
 	pShader = new CGraphicShader;
@@ -414,6 +447,88 @@ void CAssetMgr::CreateEngineGraphicShader()
 
 	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_POSTPROCESS);
 	AddAsset(L"DistortionShader", pShader);
+
+	// UI Shader
+	pShader = new CGraphicShader;
+	pShader->CreateVertexShader(L"shader\\ui.fx", "VS_UI");
+	pShader->CreatePixelShader(L"shader\\ui.fx", "PS_UI");
+	
+	pShader->SetRSType(RS_TYPE::CULL_NONE);
+	pShader->SetDSType(DS_TYPE::NO_TEST_NO_WRITE);
+	pShader->SetBSType(BS_TYPE::ALPHABLEND_COVERAGE);
+	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_UI);
+	pShader->AddTexParam(TEX_0, "OutputTexture");
+	AddAsset(L"UIShader", pShader);
+
+	// Player Button
+	pShader = new CGraphicShader;
+	pShader->CreateVertexShader(L"shader\\ui.fx", "VS_UI");
+	pShader->CreatePixelShader(L"shader\\ui.fx", "PS_UI");
+
+	pShader->SetRSType(RS_TYPE::CULL_NONE);
+	pShader->SetDSType(DS_TYPE::NO_TEST_NO_WRITE);
+	pShader->SetBSType(BS_TYPE::DEFAULT);
+	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_UI);
+	AddAsset(L"PlayerButtonHUDShader", pShader);
+
+	// Player HUD Shader
+	pShader = new CGraphicShader;
+	pShader->CreateVertexShader(L"shader\\ui.fx", "VS_UI");
+	pShader->CreatePixelShader(L"shader\\ui.fx", "Player_HUD");
+
+	pShader->SetRSType(RS_TYPE::CULL_NONE);
+	pShader->SetDSType(DS_TYPE::NO_TEST_NO_WRITE);
+	pShader->SetBSType(BS_TYPE::DEFAULT);
+	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_UI);
+	pShader->AddTexParam(TEX_0, "OutputTexture");
+	AddAsset(L"PlayerHUDShader", pShader);
+
+	// Player Fatigue Shader
+	pShader = new CGraphicShader;
+	pShader->CreateVertexShader(L"shader\\ui.fx", "VS_UI");
+	pShader->CreatePixelShader(L"shader\\ui.fx", "Player_FatigueHUD");
+
+	pShader->SetRSType(RS_TYPE::CULL_NONE);
+	pShader->SetDSType(DS_TYPE::NO_TEST_NO_WRITE);
+	pShader->SetBSType(BS_TYPE::DEFAULT);
+	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_UI);
+	pShader->AddTexParam(TEX_0, "OutputTexture");
+	AddAsset(L"PlayerFatigueShader", pShader);
+
+	// Icon Shader
+	pShader = new CGraphicShader;
+	pShader->CreateVertexShader(L"shader\\ui.fx", "VS_UI");
+	pShader->CreatePixelShader(L"shader\\ui.fx", "PS_Icon");
+
+	pShader->SetRSType(RS_TYPE::CULL_NONE);
+	pShader->SetDSType(DS_TYPE::NO_TEST_NO_WRITE);
+	pShader->SetBSType(BS_TYPE::ADDITIVE);
+	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_UI);
+	pShader->AddTexParam(TEX_0, "OutputTexture");
+	AddAsset(L"IconShader", pShader);
+
+	// Monster Face Shader
+	pShader = new CGraphicShader;
+	pShader->CreateVertexShader(L"shader\\ui.fx", "VS_UI");
+	pShader->CreatePixelShader(L"shader\\ui.fx", "PS_MonsterFace");
+
+	pShader->SetRSType(RS_TYPE::CULL_NONE);
+	pShader->SetDSType(DS_TYPE::NO_TEST_NO_WRITE);
+	pShader->SetBSType(BS_TYPE::ALPHABLEND_COVERAGE);
+	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_UI);
+	pShader->AddTexParam(TEX_0, "OutputTexture");
+	AddAsset(L"MonsterFaceShader", pShader);
+
+	//PS_BossHUD;
+	pShader = new CGraphicShader;
+	pShader->CreateVertexShader(L"shader\\ui.fx", "VS_UI");
+	pShader->CreatePixelShader(L"shader\\ui.fx", "PS_BossHUD");
+
+	pShader->SetRSType(RS_TYPE::CULL_NONE);
+	pShader->SetDSType(DS_TYPE::NO_TEST_NO_WRITE);
+	pShader->SetBSType(BS_TYPE::ALPHABLEND_COVERAGE);
+	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_UI);
+	AddAsset(L"PS_BossHUD", pShader);
 }
 
 #include "CParticleTickCS.h"

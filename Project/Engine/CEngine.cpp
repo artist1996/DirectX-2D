@@ -64,7 +64,7 @@ int CEngine::Init(HWND _hWnd, POINT _ptResolution, OBJECT_SAVE _SaveFunc, OBJECT
 	CPrefab::g_ObjectSaveFunc = _SaveFunc;
 	CPrefab::g_ObjectLoadFunc = _LoadFunc;
 
-	CObjectPoolMgr::GetInst()->Init();
+	//CObjectPoolMgr::GetInst()->Init();
 
 	return S_OK;
 }

@@ -29,6 +29,9 @@ CCamera::CCamera()
 	, m_AspectRatio(0.f)
 	, m_ZoomIn(false)
 	, m_ZoomOut(false)
+	, m_ShakingIn(false)
+	, m_ShakingOut(false)
+	, m_UI(false)
 {
 	Vec2 vResolution = CDevice::GetInst()->GetResolution();
 	m_Width = vResolution.x;
@@ -81,6 +84,16 @@ void CCamera::FinalTick()
 	else if (m_ZoomOut)
 	{
 		ZoomOut();
+	}
+
+	if (m_ShakingIn)
+	{
+		ShakingIn();
+	}
+
+	else if (m_ShakingOut)
+	{
+		ShakingOut();
 	}
 	
 	// Projection Space Åõ¿µ ÁÂÇ¥°è(NDC)
@@ -225,6 +238,28 @@ void CCamera::Render()
 	m_vecParticles.clear();
 	m_vecPostProcess.clear();
 	m_vecUI.clear();
+}
+
+void CCamera::ShakingIn()
+{
+	m_ProjectionScale -= DT * 30.f;
+
+	if (0.85f > m_ProjectionScale)
+	{
+		m_ProjectionScale = 0.85f;
+		m_ShakingIn = false;
+	}
+}
+
+void CCamera::ShakingOut()
+{
+	m_ProjectionScale += DT * 30.f;
+
+	if (1.f < m_ProjectionScale)
+	{
+		m_ProjectionScale = 1.f;
+		m_ShakingOut = false;
+	}
 }
 
 void CCamera::SaveToFile(FILE* _pFile)

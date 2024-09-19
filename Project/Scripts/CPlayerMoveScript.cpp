@@ -3,9 +3,11 @@
 
 #include <Engine/CLevelMgr.h>
 #include <Engine/CObjectPoolMgr.h>
+#include <Engine/CFontMgr.h>
 
 #include <Engine/CTransform.h>
 #include <Engine/CAnimator2D.h>
+
 
 #include "CPlayerScript.h"
 
@@ -24,9 +26,9 @@ void CPlayerMoveScript::AddForce()
 	OBJ_DIR Dir = GetOwner()->GetDir();
 
 	if (OBJ_DIR::DIR_RIGHT == Dir)
-		Rigidbody()->AddForce(Vec3(-90000.f, 0.f, 0.f));
+		Rigidbody()->AddForce(Vec3(-70000.f, 0.f, 0.f));
 	else if (OBJ_DIR::DIR_LEFT == Dir)
-		Rigidbody()->AddForce(Vec3(90000.f, 0.f, 0.f));
+		Rigidbody()->AddForce(Vec3(70000.f, 0.f, 0.f));
 }
 
 void CPlayerMoveScript::Begin()
@@ -34,6 +36,7 @@ void CPlayerMoveScript::Begin()
 	GetOwner()->SetID(OBJ_ID::PLAYER);
 	INFO& info = GetOwner()->GetInfo();
 	info.bMoveable = true;
+	info.bTackle = false;
 }
 
 void CPlayerMoveScript::Tick()
@@ -48,13 +51,13 @@ void CPlayerMoveScript::Tick()
 	{
 		if (KEY_PRESSED(KEY::RIGHT) && bMoveable[(UINT)PLATFORM_TYPE::RIGHT])
 		{
-			vPos += Vec3(1.f, 0.f, 0.f) * m_Speed * DT;
+			vPos += Vec3(1.f, 0.f, 0.f) * info.Speed * DT;
 			vRot = Vec3(0.f, XM_PI, 0.f);
 			GetOwner()->SetDir(OBJ_DIR::DIR_RIGHT);
 		}
 		if (KEY_PRESSED(KEY::LEFT) && bMoveable[(UINT)PLATFORM_TYPE::LEFT])
 		{
-			vPos += Vec3(-1.f, 0.f, 0.f) * m_Speed * DT;
+			vPos += Vec3(-1.f, 0.f, 0.f) * info.Speed * DT;
 			vRot = Vec3(0.f, 0.f, 0.f);
 			GetOwner()->SetDir(OBJ_DIR::DIR_LEFT);
 		}
@@ -68,10 +71,14 @@ void CPlayerMoveScript::Tick()
 	{
 		OBJ_DIR Dir = GetOwner()->GetDir();
 
-		if (OBJ_DIR::DIR_LEFT == Dir)
-			vPos += Vec3(-1.f, 0.f, 0.f) * 700.f * DT;
-		else if (OBJ_DIR::DIR_RIGHT == Dir)
-			vPos += Vec3(1.f, 0.f, 0.f) * 700.f * DT;
+		if (OBJ_DIR::DIR_LEFT == Dir && bMoveable[(UINT)PLATFORM_TYPE::LEFT])
+		{
+			vPos += Vec3(-1.f, 0.f, 0.f) * 1500.f * DT;
+		}
+		else if (OBJ_DIR::DIR_RIGHT == Dir && bMoveable[(UINT)PLATFORM_TYPE::RIGHT])
+		{
+			vPos += Vec3(1.f, 0.f, 0.f) * 1500.f * DT;
+		}
 	}
 
 	if (info.bForce)
@@ -79,7 +86,7 @@ void CPlayerMoveScript::Tick()
 		AddForce();
 		info.bForce = false;
 	}
-	
+
 
 	Transform()->SetRelativePos(Vec3(vPos.x, vPos.y, vPos.y));
 	Transform()->SetRelativeRotation(vRot);

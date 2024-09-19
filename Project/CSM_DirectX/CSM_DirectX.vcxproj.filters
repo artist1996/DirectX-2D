@@ -82,9 +82,6 @@
     <Filter Include="02. EditorUI\01. Inspector\AssetUI\09. GraphicShader">
       <UniqueIdentifier>{a57bc6d5-554e-4b11-824f-ba60052e82bd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. EditorUI\03. Outliner">
-      <UniqueIdentifier>{19c223bd-5886-44ed-838d-d7f075c70675}</UniqueIdentifier>
-    </Filter>
     <Filter Include="01. Manager\01. EditorMgr">
       <UniqueIdentifier>{205af50f-4cd8-40f8-8d3e-203ecd8fcf25}</UniqueIdentifier>
     </Filter>
@@ -171,6 +168,18 @@
     </Filter>
     <Filter Include="02. EditorUI\12. Level Editor">
       <UniqueIdentifier>{84c0e6e4-9d92-401d-8d9e-912e3a55e5de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. EditorUI\03. Outliner">
+      <UniqueIdentifier>{19c223bd-5886-44ed-838d-d7f075c70675}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Level">
+      <UniqueIdentifier>{8dd39063-01cc-4190-aa28-46babfbbdc34}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Level\01. Loading">
+      <UniqueIdentifier>{e97e6d8c-8bed-4f03-968c-f2aca3b991d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. EditorUI\01. Inspector\ComponentUI\11. FontUI">
+      <UniqueIdentifier>{57ec26b6-73f1-45fc-9cd6-dcf948095577}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -375,6 +384,12 @@
     <ClInclude Include="LevelEditor.h">
       <Filter>02. EditorUI\12. Level Editor</Filter>
     </ClInclude>
+    <ClInclude Include="LoadLevel.h">
+      <Filter>04. Level\01. Loading</Filter>
+    </ClInclude>
+    <ClInclude Include="FontUI.h">
+      <Filter>02. EditorUI\01. Inspector\ComponentUI\11. FontUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -572,6 +587,12 @@
     </ClCompile>
     <ClCompile Include="LevelEditor.cpp">
       <Filter>02. EditorUI\12. Level Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="LoadLevel.cpp">
+      <Filter>04. Level\01. Loading</Filter>
+    </ClCompile>
+    <ClCompile Include="FontUI.cpp">
+      <Filter>02. EditorUI\01. Inspector\ComponentUI\11. FontUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -167,6 +167,7 @@
     <ClInclude Include="EditorUI.h" />
     <ClInclude Include="Animator2DUI.h" />
     <ClInclude Include="AnimationUI.h" />
+    <ClInclude Include="FontUI.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="GraphicShaderUI.h" />
     <ClInclude Include="ImGui\imconfig.h" />
@@ -181,6 +182,7 @@
     <ClInclude Include="LevelEditor.h" />
     <ClInclude Include="Light2DUI.h" />
     <ClInclude Include="ListUI.h" />
+    <ClInclude Include="LoadLevel.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="MaterialUI.h" />
     <ClInclude Include="MenuUI.h" />
@@ -238,6 +240,7 @@
     <ClCompile Include="EditorUI.cpp" />
     <ClCompile Include="Animator2DUI.cpp" />
     <ClCompile Include="AnimationUI.cpp" />
+    <ClCompile Include="FontUI.cpp" />
     <ClCompile Include="GraphicShaderUI.cpp" />
     <ClCompile Include="ImGui\imgui.cpp" />
     <ClCompile Include="ImGui\imgui_demo.cpp" />
@@ -251,6 +254,7 @@
     <ClCompile Include="LevelEditor.cpp" />
     <ClCompile Include="Light2DUI.cpp" />
     <ClCompile Include="ListUI.cpp" />
+    <ClCompile Include="LoadLevel.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MaterialUI.cpp" />
     <ClCompile Include="MenuUI.cpp" />

@@ -561,5 +561,8 @@
     <FxCompile Include="particletick.fx">
       <Filter>HLSL\03. Compute Shader\02. ParticleTick</Filter>
     </FxCompile>
+    <FxCompile Include="ui.fx">
+      <Filter>HLSL\02. Render\01. 2D</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

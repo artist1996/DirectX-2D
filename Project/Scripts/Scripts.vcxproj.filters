@@ -13,95 +13,8 @@
     <Filter Include="Scripts\01. PlayerScript">
       <UniqueIdentifier>{48304f43-ef73-4569-b2b1-e526439abd54}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Scripts\02. PlayerSkillScript">
-      <UniqueIdentifier>{4a9e02b0-a7df-438a-9042-520c52521009}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Scripts\02. PlayerSkillScript\01. Buff">
-      <UniqueIdentifier>{7744850e-eee2-4dbc-a3a0-83f2fdeb645b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Scripts\02. PlayerSkillScript\02. RandomShoot">
-      <UniqueIdentifier>{8cbaf040-4baf-4781-b85b-6aa27e31e90f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Scripts\03. PlayerEffectScript">
-      <UniqueIdentifier>{eb41b7cb-402b-42b0-ab5d-e03799e14c01}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Scripts\04. PlatformScript">
-      <UniqueIdentifier>{ecc53cfb-0c0c-4f0c-a591-674601e4651f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Scripts\00. CameraScript">
       <UniqueIdentifier>{1f6c615f-356c-4360-a290-9feebae13b69}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Scripts\02. PlayerSkillScript\03. Pistol">
-      <UniqueIdentifier>{6087766c-003e-41af-8271-7b91ffc20793}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Scripts\03. PlayerEffectScript\02. RevolverHammerScript">
-      <UniqueIdentifier>{398a200a-1848-4862-b253-f4ca96844cd9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Scripts\03. PlayerEffectScript\01. RevolverMuzzleScript">
-      <UniqueIdentifier>{a072db7e-9eaa-4568-8775-fb8fee40ed71}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Scripts\03. PlayerEffectScript\03. HeadShotEffect">
-      <UniqueIdentifier>{0f81d8df-95e5-41eb-8ca1-415428a41fc1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Scripts\02. PlayerSkillScript\04. WindMill">
-      <UniqueIdentifier>{da887d9b-8b6a-4819-b396-ce8c164e6605}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Scripts\02. PlayerSkillScript\05. MachKick">
-      <UniqueIdentifier>{343e29c4-320d-4039-bff1-84acb9e4c99a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Scripts\02. PlayerSkillScript\06. DoubleGunHawk">
-      <UniqueIdentifier>{cb866253-fc03-4c60-98cd-2fc8fd532e83}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Scripts\02. PlayerSkillScript\07. HeadShot">
-      <UniqueIdentifier>{299c45ab-54f6-4728-955a-5d8d94cec322}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Scripts\02. PlayerSkillScript\08. RisingShot">
-      <UniqueIdentifier>{ec784029-79b8-4adf-b344-bcb197c628db}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Scripts\02. PlayerSkillScript\09. JackSpike">
-      <UniqueIdentifier>{0c3f07f4-0a88-4a97-9141-e61b13db457c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Scripts\02. PlayerSkillScript\07. HeadShot\01. Normal">
-      <UniqueIdentifier>{6290317b-6ebf-4b79-bf2a-8ef37b94a5f3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Scripts\02. PlayerSkillScript\07. HeadShot\02. Diagonal">
-      <UniqueIdentifier>{edda1265-8009-4583-b213-d0c1c0d4521d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Scripts\02. PlayerSkillScript\08. RisingShot\01. Normal">
-      <UniqueIdentifier>{96c8b010-9471-4a29-ae83-b3a1c1e09f37}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Scripts\02. PlayerSkillScript\08. RisingShot\02. Diagonal">
-      <UniqueIdentifier>{69404d0f-fdd3-4830-97b4-24c05922d253}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Scripts\03. PlayerEffectScript\04. GunHawkExplode">
-      <UniqueIdentifier>{970e8af2-4045-4cc7-9524-fbb24a848c90}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Scripts\02. PlayerSkillScript\03. Pistol\01. Normal">
-      <UniqueIdentifier>{ad28ae7d-5dcc-486a-916b-59eb4c79ecf7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Scripts\02. PlayerSkillScript\03. Pistol\02. Diagonal">
-      <UniqueIdentifier>{d004ebd1-3f01-40e7-b2b9-817aa0c62a8a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Scripts\05. NPCScript">
-      <UniqueIdentifier>{2eac85f5-e8a0-4269-bc3a-b93f70e99eec}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Scripts\05. NPCScript\01. Seria">
-      <UniqueIdentifier>{95e264fa-989a-4126-9ec0-5f672cbb66a4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Scripts\06. GateScript">
-      <UniqueIdentifier>{166948f6-871d-450d-8302-52b3a6987ee2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Scripts\06. GateScript\01. SeriaRoomGate">
-      <UniqueIdentifier>{447b6b60-5e50-424c-a2a4-8019c24c70a6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Scripts\07. MonsterScript">
-      <UniqueIdentifier>{dbad4e44-9b58-4d4d-8475-d9a41d51e867}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Scripts\07. MonsterScript\01. MeltKnight">
-      <UniqueIdentifier>{09582a77-4129-4ae5-8251-96ad029a520d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Scripts\07. MonsterScript\00. Move">
-      <UniqueIdentifier>{ecad5b4d-8259-49bc-a1d1-e11154f8cf4e}</UniqueIdentifier>
     </Filter>
     <Filter Include="Scripts\01. PlayerScript\01. PlayerScript">
       <UniqueIdentifier>{411b4e33-e519-480d-bd2b-d45403f5be65}</UniqueIdentifier>
@@ -109,41 +22,254 @@
     <Filter Include="Scripts\01. PlayerScript\02. PlayerMoveScript">
       <UniqueIdentifier>{57cb2e6a-940f-47ba-bbfe-ab012bf646a6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Scripts\08. DummyScript">
-      <UniqueIdentifier>{6645b588-5969-4148-88ec-5bd7096b4b06}</UniqueIdentifier>
+    <Filter Include="Scripts\01. PlayerScript\03. PlayerSkillScript">
+      <UniqueIdentifier>{4a9e02b0-a7df-438a-9042-520c52521009}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Scripts\09. ParticleScript">
-      <UniqueIdentifier>{42ab8cec-ec06-414f-94ce-5c0240819079}</UniqueIdentifier>
+    <Filter Include="Scripts\01. PlayerScript\03. PlayerSkillScript\01. Buff">
+      <UniqueIdentifier>{7744850e-eee2-4dbc-a3a0-83f2fdeb645b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Scripts\10. EffectScript">
-      <UniqueIdentifier>{ee8691e5-2fcf-4054-b94c-c9b1c78cfed9}</UniqueIdentifier>
+    <Filter Include="Scripts\01. PlayerScript\03. PlayerSkillScript\02. RandomShoot">
+      <UniqueIdentifier>{8cbaf040-4baf-4781-b85b-6aa27e31e90f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Scripts\07. MonsterScript\02. Hyungteo">
-      <UniqueIdentifier>{4df7c792-7170-43a3-9ecb-ab5076ee81c4}</UniqueIdentifier>
+    <Filter Include="Scripts\01. PlayerScript\03. PlayerSkillScript\03. Pistol">
+      <UniqueIdentifier>{6087766c-003e-41af-8271-7b91ffc20793}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Scripts\06. GateScript\02. LeshphonGate">
+    <Filter Include="Scripts\01. PlayerScript\03. PlayerSkillScript\03. Pistol\01. Normal">
+      <UniqueIdentifier>{ad28ae7d-5dcc-486a-916b-59eb4c79ecf7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\01. PlayerScript\03. PlayerSkillScript\03. Pistol\02. Diagonal">
+      <UniqueIdentifier>{d004ebd1-3f01-40e7-b2b9-817aa0c62a8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\01. PlayerScript\03. PlayerSkillScript\04. WindMill">
+      <UniqueIdentifier>{da887d9b-8b6a-4819-b396-ce8c164e6605}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\01. PlayerScript\03. PlayerSkillScript\05. MachKick">
+      <UniqueIdentifier>{343e29c4-320d-4039-bff1-84acb9e4c99a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\01. PlayerScript\03. PlayerSkillScript\06. DoubleGunHawk">
+      <UniqueIdentifier>{cb866253-fc03-4c60-98cd-2fc8fd532e83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\01. PlayerScript\03. PlayerSkillScript\07. HeadShot">
+      <UniqueIdentifier>{299c45ab-54f6-4728-955a-5d8d94cec322}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\01. PlayerScript\03. PlayerSkillScript\07. HeadShot\01. Normal">
+      <UniqueIdentifier>{6290317b-6ebf-4b79-bf2a-8ef37b94a5f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\01. PlayerScript\03. PlayerSkillScript\07. HeadShot\02. Diagonal">
+      <UniqueIdentifier>{edda1265-8009-4583-b213-d0c1c0d4521d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\01. PlayerScript\03. PlayerSkillScript\08. RisingShot">
+      <UniqueIdentifier>{ec784029-79b8-4adf-b344-bcb197c628db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\01. PlayerScript\03. PlayerSkillScript\08. RisingShot\01. Normal">
+      <UniqueIdentifier>{96c8b010-9471-4a29-ae83-b3a1c1e09f37}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\01. PlayerScript\03. PlayerSkillScript\08. RisingShot\02. Diagonal">
+      <UniqueIdentifier>{69404d0f-fdd3-4830-97b4-24c05922d253}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\01. PlayerScript\03. PlayerSkillScript\09. JackSpike">
+      <UniqueIdentifier>{0c3f07f4-0a88-4a97-9141-e61b13db457c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\01. PlayerScript\03. PlayerSkillScript\00. Ground">
+      <UniqueIdentifier>{73eaa73c-96df-48d5-b45b-d286e2b31046}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\01. PlayerScript\04. PlayerEffectScript">
+      <UniqueIdentifier>{eb41b7cb-402b-42b0-ab5d-e03799e14c01}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\01. PlayerScript\04. PlayerEffectScript\02. RevolverHammerScript">
+      <UniqueIdentifier>{398a200a-1848-4862-b253-f4ca96844cd9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\01. PlayerScript\04. PlayerEffectScript\01. RevolverMuzzleScript">
+      <UniqueIdentifier>{a072db7e-9eaa-4568-8775-fb8fee40ed71}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\01. PlayerScript\04. PlayerEffectScript\03. HeadShotEffect">
+      <UniqueIdentifier>{0f81d8df-95e5-41eb-8ca1-415428a41fc1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\01. PlayerScript\04. PlayerEffectScript\04. GunHawkExplode">
+      <UniqueIdentifier>{970e8af2-4045-4cc7-9524-fbb24a848c90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\02. PlatformScript">
+      <UniqueIdentifier>{ecc53cfb-0c0c-4f0c-a591-674601e4651f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\03. NPCScript">
+      <UniqueIdentifier>{2eac85f5-e8a0-4269-bc3a-b93f70e99eec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\03. NPCScript\01. Seria">
+      <UniqueIdentifier>{95e264fa-989a-4126-9ec0-5f672cbb66a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\04. GateScript">
+      <UniqueIdentifier>{166948f6-871d-450d-8302-52b3a6987ee2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\04. GateScript\01. SeriaRoomGate">
+      <UniqueIdentifier>{447b6b60-5e50-424c-a2a4-8019c24c70a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\04. GateScript\02. LeshphonGate">
       <UniqueIdentifier>{f3d785db-1e4d-4501-bc9c-e75f4d69c735}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Scripts\11. IronCageScript">
-      <UniqueIdentifier>{6bad0db4-4281-474f-b7d9-cf5c8b9829e7}</UniqueIdentifier>
+    <Filter Include="Scripts\05. MonsterScript">
+      <UniqueIdentifier>{dbad4e44-9b58-4d4d-8475-d9a41d51e867}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Scripts\07. MonsterScript\02. Hyungteo\01. Entity">
+    <Filter Include="Scripts\05. MonsterScript\01. MeltKnight">
+      <UniqueIdentifier>{09582a77-4129-4ae5-8251-96ad029a520d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\05. MonsterScript\00. Move">
+      <UniqueIdentifier>{ecad5b4d-8259-49bc-a1d1-e11154f8cf4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\05. MonsterScript\02. Hyungteo">
+      <UniqueIdentifier>{4df7c792-7170-43a3-9ecb-ab5076ee81c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\05. MonsterScript\02. Hyungteo\01. Entity">
       <UniqueIdentifier>{238a1c98-775d-4aac-9bcb-1d4ddd28b07b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Scripts\07. MonsterScript\02. Hyungteo\02. Punch">
+    <Filter Include="Scripts\05. MonsterScript\02. Hyungteo\02. Punch">
       <UniqueIdentifier>{93b2082d-d27a-416d-803d-1387f650b111}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Scripts\07. MonsterScript\02. Hyungteo\03. Sting">
+    <Filter Include="Scripts\05. MonsterScript\02. Hyungteo\03. Sting">
       <UniqueIdentifier>{ab580214-ede8-40e1-972e-fd17d4983f6e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Scripts\07. MonsterScript\02. Hyungteo\04. BuffEater">
+    <Filter Include="Scripts\05. MonsterScript\02. Hyungteo\04. BuffEater">
       <UniqueIdentifier>{b65c4907-305f-4b7d-a761-315443bae7ff}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Scripts\07. MonsterScript\03. Juris">
+    <Filter Include="Scripts\05. MonsterScript\03. Juris">
       <UniqueIdentifier>{0edb668c-ea20-4085-9e4f-3bc29efcdc08}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Scripts\02. PlayerSkillScript\00. Ground">
-      <UniqueIdentifier>{73eaa73c-96df-48d5-b45b-d286e2b31046}</UniqueIdentifier>
+    <Filter Include="Scripts\05. MonsterScript\04. Direzie">
+      <UniqueIdentifier>{b5e1f2ae-859c-42a0-bf97-edfd6e175a4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\06. DummyScript">
+      <UniqueIdentifier>{6645b588-5969-4148-88ec-5bd7096b4b06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\06. DummyScript\01. Dummy">
+      <UniqueIdentifier>{95d64d61-0c18-49ed-81f3-afa82797fbcb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\06. DummyScript\02. LoadingScript">
+      <UniqueIdentifier>{827cb867-d9d0-4e3b-b3a4-74be1d453e4c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\07. ParticleScript">
+      <UniqueIdentifier>{42ab8cec-ec06-414f-94ce-5c0240819079}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\08. EffectScript">
+      <UniqueIdentifier>{ee8691e5-2fcf-4054-b94c-c9b1c78cfed9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\09. IronCageScript">
+      <UniqueIdentifier>{6bad0db4-4281-474f-b7d9-cf5c8b9829e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\05. MonsterScript\04. Direzie\01. Entity">
+      <UniqueIdentifier>{a13da6d6-adb0-47f3-9aa2-7fe59aa2a61b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\05. MonsterScript\04. Direzie\02. Wind">
+      <UniqueIdentifier>{51827b8d-7c80-4f2d-872e-b6770e487481}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\10. UIScript">
+      <UniqueIdentifier>{ed4c0c7c-d8b5-45ac-9043-0945c42e5982}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\10. UIScript\02. Monster">
+      <UniqueIdentifier>{e33c7af5-7699-462e-bc5a-50e4949b1f1d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\00. CameraScript\01. MainCamera">
+      <UniqueIdentifier>{cf4790c6-c94f-464b-9b42-7520b5402141}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\00. CameraScript\02. UICamera">
+      <UniqueIdentifier>{e7ebbad5-78a3-4723-9440-345aa97a4e48}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\11. MouseScript">
+      <UniqueIdentifier>{852d5f99-9904-41b1-9482-6d4abca655e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\10. UIScript\02. Monster\02. CurHP">
+      <UniqueIdentifier>{4facce04-3c81-41ae-871f-cf92f11564d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\10. UIScript\02. Monster\03. NextHPBar">
+      <UniqueIdentifier>{8f427039-dd54-4cfd-9a20-3ac003b5bb42}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\10. UIScript\02. Monster\04. WhiteBar">
+      <UniqueIdentifier>{fe950791-5b48-4f9e-b63a-8a6533f0d3a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\10. UIScript\02. Monster\05. Face">
+      <UniqueIdentifier>{fd3005ae-e838-42e5-b96a-f221d5f99f46}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\10. UIScript\04. Boss">
+      <UniqueIdentifier>{d8a83b2a-cc69-4097-b466-c81a5f3c94a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\10. UIScript\04. Boss\01. HUD">
+      <UniqueIdentifier>{08422db4-b572-41b8-9dba-edccfeadebd0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\10. UIScript\04. Boss\02. HPBar">
+      <UniqueIdentifier>{10d68077-657e-4775-ac59-8a5ef163f758}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\10. UIScript\04. Boss\02. HPBar\01. CurHPBar">
+      <UniqueIdentifier>{73096698-988e-432b-ace7-47fc5a911d93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\10. UIScript\04. Boss\02. HPBar\02. NextHPBar">
+      <UniqueIdentifier>{b2631493-58f0-40e8-a935-6b0ea5952940}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\10. UIScript\04. Boss\02. HPBar\03. MaxHPBar">
+      <UniqueIdentifier>{e854274c-3e51-4cad-9b3a-df51b5928406}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\10. UIScript\04. Boss\02. HPBar\04. CurHPText">
+      <UniqueIdentifier>{3c0a2403-d20c-42e8-b9e3-23eb1ca70aea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\10. UIScript\03. NamedMonster">
+      <UniqueIdentifier>{e0bd5994-d266-4002-8673-1d11d3f30453}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\10. UIScript\03. NamedMonster\01. HUD">
+      <UniqueIdentifier>{fd0d9c27-5d85-48df-97ad-6da875877394}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\10. UIScript\02. Monster\01. HUD">
+      <UniqueIdentifier>{4b488562-02cf-405b-869b-0e09b134b282}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\10. UIScript\02. Monster\06. HPFont">
+      <UniqueIdentifier>{11209b91-e401-4443-8e04-e0b90bbd795b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\01. PlayerScript\03. PlayerSkillScript\10. Punisher">
+      <UniqueIdentifier>{4a0cc590-3ee0-4ab9-8ba0-a79ec24aad21}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\01. PlayerScript\03. PlayerSkillScript\03. Pistol\03. Punisher">
+      <UniqueIdentifier>{209288ae-764f-4382-8680-39b2811fb004}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\01. PlayerScript\03. PlayerSkillScript\11. BBQ">
+      <UniqueIdentifier>{65079391-f5a7-4af3-8688-39ca1d663dea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\01. PlayerScript\03. PlayerSkillScript\12. Gatlinggun">
+      <UniqueIdentifier>{b464c93d-2b7c-4875-8268-376531c728c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\01. PlayerScript\03. PlayerSkillScript\03. Pistol\04. Gatlinggun">
+      <UniqueIdentifier>{cb5d3e6b-2f26-4d07-b1ec-eccbfb55bf0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\10. UIScript\01. Player">
+      <UniqueIdentifier>{607039d9-f61a-4841-92ab-6682f26f7a99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\10. UIScript\01. Player\01. UI">
+      <UniqueIdentifier>{3c98c410-c6d2-4a99-ac80-20915e75f9ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\10. UIScript\01. Player\01. UI\01. Main">
+      <UniqueIdentifier>{754b436a-43e3-4843-9668-225ab357a081}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\10. UIScript\01. Player\01. UI\02. Item">
+      <UniqueIdentifier>{4bca91e3-0fa9-43b6-a33f-423ecd13b0ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\10. UIScript\01. Player\02. HUD">
+      <UniqueIdentifier>{5d10c4a1-6150-4e93-8c5b-02cb68544794}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\10. UIScript\01. Player\02. HUD\01. HP">
+      <UniqueIdentifier>{9d475c40-9797-4ecc-b2a5-c98c05166636}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\10. UIScript\01. Player\02. HUD\02. MP">
+      <UniqueIdentifier>{36b3faee-695c-4e79-ae41-2eb9b8d83170}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\10. UIScript\01. Player\02. HUD\03. Fatigue">
+      <UniqueIdentifier>{37b896e5-6b36-48f2-baab-67e8d1836f8e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\10. UIScript\01. Player\02. HUD\04. Button">
+      <UniqueIdentifier>{a7bb4092-9a06-4576-a246-dade2478474f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\10. UIScript\01. Player\03. Icon">
+      <UniqueIdentifier>{581cd55d-3ee7-4bc6-8952-29cc6bd083d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\10. UIScript\01. Player\03. Icon\01. Skill">
+      <UniqueIdentifier>{62544cf4-79d5-4497-9f8f-1465a304785b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\10. UIScript\01. Player\03. Icon\02. Item">
+      <UniqueIdentifier>{663629e6-ef83-4ac9-b765-7370e0ae02c2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -162,98 +288,179 @@
     <ClInclude Include="CPlayerMoveScript.h">
       <Filter>Scripts\01. PlayerScript\02. PlayerMoveScript</Filter>
     </ClInclude>
-    <ClInclude Include="CCameraMoveScript.h">
-      <Filter>Scripts\00. CameraScript</Filter>
-    </ClInclude>
     <ClInclude Include="CBuffScript.h">
-      <Filter>Scripts\02. PlayerSkillScript\01. Buff</Filter>
+      <Filter>Scripts\01. PlayerScript\03. PlayerSkillScript\01. Buff</Filter>
     </ClInclude>
     <ClInclude Include="CRandomShootScript.h">
-      <Filter>Scripts\02. PlayerSkillScript\02. RandomShoot</Filter>
+      <Filter>Scripts\01. PlayerScript\03. PlayerSkillScript\02. RandomShoot</Filter>
     </ClInclude>
     <ClInclude Include="CPlatformScript.h">
-      <Filter>Scripts\04. PlatformScript</Filter>
+      <Filter>Scripts\02. PlatformScript</Filter>
     </ClInclude>
     <ClInclude Include="CMuzzleScript.h">
-      <Filter>Scripts\03. PlayerEffectScript\01. RevolverMuzzleScript</Filter>
+      <Filter>Scripts\01. PlayerScript\04. PlayerEffectScript\01. RevolverMuzzleScript</Filter>
     </ClInclude>
     <ClInclude Include="CHammerScript.h">
-      <Filter>Scripts\03. PlayerEffectScript\02. RevolverHammerScript</Filter>
+      <Filter>Scripts\01. PlayerScript\04. PlayerEffectScript\02. RevolverHammerScript</Filter>
     </ClInclude>
     <ClInclude Include="CHeadShotEffectScript.h">
-      <Filter>Scripts\03. PlayerEffectScript\03. HeadShotEffect</Filter>
+      <Filter>Scripts\01. PlayerScript\04. PlayerEffectScript\03. HeadShotEffect</Filter>
     </ClInclude>
     <ClInclude Include="CWindmillScript.h">
-      <Filter>Scripts\02. PlayerSkillScript\04. WindMill</Filter>
+      <Filter>Scripts\01. PlayerScript\03. PlayerSkillScript\04. WindMill</Filter>
     </ClInclude>
     <ClInclude Include="CHeadShotScript.h">
-      <Filter>Scripts\02. PlayerSkillScript\07. HeadShot\01. Normal</Filter>
+      <Filter>Scripts\01. PlayerScript\03. PlayerSkillScript\07. HeadShot\01. Normal</Filter>
     </ClInclude>
     <ClInclude Include="CDoubleGunHawkScript.h">
-      <Filter>Scripts\02. PlayerSkillScript\06. DoubleGunHawk</Filter>
+      <Filter>Scripts\01. PlayerScript\03. PlayerSkillScript\06. DoubleGunHawk</Filter>
     </ClInclude>
     <ClInclude Include="CMachKickScript.h">
-      <Filter>Scripts\02. PlayerSkillScript\05. MachKick</Filter>
+      <Filter>Scripts\01. PlayerScript\03. PlayerSkillScript\05. MachKick</Filter>
     </ClInclude>
     <ClInclude Include="CJackSpikeScript.h">
-      <Filter>Scripts\02. PlayerSkillScript\09. JackSpike</Filter>
+      <Filter>Scripts\01. PlayerScript\03. PlayerSkillScript\09. JackSpike</Filter>
     </ClInclude>
     <ClInclude Include="CRisingShotScript.h">
-      <Filter>Scripts\02. PlayerSkillScript\08. RisingShot\01. Normal</Filter>
+      <Filter>Scripts\01. PlayerScript\03. PlayerSkillScript\08. RisingShot\01. Normal</Filter>
     </ClInclude>
     <ClInclude Include="CGunHawkExplodeScript.h">
-      <Filter>Scripts\03. PlayerEffectScript\04. GunHawkExplode</Filter>
+      <Filter>Scripts\01. PlayerScript\04. PlayerEffectScript\04. GunHawkExplode</Filter>
     </ClInclude>
     <ClInclude Include="CPistolScript.h">
-      <Filter>Scripts\02. PlayerSkillScript\03. Pistol\01. Normal</Filter>
+      <Filter>Scripts\01. PlayerScript\03. PlayerSkillScript\03. Pistol\01. Normal</Filter>
     </ClInclude>
     <ClInclude Include="CDiagonalPistolScript.h">
-      <Filter>Scripts\02. PlayerSkillScript\03. Pistol\02. Diagonal</Filter>
+      <Filter>Scripts\01. PlayerScript\03. PlayerSkillScript\03. Pistol\02. Diagonal</Filter>
     </ClInclude>
     <ClInclude Include="CSeriaScript.h">
-      <Filter>Scripts\05. NPCScript\01. Seria</Filter>
+      <Filter>Scripts\03. NPCScript\01. Seria</Filter>
     </ClInclude>
     <ClInclude Include="CDiagonalHeadShotScript.h">
-      <Filter>Scripts\02. PlayerSkillScript\07. HeadShot\02. Diagonal</Filter>
+      <Filter>Scripts\01. PlayerScript\03. PlayerSkillScript\07. HeadShot\02. Diagonal</Filter>
     </ClInclude>
     <ClInclude Include="CSeriaRoomGateScript.h">
-      <Filter>Scripts\06. GateScript\01. SeriaRoomGate</Filter>
+      <Filter>Scripts\04. GateScript\01. SeriaRoomGate</Filter>
     </ClInclude>
     <ClInclude Include="CMeltKnightScript.h">
-      <Filter>Scripts\07. MonsterScript\01. MeltKnight</Filter>
+      <Filter>Scripts\05. MonsterScript\01. MeltKnight</Filter>
     </ClInclude>
     <ClInclude Include="CMonsterMoveScript.h">
-      <Filter>Scripts\07. MonsterScript\00. Move</Filter>
-    </ClInclude>
-    <ClInclude Include="CDummyScript.h">
-      <Filter>Scripts\08. DummyScript</Filter>
+      <Filter>Scripts\05. MonsterScript\00. Move</Filter>
     </ClInclude>
     <ClInclude Include="CParticleScript.h">
-      <Filter>Scripts\09. ParticleScript</Filter>
+      <Filter>Scripts\07. ParticleScript</Filter>
     </ClInclude>
     <ClInclude Include="CEffectScript.h">
-      <Filter>Scripts\10. EffectScript</Filter>
+      <Filter>Scripts\08. EffectScript</Filter>
     </ClInclude>
     <ClInclude Include="LeshphonGateScript.h">
-      <Filter>Scripts\06. GateScript\02. LeshphonGate</Filter>
+      <Filter>Scripts\04. GateScript\02. LeshphonGate</Filter>
     </ClInclude>
     <ClInclude Include="CIroncageScript.h">
-      <Filter>Scripts\11. IronCageScript</Filter>
+      <Filter>Scripts\09. IronCageScript</Filter>
     </ClInclude>
     <ClInclude Include="CHyungteoScript.h">
-      <Filter>Scripts\07. MonsterScript\02. Hyungteo\01. Entity</Filter>
+      <Filter>Scripts\05. MonsterScript\02. Hyungteo\01. Entity</Filter>
     </ClInclude>
     <ClInclude Include="CHyungteoPunchScript.h">
-      <Filter>Scripts\07. MonsterScript\02. Hyungteo\02. Punch</Filter>
+      <Filter>Scripts\05. MonsterScript\02. Hyungteo\02. Punch</Filter>
     </ClInclude>
     <ClInclude Include="CHyungteoStingScript.h">
-      <Filter>Scripts\07. MonsterScript\02. Hyungteo\03. Sting</Filter>
+      <Filter>Scripts\05. MonsterScript\02. Hyungteo\03. Sting</Filter>
     </ClInclude>
     <ClInclude Include="CJurisScript.h">
-      <Filter>Scripts\07. MonsterScript\03. Juris</Filter>
+      <Filter>Scripts\05. MonsterScript\03. Juris</Filter>
     </ClInclude>
     <ClInclude Include="CSkillGroundScript.h">
-      <Filter>Scripts\02. PlayerSkillScript\00. Ground</Filter>
+      <Filter>Scripts\01. PlayerScript\03. PlayerSkillScript\00. Ground</Filter>
+    </ClInclude>
+    <ClInclude Include="CDummyScript.h">
+      <Filter>Scripts\06. DummyScript\01. Dummy</Filter>
+    </ClInclude>
+    <ClInclude Include="CLoadingScript.h">
+      <Filter>Scripts\06. DummyScript\02. LoadingScript</Filter>
+    </ClInclude>
+    <ClInclude Include="CDirezieScript.h">
+      <Filter>Scripts\05. MonsterScript\04. Direzie\01. Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="CDirezieWindScript.h">
+      <Filter>Scripts\05. MonsterScript\04. Direzie\02. Wind</Filter>
+    </ClInclude>
+    <ClInclude Include="CCameraMoveScript.h">
+      <Filter>Scripts\00. CameraScript\01. MainCamera</Filter>
+    </ClInclude>
+    <ClInclude Include="CUICameraScript.h">
+      <Filter>Scripts\00. CameraScript\02. UICamera</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayerHUDScript.h">
+      <Filter>Scripts\10. UIScript\01. Player\02. HUD\01. HP</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayerMPHUDScript.h">
+      <Filter>Scripts\10. UIScript\01. Player\02. HUD\02. MP</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayerUIScript.h">
+      <Filter>Scripts\10. UIScript\01. Player\01. UI\01. Main</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayerFatigueHUDScript.h">
+      <Filter>Scripts\10. UIScript\01. Player\02. HUD\03. Fatigue</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayerHUDButtonScript.h">
+      <Filter>Scripts\10. UIScript\01. Player\02. HUD\04. Button</Filter>
+    </ClInclude>
+    <ClInclude Include="CSkillIconScript.h">
+      <Filter>Scripts\10. UIScript\01. Player\03. Icon\01. Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="CBossHUDScript.h">
+      <Filter>Scripts\10. UIScript\04. Boss\01. HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="CBossCurHPBarScript.h">
+      <Filter>Scripts\10. UIScript\04. Boss\02. HPBar\01. CurHPBar</Filter>
+    </ClInclude>
+    <ClInclude Include="CBossNextHPBarScript.h">
+      <Filter>Scripts\10. UIScript\04. Boss\02. HPBar\02. NextHPBar</Filter>
+    </ClInclude>
+    <ClInclude Include="CBossMaxHPBarScript.h">
+      <Filter>Scripts\10. UIScript\04. Boss\02. HPBar\03. MaxHPBar</Filter>
+    </ClInclude>
+    <ClInclude Include="CBossCurHPFontScript.h">
+      <Filter>Scripts\10. UIScript\04. Boss\02. HPBar\04. CurHPText</Filter>
+    </ClInclude>
+    <ClInclude Include="CNamedMonsterHUDScript.h">
+      <Filter>Scripts\10. UIScript\03. NamedMonster\01. HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="CNamedMonsterFaceHUDScript.h">
+      <Filter>Scripts\10. UIScript\02. Monster\05. Face</Filter>
+    </ClInclude>
+    <ClInclude Include="CMonsterHPBarScript.h">
+      <Filter>Scripts\10. UIScript\02. Monster\02. CurHP</Filter>
+    </ClInclude>
+    <ClInclude Include="CMonsterWhiteBarScript.h">
+      <Filter>Scripts\10. UIScript\02. Monster\04. WhiteBar</Filter>
+    </ClInclude>
+    <ClInclude Include="CMonsterNextHPBarScript.h">
+      <Filter>Scripts\10. UIScript\02. Monster\03. NextHPBar</Filter>
+    </ClInclude>
+    <ClInclude Include="CMonsterHUDScript.h">
+      <Filter>Scripts\10. UIScript\02. Monster\01. HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="CMonsterHPFontScript.h">
+      <Filter>Scripts\10. UIScript\02. Monster\06. HPFont</Filter>
+    </ClInclude>
+    <ClInclude Include="CPunisherScript.h">
+      <Filter>Scripts\01. PlayerScript\03. PlayerSkillScript\10. Punisher</Filter>
+    </ClInclude>
+    <ClInclude Include="CPunisherPistolScript.h">
+      <Filter>Scripts\01. PlayerScript\03. PlayerSkillScript\03. Pistol\03. Punisher</Filter>
+    </ClInclude>
+    <ClInclude Include="CBBQScript.h">
+      <Filter>Scripts\01. PlayerScript\03. PlayerSkillScript\11. BBQ</Filter>
+    </ClInclude>
+    <ClInclude Include="CGatlinggunScript.h">
+      <Filter>Scripts\01. PlayerScript\03. PlayerSkillScript\12. Gatlinggun</Filter>
+    </ClInclude>
+    <ClInclude Include="CGatlinggunPistolScript.h">
+      <Filter>Scripts\01. PlayerScript\03. PlayerSkillScript\03. Pistol\04. Gatlinggun</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -272,98 +479,179 @@
     <ClCompile Include="CPlayerMoveScript.cpp">
       <Filter>Scripts\01. PlayerScript\02. PlayerMoveScript</Filter>
     </ClCompile>
-    <ClCompile Include="CCameraMoveScript.cpp">
-      <Filter>Scripts\00. CameraScript</Filter>
-    </ClCompile>
     <ClCompile Include="CBuffScript.cpp">
-      <Filter>Scripts\02. PlayerSkillScript\01. Buff</Filter>
+      <Filter>Scripts\01. PlayerScript\03. PlayerSkillScript\01. Buff</Filter>
     </ClCompile>
     <ClCompile Include="CRandomShootScript.cpp">
-      <Filter>Scripts\02. PlayerSkillScript\02. RandomShoot</Filter>
+      <Filter>Scripts\01. PlayerScript\03. PlayerSkillScript\02. RandomShoot</Filter>
     </ClCompile>
     <ClCompile Include="CPlatformScript.cpp">
-      <Filter>Scripts\04. PlatformScript</Filter>
+      <Filter>Scripts\02. PlatformScript</Filter>
     </ClCompile>
     <ClCompile Include="CMuzzleScript.cpp">
-      <Filter>Scripts\03. PlayerEffectScript\01. RevolverMuzzleScript</Filter>
+      <Filter>Scripts\01. PlayerScript\04. PlayerEffectScript\01. RevolverMuzzleScript</Filter>
     </ClCompile>
     <ClCompile Include="CHammerScript.cpp">
-      <Filter>Scripts\03. PlayerEffectScript\02. RevolverHammerScript</Filter>
+      <Filter>Scripts\01. PlayerScript\04. PlayerEffectScript\02. RevolverHammerScript</Filter>
     </ClCompile>
     <ClCompile Include="CHeadShotEffectScript.cpp">
-      <Filter>Scripts\03. PlayerEffectScript\03. HeadShotEffect</Filter>
+      <Filter>Scripts\01. PlayerScript\04. PlayerEffectScript\03. HeadShotEffect</Filter>
     </ClCompile>
     <ClCompile Include="CWindmillScript.cpp">
-      <Filter>Scripts\02. PlayerSkillScript\04. WindMill</Filter>
+      <Filter>Scripts\01. PlayerScript\03. PlayerSkillScript\04. WindMill</Filter>
     </ClCompile>
     <ClCompile Include="CHeadShotScript.cpp">
-      <Filter>Scripts\02. PlayerSkillScript\07. HeadShot\01. Normal</Filter>
+      <Filter>Scripts\01. PlayerScript\03. PlayerSkillScript\07. HeadShot\01. Normal</Filter>
     </ClCompile>
     <ClCompile Include="CDoubleGunHawkScript.cpp">
-      <Filter>Scripts\02. PlayerSkillScript\06. DoubleGunHawk</Filter>
+      <Filter>Scripts\01. PlayerScript\03. PlayerSkillScript\06. DoubleGunHawk</Filter>
     </ClCompile>
     <ClCompile Include="CMachKickScript.cpp">
-      <Filter>Scripts\02. PlayerSkillScript\05. MachKick</Filter>
+      <Filter>Scripts\01. PlayerScript\03. PlayerSkillScript\05. MachKick</Filter>
     </ClCompile>
     <ClCompile Include="CJackSpikeScript.cpp">
-      <Filter>Scripts\02. PlayerSkillScript\09. JackSpike</Filter>
+      <Filter>Scripts\01. PlayerScript\03. PlayerSkillScript\09. JackSpike</Filter>
     </ClCompile>
     <ClCompile Include="CRisingShotScript.cpp">
-      <Filter>Scripts\02. PlayerSkillScript\08. RisingShot\01. Normal</Filter>
+      <Filter>Scripts\01. PlayerScript\03. PlayerSkillScript\08. RisingShot\01. Normal</Filter>
     </ClCompile>
     <ClCompile Include="CGunHawkExplodeScript.cpp">
-      <Filter>Scripts\03. PlayerEffectScript\04. GunHawkExplode</Filter>
+      <Filter>Scripts\01. PlayerScript\04. PlayerEffectScript\04. GunHawkExplode</Filter>
     </ClCompile>
     <ClCompile Include="CPistolScript.cpp">
-      <Filter>Scripts\02. PlayerSkillScript\03. Pistol\01. Normal</Filter>
+      <Filter>Scripts\01. PlayerScript\03. PlayerSkillScript\03. Pistol\01. Normal</Filter>
     </ClCompile>
     <ClCompile Include="CDiagonalPistolScript.cpp">
-      <Filter>Scripts\02. PlayerSkillScript\03. Pistol\02. Diagonal</Filter>
+      <Filter>Scripts\01. PlayerScript\03. PlayerSkillScript\03. Pistol\02. Diagonal</Filter>
     </ClCompile>
     <ClCompile Include="CSeriaScript.cpp">
-      <Filter>Scripts\05. NPCScript\01. Seria</Filter>
+      <Filter>Scripts\03. NPCScript\01. Seria</Filter>
     </ClCompile>
     <ClCompile Include="CDiagonalHeadShotScript.cpp">
-      <Filter>Scripts\02. PlayerSkillScript\07. HeadShot\02. Diagonal</Filter>
+      <Filter>Scripts\01. PlayerScript\03. PlayerSkillScript\07. HeadShot\02. Diagonal</Filter>
     </ClCompile>
     <ClCompile Include="CSeriaRoomGateScript.cpp">
-      <Filter>Scripts\06. GateScript\01. SeriaRoomGate</Filter>
+      <Filter>Scripts\04. GateScript\01. SeriaRoomGate</Filter>
     </ClCompile>
     <ClCompile Include="CMeltKnightScript.cpp">
-      <Filter>Scripts\07. MonsterScript\01. MeltKnight</Filter>
+      <Filter>Scripts\05. MonsterScript\01. MeltKnight</Filter>
     </ClCompile>
     <ClCompile Include="CMonsterMoveScript.cpp">
-      <Filter>Scripts\07. MonsterScript\00. Move</Filter>
-    </ClCompile>
-    <ClCompile Include="CDummyScript.cpp">
-      <Filter>Scripts\08. DummyScript</Filter>
+      <Filter>Scripts\05. MonsterScript\00. Move</Filter>
     </ClCompile>
     <ClCompile Include="CParticleScript.cpp">
-      <Filter>Scripts\09. ParticleScript</Filter>
+      <Filter>Scripts\07. ParticleScript</Filter>
     </ClCompile>
     <ClCompile Include="CEffectScript.cpp">
-      <Filter>Scripts\10. EffectScript</Filter>
+      <Filter>Scripts\08. EffectScript</Filter>
     </ClCompile>
     <ClCompile Include="LeshphonGateScript.cpp">
-      <Filter>Scripts\06. GateScript\02. LeshphonGate</Filter>
+      <Filter>Scripts\04. GateScript\02. LeshphonGate</Filter>
     </ClCompile>
     <ClCompile Include="CIroncageScript.cpp">
-      <Filter>Scripts\11. IronCageScript</Filter>
+      <Filter>Scripts\09. IronCageScript</Filter>
     </ClCompile>
     <ClCompile Include="CHyungteoScript.cpp">
-      <Filter>Scripts\07. MonsterScript\02. Hyungteo\01. Entity</Filter>
+      <Filter>Scripts\05. MonsterScript\02. Hyungteo\01. Entity</Filter>
     </ClCompile>
     <ClCompile Include="CHyungteoPunchScript.cpp">
-      <Filter>Scripts\07. MonsterScript\02. Hyungteo\02. Punch</Filter>
+      <Filter>Scripts\05. MonsterScript\02. Hyungteo\02. Punch</Filter>
     </ClCompile>
     <ClCompile Include="CHyungteoStingScript.cpp">
-      <Filter>Scripts\07. MonsterScript\02. Hyungteo\03. Sting</Filter>
+      <Filter>Scripts\05. MonsterScript\02. Hyungteo\03. Sting</Filter>
     </ClCompile>
     <ClCompile Include="CJurisScript.cpp">
-      <Filter>Scripts\07. MonsterScript\03. Juris</Filter>
+      <Filter>Scripts\05. MonsterScript\03. Juris</Filter>
     </ClCompile>
     <ClCompile Include="CSkillGroundScript.cpp">
-      <Filter>Scripts\02. PlayerSkillScript\00. Ground</Filter>
+      <Filter>Scripts\01. PlayerScript\03. PlayerSkillScript\00. Ground</Filter>
+    </ClCompile>
+    <ClCompile Include="CDummyScript.cpp">
+      <Filter>Scripts\06. DummyScript\01. Dummy</Filter>
+    </ClCompile>
+    <ClCompile Include="CLoadingScript.cpp">
+      <Filter>Scripts\06. DummyScript\02. LoadingScript</Filter>
+    </ClCompile>
+    <ClCompile Include="CDirezieScript.cpp">
+      <Filter>Scripts\05. MonsterScript\04. Direzie\01. Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="CDirezieWindScript.cpp">
+      <Filter>Scripts\05. MonsterScript\04. Direzie\02. Wind</Filter>
+    </ClCompile>
+    <ClCompile Include="CCameraMoveScript.cpp">
+      <Filter>Scripts\00. CameraScript\01. MainCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="CUICameraScript.cpp">
+      <Filter>Scripts\00. CameraScript\02. UICamera</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayerHUDScript.cpp">
+      <Filter>Scripts\10. UIScript\01. Player\02. HUD\01. HP</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayerMPHUDScript.cpp">
+      <Filter>Scripts\10. UIScript\01. Player\02. HUD\02. MP</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayerUIScript.cpp">
+      <Filter>Scripts\10. UIScript\01. Player\01. UI\01. Main</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayerFatigueHUDScript.cpp">
+      <Filter>Scripts\10. UIScript\01. Player\02. HUD\03. Fatigue</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayerHUDButtonScript.cpp">
+      <Filter>Scripts\10. UIScript\01. Player\02. HUD\04. Button</Filter>
+    </ClCompile>
+    <ClCompile Include="CSkillIconScript.cpp">
+      <Filter>Scripts\10. UIScript\01. Player\03. Icon\01. Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="CBossHUDScript.cpp">
+      <Filter>Scripts\10. UIScript\04. Boss\01. HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="CBossCurHPBarScript.cpp">
+      <Filter>Scripts\10. UIScript\04. Boss\02. HPBar\01. CurHPBar</Filter>
+    </ClCompile>
+    <ClCompile Include="CBossNextHPBarScript.cpp">
+      <Filter>Scripts\10. UIScript\04. Boss\02. HPBar\02. NextHPBar</Filter>
+    </ClCompile>
+    <ClCompile Include="CBossMaxHPBarScript.cpp">
+      <Filter>Scripts\10. UIScript\04. Boss\02. HPBar\03. MaxHPBar</Filter>
+    </ClCompile>
+    <ClCompile Include="CBossCurHPFontScript.cpp">
+      <Filter>Scripts\10. UIScript\04. Boss\02. HPBar\04. CurHPText</Filter>
+    </ClCompile>
+    <ClCompile Include="CNamedMonsterHUDScript.cpp">
+      <Filter>Scripts\10. UIScript\03. NamedMonster\01. HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="CNamedMonsterFaceHUDScript.cpp">
+      <Filter>Scripts\10. UIScript\02. Monster\05. Face</Filter>
+    </ClCompile>
+    <ClCompile Include="CMonsterHPBarScript.cpp">
+      <Filter>Scripts\10. UIScript\02. Monster\02. CurHP</Filter>
+    </ClCompile>
+    <ClCompile Include="CMonsterWhiteBarScript.cpp">
+      <Filter>Scripts\10. UIScript\02. Monster\04. WhiteBar</Filter>
+    </ClCompile>
+    <ClCompile Include="CMonsterNextHPBarScript.cpp">
+      <Filter>Scripts\10. UIScript\02. Monster\03. NextHPBar</Filter>
+    </ClCompile>
+    <ClCompile Include="CMonsterHUDScript.cpp">
+      <Filter>Scripts\10. UIScript\02. Monster\01. HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="CMonsterHPFontScript.cpp">
+      <Filter>Scripts\10. UIScript\02. Monster\06. HPFont</Filter>
+    </ClCompile>
+    <ClCompile Include="CPunisherScript.cpp">
+      <Filter>Scripts\01. PlayerScript\03. PlayerSkillScript\10. Punisher</Filter>
+    </ClCompile>
+    <ClCompile Include="CPunisherPistolScript.cpp">
+      <Filter>Scripts\01. PlayerScript\03. PlayerSkillScript\03. Pistol\03. Punisher</Filter>
+    </ClCompile>
+    <ClCompile Include="CBBQScript.cpp">
+      <Filter>Scripts\01. PlayerScript\03. PlayerSkillScript\11. BBQ</Filter>
+    </ClCompile>
+    <ClCompile Include="CGatlinggunScript.cpp">
+      <Filter>Scripts\01. PlayerScript\03. PlayerSkillScript\12. Gatlinggun</Filter>
+    </ClCompile>
+    <ClCompile Include="CGatlinggunPistolScript.cpp">
+      <Filter>Scripts\01. PlayerScript\03. PlayerSkillScript\03. Pistol\04. Gatlinggun</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

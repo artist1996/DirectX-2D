@@ -47,18 +47,42 @@ void CPistolScript::Tick()
 
 void CPistolScript::BeginOverlap(CCollider2D* _OwnCollider, CGameObject* _OtherObj, CCollider2D* _OtherCollider)
 {
+
 }
 
 void CPistolScript::Overlap(CCollider2D* _OwnCollider, CGameObject* _OtherObj, CCollider2D* _OtherCollider)
 {
-	if (6 == _OtherObj->GetLayerIdx()
-		|| L"Platform" == _OtherObj->GetName())
+	if (6 == _OtherObj->GetLayerIdx() || L"Platform" == _OtherObj->GetName())
 	{
+		Vec3 vPos = Transform()->GetWorldPos();
+		Vec3 vOtherPos = _OtherObj->Transform()->GetWorldPos();
+
 		if (GetOwner()->GetParent()->GetGroundCollision())
 		{
 			INFO& info = _OtherObj->GetInfo();
+
+			if (L"hyungteo" == _OtherObj->GetName())
+			{
+				if (!_OtherObj->Rigidbody()->IsGround())
+				{
+					_OtherObj->Rigidbody()->SetGround(true);
+					_OtherObj->FSM()->ChangeState(L"AirHit");
+				}
+			}
+			else if (L"direzie" == _OtherObj->GetName() && !info.bSuperArmor)
+			{
+				if (_OtherObj->Rigidbody()->IsGround())
+					_OtherObj->FSM()->ChangeState(L"GroundHit");
+				else
+				{
+					_OtherObj->Rigidbody()->SetGround(true);
+					_OtherObj->FSM()->ChangeState(L"Fall");
+				}
+			}
+
 			info.HP -= 10.f;
 			DeleteObject(GetOwner()->GetParent());
+			GetOwner()->GetParent()->SetGroundCollision(false);
 		}
 	}
 }

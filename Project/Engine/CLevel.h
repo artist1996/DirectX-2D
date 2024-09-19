@@ -37,10 +37,11 @@ private:
     void ChangeLevelState(LEVEL_STATE _NextState);
 
 public:
-    void Begin();
-    void Tick();
-    void FinalTick();
-    void Exit();
+    virtual void Enter() {}
+    virtual void Begin();
+    virtual void Tick();
+    virtual void FinalTick();
+    virtual void Exit();
     
 public:
     virtual CLevel* Clone() { return new CLevel(*this); }

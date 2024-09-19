@@ -8,6 +8,7 @@
 #include "CLevel.h"
 #include "CLayer.h"
 
+#include "CFontMgr.h"
 #include "components.h"
 
 CGameObject::CGameObject()
@@ -25,6 +26,9 @@ CGameObject::CGameObject()
 	, m_ID(OBJ_ID::END)
 	, m_Info{}
 	, m_GroundCollision(false)
+	, m_Color(0.f)
+	, m_FontScale(0.f)
+	, m_Active(true)
 {
 }
 
@@ -44,6 +48,10 @@ CGameObject::CGameObject(const CGameObject& _Origin)
 	, m_Target(_Origin.m_Target)
 	, m_Info(_Origin.m_Info)
 	, m_GroundCollision(false)
+	, m_Color(_Origin.m_Color)
+	, m_strFont(_Origin.m_strFont)
+	, m_FontScale(_Origin.m_FontScale)
+	, m_Active(_Origin.m_Active)
 {
 	// Component 복사
 	for (UINT i = 0; i < (UINT)COMPONENT_TYPE::END; ++i)
@@ -111,6 +119,17 @@ CScript* CGameObject::FindScriptByName(const wstring& _strName)
 	{
 		if (_strName == m_vecScript[i]->GetName())
 			return m_vecScript[i];
+	}
+
+	return nullptr;
+}
+
+CGameObject* CGameObject::FindChildByName(const wstring& _strName)
+{
+	for (size_t i = 0; i < m_vecChildren.size(); ++i)
+	{
+		if (_strName == m_vecChildren[i]->GetName())
+			return m_vecChildren[i];
 	}
 
 	return nullptr;
@@ -302,6 +321,7 @@ void CGameObject::FinalTick()
 	pLayer->RegisterGameObject(this);
 
 	// 자식 오브젝트
+
 	vector<CGameObject*>::iterator iter = m_vecChildren.begin();
 	for (; iter != m_vecChildren.end(); )
 	{
@@ -318,4 +338,52 @@ void CGameObject::Render()
 {
 	if (m_RenderCom)
 		m_RenderCom->Render();
+
+	if (m_strFont.empty())
+		return;
+
+	Vec3 vScreenPos = CarculatePosition();
+
+	CFontMgr::GetInst()->DrawFont(m_strFont.c_str(), vScreenPos.x + m_FontOffset.x, vScreenPos.y + m_FontOffset.y, m_FontScale, m_Color);
+}
+
+Vec3 CGameObject::CarculatePosition()
+{
+	Vec3 vPos = Transform()->GetWorldPos();
+
+	CGameObject* pCam = CLevelMgr::GetInst()->FindObjectByName(L"MainCamera");
+
+	const Matrix& matView = pCam->Camera()->GetViewMatrix();
+	const Matrix& matProj = pCam->Camera()->GetProjMatrix();
+
+
+	Vec4 vClipPos = Vec4(vPos, 1.f);
+	vClipPos = XMVector4Transform(vClipPos, matView * matProj);
+
+	Vec3 vNDC;
+	vNDC.x = vClipPos.x / vClipPos.w;
+	vNDC.y = vClipPos.y / vClipPos.w;
+	vNDC.z = vClipPos.z / vClipPos.w;
+
+	float Width = 1280.f;
+	float Height = 768.f;
+
+	Vec3 vScreenPos;
+	vScreenPos.x = (vNDC.x * 0.5f + 0.5f) * Width;
+	vScreenPos.y = (1.0f - (vNDC.y * 0.5f + 0.5f)) * Height; // y는 뒤집어야 함
+
+	return vScreenPos;
+}
+
+void CGameObject::SetActive(bool _Set)
+{
+	m_Active = _Set;
+
+	if (m_vecChildren.empty())
+		return;
+
+	for (size_t i = 0; i < m_vecChildren.size(); ++i)
+	{
+		m_vecChildren[i]->SetActive(_Set);
+	}
 }

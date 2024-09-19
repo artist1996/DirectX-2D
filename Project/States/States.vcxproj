@@ -158,12 +158,30 @@ call CodeGen.exe</Command>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CDirezieAirHitState.h" />
+    <ClInclude Include="CDirezieAttack01State.h" />
+    <ClInclude Include="CDirezieAttack02State.h" />
+    <ClInclude Include="CDirezieAttack03State.h" />
+    <ClInclude Include="CDirezieAttack04State.h" />
+    <ClInclude Include="CDirezieAttack05State.h" />
+    <ClInclude Include="CDirezieDeadState.h" />
+    <ClInclude Include="CDirezieDownHitState.h" />
+    <ClInclude Include="CDirezieFlyState.h" />
+    <ClInclude Include="CDirezieHideState.h" />
+    <ClInclude Include="CDirezieHitState.h" />
+    <ClInclude Include="CDirezieIdleState.h" />
+    <ClInclude Include="CDirezieStiffnessState.h" />
+    <ClInclude Include="CDirezieTraceState.h" />
+    <ClInclude Include="CDirezieWakeUpState.h" />
+    <ClInclude Include="CDirezieFallState.h" />
     <ClInclude Include="CHyungteoAirHitState.h" />
     <ClInclude Include="CHyungteoBuffEaterState.h" />
     <ClInclude Include="CHyungteoDeadState.h" />
+    <ClInclude Include="CHyungteoDownHitState.h" />
     <ClInclude Include="CHyungteoEatState.h" />
     <ClInclude Include="CHyungteoFallState.h" />
     <ClInclude Include="CHyungteoFlyState.h" />
+    <ClInclude Include="CHyungteoHitBBQState.h" />
     <ClInclude Include="CHyungteoHitState.h" />
     <ClInclude Include="CHyungteoIdleState.h" />
     <ClInclude Include="CHyungteoLookState.h" />
@@ -191,12 +209,30 @@ call CodeGen.exe</Command>
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CDirezieAirHitState.cpp" />
+    <ClCompile Include="CDirezieAttack01State.cpp" />
+    <ClCompile Include="CDirezieAttack02State.cpp" />
+    <ClCompile Include="CDirezieAttack03State.cpp" />
+    <ClCompile Include="CDirezieAttack04State.cpp" />
+    <ClCompile Include="CDirezieAttack05State.cpp" />
+    <ClCompile Include="CDirezieDeadState.cpp" />
+    <ClCompile Include="CDirezieDownHitState.cpp" />
+    <ClCompile Include="CDirezieFlyState.cpp" />
+    <ClCompile Include="CDirezieHideState.cpp" />
+    <ClCompile Include="CDirezieHitState.cpp" />
+    <ClCompile Include="CDirezieIdleState.cpp" />
+    <ClCompile Include="CDirezieStiffnessState.cpp" />
+    <ClCompile Include="CDirezieTraceState.cpp" />
+    <ClCompile Include="CDirezieWakeUpState.cpp" />
+    <ClCompile Include="CDirezieFallState.cpp" />
     <ClCompile Include="CHyungteoAirHitState.cpp" />
     <ClCompile Include="CHyungteoBuffEaterState.cpp" />
     <ClCompile Include="CHyungteoDeadState.cpp" />
+    <ClCompile Include="CHyungteoDownHitState.cpp" />
     <ClCompile Include="CHyungteoEatState.cpp" />
     <ClCompile Include="CHyungteoFallState.cpp" />
     <ClCompile Include="CHyungteoFlyState.cpp" />
+    <ClCompile Include="CHyungteoHitBBQState.cpp" />
     <ClCompile Include="CHyungteoHitState.cpp" />
     <ClCompile Include="CHyungteoIdleState.cpp" />
     <ClCompile Include="CHyungteoLookState.cpp" />

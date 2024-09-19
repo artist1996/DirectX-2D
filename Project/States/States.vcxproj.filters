@@ -118,6 +118,75 @@
     <Filter Include="States\01. Monster\03. Juris\06. Hit\02. Stiffness">
       <UniqueIdentifier>{4b522c1e-9b40-4aca-b23b-fba79bdcfb64}</UniqueIdentifier>
     </Filter>
+    <Filter Include="States\02. Boss\01. Direzie">
+      <UniqueIdentifier>{75d7da76-098c-4a9c-ae89-ecc8bcc36b3c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="States\02. Boss\01. Direzie\01. Idle">
+      <UniqueIdentifier>{59ad2d7d-17a2-4136-a832-3f7df77fc4b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="States\02. Boss\01. Direzie\02. Trace">
+      <UniqueIdentifier>{aa97b732-084a-42f7-8704-6f77b6340547}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="States\02. Boss\01. Direzie\03. Attack">
+      <UniqueIdentifier>{faf649c5-7f23-40e7-8aab-938551c5cfa6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="States\02. Boss\01. Direzie\04. Hide">
+      <UniqueIdentifier>{5f62ba4b-9f88-455a-bf9d-c16ea58422f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="States\02. Boss\01. Direzie\05. Hit">
+      <UniqueIdentifier>{385f2721-b19d-4f78-95a2-0c705aeea13b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="States\02. Boss\01. Direzie\03. Attack\01. Attack1">
+      <UniqueIdentifier>{49501d06-1099-40ad-9bf8-ebbcb8c2fea4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="States\02. Boss\01. Direzie\03. Attack\02. Attack2">
+      <UniqueIdentifier>{6f67c912-7a43-45cf-8827-323c7a97bf45}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="States\02. Boss\01. Direzie\03. Attack\03. Attack3">
+      <UniqueIdentifier>{16f14cdb-f539-4328-8919-1a1d1690a0ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="States\02. Boss\01. Direzie\03. Attack\04. Attack4">
+      <UniqueIdentifier>{bb4f5cc0-bb44-4079-b0b3-03679e67f26b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="States\02. Boss\01. Direzie\03. Attack\05. Attack5">
+      <UniqueIdentifier>{6645ca5e-7728-429f-a63c-53fe328b6b55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="States\02. Boss\01. Direzie\05. Hit\01. GroundHit">
+      <UniqueIdentifier>{00114b2d-fb26-48ef-9eed-d35773f884d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="States\02. Boss\01. Direzie\05. Hit\02. AirHit">
+      <UniqueIdentifier>{81aebf74-6983-440a-bfef-4e47e7b7498d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="States\02. Boss\01. Direzie\05. Hit\03. Stiffness">
+      <UniqueIdentifier>{fdf574f6-9bb3-4695-9791-b57581888cff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="States\02. Boss\01. Direzie\08. Recoil">
+      <UniqueIdentifier>{a2bd6d23-5c89-4ec7-994b-446aa7d9aa78}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="States\02. Boss\01. Direzie\07. Fall">
+      <UniqueIdentifier>{3592ea5b-702a-418c-bda3-461758359ec5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="States\02. Boss\01. Direzie\06. Fly">
+      <UniqueIdentifier>{a23b7e31-76ef-4990-a866-d64efdd6abf5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="States\02. Boss\01. Direzie\10. Dead">
+      <UniqueIdentifier>{c098c065-2409-463a-9aa1-d52f6b0c1a64}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="States\02. Boss\01. Direzie\09. WakeUp">
+      <UniqueIdentifier>{112294d3-d653-45c2-a34a-e39ec0112692}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="States\01. Monster\02. Hyungteo\06. Hit\04. DownHit">
+      <UniqueIdentifier>{7f00ba5c-eb7d-4dc3-93d0-58189c7018d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="States\01. Monster\02. Hyungteo\06. Hit\05. HitBBQ">
+      <UniqueIdentifier>{506f72d1-66d8-49b5-94cb-3f8e8a19676a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="States\02. Boss\01. Direzie\05. Hit\04. DownHit">
+      <UniqueIdentifier>{c30f3259-e270-4e2a-a532-f390a6f0154e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="States\02. Boss\01. Direzie\05. Hit\05. HitBBQ">
+      <UniqueIdentifier>{78c57ffb-a11c-4668-861f-70c2e833113a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -213,6 +282,60 @@
     <ClInclude Include="CJurisStiffnessState.h">
       <Filter>States\01. Monster\03. Juris\06. Hit\02. Stiffness</Filter>
     </ClInclude>
+    <ClInclude Include="CDirezieIdleState.h">
+      <Filter>States\02. Boss\01. Direzie\01. Idle</Filter>
+    </ClInclude>
+    <ClInclude Include="CDirezieTraceState.h">
+      <Filter>States\02. Boss\01. Direzie\02. Trace</Filter>
+    </ClInclude>
+    <ClInclude Include="CDirezieAttack01State.h">
+      <Filter>States\02. Boss\01. Direzie\03. Attack\01. Attack1</Filter>
+    </ClInclude>
+    <ClInclude Include="CDirezieAttack02State.h">
+      <Filter>States\02. Boss\01. Direzie\03. Attack\02. Attack2</Filter>
+    </ClInclude>
+    <ClInclude Include="CDirezieAttack03State.h">
+      <Filter>States\02. Boss\01. Direzie\03. Attack\03. Attack3</Filter>
+    </ClInclude>
+    <ClInclude Include="CDirezieAttack04State.h">
+      <Filter>States\02. Boss\01. Direzie\03. Attack\04. Attack4</Filter>
+    </ClInclude>
+    <ClInclude Include="CDirezieAttack05State.h">
+      <Filter>States\02. Boss\01. Direzie\03. Attack\05. Attack5</Filter>
+    </ClInclude>
+    <ClInclude Include="CDirezieHideState.h">
+      <Filter>States\02. Boss\01. Direzie\04. Hide</Filter>
+    </ClInclude>
+    <ClInclude Include="CDirezieHitState.h">
+      <Filter>States\02. Boss\01. Direzie\05. Hit\01. GroundHit</Filter>
+    </ClInclude>
+    <ClInclude Include="CDirezieStiffnessState.h">
+      <Filter>States\02. Boss\01. Direzie\05. Hit\03. Stiffness</Filter>
+    </ClInclude>
+    <ClInclude Include="CDirezieFlyState.h">
+      <Filter>States\02. Boss\01. Direzie\06. Fly</Filter>
+    </ClInclude>
+    <ClInclude Include="CDirezieAirHitState.h">
+      <Filter>States\02. Boss\01. Direzie\05. Hit\02. AirHit</Filter>
+    </ClInclude>
+    <ClInclude Include="CDirezieFallState.h">
+      <Filter>States\02. Boss\01. Direzie\07. Fall</Filter>
+    </ClInclude>
+    <ClInclude Include="CDirezieWakeUpState.h">
+      <Filter>States\02. Boss\01. Direzie\09. WakeUp</Filter>
+    </ClInclude>
+    <ClInclude Include="CDirezieDeadState.h">
+      <Filter>States\02. Boss\01. Direzie\10. Dead</Filter>
+    </ClInclude>
+    <ClInclude Include="CHyungteoDownHitState.h">
+      <Filter>States\01. Monster\02. Hyungteo\06. Hit\04. DownHit</Filter>
+    </ClInclude>
+    <ClInclude Include="CHyungteoHitBBQState.h">
+      <Filter>States\01. Monster\02. Hyungteo\06. Hit\05. HitBBQ</Filter>
+    </ClInclude>
+    <ClInclude Include="CDirezieDownHitState.h">
+      <Filter>States\02. Boss\01. Direzie\05. Hit\04. DownHit</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -307,6 +430,60 @@
     </ClCompile>
     <ClCompile Include="CJurisStiffnessState.cpp">
       <Filter>States\01. Monster\03. Juris\06. Hit\02. Stiffness</Filter>
+    </ClCompile>
+    <ClCompile Include="CDirezieIdleState.cpp">
+      <Filter>States\02. Boss\01. Direzie\01. Idle</Filter>
+    </ClCompile>
+    <ClCompile Include="CDirezieTraceState.cpp">
+      <Filter>States\02. Boss\01. Direzie\02. Trace</Filter>
+    </ClCompile>
+    <ClCompile Include="CDirezieAttack01State.cpp">
+      <Filter>States\02. Boss\01. Direzie\03. Attack\01. Attack1</Filter>
+    </ClCompile>
+    <ClCompile Include="CDirezieAttack02State.cpp">
+      <Filter>States\02. Boss\01. Direzie\03. Attack\02. Attack2</Filter>
+    </ClCompile>
+    <ClCompile Include="CDirezieAttack03State.cpp">
+      <Filter>States\02. Boss\01. Direzie\03. Attack\03. Attack3</Filter>
+    </ClCompile>
+    <ClCompile Include="CDirezieAttack04State.cpp">
+      <Filter>States\02. Boss\01. Direzie\03. Attack\04. Attack4</Filter>
+    </ClCompile>
+    <ClCompile Include="CDirezieAttack05State.cpp">
+      <Filter>States\02. Boss\01. Direzie\03. Attack\05. Attack5</Filter>
+    </ClCompile>
+    <ClCompile Include="CDirezieHideState.cpp">
+      <Filter>States\02. Boss\01. Direzie\04. Hide</Filter>
+    </ClCompile>
+    <ClCompile Include="CDirezieHitState.cpp">
+      <Filter>States\02. Boss\01. Direzie\05. Hit\01. GroundHit</Filter>
+    </ClCompile>
+    <ClCompile Include="CDirezieStiffnessState.cpp">
+      <Filter>States\02. Boss\01. Direzie\05. Hit\03. Stiffness</Filter>
+    </ClCompile>
+    <ClCompile Include="CDirezieFlyState.cpp">
+      <Filter>States\02. Boss\01. Direzie\06. Fly</Filter>
+    </ClCompile>
+    <ClCompile Include="CDirezieAirHitState.cpp">
+      <Filter>States\02. Boss\01. Direzie\05. Hit\02. AirHit</Filter>
+    </ClCompile>
+    <ClCompile Include="CDirezieFallState.cpp">
+      <Filter>States\02. Boss\01. Direzie\07. Fall</Filter>
+    </ClCompile>
+    <ClCompile Include="CDirezieWakeUpState.cpp">
+      <Filter>States\02. Boss\01. Direzie\09. WakeUp</Filter>
+    </ClCompile>
+    <ClCompile Include="CDirezieDeadState.cpp">
+      <Filter>States\02. Boss\01. Direzie\10. Dead</Filter>
+    </ClCompile>
+    <ClCompile Include="CHyungteoDownHitState.cpp">
+      <Filter>States\01. Monster\02. Hyungteo\06. Hit\04. DownHit</Filter>
+    </ClCompile>
+    <ClCompile Include="CHyungteoHitBBQState.cpp">
+      <Filter>States\01. Monster\02. Hyungteo\06. Hit\05. HitBBQ</Filter>
+    </ClCompile>
+    <ClCompile Include="CDirezieDownHitState.cpp">
+      <Filter>States\02. Boss\01. Direzie\05. Hit\04. DownHit</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

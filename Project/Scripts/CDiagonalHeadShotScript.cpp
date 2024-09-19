@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "CDiagonalHeadShotScript.h"
 
+#include <Engine/CLevelMgr.h>
+
 CDiagonalHeadShotScript::CDiagonalHeadShotScript()
 	: CScript(SCRIPT_TYPE::DIAGONALHEADSHOTSCRIPT)
 	, m_HitEffectPref(nullptr)
@@ -57,6 +59,9 @@ void CDiagonalHeadShotScript::BeginOverlap(CCollider2D* _OwnCollider, CGameObjec
 {
 	if (6 == _OtherObj->GetLayerIdx() || L"Platform" == _OtherObj->GetName())
 	{
+		CGameObject* pCam = CLevelMgr::GetInst()->FindObjectByName(L"MainCamera");
+		pCam->Camera()->SetShaking(true);
+
 		Vec3 vPos = Transform()->GetWorldPos();
 		Vec3 vOtherPos = _OtherObj->Transform()->GetWorldPos();
 
@@ -64,7 +69,7 @@ void CDiagonalHeadShotScript::BeginOverlap(CCollider2D* _OwnCollider, CGameObjec
 		{
 			CGameObject* pObject = m_HitEffectPref->Instantiate();
 			INFO& info = _OtherObj->GetInfo();
-			info.HP -= 10.f;
+			info.HP -= 70.f;
 			if (GetOwner()->GetParent()->GetDir() == OBJ_DIR::DIR_LEFT)
 			{
 				pObject->Transform()->SetRelativePos(Vec3(vOtherPos.x - 150.f, vOtherPos.y, vOtherPos.z - 50.f));
@@ -76,7 +81,6 @@ void CDiagonalHeadShotScript::BeginOverlap(CCollider2D* _OwnCollider, CGameObjec
 				pObject->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, 0.f));
 			}
 			CreateObject(pObject, 0);
-			//DeleteObject(GetOwner()->GetParent());
 
 			if (L"hyungteo" == _OtherObj->GetName())
 			{
@@ -86,6 +90,16 @@ void CDiagonalHeadShotScript::BeginOverlap(CCollider2D* _OwnCollider, CGameObjec
 			else if (L"juris" == _OtherObj->GetName())
 			{
 				_OtherObj->FSM()->ChangeState(L"Hit");
+			}
+			else if (L"direzie" == _OtherObj->GetName() && !info.bSuperArmor)
+			{
+				if (_OtherObj->Rigidbody()->IsGround())
+					_OtherObj->FSM()->ChangeState(L"GroundHit");
+				else
+				{
+					_OtherObj->Rigidbody()->SetGround(true);
+					_OtherObj->FSM()->ChangeState(L"Fall");
+				}
 			}
 		}
 	}

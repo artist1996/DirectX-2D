@@ -19,6 +19,7 @@
 #include <Scripts/CCameraMoveScript.h>
 #include <Scripts/CPlatformScript.h>
 #include <Scripts/CPlayerMoveScript.h>
+#include <Scripts/CUICameraScript.h>
 
 #include "CLevelSaveLoad.h"
 
@@ -42,9 +43,6 @@ void CTestLevel::CreateTestLevel()
 	CLevel* pLevel = CLevelSaveLoad::LoadLevel(strPath + L"level\\seria_room.lv");
 	CLevelMgr::GetInst()->AddLevel(pLevel);
 	
-	//ChangeLevel(pLevel, STOP);
-
-	
 	pLevel = CLevelSaveLoad::LoadLevel(strPath + L"level\\hendonmyer.lv");
 	CLevelMgr::GetInst()->AddLevel(pLevel);
 	
@@ -57,16 +55,55 @@ void CTestLevel::CreateTestLevel()
 	pLevel = CLevelSaveLoad::LoadLevel(strPath + L"level\\leshphon3.lv");
 	CLevelMgr::GetInst()->AddLevel(pLevel);
 
+	pLevel = CLevelSaveLoad::LoadLevel(strPath + L"level\\leshphon4.lv");
+	CLevelMgr::GetInst()->AddLevel(pLevel);
+
+	CObjectPoolMgr::GetInst()->Init();
+
+	//ChangeCurLevel(LEVEL_TYPE::SERIAROOM);
+	//ChangeCurLevel(LEVEL_TYPE::HENDONMYER);
 	//ChangeCurLevel(LEVEL_TYPE::LESHPHON1);
 	//ChangeCurLevel(LEVEL_TYPE::LESHPHON2);
-	ChangeCurLevel(LEVEL_TYPE::LESHPHON3);
-	//ChangeCurLevel(LEVEL_TYPE::HENDONMYER);
-	//ChangeCurLevel(LEVEL_TYPE::SERIAROOM);
+	//ChangeCurLevel(LEVEL_TYPE::LESHPHON3);
+	ChangeCurLevel(LEVEL_TYPE::LESHPHON4);
+
+	//CGameObject* pCamObj = new CGameObject;
+	//pCamObj->SetName(L"UICamera");
+	//pCamObj->AddComponent(new CTransform);
+	//pCamObj->AddComponent(new CCamera);
+	////pCamObj->AddComponent(new CUICameraScript);
+	//
+	//pCamObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, 1.f));
+	//
+	//pCamObj->Camera()->SetPriority(1);
+	//pCamObj->Camera()->SetLayer(31, true);
+	//pCamObj->Camera()->SetFar(100000.f);
+	//pCamObj->Camera()->SetProjType(PROJ_TYPE::ORTHOGRAPHIC);
+	//
+	//
+	//CreateObject(pCamObj, 31);
+
 	CGameObject* pEntity = CObjectPoolMgr::GetInst()->GetObj(OBJ_ID::PLAYER);
 	pEntity->Transform()->SetRelativePos(Vec3(650.f, 0.f, 0.f));
 	pEntity->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, 0.f));
-	
+
 	CreateObject(pEntity, 4);
+
+	//CGameObject* CamObj = new CGameObject;
+	//CamObj->SetName(L"MainCamera");
+	//CamObj->AddComponent(new CTransform);
+	//CamObj->AddComponent(new CCamera);
+	//CamObj->AddComponent(new CCameraMoveScript);
+	//
+	//CamObj->Camera()->SetPriority(0);
+	//
+	//CamObj->Camera()->SetLayerAll();
+	//CamObj->Camera()->SetLayer(31, false);
+	//CamObj->Camera()->SetFar(100000.f);
+	//CamObj->Camera()->SetProjType(PROJ_TYPE::ORTHOGRAPHIC);
+	//CamObj->Camera()->SetProjType(PROJ_TYPE::PERSPECTIVE);
+	//CreateObject(CamObj, 0);
+
 	//CLevel* pNewLevel = new CLevel;
 	//ChangeLevel(pNewLevel, LEVEL_STATE::STOP);
 	//
@@ -108,7 +145,7 @@ void CTestLevel::CreateTestLevel()
 	//pLight2D->Light2D()->SetRadius(500.f);
 	//
 	//pNewLevel->AddObject(0, pLight2D);
-	//
+	
 	////// Player Object
 	//CGameObject* pPlayer = new CGameObject;
 	//pPlayer->SetName(L"Player");

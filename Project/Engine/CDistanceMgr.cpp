@@ -8,6 +8,7 @@
 
 #include "CTransform.h"
 #include "CCollider2D.h"
+#include "CRigidbody.h"
 
 CDistanceMgr::CDistanceMgr()
 	: m_Player(nullptr)
@@ -58,8 +59,12 @@ bool CDistanceMgr::CalculateDistance()
 
 		if (500.f > fabs(vPlayerPos.x - vMonsterColPos.x)
 			&& 40.f > fabs(fPlayerY - vMonsterPosY))
-		{		
-			return true;
+		{
+			if (nullptr == vecMonsters[i]->GetChildren()[0]->Rigidbody())
+				return true;
+
+			if (vecMonsters[i]->GetChildren()[0]->Rigidbody()->IsGround())
+				return true;
 		}
 	}
 

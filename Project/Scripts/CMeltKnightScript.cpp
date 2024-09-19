@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "CMeltKnightScript.h"
 
+#include <Engine/CLevelMgr.h>
 #include <Engine/CObjectPoolMgr.h>
 
 #include <States/CMeltKnightIdleState.h>
@@ -12,6 +13,7 @@
 CMeltKnightScript::CMeltKnightScript()
 	: CScript(SCRIPT_TYPE::MELTKNIGHTSCRIPT)
 	, m_Info{}
+	, m_Dead(false)
 {
 }
 
@@ -21,7 +23,7 @@ CMeltKnightScript::~CMeltKnightScript()
 
 void CMeltKnightScript::InitInfo()
 {
-	m_Info.MaxHP = 100;
+	m_Info.MaxHP = 600;
 	m_Info.HP = m_Info.MaxHP;
 	m_Info.Defense = 0;
 	m_Info.MinAttack = 10;
@@ -51,110 +53,27 @@ void CMeltKnightScript::Tick()
 {
 	m_Info = GetOwner()->GetInfo();
 
-	if (0 >= m_Info.HP)
+	if (0 >= m_Info.HP && !m_Dead)
+	{
 		FSM()->ChangeState(L"Dead");
+		m_Dead = true;
+	}
 }
 
 void CMeltKnightScript::BeginOverlap(CCollider2D* _OwnCollider, CGameObject* _OtherObj, CCollider2D* _OtherCollider)
 {
-	//if (7 == _OtherObj->GetLayerIdx())
-	//{
-	//	Vec3 vPos = Transform()->GetRelativePos();
-	//	Vec3 vOtherPos = _OtherObj->Transform()->GetRelativePos();
-	//
-	//	if(100.f > fabs(vPos.z - vOtherPos.z))
-	//		m_Info.HP -= 10;
-	//
-	//	GetOwner()->SetInfo(m_Info);
-	//}
-
-	//if (3 == _OtherObj->GetLayerIdx())
-	//{
-	//	Vec3 vPos = _OwnCollider->GetWorldPos();
-	//	Vec3 vScale = Transform()->GetWorldScale();
-	//	Vec3 vOtherPos = _OtherCollider->GetWorldPos();
-	//	Vec3 vOtherScale = _OtherObj->Transform()->GetWorldScale();
-	//
-	//	bool* bMoveable = GetOwner()->GetMoveable();
-	//
-	//	if (vOtherPos.x + vOtherScale.x * 0.5f < vPos.x - vScale.x * 0.5f + 10.f
-	//		&& vOtherPos.y + vOtherScale.y * 0.5f > vPos.y - vScale.y * 0.5f
-	//		&& vOtherPos.y - vOtherScale.y * 0.5f < vPos.y + vScale.y * 0.5f)
-	//	{
-	//		GetOwner()->SetMoveable(PLATFORM_TYPE::RIGHT, false);
-	//	}
-	//	
-	//	else if (vOtherPos.x - vOtherScale.x * 0.5f > vPos.x + vScale.x * 0.5f - 10.f
-	//		&& vOtherPos.y + vOtherScale.y * 0.5f > vPos.y - vScale.y * 0.5f
-	//		&& vOtherPos.y - vOtherScale.y * 0.5f < vPos.y + vScale.y * 0.5f)
-	//	{
-	//		GetOwner()->SetMoveable(PLATFORM_TYPE::LEFT, false);
-	//	}
-	//
-	//	else if (vOtherPos.y - vOtherScale.y * 0.5f < vPos.y + vScale.y * 0.5f - 10.f
-	//		&& vOtherPos.x - vOtherScale.x * 0.5f > vPos.x - vScale.x * 0.5 - 100.f
-	//		&& vOtherPos.x + vOtherScale.x * 0.5f < vPos.x + vScale.x * 0.5f + 100.f)
-	//	{
-	//		GetOwner()->SetMoveable(PLATFORM_TYPE::UP, false);
-	//	}
-	//
-	//	else if (vOtherPos.y + vOtherScale.y * 0.5f > vPos.y - vScale.y * 0.5f + 10.f
-	//		&& vOtherPos.x - vOtherScale.x * 0.5f > vPos.x - vScale.x * 0.5f - 100.f
-	//		&& vOtherPos.x + vOtherScale.x * 0.5f < vPos.x + vScale.x * 0.5f + 100.f)
-	//	{
-	//		GetOwner()->SetMoveable(PLATFORM_TYPE::BOTTOM, false);
-	//	}
-	//}
+	if (7 == _OtherObj->GetLayerIdx())
+	{
+		CGameObject* pObject = CLevelMgr::GetInst()->FindObjectByName(L"MonsterHUD");
+		pObject->SetActive(true);
+		pObject->SetTarget(GetOwner());
+	}
 }
 
 void CMeltKnightScript::Overlap(CCollider2D* _OwnCollider, CGameObject* _OtherObj, CCollider2D* _OtherCollider)
 {
-	//if (3 == _OtherObj->GetLayerIdx())
-	//{
-	//	Vec3 vPos = _OwnCollider->GetWorldPos();
-	//	Vec3 vScale = Transform()->GetWorldScale();
-	//	Vec3 vOtherPos = _OtherCollider->GetWorldPos();
-	//	Vec3 vOtherScale = _OtherObj->Transform()->GetWorldScale();
-	//
-	//	bool* bMoveable = GetOwner()->GetMoveable();
-	//
-	//	if (vOtherPos.x - vOtherScale.x * 0.5f < vPos.x + vScale.x * 0.5f + 10.f)
-	//		//&& vOtherPos.y + vOtherScale.y * 0.5f > vPos.y - vScale.y * 0.5f
-	//		//&& vOtherPos.y - vOtherScale.y * 0.5f < vPos.y + vScale.y * 0.5f)
-	//	{
-	//		GetOwner()->SetMoveable(PLATFORM_TYPE::RIGHT, false);
-	//	}
-	//
-	//	else if (vOtherPos.x + vOtherScale.x * 0.5f + 10.f > vPos.x - vScale.x * 0.5f - 10.f)
-	//		//&& vOtherPos.y + vOtherScale.y * 0.5f > vPos.y - vScale.y * 0.5f
-	//		//&& vOtherPos.y - vOtherScale.y * 0.5f < vPos.y + vScale.y * 0.5f)
-	//	{
-	//		GetOwner()->SetMoveable(PLATFORM_TYPE::LEFT, false);
-	//	}
-	//
-	//	else if (vOtherPos.y - vOtherScale.y * 0.5f < vPos.y + vScale.y * 0.5f - 10.f)
-	//		//&& vOtherPos.x - vOtherScale.x * 0.5f > vPos.x - vScale.x * 0.5 - 100.f
-	//		//&& vOtherPos.x + vOtherScale.x * 0.5f < vPos.x + vScale.x * 0.5f + 100.f)
-	//	{
-	//		GetOwner()->SetMoveable(PLATFORM_TYPE::UP, false);
-	//	}
-	//
-	//	else if (vOtherPos.y + vOtherScale.y * 0.5f > vPos.y - vScale.y * 0.5f + 10.f)
-	//		//&& vOtherPos.x - vOtherScale.x * 0.5f > vPos.x - vScale.x * 0.5f - 100.f
-	//		//&& vOtherPos.x + vOtherScale.x * 0.5f < vPos.x + vScale.x * 0.5f + 100.f)
-	//	{
-	//		GetOwner()->SetMoveable(PLATFORM_TYPE::BOTTOM, false);
-	//	}
-	//}
 }
 
 void CMeltKnightScript::EndOverlap(CCollider2D* _OwnCollider, CGameObject* _OtherObj, CCollider2D* _OtherCollider)
 {
-	//if (3 == _OtherObj->GetLayerIdx())
-	//{
-	//	GetOwner()->SetMoveable(PLATFORM_TYPE::LEFT, true);
-	//	GetOwner()->SetMoveable(PLATFORM_TYPE::RIGHT, true);
-	//	GetOwner()->SetMoveable(PLATFORM_TYPE::BOTTOM, true);
-	//	GetOwner()->SetMoveable(PLATFORM_TYPE::UP, true);
-	//}
 }

@@ -63,6 +63,9 @@ void CRenderMgr::Tick()
 				continue;
 
 			m_vecCam[i]->Render();
+
+			if(i == 0)
+				RenderDebugShape();
 		}
 	}
 
@@ -73,8 +76,6 @@ void CRenderMgr::Tick()
 			m_EditorCamera->Render();
 		}
 	}
-
-	RenderDebugShape();
 
 	CTimeMgr::GetInst()->Render();
 

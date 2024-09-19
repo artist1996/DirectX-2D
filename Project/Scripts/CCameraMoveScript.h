@@ -8,16 +8,23 @@ private:
     CGameObject* m_Target;
 
     float        m_CamSpeed;
+    float        m_Dir;
+    float        m_ShakingTime;
 
     Vec2         m_BoundaryLT;
+    Vec3         m_StartPos;
     float        m_BoundaryRightWidth;
     float        m_BoundaryBottomHeight;
 
     bool         m_TargetMove;
+    bool         m_Shaking;
   
 private:
     void OrthoGraphicMove();
     void PerspectiveMove();
+
+public:
+    void SetShaking(bool _Set);
 
 public:
     virtual void Begin() override;

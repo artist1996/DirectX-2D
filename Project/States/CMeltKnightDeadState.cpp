@@ -13,13 +13,16 @@ CMeltKnightDeadState::~CMeltKnightDeadState()
 void CMeltKnightDeadState::Enter()
 {
 	// Melt Knight Animation Number (0 : IDLE, 1 : Move, 2 : Attack, 3 : Dead)
-	GetFSM()->GetOwner()->Animator2D()->Play(3, 7.f, true);
+	GetOwner()->Animator2D()->Reset();
+	GetOwner()->Animator2D()->Play(3, 7.f, true);
 }
 
 void CMeltKnightDeadState::FinalTick()
 {
 	if (GetOwner()->Animator2D()->IsFinish())
+	{
 		DeleteObject(GetOwner()->GetParent());
+	}
 }
 
 void CMeltKnightDeadState::Exit()

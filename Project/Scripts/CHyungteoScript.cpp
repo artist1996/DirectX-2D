@@ -17,6 +17,8 @@
 #include <States/CHyungteoRecoilState.h>
 #include <States/CHyungteoAirHitState.h>
 #include <States/CHyungteoStiffnessState.h>
+#include <States/CHyungteoDownHitState.h>
+#include <States/CHyungteoHitBBQState.h>
 
 CHyungteoScript::CHyungteoScript()
 	: CScript(SCRIPT_TYPE::HYUNGTEOSCRIPT)
@@ -60,6 +62,8 @@ void CHyungteoScript::Begin()
 	FSM()->AddState(L"Recoil", new CHyungteoRecoilState);
 	FSM()->AddState(L"AirHit", new CHyungteoAirHitState);
 	FSM()->AddState(L"Stiffness", new CHyungteoStiffnessState);
+	FSM()->AddState(L"DownHit", new CHyungteoDownHitState);
+	FSM()->AddState(L"HitBBQ", new CHyungteoHitBBQState);
 
 	FSM()->ChangeState(L"Eat");
 }
@@ -79,8 +83,9 @@ void CHyungteoScript::BeginOverlap(CCollider2D* _OwnCollider, CGameObject* _Othe
 {
 	if (7 == _OtherObj->GetLayerIdx())
 	{
-		INFO& info = GetOwner()->GetInfo();
-		info.HP -= 10.f;
+		CGameObject* pObject = CLevelMgr::GetInst()->FindObjectByName(L"NamedMonsterHUD");
+		pObject->SetActive(true);
+		pObject->SetTarget(GetOwner());
 	}
 }
 

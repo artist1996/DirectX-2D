@@ -100,8 +100,8 @@ void CTaskMgr::ExecuteTask()
 			if (nullptr != pLevel)
 				pLevel->Exit();
 			
-			//CLevelMgr::GetInst()->GetCurrentLevel()->Exit();
 			CLevelMgr::GetInst()->ChangeCurLevel(Type);
+			
 			CLevelMgr::GetInst()->LevelChanged();
 		}
 		break;

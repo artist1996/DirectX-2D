@@ -36,7 +36,7 @@ const char* COMPONENT_TYPE_STRING[] =
 	"PARTICLE_SYSTEM",
 	"DECAl",
 	"SKYBOX",
-	"LANDSCAPE"
+	"LANDSCAPE",
 };
 
 const char* ToString(COMPONENT_TYPE _Type) { return COMPONENT_TYPE_STRING[(UINT)_Type]; }

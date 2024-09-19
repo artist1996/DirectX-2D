@@ -36,6 +36,6 @@ void CSeriaRoomGateScript::BeginOverlap(CCollider2D* _OwnCollider, CGameObject* 
 		pPlayer->Transform()->SetRelativePos(-82.f, 24.f, 0.f);
 		CreateObject(pPlayer, 4);
 		
-		//ChangeLevelState(PLAY);
+		ChangeLevelState(PLAY);
 	}
 }

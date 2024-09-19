@@ -1,12 +1,30 @@
 #include "pch.h"
 #include "CStateMgr.h"
 
+#include "CDirezieAirHitState.h"
+#include "CDirezieAttack01State.h"
+#include "CDirezieAttack02State.h"
+#include "CDirezieAttack03State.h"
+#include "CDirezieAttack04State.h"
+#include "CDirezieAttack05State.h"
+#include "CDirezieDeadState.h"
+#include "CDirezieDownHitState.h"
+#include "CDirezieFallState.h"
+#include "CDirezieFlyState.h"
+#include "CDirezieHideState.h"
+#include "CDirezieHitState.h"
+#include "CDirezieIdleState.h"
+#include "CDirezieStiffnessState.h"
+#include "CDirezieTraceState.h"
+#include "CDirezieWakeUpState.h"
 #include "CHyungteoAirHitState.h"
 #include "CHyungteoBuffEaterState.h"
 #include "CHyungteoDeadState.h"
+#include "CHyungteoDownHitState.h"
 #include "CHyungteoEatState.h"
 #include "CHyungteoFallState.h"
 #include "CHyungteoFlyState.h"
+#include "CHyungteoHitBBQState.h"
 #include "CHyungteoHitState.h"
 #include "CHyungteoIdleState.h"
 #include "CHyungteoLookState.h"
@@ -32,12 +50,30 @@
 
 void CStateMgr::GetStateInfo(vector<wstring>& _vec)
 {
+	_vec.push_back(L"CDirezieAirHitState");
+	_vec.push_back(L"CDirezieAttack01State");
+	_vec.push_back(L"CDirezieAttack02State");
+	_vec.push_back(L"CDirezieAttack03State");
+	_vec.push_back(L"CDirezieAttack04State");
+	_vec.push_back(L"CDirezieAttack05State");
+	_vec.push_back(L"CDirezieDeadState");
+	_vec.push_back(L"CDirezieDownHitState");
+	_vec.push_back(L"CDirezieFallState");
+	_vec.push_back(L"CDirezieFlyState");
+	_vec.push_back(L"CDirezieHideState");
+	_vec.push_back(L"CDirezieHitState");
+	_vec.push_back(L"CDirezieIdleState");
+	_vec.push_back(L"CDirezieStiffnessState");
+	_vec.push_back(L"CDirezieTraceState");
+	_vec.push_back(L"CDirezieWakeUpState");
 	_vec.push_back(L"CHyungteoAirHitState");
 	_vec.push_back(L"CHyungteoBuffEaterState");
 	_vec.push_back(L"CHyungteoDeadState");
+	_vec.push_back(L"CHyungteoDownHitState");
 	_vec.push_back(L"CHyungteoEatState");
 	_vec.push_back(L"CHyungteoFallState");
 	_vec.push_back(L"CHyungteoFlyState");
+	_vec.push_back(L"CHyungteoHitBBQState");
 	_vec.push_back(L"CHyungteoHitState");
 	_vec.push_back(L"CHyungteoIdleState");
 	_vec.push_back(L"CHyungteoLookState");
@@ -64,18 +100,54 @@ void CStateMgr::GetStateInfo(vector<wstring>& _vec)
 
 CState * CStateMgr::GetState(const wstring& _strStateName)
 {
+	if (L"CDirezieAirHitState" == _strStateName)
+		return new CDirezieAirHitState;
+	if (L"CDirezieAttack01State" == _strStateName)
+		return new CDirezieAttack01State;
+	if (L"CDirezieAttack02State" == _strStateName)
+		return new CDirezieAttack02State;
+	if (L"CDirezieAttack03State" == _strStateName)
+		return new CDirezieAttack03State;
+	if (L"CDirezieAttack04State" == _strStateName)
+		return new CDirezieAttack04State;
+	if (L"CDirezieAttack05State" == _strStateName)
+		return new CDirezieAttack05State;
+	if (L"CDirezieDeadState" == _strStateName)
+		return new CDirezieDeadState;
+	if (L"CDirezieDownHitState" == _strStateName)
+		return new CDirezieDownHitState;
+	if (L"CDirezieFallState" == _strStateName)
+		return new CDirezieFallState;
+	if (L"CDirezieFlyState" == _strStateName)
+		return new CDirezieFlyState;
+	if (L"CDirezieHideState" == _strStateName)
+		return new CDirezieHideState;
+	if (L"CDirezieHitState" == _strStateName)
+		return new CDirezieHitState;
+	if (L"CDirezieIdleState" == _strStateName)
+		return new CDirezieIdleState;
+	if (L"CDirezieStiffnessState" == _strStateName)
+		return new CDirezieStiffnessState;
+	if (L"CDirezieTraceState" == _strStateName)
+		return new CDirezieTraceState;
+	if (L"CDirezieWakeUpState" == _strStateName)
+		return new CDirezieWakeUpState;
 	if (L"CHyungteoAirHitState" == _strStateName)
 		return new CHyungteoAirHitState;
 	if (L"CHyungteoBuffEaterState" == _strStateName)
 		return new CHyungteoBuffEaterState;
 	if (L"CHyungteoDeadState" == _strStateName)
 		return new CHyungteoDeadState;
+	if (L"CHyungteoDownHitState" == _strStateName)
+		return new CHyungteoDownHitState;
 	if (L"CHyungteoEatState" == _strStateName)
 		return new CHyungteoEatState;
 	if (L"CHyungteoFallState" == _strStateName)
 		return new CHyungteoFallState;
 	if (L"CHyungteoFlyState" == _strStateName)
 		return new CHyungteoFlyState;
+	if (L"CHyungteoHitBBQState" == _strStateName)
+		return new CHyungteoHitBBQState;
 	if (L"CHyungteoHitState" == _strStateName)
 		return new CHyungteoHitState;
 	if (L"CHyungteoIdleState" == _strStateName)
@@ -127,6 +199,54 @@ CState * CStateMgr::GetState(UINT _iStateType)
 {
 	switch (_iStateType)
 	{
+	case (UINT)STATE_TYPE::DIREZIEAIRHITSTATE:
+		return new CDirezieAirHitState;
+		break;
+	case (UINT)STATE_TYPE::DIREZIEATTACK01STATE:
+		return new CDirezieAttack01State;
+		break;
+	case (UINT)STATE_TYPE::DIREZIEATTACK02STATE:
+		return new CDirezieAttack02State;
+		break;
+	case (UINT)STATE_TYPE::DIREZIEATTACK03STATE:
+		return new CDirezieAttack03State;
+		break;
+	case (UINT)STATE_TYPE::DIREZIEATTACK04STATE:
+		return new CDirezieAttack04State;
+		break;
+	case (UINT)STATE_TYPE::DIREZIEATTACK05STATE:
+		return new CDirezieAttack05State;
+		break;
+	case (UINT)STATE_TYPE::DIREZIEDEADSTATE:
+		return new CDirezieDeadState;
+		break;
+	case (UINT)STATE_TYPE::DIREZIEDOWNHITSTATE:
+		return new CDirezieDownHitState;
+		break;
+	case (UINT)STATE_TYPE::DIREZIEFALLSTATE:
+		return new CDirezieFallState;
+		break;
+	case (UINT)STATE_TYPE::DIREZIEFLYSTATE:
+		return new CDirezieFlyState;
+		break;
+	case (UINT)STATE_TYPE::DIREZIEHIDESTATE:
+		return new CDirezieHideState;
+		break;
+	case (UINT)STATE_TYPE::DIREZIEHITSTATE:
+		return new CDirezieHitState;
+		break;
+	case (UINT)STATE_TYPE::DIREZIEIDLESTATE:
+		return new CDirezieIdleState;
+		break;
+	case (UINT)STATE_TYPE::DIREZIESTIFFNESSSTATE:
+		return new CDirezieStiffnessState;
+		break;
+	case (UINT)STATE_TYPE::DIREZIETRACESTATE:
+		return new CDirezieTraceState;
+		break;
+	case (UINT)STATE_TYPE::DIREZIEWAKEUPSTATE:
+		return new CDirezieWakeUpState;
+		break;
 	case (UINT)STATE_TYPE::HYUNGTEOAIRHITSTATE:
 		return new CHyungteoAirHitState;
 		break;
@@ -136,6 +256,9 @@ CState * CStateMgr::GetState(UINT _iStateType)
 	case (UINT)STATE_TYPE::HYUNGTEODEADSTATE:
 		return new CHyungteoDeadState;
 		break;
+	case (UINT)STATE_TYPE::HYUNGTEODOWNHITSTATE:
+		return new CHyungteoDownHitState;
+		break;
 	case (UINT)STATE_TYPE::HYUNGTEOEATSTATE:
 		return new CHyungteoEatState;
 		break;
@@ -144,6 +267,9 @@ CState * CStateMgr::GetState(UINT _iStateType)
 		break;
 	case (UINT)STATE_TYPE::HYUNGTEOFLYSTATE:
 		return new CHyungteoFlyState;
+		break;
+	case (UINT)STATE_TYPE::HYUNGTEOHITBBQSTATE:
+		return new CHyungteoHitBBQState;
 		break;
 	case (UINT)STATE_TYPE::HYUNGTEOHITSTATE:
 		return new CHyungteoHitState;
@@ -219,6 +345,70 @@ const wchar_t * CStateMgr::GetStateName(CState * _pState)
 {
 	switch ((STATE_TYPE)_pState->GetStateType())
 	{
+	case STATE_TYPE::DIREZIEAIRHITSTATE:
+		return L"CDirezieAirHitState";
+		break;
+
+	case STATE_TYPE::DIREZIEATTACK01STATE:
+		return L"CDirezieAttack01State";
+		break;
+
+	case STATE_TYPE::DIREZIEATTACK02STATE:
+		return L"CDirezieAttack02State";
+		break;
+
+	case STATE_TYPE::DIREZIEATTACK03STATE:
+		return L"CDirezieAttack03State";
+		break;
+
+	case STATE_TYPE::DIREZIEATTACK04STATE:
+		return L"CDirezieAttack04State";
+		break;
+
+	case STATE_TYPE::DIREZIEATTACK05STATE:
+		return L"CDirezieAttack05State";
+		break;
+
+	case STATE_TYPE::DIREZIEDEADSTATE:
+		return L"CDirezieDeadState";
+		break;
+
+	case STATE_TYPE::DIREZIEDOWNHITSTATE:
+		return L"CDirezieDownHitState";
+		break;
+
+	case STATE_TYPE::DIREZIEFALLSTATE:
+		return L"CDirezieFallState";
+		break;
+
+	case STATE_TYPE::DIREZIEFLYSTATE:
+		return L"CDirezieFlyState";
+		break;
+
+	case STATE_TYPE::DIREZIEHIDESTATE:
+		return L"CDirezieHideState";
+		break;
+
+	case STATE_TYPE::DIREZIEHITSTATE:
+		return L"CDirezieHitState";
+		break;
+
+	case STATE_TYPE::DIREZIEIDLESTATE:
+		return L"CDirezieIdleState";
+		break;
+
+	case STATE_TYPE::DIREZIESTIFFNESSSTATE:
+		return L"CDirezieStiffnessState";
+		break;
+
+	case STATE_TYPE::DIREZIETRACESTATE:
+		return L"CDirezieTraceState";
+		break;
+
+	case STATE_TYPE::DIREZIEWAKEUPSTATE:
+		return L"CDirezieWakeUpState";
+		break;
+
 	case STATE_TYPE::HYUNGTEOAIRHITSTATE:
 		return L"CHyungteoAirHitState";
 		break;
@@ -231,6 +421,10 @@ const wchar_t * CStateMgr::GetStateName(CState * _pState)
 		return L"CHyungteoDeadState";
 		break;
 
+	case STATE_TYPE::HYUNGTEODOWNHITSTATE:
+		return L"CHyungteoDownHitState";
+		break;
+
 	case STATE_TYPE::HYUNGTEOEATSTATE:
 		return L"CHyungteoEatState";
 		break;
@@ -241,6 +435,10 @@ const wchar_t * CStateMgr::GetStateName(CState * _pState)
 
 	case STATE_TYPE::HYUNGTEOFLYSTATE:
 		return L"CHyungteoFlyState";
+		break;
+
+	case STATE_TYPE::HYUNGTEOHITBBQSTATE:
+		return L"CHyungteoHitBBQState";
 		break;
 
 	case STATE_TYPE::HYUNGTEOHITSTATE:

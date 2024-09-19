@@ -6,6 +6,7 @@ class CMeltKnightScript :
 {
 private:
     INFO m_Info;
+    bool m_Dead;
 
 private:
     void InitInfo();

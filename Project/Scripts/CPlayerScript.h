@@ -20,6 +20,10 @@ struct tPlayerPrefab
     Ptr<CPrefab> MachKickPref;
     Ptr<CPrefab> JackSpikePref;
     Ptr<CPrefab> RisingShotPref;
+    Ptr<CPrefab> WesternFirePref;
+    Ptr<CPrefab> PunisherPref;
+    Ptr<CPrefab> PunisherPistolPref;
+    Ptr<CPrefab> BBQPref;
 };
 
 struct tPlayerSkillTime
@@ -32,6 +36,9 @@ struct tPlayerSkillTime
     float fMachKickTime;
     float fJackSpikeTime;
     float fRisingShotTime;
+    float fWesternFireTime;
+    float fPunisherTime;
+    float fBBQTime;
 
     float fHeadShotCoolTime;
     float fDeathByRevolverCoolTime;
@@ -41,6 +48,9 @@ struct tPlayerSkillTime
     float fMachKickCoolTime;
     float fJackSpikeCoolTime;
     float fRisingShotCoolTime;
+    float fWesternFireCoolTime;
+    float fPunisherCoolTime;
+    float fBBQCoolTime;
 };
 
 struct tPlayerUseSkill
@@ -53,19 +63,29 @@ struct tPlayerUseSkill
     bool bMachKick;
     bool bJackSpike;
     bool bRisingShot;
+    bool bWesternFire;
+    bool bPunisher;
+    bool bBBQ;
 };
 
 class CPlayerScript :
     public CScript
 {
 private:
-    enum STATE    { IDLE, MOVE, AT_1, AT_2, AT_3,
-                    JUMP, LANDING, RUN, DG_AT1, DG_AT2, DG_AT3, DG_AT4,
-                    SK_1, SK_2, SK_3, SK_4, SK_5, SK_6, SK_7, SK_8, SK_9, AT_4, DEAD, TACKLE,
-                    GUNHAWKSHOOT, GUNHAWKSTANDBY, GUNHAWKLASTSHOOT, END, };
+    enum PLAYER_STATE {
+        IDLE, MOVE, AT_1, AT_2, AT_3,
+        JUMP, LANDING, RUN, DG_AT1, DG_AT2, DG_AT3, DG_AT4,
+        SK_1, SK_2, SK_3, SK_4, SK_5, SK_6, SK_7, SK_8, SK_9, AT_4, DEAD, TACKLE,
+        GUNHAWKSHOOT, GUNHAWKSTANDBY, GUNHAWKLASTSHOOT, WESTERNFIRE, PUNISHER, PUNISHERSHOOT, BBQ, BBQREADY, BBQSHOOT,
+        END,
+    };
 
-    enum class ANIMATION_NUM { IDLE, MOVE, AT_1, AT_2, AT_3, JUMP, LANDING, RUN, DG_AT1, DG_AT2, DG_AT3,
-                               JACKSPIKE, RANDOMSHOT, DEATHBYREVOLVER, WINDMILL, MACHKICK, TACKLE, GUNHAWKSHOOT, GUNHAWKSTANDBY, };
+    enum class ANIMATION_NUM {
+        IDLE, MOVE, AT_1, AT_2, AT_3,
+        JUMP, LANDING, RUN, DG_AT1, DG_AT2, DG_AT3,
+        JACKSPIKE, RANDOMSHOT, DEATHBYREVOLVER, WINDMILL,
+        MACHKICK, TACKLE, GUNHAWKSHOOT, GUNHAWKSTANDBY, PUNISHER, PUNISHERSHOOT, BBQREADY, BBQSHOOT,
+    };
 
 private:
     Ptr<CTexture>            m_Texture;
@@ -86,7 +106,7 @@ private:
     Ptr<CPrefab>             m_RisingShotPref;
                              
     OBJ_DIR                  m_Dir;
-    STATE                    m_State;
+    PLAYER_STATE             m_State;
     
     tPlayerSkillTime         m_CoolTime;
     tPlayerUseSkill          m_UseSkill;
@@ -96,6 +116,7 @@ private:
     float                    m_GroundPosY;
                              
     float                    m_Time;
+    float                    m_BBQTime;
                              
     bool                     m_NextAttack;
     bool                     m_Run;
@@ -108,7 +129,11 @@ private:
     bool                     m_GunHawkStandby;
 
 private:
-    void SetState(STATE _State)         { m_State = _State; }
+    void InitInfo();
+    void InitPrefabs();
+
+private:
+    void SetState(PLAYER_STATE _State)         { m_State = _State; }
     void SetDirection(OBJ_DIR _Dir)     { GetOwner()->SetDir(_Dir); }
     void SetTBDirection(OBJ_DIR _Dir)   { GetOwner()->SetTBDir(_Dir); }
     void SetPrevDirection(OBJ_DIR _Dir) { GetOwner()->SetPrevDir(_Dir); }
@@ -117,6 +142,7 @@ private:
     void AddForce();
     void SetGroundPos(float _PosY)  { m_GroundPosY = _PosY; }
     bool GroundCheck();
+    void SetFontOffset();
 
 private:
     void Idle();
@@ -149,10 +175,16 @@ private:
     void GunHawkShoot();
     void GunHawkStandBy();
     void GunHawkLastShoot();
+    void WesternFire();
+    void PuniSher();
+    void PuniSherShoot();
+    void SkillBBQ();
+    void BBQReady();
+    void SkillBBQShoot();
 
     // Skill TimeCheck
     void SkillTimeCheck();
-
+    
     // Stylish Skill
     void Stylish();
 
@@ -175,9 +207,18 @@ private:
     void CreateMachKick();
     void CreateJackSpike();
     void CreateRisingShot();
-
+    void CreateWesternFire();
+    void CreatePunisher();
+    void CreatePunisherPistol();
+    void CreateBBQ();
+    
 public:
     void ChangeStateDoubleGunHawkStandBy();
+    void ChangeStatePunisherShoot();
+    void ChangeStateBBQReady();
+    const tPlayerSkillTime& GetSkillTime() { return m_CoolTime; }
+    const tPlayerUseSkill& GetUseSkill()   { return m_UseSkill; }
+    const PLAYER_STATE& GetState()         { return m_State; }
 
 public:
     virtual void Begin() override;

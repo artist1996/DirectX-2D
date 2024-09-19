@@ -27,7 +27,9 @@ void CJackSpikeScript::Tick()
 
 void CJackSpikeScript::BeginOverlap(CCollider2D* _OwnCollider, CGameObject* _OtherObj, CCollider2D* _OtherCollider)
 {
-	if (L"hyungteo" == _OtherObj->GetName())
+	INFO& info = _OtherObj->GetInfo();
+
+	if (L"hyungteo" == _OtherObj->GetName() || L"direzie" == _OtherObj->GetName() && !info.bSuperArmor)
 	{
 		Vec3 vPos = Transform()->GetWorldPos();
 		Vec3 vOtherPos = _OtherObj->Transform()->GetWorldPos();
@@ -54,6 +56,8 @@ void CJackSpikeScript::BeginOverlap(CCollider2D* _OwnCollider, CGameObject* _Oth
 			}
 
 			_OtherObj->FSM()->ChangeState(L"Fly");
+
+			info.HP -= 5.f;
 		}
 	}
 }

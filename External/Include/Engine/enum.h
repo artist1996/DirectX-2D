@@ -48,7 +48,6 @@ enum class COMPONENT_TYPE
 	DECAl,
 	SKYBOX,
 	LANDSCAPE,
-
 	END,
 
 	SCRIPT,
@@ -80,6 +79,36 @@ enum class MONSTER_STATE
 	TRACE,
 	ATTACK,
 	DEAD,
+
+	END,
+};
+
+enum class HUD_TYPE
+{
+	INFO,
+	INVENTORY,
+	QUEST,
+	SKILL,
+	AUCTION,
+	MENU,
+	CAHSSHOP,
+
+	END,
+};
+
+enum class PLAYER_SKILLTYPE
+{
+	HEADSHOT,	   // A
+	RISINGSHOT,    // S
+	WINDMILL,	   // D
+	MACHKICK,      // F
+	RANDOMSHOOT,   // G
+	WESTERNFIRE,   // H
+	GUNHAWK,	   // Q
+	PUNISHER,      // W
+	BBQ,	       // E
+	MULTIHEADSHOT, // R
+	DEATHCRYSIS,   // CTRL
 
 	END,
 };

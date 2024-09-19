@@ -21,6 +21,7 @@ CCollider2D::CCollider2D(const CCollider2D& _Origin)
 	, m_OverlapCount(0)
 	, m_IndependentScale(_Origin.m_IndependentScale)
 	, m_bRender(_Origin.m_bRender)
+	, m_bActive(_Origin.m_bActive)
 {
 }
 

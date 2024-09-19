@@ -10,6 +10,7 @@
 
 #include "CLevelSaveLoad.h"
 #include "CTestLevel.h"
+#include "LoadLevel.h"
 
 // 전역 변수:
 HINSTANCE g_hInst = nullptr;                               // 현재 인스턴스입니다.
@@ -25,7 +26,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                      _In_ int       nCmdShow)
 {
     _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-    //_CrtSetBreakAlloc(26263);
+    //_CrtSetBreakAlloc(29627);
 
     MyRegisterClass(hInstance);
 
@@ -57,6 +58,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     CEditorMgr::GetInst()->Init();
 #endif
     CTestLevel::CreateTestLevel();
+    //LoadLevel* lv = new LoadLevel;
+    //lv->Init();
 
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_CSMDIRECTX));
 

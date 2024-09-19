@@ -36,7 +36,6 @@ void CMachKickScript::BeginOverlap(CCollider2D* _OwnCollider, CGameObject* _Othe
 			if (L"juris" == _OtherObj->GetName())
 			{
 				_OtherObj->FSM()->ChangeState(L"Stiffness");
-				info.HP -= 5.f;
 			}
 
 			if (L"hyungteo" == _OtherObj->GetName())
@@ -59,9 +58,23 @@ void CMachKickScript::BeginOverlap(CCollider2D* _OwnCollider, CGameObject* _Othe
 					pRB->Jump();
 					_OtherObj->FSM()->ChangeState(L"AirHit");
 				}
-			
-				info.HP -= 5.f;
 			}
+
+			if (L"direzie" == _OtherObj->GetName())
+			{
+				CRigidbody* pRB = _OtherObj->Rigidbody();
+				if (pRB->IsGround())
+					_OtherObj->FSM()->ChangeState(L"GroundHit");
+				else
+				{
+					pRB->SetGround(true);
+					pRB->SetJumpSpeed(50.f);
+					pRB->SetMaxGravitySpeed(200.f);
+					pRB->Jump();
+					_OtherObj->FSM()->ChangeState(L"AirHit");
+				}
+			}
+			info.HP -= 10.f;
 		}
 	}
 }

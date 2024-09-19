@@ -12,6 +12,9 @@ CCameraMoveScript::CCameraMoveScript()
 	, m_BoundaryRightWidth(0.f)
 	, m_BoundaryBottomHeight(0.f)
 	, m_TargetMove(false)
+	, m_Shaking(false)
+	, m_ShakingTime(0.f)
+	, m_Dir(1.f)
 {
 	AddScriptParam(SCRIPT_PARAM::VEC2, "Boundary LT", &m_BoundaryLT);
 	AddScriptParam(SCRIPT_PARAM::FLOAT, "Boundary R Width", &m_BoundaryRightWidth);
@@ -26,8 +29,10 @@ void CCameraMoveScript::Begin()
 {
 	m_Target = CLevelMgr::GetInst()->FindObjectByName(L"PlayerMove");
 	GetOwner()->SetTarget(m_Target);
-
+	
 	CLevel* pLevel = CLevelMgr::GetInst()->GetCurrentLevel();
+
+	//Camera()->SetPriority(1);
 
 	if (L"leshphon1" == pLevel->GetName())
 		m_BoundaryLT = Vec2(223.f, 39.f);
@@ -35,8 +40,11 @@ void CCameraMoveScript::Begin()
 	else if (L"leshphon2" == pLevel->GetName())
 		m_BoundaryLT = Vec2(0.f, 40.f);
 
-	else if(L"leshphon3" == pLevel->GetName())
+	else if (L"leshphon3" == pLevel->GetName())
 		m_BoundaryLT = Vec2(0.f, 44.f);
+
+	else if (L"leshphon4" == pLevel->GetName())
+		m_BoundaryLT = Vec2(0.f, 41.f);
 }
 
 void CCameraMoveScript::Tick()
@@ -47,6 +55,9 @@ void CCameraMoveScript::Tick()
 	//else if(KEY_TAP(KEY::_2))
 	//	Camera()->SetProjType(PROJ_TYPE::PERSPECTIVE);
 	
+	if (nullptr == m_Target)
+		return;
+
 	if (PROJ_TYPE::ORTHOGRAPHIC == Camera()->GetProjType())
 	{
 		// 직교 투영 카메라 무브
@@ -78,21 +89,46 @@ void CCameraMoveScript::OrthoGraphicMove()
 	float Speed = m_CamSpeed;
 
 	Vec3 vPos = m_Target->Transform()->GetWorldPos();
+	if (!m_Shaking)
+	{
+		if (vPos.x <= m_BoundaryLT.x)
+			vPos.x = m_BoundaryLT.x;
 
+		if (vPos.y <= m_BoundaryLT.y)
+			vPos.y = m_BoundaryLT.y;
+
+		if (vPos.x >= m_BoundaryRightWidth)
+			vPos.x = m_BoundaryRightWidth;
+
+		if (vPos.y >= m_BoundaryBottomHeight)
+			vPos.y = m_BoundaryBottomHeight;
+	}
+	else
+	{
+		vPos.x += m_Dir * 0.01f * DT;
+
+		float fDist = fabs(m_StartPos.x - vPos.x) - 10.f;
+
+		m_ShakingTime += DT;
+
+		if (1.f > fDist)
+		{
+			m_Dir *= -1.f;
+		}
+		
+		if (0.1f < m_ShakingTime)
+		{
+			m_Shaking = false;
+			m_ShakingTime = 0.f;
+		}
+
+		if (vPos.y <= m_BoundaryLT.y)
+			vPos.y = m_BoundaryLT.y;
+		if (vPos.y >= m_BoundaryBottomHeight)
+			vPos.y = m_BoundaryBottomHeight;
+	}
 	if (KEY_PRESSED(KEY::LSHIFT))
 		Speed *= 3.f;
-
-	if (vPos.x <= m_BoundaryLT.x)
-		vPos.x = m_BoundaryLT.x;
-
-	if (vPos.y <= m_BoundaryLT.y)
-		vPos.y = m_BoundaryLT.y;
-	
-	if (vPos.x >= m_BoundaryRightWidth)
-		vPos.x = m_BoundaryRightWidth;
-	
-	if (vPos.y >= m_BoundaryBottomHeight)
-		vPos.y = m_BoundaryBottomHeight;
 
 	Transform()->SetRelativePos(vPos);
 }
@@ -150,6 +186,12 @@ void CCameraMoveScript::PerspectiveMove()
 	//{
 	//	CKeyMgr::GetInst()->MouseCaptrue(false);
 	//}
+}
+
+void CCameraMoveScript::SetShaking(bool _Set)
+{
+	m_Shaking = _Set;
+	m_StartPos = Transform()->GetRelativePos();
 }
 
 void CCameraMoveScript::SaveToFile(FILE* _pFile)

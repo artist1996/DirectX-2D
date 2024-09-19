@@ -75,11 +75,16 @@ struct tTask
 
 typedef struct tObjInfo
 {
+	int   MaxFatigue;
+	int   Fatigue;
 	float MaxHP;
 	float HP;
+	float MaxMP;
+	float MP;
 	float MinAttack;
 	float MaxAttack;
 	float Defense;
+	float Speed;
 	bool  bTackle;
 	bool  bMoveable;
 	bool  bHit;
@@ -88,6 +93,7 @@ typedef struct tObjInfo
 	bool  bHitFly;
 	bool  bForce;
 	bool  bAirHit;
+	bool  bSuperArmor;
 }INFO;
 
 struct tLight
