@@ -9,6 +9,8 @@ private:
     float        m_DestroyPos;
     float        m_Speed;
 
+private:
+
 public:
     virtual void Begin() override;
     virtual void Tick() override;

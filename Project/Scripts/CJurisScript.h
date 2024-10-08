@@ -6,6 +6,7 @@ class CJurisScript :
 {
 private:
     bool    m_Dead;
+    float   m_Time;
 
 private:
     void InitInfo();

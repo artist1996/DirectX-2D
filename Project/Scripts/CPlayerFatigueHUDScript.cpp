@@ -21,6 +21,9 @@ void CPlayerFatigueHUDScript::Begin()
 
 void CPlayerFatigueHUDScript::Tick()
 {
+	if (!m_pTarget)
+		return;
+
 	INFO& info = m_pTarget->GetInfo();
 
 	CalculateByRatio(info);

@@ -77,6 +77,7 @@ typedef struct tObjInfo
 {
 	int   MaxFatigue;
 	int   Fatigue;
+	int   iGold;
 	float MaxHP;
 	float HP;
 	float MaxMP;
@@ -94,6 +95,8 @@ typedef struct tObjInfo
 	bool  bForce;
 	bool  bAirHit;
 	bool  bSuperArmor;
+	bool  bInvincible;
+	bool  bReflection;
 }INFO;
 
 struct tLight

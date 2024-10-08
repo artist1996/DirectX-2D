@@ -48,7 +48,7 @@ int CEngine::Init(HWND _hWnd, POINT _ptResolution, OBJECT_SAVE _SaveFunc, OBJECT
 	assert(m_FMODSystem);
 
 	// 32개 채널 생성
-	m_FMODSystem->init(32, FMOD_DEFAULT, nullptr);
+	m_FMODSystem->init(100, FMOD_DEFAULT, nullptr);
 
 	// Manager Init
 

@@ -3,7 +3,7 @@
 #include <Engine/CLevelMgr.h>
 
 #include "CPlayerScript.h"
-
+#include "CMonsterDamageFontScript.h"
 
 CDoubleGunHawkScript::CDoubleGunHawkScript()
 	: CScript(SCRIPT_TYPE::DOUBLEGUNHAWKSCRIPT)
@@ -31,11 +31,20 @@ CDoubleGunHawkScript::~CDoubleGunHawkScript()
 
 void CDoubleGunHawkScript::Begin()
 {
+	MeshRender()->GetDynamicMaterial();
+
 	Animator2D()->Play(0, 30.f, true);
 
 	MeshRender()->GetMaterial()->SetScalarParam(INT_3, 1);
 
 	m_Accel = m_Force / m_Mass;
+	
+	if (GUNHAWK_TYPE::TYPE_ONE == m_Type)
+		CAssetMgr::GetInst()->FindAsset<CSound>(L"sound\\player\\gunhawk_12.ogg")->Play(0, 0.4f, false);
+	else
+		CAssetMgr::GetInst()->FindAsset<CSound>(L"sound\\player\\gunhawk_3.ogg")->Play(0, 0.4f, false);
+
+	CAssetMgr::GetInst()->FindAsset<CSound>(L"sound\\player\\gunhawk_gun.ogg")->Play(0, 0.1f, false);
 }
 
 void CDoubleGunHawkScript::Tick()
@@ -100,6 +109,12 @@ void CDoubleGunHawkScript::Tick()
 			m_Stop = true;
 
 			DeleteObject(GetOwner());
+			if (GUNHAWK_TYPE::TYPE_ONE == m_Type)
+				CAssetMgr::GetInst()->FindAsset<CSound>(L"sound\\player\\gunhawk_12.ogg")->Stop();
+			else
+				CAssetMgr::GetInst()->FindAsset<CSound>(L"sound\\player\\gunhawk_3.ogg")->Stop();
+
+			CAssetMgr::GetInst()->FindAsset<CSound>(L"sound\\player\\gunhawk_gun.ogg")->Stop();
 		}
 
 		m_Accel -= m_Friction * DT;
@@ -134,6 +149,8 @@ void CDoubleGunHawkScript::BeginOverlap(CCollider2D* _OwnCollider, CGameObject* 
 
 			DeleteObject(GetOwner());
 			_OtherCollider->MinusOverlapCount();
+			CAssetMgr::GetInst()->FindAsset<CSound>(L"sound\\player\\gunhawk_12.ogg")->Stop();
+			CAssetMgr::GetInst()->FindAsset<CSound>(L"sound\\player\\gunhawk_gun.ogg")->Stop();
 		}
 	}
 }
@@ -147,6 +164,46 @@ void CDoubleGunHawkScript::Overlap(CCollider2D* _OwnCollider, CGameObject* _Othe
 		{
 			info.HP -= 20.f;
 			m_Hit = true;
+			int Rand = CRandomMgr::GetInst()->GetRandom(1);
+			CAssetMgr::GetInst()->FindAsset<CSound>(L"sound\\player\\gunhawk_hit_01.ogg")->Play(1, 0.3f, true);
+
+			if (L"MonsterMove" != _OtherObj->GetName() && 6 == _OtherObj->GetLayerIdx() && OBJ_DIR::DIR_LEFT == _OtherObj->GetParent()->GetDir())
+			{
+				Vec3 vOtherPos = _OtherObj->Transform()->GetWorldPos();
+				Ptr<CPrefab> pDamage = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\monsterdamage.pref");
+				CGameObject* pObj = pDamage->Instantiate();
+				pObj->Transform()->SetRelativePos(Vec3(vOtherPos.x + 100.f, vOtherPos.y, vOtherPos.z));
+
+				if (0 == Rand)
+				{
+					static_cast<CMonsterDamageFontScript*>(pObj->GetScripts()[0])->SetDamge(3416371);
+					static_cast<CMonsterDamageFontScript*>(pObj->GetScripts()[0])->SetType(FONT_TYPE::NORMAL);
+				}
+				else
+				{
+					static_cast<CMonsterDamageFontScript*>(pObj->GetScripts()[0])->SetDamge(4167254);
+					static_cast<CMonsterDamageFontScript*>(pObj->GetScripts()[0])->SetType(FONT_TYPE::CRITICAL);
+				}
+				CreateObject(pObj, 0);
+			}
+			else if (L"MonsterMove" != _OtherObj->GetName() && 6 == _OtherObj->GetLayerIdx() && OBJ_DIR::DIR_RIGHT == _OtherObj->GetParent()->GetDir())
+			{
+				Vec3 vOtherPos = _OtherObj->Transform()->GetWorldPos();
+				Ptr<CPrefab> pDamage = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\monsterdamage.pref");
+				CGameObject* pObj = pDamage->Instantiate();
+				pObj->Transform()->SetRelativePos(Vec3(vOtherPos.x - 100.f, vOtherPos.y, vOtherPos.z));
+				if (0 == Rand)
+				{
+					static_cast<CMonsterDamageFontScript*>(pObj->GetScripts()[0])->SetDamge(3416371);
+					static_cast<CMonsterDamageFontScript*>(pObj->GetScripts()[0])->SetType(FONT_TYPE::NORMAL);
+				}
+				else
+				{
+					static_cast<CMonsterDamageFontScript*>(pObj->GetScripts()[0])->SetDamge(4167254);
+					static_cast<CMonsterDamageFontScript*>(pObj->GetScripts()[0])->SetType(FONT_TYPE::CRITICAL);
+				}
+				CreateObject(pObj, 0);
+			}
 		}
 	}
 
@@ -155,7 +212,10 @@ void CDoubleGunHawkScript::Overlap(CCollider2D* _OwnCollider, CGameObject* _Othe
 		m_HitTime += DT;
 
 		if (0.15f < m_HitTime)
-			_OtherObj->FSM()->ChangeState(L"Stiffness");
+		{
+			if(!info.bReflection)
+				_OtherObj->FSM()->ChangeState(L"Stiffness");
+		}
 	}
 
 	if (L"hyungteo" == _OtherObj->GetName())

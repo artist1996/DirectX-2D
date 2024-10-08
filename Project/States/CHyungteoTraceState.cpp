@@ -130,7 +130,7 @@ void CHyungteoTraceState::FinalTick()
 			GetFSM()->ChangeState(L"Punch");	
 	}
 
-	GetOwner()->GetParent()->Transform()->SetRelativePos(vPos);
+	GetOwner()->GetParent()->Transform()->SetRelativePos(Vec3(vPos.x, vPos.y, vPos.y));
 }
 
 void CHyungteoTraceState::Exit()

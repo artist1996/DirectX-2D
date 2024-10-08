@@ -72,6 +72,9 @@ void CTransform::FinalTick()
 		{
 			m_WorldDir[i] = XMVector3TransformNormal(vDefaultAxis[i], m_matWorld);
 			m_WorldDir[i].Normalize();
+
+			if (L"Player" == GetOwner()->GetName())
+				int a = 0;
 		}
 	}
 

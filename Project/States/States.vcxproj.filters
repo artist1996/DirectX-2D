@@ -187,6 +187,9 @@
     <Filter Include="States\02. Boss\01. Direzie\05. Hit\05. HitBBQ">
       <UniqueIdentifier>{78c57ffb-a11c-4668-861f-70c2e833113a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="States\02. Boss\01. Direzie\05. Hit\06. Holding">
+      <UniqueIdentifier>{bbcd6430-5bae-4d33-bc0f-47d00904ad1c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -336,6 +339,12 @@
     <ClInclude Include="CDirezieDownHitState.h">
       <Filter>States\02. Boss\01. Direzie\05. Hit\04. DownHit</Filter>
     </ClInclude>
+    <ClInclude Include="CDirezieHitBBQState.h">
+      <Filter>States\02. Boss\01. Direzie\05. Hit\05. HitBBQ</Filter>
+    </ClInclude>
+    <ClInclude Include="CDirezieHoldingState.h">
+      <Filter>States\02. Boss\01. Direzie\05. Hit\06. Holding</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -484,6 +493,12 @@
     </ClCompile>
     <ClCompile Include="CDirezieDownHitState.cpp">
       <Filter>States\02. Boss\01. Direzie\05. Hit\04. DownHit</Filter>
+    </ClCompile>
+    <ClCompile Include="CDirezieHitBBQState.cpp">
+      <Filter>States\02. Boss\01. Direzie\05. Hit\05. HitBBQ</Filter>
+    </ClCompile>
+    <ClCompile Include="CDirezieHoldingState.cpp">
+      <Filter>States\02. Boss\01. Direzie\05. Hit\06. Holding</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

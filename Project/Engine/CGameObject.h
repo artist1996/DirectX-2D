@@ -70,7 +70,7 @@ public:
     void SetForce(bool _Set)  { m_Info.bForce = _Set; }
     
     void SetGroundCollision(bool _Set) { m_GroundCollision = _Set; }
-    bool GetGroundCollision()          { return m_GroundCollision; }
+    bool IsGroundCollision()          { return m_GroundCollision; }
 
     void SetActive(bool _Set);
     bool IsActive()           { return m_Active; }
@@ -111,6 +111,8 @@ public:
     void SetFont(const wstring& _strFont) { m_strFont = _strFont; }
     void SetFontColor(UINT _Color)        { m_Color = _Color; }
     void SetFontOffset(Vec2 _Offset)      { m_FontOffset = _Offset; }
+
+    void SetLayerIdx(int _Idx) { m_LayerIdx = _Idx; }
 
     Vec3 CarculatePosition();
 

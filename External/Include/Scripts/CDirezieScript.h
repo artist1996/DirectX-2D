@@ -7,15 +7,18 @@ class CDirezieScript :
 private:
     Ptr<CPrefab> m_WindPref;
     float        m_Damage;
-    float        m_CumulativeDamage;
     float        m_Count;
     float        m_DamageHP;
 
+    float        m_Time;
+    bool         m_Color;
+
     bool         m_IsDamage;
+    bool         m_Dead;
 
 private:
     float Lerp(float _start, float _end, float _t);
-    void InitInfo();
+    void  InitInfo();
 
 public:
     void Damage(float _Attack);

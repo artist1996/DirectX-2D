@@ -25,6 +25,9 @@ void CSkillIconScript::Begin()
 
 void CSkillIconScript::Tick()
 {
+	if (!m_pTarget)
+		return;
+
 	CalculateRatio();
 	MeshRender()->GetMaterial()->SetScalarParam(FLOAT_1, m_Ratio);
 }
@@ -67,7 +70,7 @@ void CSkillIconScript::CalculateRatio()
 		m_Ratio = Time.fHeadShotCoolTime / Time.fHeadShotTime;
 		break;
 	case PLAYER_SKILLTYPE::DEATHCRYSIS:
-		m_Ratio = Time.fHeadShotCoolTime / Time.fHeadShotTime;
+		m_Ratio = Time.fDeathCrisisTime / Time.fDeathCrisisCoolTime;
 		break;
 	}
 }

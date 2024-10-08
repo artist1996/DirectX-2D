@@ -26,6 +26,7 @@ public:
     void SetRelativeRotation(float x, float y, float z) { m_RelativeRotation = Vec3(x, y, z); }
 
     void SetWorldMatrix(const Matrix& _matWorld)        { m_matWorld = _matWorld; }
+    void SetZAxis(float _z) { m_RelativePos.z = _z; }
 
     void SetIndependentScale(bool _Set)                 { m_IndependentScale = _Set; }
 

@@ -103,9 +103,6 @@
     <Filter Include="Scripts\04. GateScript\01. SeriaRoomGate">
       <UniqueIdentifier>{447b6b60-5e50-424c-a2a4-8019c24c70a6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Scripts\04. GateScript\02. LeshphonGate">
-      <UniqueIdentifier>{f3d785db-1e4d-4501-bc9c-e75f4d69c735}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Scripts\05. MonsterScript">
       <UniqueIdentifier>{dbad4e44-9b58-4d4d-8475-d9a41d51e867}</UniqueIdentifier>
     </Filter>
@@ -271,6 +268,108 @@
     <Filter Include="Scripts\10. UIScript\01. Player\03. Icon\02. Item">
       <UniqueIdentifier>{663629e6-ef83-4ac9-b765-7370e0ae02c2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scripts\01. PlayerScript\03. PlayerSkillScript\06. DoubleGunHawk\01. Normal">
+      <UniqueIdentifier>{c0a1dbd1-ed6e-4f0e-abf6-d1712a1d410e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\01. PlayerScript\03. PlayerSkillScript\06. DoubleGunHawk\02. DeathCrisis">
+      <UniqueIdentifier>{d1846554-77eb-45d8-ae42-c3a51ded563f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\13. DeathCrisisLine">
+      <UniqueIdentifier>{bc600c58-0057-45e8-adb9-6b9a1256ce62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\13. DeathCrisisLine\02. DeathCrisislinetwo">
+      <UniqueIdentifier>{cd2442a7-66ee-4ff3-84d0-f095410a1a32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\13. DeathCrisisLine\01. DeathCrisisLineOne">
+      <UniqueIdentifier>{2ca67653-39b4-43c2-934a-c283daae0103}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\01. PlayerScript\03. PlayerSkillScript\06. DoubleGunHawk\02. DeathCrisis\01. One">
+      <UniqueIdentifier>{ec554781-4e64-460d-86a8-936e8f97978c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\01. PlayerScript\03. PlayerSkillScript\06. DoubleGunHawk\02. DeathCrisis\02. Two">
+      <UniqueIdentifier>{430c5021-8328-45c1-bc17-1b24bfc64fa4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\01. PlayerScript\03. PlayerSkillScript\13. DeathCrisisBoom">
+      <UniqueIdentifier>{339de0ca-ab92-48b3-b44a-5c7b64e63e9c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\01. PlayerScript\04. PlayerEffectScript\05. Children">
+      <UniqueIdentifier>{db7b321f-5dba-4a74-b91b-07458e15f485}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\08. EffectScript\01. Effect">
+      <UniqueIdentifier>{03de2641-71be-4e70-9eea-12651b493fc1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\08. EffectScript\02. Light">
+      <UniqueIdentifier>{aae4f834-d71b-487b-9a53-58c83f56f735}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\04. GateScript\03. LeshphonGate">
+      <UniqueIdentifier>{f3d785db-1e4d-4501-bc9c-e75f4d69c735}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\04. GateScript\02. HendonmyerGate">
+      <UniqueIdentifier>{107353a4-399b-470b-9f53-150b8936c1fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\05. MonsterScript\01. MeltKnight\01. Entity">
+      <UniqueIdentifier>{8f495839-8050-4ab9-a7fc-da26f638e263}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\05. MonsterScript\01. MeltKnight\02. Attack">
+      <UniqueIdentifier>{086ca869-22b8-4c01-b73f-23f03b6dee29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\05. MonsterScript\03. Juris\01. Entity">
+      <UniqueIdentifier>{cd2a1c9e-80be-4ce4-bb21-bb79c60e7584}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\05. MonsterScript\03. Juris\02. Attack">
+      <UniqueIdentifier>{8f53c858-fe82-4ce3-beb0-90ebfecf8a8b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\05. MonsterScript\04. Direzie\03. Attack">
+      <UniqueIdentifier>{b14d4c21-b57e-4865-80f2-30591e274b3c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\10. UIScript\05. DamageFont">
+      <UniqueIdentifier>{b2fdbcc8-7bd9-48b0-a11f-ae9b926079b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\03. NPCScript\01. Seria\01. Entity">
+      <UniqueIdentifier>{3f1a10b0-4272-4ace-98f7-8a10ea8f01e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\03. NPCScript\01. Seria\02. Outline">
+      <UniqueIdentifier>{4972ccdb-5917-4b24-8aa7-4bccfceccf4d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\10. UIScript\06. Inventory">
+      <UniqueIdentifier>{2a114f80-e079-47cc-88b1-74c0ece33aa8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\10. UIScript\06. Inventory\02. EquipSlot">
+      <UniqueIdentifier>{3eea36fc-5df3-446b-9183-7ddb34f727cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\10. UIScript\06. Inventory\01. Panel">
+      <UniqueIdentifier>{dfa6295f-4137-4d26-9c03-662ada0272ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\10. UIScript\06. Inventory\03. InventorySlot">
+      <UniqueIdentifier>{57a2910e-6a5a-4eb2-b238-7ad29da1ba7f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\10. UIScript\06. Inventory\05. Item">
+      <UniqueIdentifier>{82862b44-3a0d-4e04-9378-e0a6a3df194c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\10. UIScript\06. Inventory\04. InventoryInfo">
+      <UniqueIdentifier>{61ac629f-ffa8-4290-94ce-007cd0121c4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\10. UIScript\07. Store">
+      <UniqueIdentifier>{55c62bf6-c448-4f9f-80d3-392fecd72bda}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\10. UIScript\07. Store\01. Panel">
+      <UniqueIdentifier>{106b5a25-0795-4dce-a0ef-9f3dcd1b2b03}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\10. UIScript\07. Store\02. Slot">
+      <UniqueIdentifier>{32356c4c-26e2-4786-8e8b-7c2f93174d80}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\10. UIScript\08. UserInterface">
+      <UniqueIdentifier>{50f38643-de4c-4a8b-9c01-937f9e384a00}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\10. UIScript\06. Inventory\06. Gold">
+      <UniqueIdentifier>{274ba695-0f13-4b0a-873a-f5750ba7b832}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\10. UIScript\07. Store\03. Price">
+      <UniqueIdentifier>{ac49c5ef-640e-425b-8b21-8ee2ba4fb0af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\10. UIScript\09. Tap">
+      <UniqueIdentifier>{865a2238-6a58-4985-8ee1-dd9c77d28d24}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -312,9 +411,6 @@
     <ClInclude Include="CHeadShotScript.h">
       <Filter>Scripts\01. PlayerScript\03. PlayerSkillScript\07. HeadShot\01. Normal</Filter>
     </ClInclude>
-    <ClInclude Include="CDoubleGunHawkScript.h">
-      <Filter>Scripts\01. PlayerScript\03. PlayerSkillScript\06. DoubleGunHawk</Filter>
-    </ClInclude>
     <ClInclude Include="CMachKickScript.h">
       <Filter>Scripts\01. PlayerScript\03. PlayerSkillScript\05. MachKick</Filter>
     </ClInclude>
@@ -333,17 +429,11 @@
     <ClInclude Include="CDiagonalPistolScript.h">
       <Filter>Scripts\01. PlayerScript\03. PlayerSkillScript\03. Pistol\02. Diagonal</Filter>
     </ClInclude>
-    <ClInclude Include="CSeriaScript.h">
-      <Filter>Scripts\03. NPCScript\01. Seria</Filter>
-    </ClInclude>
     <ClInclude Include="CDiagonalHeadShotScript.h">
       <Filter>Scripts\01. PlayerScript\03. PlayerSkillScript\07. HeadShot\02. Diagonal</Filter>
     </ClInclude>
     <ClInclude Include="CSeriaRoomGateScript.h">
       <Filter>Scripts\04. GateScript\01. SeriaRoomGate</Filter>
-    </ClInclude>
-    <ClInclude Include="CMeltKnightScript.h">
-      <Filter>Scripts\05. MonsterScript\01. MeltKnight</Filter>
     </ClInclude>
     <ClInclude Include="CMonsterMoveScript.h">
       <Filter>Scripts\05. MonsterScript\00. Move</Filter>
@@ -351,11 +441,8 @@
     <ClInclude Include="CParticleScript.h">
       <Filter>Scripts\07. ParticleScript</Filter>
     </ClInclude>
-    <ClInclude Include="CEffectScript.h">
-      <Filter>Scripts\08. EffectScript</Filter>
-    </ClInclude>
     <ClInclude Include="LeshphonGateScript.h">
-      <Filter>Scripts\04. GateScript\02. LeshphonGate</Filter>
+      <Filter>Scripts\04. GateScript\03. LeshphonGate</Filter>
     </ClInclude>
     <ClInclude Include="CIroncageScript.h">
       <Filter>Scripts\09. IronCageScript</Filter>
@@ -368,9 +455,6 @@
     </ClInclude>
     <ClInclude Include="CHyungteoStingScript.h">
       <Filter>Scripts\05. MonsterScript\02. Hyungteo\03. Sting</Filter>
-    </ClInclude>
-    <ClInclude Include="CJurisScript.h">
-      <Filter>Scripts\05. MonsterScript\03. Juris</Filter>
     </ClInclude>
     <ClInclude Include="CSkillGroundScript.h">
       <Filter>Scripts\01. PlayerScript\03. PlayerSkillScript\00. Ground</Filter>
@@ -462,6 +546,96 @@
     <ClInclude Include="CGatlinggunPistolScript.h">
       <Filter>Scripts\01. PlayerScript\03. PlayerSkillScript\03. Pistol\04. Gatlinggun</Filter>
     </ClInclude>
+    <ClInclude Include="CDeathCrisislinetwoScript.h">
+      <Filter>Scripts\13. DeathCrisisLine\02. DeathCrisislinetwo</Filter>
+    </ClInclude>
+    <ClInclude Include="CDoubleGunHawkScript.h">
+      <Filter>Scripts\01. PlayerScript\03. PlayerSkillScript\06. DoubleGunHawk\01. Normal</Filter>
+    </ClInclude>
+    <ClInclude Include="CDeathCrisisLineoneScript.h">
+      <Filter>Scripts\13. DeathCrisisLine\01. DeathCrisisLineOne</Filter>
+    </ClInclude>
+    <ClInclude Include="CDeathCrisisGunHawkScript.h">
+      <Filter>Scripts\01. PlayerScript\03. PlayerSkillScript\06. DoubleGunHawk\02. DeathCrisis\01. One</Filter>
+    </ClInclude>
+    <ClInclude Include="CDeathCrisisGunHawkTwoScript.h">
+      <Filter>Scripts\01. PlayerScript\03. PlayerSkillScript\06. DoubleGunHawk\02. DeathCrisis\02. Two</Filter>
+    </ClInclude>
+    <ClInclude Include="CDeathCrisisBigBoomScript.h">
+      <Filter>Scripts\01. PlayerScript\03. PlayerSkillScript\13. DeathCrisisBoom</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayerChildrenEffectScript.h">
+      <Filter>Scripts\01. PlayerScript\04. PlayerEffectScript\05. Children</Filter>
+    </ClInclude>
+    <ClInclude Include="CEffectScript.h">
+      <Filter>Scripts\08. EffectScript\01. Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="CDeathCrisisLightScript.h">
+      <Filter>Scripts\08. EffectScript\02. Light</Filter>
+    </ClInclude>
+    <ClInclude Include="CHendonMyreGateScript.h">
+      <Filter>Scripts\04. GateScript\02. HendonmyerGate</Filter>
+    </ClInclude>
+    <ClInclude Include="CMeltKnightScript.h">
+      <Filter>Scripts\05. MonsterScript\01. MeltKnight\01. Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="CMeltKnightAttackScript.h">
+      <Filter>Scripts\05. MonsterScript\01. MeltKnight\02. Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="CJurisScript.h">
+      <Filter>Scripts\05. MonsterScript\03. Juris\01. Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="CJurisAttackScript.h">
+      <Filter>Scripts\05. MonsterScript\03. Juris\02. Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="CDirezieAttackScript.h">
+      <Filter>Scripts\05. MonsterScript\04. Direzie\03. Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="CMonsterDamageFontScript.h">
+      <Filter>Scripts\10. UIScript\05. DamageFont</Filter>
+    </ClInclude>
+    <ClInclude Include="CMouseScript.h">
+      <Filter>Scripts\11. MouseScript</Filter>
+    </ClInclude>
+    <ClInclude Include="CSeriaScript.h">
+      <Filter>Scripts\03. NPCScript\01. Seria\01. Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="COutlineScript.h">
+      <Filter>Scripts\03. NPCScript\01. Seria\02. Outline</Filter>
+    </ClInclude>
+    <ClInclude Include="CPanelScript.h">
+      <Filter>Scripts\10. UIScript\06. Inventory\01. Panel</Filter>
+    </ClInclude>
+    <ClInclude Include="CEquipSlotScript.h">
+      <Filter>Scripts\10. UIScript\06. Inventory\02. EquipSlot</Filter>
+    </ClInclude>
+    <ClInclude Include="CInventorySlotScript.h">
+      <Filter>Scripts\10. UIScript\06. Inventory\03. InventorySlot</Filter>
+    </ClInclude>
+    <ClInclude Include="CInventoryInfoScript.h">
+      <Filter>Scripts\10. UIScript\06. Inventory\04. InventoryInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="CItemScript.h">
+      <Filter>Scripts\10. UIScript\06. Inventory\05. Item</Filter>
+    </ClInclude>
+    <ClInclude Include="CStorePanelScript.h">
+      <Filter>Scripts\10. UIScript\07. Store\01. Panel</Filter>
+    </ClInclude>
+    <ClInclude Include="CStoreSlotScript.h">
+      <Filter>Scripts\10. UIScript\07. Store\02. Slot</Filter>
+    </ClInclude>
+    <ClInclude Include="CInventoryGoldScript.h">
+      <Filter>Scripts\10. UIScript\06. Inventory\06. Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="CStorePriceScript.h">
+      <Filter>Scripts\10. UIScript\07. Store\03. Price</Filter>
+    </ClInclude>
+    <ClInclude Include="CTapScript.h">
+      <Filter>Scripts\10. UIScript\09. Tap</Filter>
+    </ClInclude>
+    <ClInclude Include="CUserInterFaceScript.h">
+      <Filter>Scripts\10. UIScript\08. UserInterface</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -503,9 +677,6 @@
     <ClCompile Include="CHeadShotScript.cpp">
       <Filter>Scripts\01. PlayerScript\03. PlayerSkillScript\07. HeadShot\01. Normal</Filter>
     </ClCompile>
-    <ClCompile Include="CDoubleGunHawkScript.cpp">
-      <Filter>Scripts\01. PlayerScript\03. PlayerSkillScript\06. DoubleGunHawk</Filter>
-    </ClCompile>
     <ClCompile Include="CMachKickScript.cpp">
       <Filter>Scripts\01. PlayerScript\03. PlayerSkillScript\05. MachKick</Filter>
     </ClCompile>
@@ -524,17 +695,11 @@
     <ClCompile Include="CDiagonalPistolScript.cpp">
       <Filter>Scripts\01. PlayerScript\03. PlayerSkillScript\03. Pistol\02. Diagonal</Filter>
     </ClCompile>
-    <ClCompile Include="CSeriaScript.cpp">
-      <Filter>Scripts\03. NPCScript\01. Seria</Filter>
-    </ClCompile>
     <ClCompile Include="CDiagonalHeadShotScript.cpp">
       <Filter>Scripts\01. PlayerScript\03. PlayerSkillScript\07. HeadShot\02. Diagonal</Filter>
     </ClCompile>
     <ClCompile Include="CSeriaRoomGateScript.cpp">
       <Filter>Scripts\04. GateScript\01. SeriaRoomGate</Filter>
-    </ClCompile>
-    <ClCompile Include="CMeltKnightScript.cpp">
-      <Filter>Scripts\05. MonsterScript\01. MeltKnight</Filter>
     </ClCompile>
     <ClCompile Include="CMonsterMoveScript.cpp">
       <Filter>Scripts\05. MonsterScript\00. Move</Filter>
@@ -542,11 +707,8 @@
     <ClCompile Include="CParticleScript.cpp">
       <Filter>Scripts\07. ParticleScript</Filter>
     </ClCompile>
-    <ClCompile Include="CEffectScript.cpp">
-      <Filter>Scripts\08. EffectScript</Filter>
-    </ClCompile>
     <ClCompile Include="LeshphonGateScript.cpp">
-      <Filter>Scripts\04. GateScript\02. LeshphonGate</Filter>
+      <Filter>Scripts\04. GateScript\03. LeshphonGate</Filter>
     </ClCompile>
     <ClCompile Include="CIroncageScript.cpp">
       <Filter>Scripts\09. IronCageScript</Filter>
@@ -559,9 +721,6 @@
     </ClCompile>
     <ClCompile Include="CHyungteoStingScript.cpp">
       <Filter>Scripts\05. MonsterScript\02. Hyungteo\03. Sting</Filter>
-    </ClCompile>
-    <ClCompile Include="CJurisScript.cpp">
-      <Filter>Scripts\05. MonsterScript\03. Juris</Filter>
     </ClCompile>
     <ClCompile Include="CSkillGroundScript.cpp">
       <Filter>Scripts\01. PlayerScript\03. PlayerSkillScript\00. Ground</Filter>
@@ -652,6 +811,96 @@
     </ClCompile>
     <ClCompile Include="CGatlinggunPistolScript.cpp">
       <Filter>Scripts\01. PlayerScript\03. PlayerSkillScript\03. Pistol\04. Gatlinggun</Filter>
+    </ClCompile>
+    <ClCompile Include="CDeathCrisislinetwoScript.cpp">
+      <Filter>Scripts\13. DeathCrisisLine\02. DeathCrisislinetwo</Filter>
+    </ClCompile>
+    <ClCompile Include="CDoubleGunHawkScript.cpp">
+      <Filter>Scripts\01. PlayerScript\03. PlayerSkillScript\06. DoubleGunHawk\01. Normal</Filter>
+    </ClCompile>
+    <ClCompile Include="CDeathCrisisLineoneScript.cpp">
+      <Filter>Scripts\13. DeathCrisisLine\01. DeathCrisisLineOne</Filter>
+    </ClCompile>
+    <ClCompile Include="CDeathCrisisGunHawkScript.cpp">
+      <Filter>Scripts\01. PlayerScript\03. PlayerSkillScript\06. DoubleGunHawk\02. DeathCrisis\01. One</Filter>
+    </ClCompile>
+    <ClCompile Include="CDeathCrisisGunHawkTwoScript.cpp">
+      <Filter>Scripts\01. PlayerScript\03. PlayerSkillScript\06. DoubleGunHawk\02. DeathCrisis\02. Two</Filter>
+    </ClCompile>
+    <ClCompile Include="CDeathCrisisBigBoomScript.cpp">
+      <Filter>Scripts\01. PlayerScript\03. PlayerSkillScript\13. DeathCrisisBoom</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayerChildrenEffectScript.cpp">
+      <Filter>Scripts\01. PlayerScript\04. PlayerEffectScript\05. Children</Filter>
+    </ClCompile>
+    <ClCompile Include="CEffectScript.cpp">
+      <Filter>Scripts\08. EffectScript\01. Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="CDeathCrisisLightScript.cpp">
+      <Filter>Scripts\08. EffectScript\02. Light</Filter>
+    </ClCompile>
+    <ClCompile Include="CHendonMyreGateScript.cpp">
+      <Filter>Scripts\04. GateScript\02. HendonmyerGate</Filter>
+    </ClCompile>
+    <ClCompile Include="CMeltKnightScript.cpp">
+      <Filter>Scripts\05. MonsterScript\01. MeltKnight\01. Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="CMeltKnightAttackScript.cpp">
+      <Filter>Scripts\05. MonsterScript\01. MeltKnight\02. Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="CJurisScript.cpp">
+      <Filter>Scripts\05. MonsterScript\03. Juris\01. Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="CJurisAttackScript.cpp">
+      <Filter>Scripts\05. MonsterScript\03. Juris\02. Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="CDirezieAttackScript.cpp">
+      <Filter>Scripts\05. MonsterScript\04. Direzie\03. Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="CMonsterDamageFontScript.cpp">
+      <Filter>Scripts\10. UIScript\05. DamageFont</Filter>
+    </ClCompile>
+    <ClCompile Include="CMouseScript.cpp">
+      <Filter>Scripts\11. MouseScript</Filter>
+    </ClCompile>
+    <ClCompile Include="CSeriaScript.cpp">
+      <Filter>Scripts\03. NPCScript\01. Seria\01. Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="COutlineScript.cpp">
+      <Filter>Scripts\03. NPCScript\01. Seria\02. Outline</Filter>
+    </ClCompile>
+    <ClCompile Include="CPanelScript.cpp">
+      <Filter>Scripts\10. UIScript\06. Inventory\01. Panel</Filter>
+    </ClCompile>
+    <ClCompile Include="CEquipSlotScript.cpp">
+      <Filter>Scripts\10. UIScript\06. Inventory\02. EquipSlot</Filter>
+    </ClCompile>
+    <ClCompile Include="CInventorySlotScript.cpp">
+      <Filter>Scripts\10. UIScript\06. Inventory\03. InventorySlot</Filter>
+    </ClCompile>
+    <ClCompile Include="CInventoryInfoScript.cpp">
+      <Filter>Scripts\10. UIScript\06. Inventory\04. InventoryInfo</Filter>
+    </ClCompile>
+    <ClCompile Include="CItemScript.cpp">
+      <Filter>Scripts\10. UIScript\06. Inventory\05. Item</Filter>
+    </ClCompile>
+    <ClCompile Include="CStorePanelScript.cpp">
+      <Filter>Scripts\10. UIScript\07. Store\01. Panel</Filter>
+    </ClCompile>
+    <ClCompile Include="CStoreSlotScript.cpp">
+      <Filter>Scripts\10. UIScript\07. Store\02. Slot</Filter>
+    </ClCompile>
+    <ClCompile Include="CInventoryGoldScript.cpp">
+      <Filter>Scripts\10. UIScript\06. Inventory\06. Gold</Filter>
+    </ClCompile>
+    <ClCompile Include="CStorePriceScript.cpp">
+      <Filter>Scripts\10. UIScript\07. Store\03. Price</Filter>
+    </ClCompile>
+    <ClCompile Include="CTapScript.cpp">
+      <Filter>Scripts\10. UIScript\09. Tap</Filter>
+    </ClCompile>
+    <ClCompile Include="CUserInterFaceScript.cpp">
+      <Filter>Scripts\10. UIScript\08. UserInterface</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -3,6 +3,7 @@
 #include "CCamera.h"
 
 #include "CTimeMgr.h"
+#include "CKeyMgr.h"
 #include "CAssetMgr.h"
 
 #include "CTransform.h"
@@ -74,10 +75,12 @@ void CRenderMgr::Tick()
 		if (nullptr != m_EditorCamera)
 		{
 			m_EditorCamera->Render();
+			RenderDebugShape();
 		}
 	}
 
 	CTimeMgr::GetInst()->Render();
+	CKeyMgr::GetInst()->Render();
 
 	Clear();
 }

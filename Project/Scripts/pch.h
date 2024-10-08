@@ -24,6 +24,7 @@
 
 #include <Engine/global.h>
 #include <Engine/CEngine.h>
+#include <Engine/CRandomMgr.h>
 
 #include <States/CStateMgr.h>
 #include "CScriptMgr.h"

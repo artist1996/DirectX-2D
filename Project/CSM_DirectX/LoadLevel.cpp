@@ -99,11 +99,13 @@ void LoadLevel::Tick()
 		if (5.f < m_Time)
 		{
 			CLevel* pLevel = CLevelMgr::GetInst()->FindLevel(LEVEL_TYPE::SERIAROOM);
-			ChangeLevel(pLevel, PLAY);
+			
+			ChangeLevel(pLevel, STOP);
 			CGameObject* pEntity = CObjectPoolMgr::GetInst()->GetObj(OBJ_ID::PLAYER);
 			pEntity->Transform()->SetRelativePos(Vec3(0.f, -50.f, 0.f));
 			pEntity->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, 0.f));
 			CreateObject(pEntity, 4);
+			ChangeLevel(pLevel, PLAY);
 		}
 	}
 }
@@ -112,11 +114,12 @@ void LoadLevel::Load(std::mutex& _mtx)
 {
 	std::lock_guard<std::mutex> lock(_mtx);
 
+	Reload();
+	//CEditorMgr::GetInst()->Init();
 	//Reload();
-	CEditorMgr::GetInst()->Init();
 	CTestLevel::CreateTestLevel();
 	CObjectPoolMgr::GetInst()->Init();
-	CTaskMgr::GetInst()->AddTask(tTask{ ASSET_CHANGED });
+	//CTaskMgr::GetInst()->AddTask(tTask{ ASSET_CHANGED });
 	Complete.store(true);
 }
 

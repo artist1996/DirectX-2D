@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "CRisingShotScript.h"
+#include "CMonsterDamageFontScript.h"
 
 CRisingShotScript::CRisingShotScript()
 	: CScript(SCRIPT_TYPE::RISINGSHOTSCRIPT)
@@ -47,12 +48,51 @@ void CRisingShotScript::BeginOverlap(CCollider2D* _OwnCollider, CGameObject* _Ot
 {
 	INFO& info = _OtherObj->GetInfo();
 
+	int Rand = CRandomMgr::GetInst()->GetRandom(1);
+
+	if (L"MonsterMove" != _OtherObj->GetName() && 6 == _OtherObj->GetLayerIdx() && OBJ_DIR::DIR_LEFT == _OtherObj->GetParent()->GetDir())
+	{
+		Vec3 vOtherPos = _OtherObj->Transform()->GetWorldPos();
+		Ptr<CPrefab> pDamage = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\monsterdamage.pref");
+		CGameObject* pObj = pDamage->Instantiate();
+		pObj->Transform()->SetRelativePos(Vec3(vOtherPos.x + 100.f, vOtherPos.y, vOtherPos.z));
+		if (0 == Rand)
+		{
+			static_cast<CMonsterDamageFontScript*>(pObj->GetScripts()[0])->SetDamge(1254963);
+			static_cast<CMonsterDamageFontScript*>(pObj->GetScripts()[0])->SetType(FONT_TYPE::NORMAL);
+		}
+		else
+		{
+			static_cast<CMonsterDamageFontScript*>(pObj->GetScripts()[0])->SetDamge(2315136);
+			static_cast<CMonsterDamageFontScript*>(pObj->GetScripts()[0])->SetType(FONT_TYPE::CRITICAL);
+		}
+		CreateObject(pObj, 0);
+	}
+	else if (L"MonsterMove" != _OtherObj->GetName() && 6 == _OtherObj->GetLayerIdx() && OBJ_DIR::DIR_RIGHT == _OtherObj->GetParent()->GetDir())
+	{
+		Vec3 vOtherPos = _OtherObj->Transform()->GetWorldPos();
+		Ptr<CPrefab> pDamage = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\monsterdamage.pref");
+		CGameObject* pObj = pDamage->Instantiate();
+		pObj->Transform()->SetRelativePos(Vec3(vOtherPos.x - 100.f, vOtherPos.y, vOtherPos.z));
+		if (0 == Rand)
+		{
+			static_cast<CMonsterDamageFontScript*>(pObj->GetScripts()[0])->SetDamge(1254963);
+			static_cast<CMonsterDamageFontScript*>(pObj->GetScripts()[0])->SetType(FONT_TYPE::NORMAL);
+		}
+		else
+		{
+			static_cast<CMonsterDamageFontScript*>(pObj->GetScripts()[0])->SetDamge(2315136);
+			static_cast<CMonsterDamageFontScript*>(pObj->GetScripts()[0])->SetType(FONT_TYPE::CRITICAL);
+		}
+		CreateObject(pObj, 0);
+	}
+
 	if (6 == _OtherObj->GetLayerIdx() || L"Platform" == _OtherObj->GetName())
 	{
 		Vec3 vPos = Transform()->GetWorldPos();
 		Vec3 vOtherPos = _OtherObj->Transform()->GetWorldPos();
 
-		if (GetOwner()->GetParent()->GetGroundCollision())
+		if (GetOwner()->GetParent()->IsGroundCollision())
 		{
 			DeleteObject(GetOwner()->GetParent());
 		}
@@ -61,8 +101,8 @@ void CRisingShotScript::BeginOverlap(CCollider2D* _OwnCollider, CGameObject* _Ot
 	if (L"hyungteo" == _OtherObj->GetName() || L"direzie" == _OtherObj->GetName() && !info.bSuperArmor)
 	{
 		info.HP -= 10.f;
-
-		if (GetOwner()->GetParent()->GetGroundCollision())
+		CAssetMgr::GetInst()->FindAsset<CSound>(L"sound\\player\\gun_hit_01.ogg")->Play(1, 0.2f, true);
+		if (GetOwner()->GetParent()->IsGroundCollision())
 		{
 			CRigidbody* pRB = _OtherObj->Rigidbody();
 

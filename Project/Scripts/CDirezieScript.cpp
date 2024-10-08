@@ -18,6 +18,11 @@
 #include <States/CDirezieFallState.h>
 #include <States/CDirezieWakeUpState.h>
 #include <States/CDirezieDownHitState.h>
+#include <States/CDirezieHitBBQState.h>
+#include <States/CDirezieDeadState.h>
+#include <States/CDirezieHoldingState.h>
+
+#include "CPlayerScript.h"
 
 CDirezieScript::CDirezieScript()
 	: CScript(SCRIPT_TYPE::DIREZIESCRIPT)
@@ -26,6 +31,9 @@ CDirezieScript::CDirezieScript()
 	, m_Count(1.f)
 	, m_DamageHP(0.f)
 	, m_IsDamage(false)
+	, m_Dead(false)
+	, m_Time(0.f)
+	, m_Color(true)
 {
 }
 
@@ -79,6 +87,9 @@ void CDirezieScript::Begin()
 	FSM()->AddState(L"Fall", new CDirezieFallState);
 	FSM()->AddState(L"WakeUp", new CDirezieWakeUpState);
 	FSM()->AddState(L"DownHit", new CDirezieDownHitState);
+	FSM()->AddState(L"HitBBQ", new CDirezieHitBBQState);
+	FSM()->AddState(L"Dead", new CDirezieDeadState);
+	FSM()->AddState(L"Holding", new CDirezieHoldingState);
 
 	m_WindPref = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\direziewind.pref");
 	
@@ -105,10 +116,39 @@ void CDirezieScript::Tick()
 		GetOwner()->SetFontOffset(Vec2(-50.f, -100.f));
 	}
 
-	//if (info.bSuperArmor)
-	//	MeshRender()->GetMaterial()->SetScalarParam(INT_3, 1);
-	//else
-	//	MeshRender()->GetMaterial()->SetScalarParam(INT_3, 0);
+	if (0 >= info.HP && !m_Dead && Rigidbody()->IsGround())
+	{
+		FSM()->ChangeState(L"Dead");
+		m_Dead = true;
+		info.bDead = true;
+	}
+
+	if (info.bSuperArmor)
+	{
+		m_Time += DT;
+		MeshRender()->GetMaterial()->SetScalarParam(INT_3, 1);
+		MeshRender()->GetMaterial()->SetScalarParam(INT_2, 1);
+
+		if(m_Color)
+			MeshRender()->GetMaterial()->SetScalarParam(VEC4_1, Vec4(1.f, 1.f, 0.f, 0.1f));
+		else
+			MeshRender()->GetMaterial()->SetScalarParam(VEC4_1, Vec4(1.f, 0.f, 0.f, 0.1f));
+	}
+	else
+	{
+		MeshRender()->GetMaterial()->SetScalarParam(INT_2, 0);
+		MeshRender()->GetMaterial()->SetScalarParam(INT_3, 0);
+	}
+
+	if (0.2f < m_Time)
+	{
+		if (m_Color)
+			m_Color = false;
+		else
+			m_Color = true;
+
+		m_Time = 0.f;
+	}
 }
 
 void CDirezieScript::Damage(float _Attack)
@@ -118,10 +158,41 @@ void CDirezieScript::Damage(float _Attack)
 
 void CDirezieScript::BeginOverlap(CCollider2D* _OwnCollider, CGameObject* _OtherObj, CCollider2D* _OtherCollider)
 {
+	if (L"deathcrisisgunhawk" == _OtherObj->GetName() || L"deathcrisisbigboom" == _OtherObj->GetName() || L"deathcrisisgunhawk0" == _OtherObj->GetName())
+	{
+		FSM()->ChangeState(L"Holding");
+	}
 }
 
 void CDirezieScript::Overlap(CCollider2D* _OwnCollider, CGameObject* _OtherObj, CCollider2D* _OtherCollider)
 {
+	if (L"Player" == _OtherObj->GetName() && GetOwner()->GetParent()->IsGroundCollision())
+	{
+		INFO& info = _OtherObj->GetInfo();
+		CState* pCurState = FSM()->GetCurrentState();
+		
+		if (!info.bInvincible && !info.bSuperArmor)
+		{
+			if (FSM()->FindState(L"Attack03") == pCurState)
+			{
+				info.HP -= 35.f;
+				info.bInvincible = true;
+				static_cast<CPlayerScript*>(_OtherObj->GetScripts()[0])->ChangeStateHit();
+			}
+			else if (FSM()->FindState(L"Attack04") == pCurState)
+			{
+				info.HP -= 50.f;
+				info.bInvincible = true;
+				static_cast<CPlayerScript*>(_OtherObj->GetScripts()[0])->ChangeStateHit();
+			}
+			else if (FSM()->FindState(L"Attack05") == pCurState)
+			{
+				info.HP -= 50.f;
+				info.bInvincible = true;
+				static_cast<CPlayerScript*>(_OtherObj->GetScripts()[0])->ChangeStateHit();
+			}
+		}
+	}
 }
 
 void CDirezieScript::EndOverlap(CCollider2D* _OwnCollider, CGameObject* _OtherObj, CCollider2D* _OtherCollider)

@@ -12,6 +12,7 @@
 #include "CRenderComponent.h"
 
 #include "CTransform.h"
+#include "CCollider2D.h"
 
 #include "CKeyMgr.h"
 #include "CTimeMgr.h"
@@ -102,7 +103,7 @@ void CCamera::FinalTick()
 		// 1. 직교 투영 (Orthographic)
 		// 투영을 일직선으로
 		// 시야 범위를 NDC 로 압축
-		m_matProj = XMMatrixOrthographicLH(m_Width * m_ProjectionScale, m_Height * m_ProjectionScale, 1.f, m_Far);
+		m_matProj = XMMatrixOrthographicLH(m_Width * m_ProjectionScale, m_Height * m_ProjectionScale, -m_Far, m_Far);
 	}
 
 	else
@@ -149,6 +150,7 @@ void CCamera::SortGameObject()
 				break;
 			case DOMAIN_MASKED:
 				m_vecMasked.push_back(vecObjects[j]);
+				//YSorting();
 				break;
 			case DOMAIN_TRANSPARENT:
 				m_vecTransparent.push_back(vecObjects[j]);
@@ -259,6 +261,42 @@ void CCamera::ShakingOut()
 	{
 		m_ProjectionScale = 1.f;
 		m_ShakingOut = false;
+	}
+}
+
+void CCamera::YSorting()
+{
+	float fY = 0.f;
+	list<CGameObject*> Maskedlist;
+
+	for (size_t i = 0; i < m_vecMasked.size(); ++i)
+	{
+		CCollider2D* pCollider2D = m_vecMasked[i]->Collider2D();
+
+		if (nullptr == pCollider2D)
+			Maskedlist.push_back(m_vecMasked[i]);
+
+		else
+		{
+			if (fY < pCollider2D->GetWorldPos().y)
+			{
+				Maskedlist.push_front(m_vecMasked[i]);
+				fY = pCollider2D->GetWorldPos().y;
+			}
+			else
+			{
+				Maskedlist.push_back(m_vecMasked[i]);
+				fY = pCollider2D->GetWorldPos().y;
+			}
+		}
+	}
+
+	int i = 0;
+
+	for (auto& iter : Maskedlist)
+	{
+		m_vecMasked[i] = iter;
+		++i;
 	}
 }
 

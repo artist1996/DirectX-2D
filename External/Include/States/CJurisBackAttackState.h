@@ -7,6 +7,7 @@ class CJurisBackAttackState :
 private:
     Ptr<CPrefab> m_AttackPref;
     bool         m_Init;
+    bool         m_Spawn;
 
 public:
     virtual void Enter() override;

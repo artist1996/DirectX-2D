@@ -19,11 +19,13 @@ void CPlayerHUDScript::Begin()
 {
 	MeshRender()->GetDynamicMaterial();
 	m_pTarget = CLevelMgr::GetInst()->FindObjectByName(L"Player");
-
 }
 
 void CPlayerHUDScript::Tick()
 {
+	if (nullptr == m_pTarget)
+		return;
+
 	INFO& info = m_pTarget->GetInfo();
 
 	CalculateByRatio(info);

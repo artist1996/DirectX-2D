@@ -16,6 +16,7 @@
 CJurisScript::CJurisScript()
 	: CScript(SCRIPT_TYPE::JURISSCRIPT)
 	, m_Dead(false)
+	, m_Time(0.f)
 {
 }
 
@@ -29,6 +30,7 @@ void CJurisScript::InitInfo()
 
 	info.MaxHP = 2700.f;
 	info.HP = 2700.f;
+	info.bReflection = false;
 
 	GetOwner()->SetInfo(info);
 }
@@ -50,17 +52,37 @@ void CJurisScript::Begin()
 	FSM()->AddState(L"Stiffness", new CJurisStiffnessState);
 
 	FSM()->ChangeState(L"Idle");
+
+	MeshRender()->GetMaterial()->SetScalarParam(INT_3, 1);
 }
 
 void CJurisScript::Tick()
 {
 	INFO& info = GetOwner()->GetInfo();
+	m_Time += DT;
 
 	if (0 >= info.HP && !m_Dead)
 	{
 		FSM()->ChangeState(L"Dead");
 		m_Dead = true;
+		info.bDead = true;
+		MeshRender()->GetMaterial()->SetScalarParam(INT_3, 0);
+		CGameObject* pObject = CLevelMgr::GetInst()->FindObjectByName(L"NamedMonsterHUD");
+		pObject->SetActive(false);
 	}
+
+	if (info.bReflection)
+		MeshRender()->GetMaterial()->SetScalarParam(VEC4_1, Vec4(1.f, 0.f, 0.f, 0.1f));
+	else
+		MeshRender()->GetMaterial()->SetScalarParam(VEC4_1, Vec4(0.f, 0.f, 1.f, 0.1f));
+
+	if (7.f < m_Time)
+	{
+		info.bReflection = !info.bReflection;
+		m_Time = 0.f;
+	}
+
+	GetOwner()->Transform()->SetZAxis(GetOwner()->GetParent()->Collider2D()->GetWorldPos().y);
 }
 
 void CJurisScript::BeginOverlap(CCollider2D* _OwnCollider, CGameObject* _OtherObj, CCollider2D* _OtherCollider)

@@ -51,6 +51,7 @@ private:
 
 	Vec2				m_CapturePos;
 	bool				m_MouseCapture;
+	wchar_t				m_szBuff[255];
 
 public:
 	void Init();

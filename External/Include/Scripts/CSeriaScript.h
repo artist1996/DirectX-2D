@@ -4,6 +4,13 @@ class CSeriaScript :
     public CScript
 {
 private:
+    float   m_Time;
+    bool    m_Active;
+    int     m_Prev;
+
+private:
+    void MouseCheck();
+    void Click();
 
 public:
     virtual void Begin() override;

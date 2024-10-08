@@ -160,6 +160,11 @@ void CAssetMgr::CreateEngineMaterial()
 	pMtrl->SetShader(FindAsset<CGraphicShader>(L"Std2DAdditiveShader"));
 	AddAsset(L"Std2DAdditiveMtrl", pMtrl);
 
+	// Std2D Addtive Mtrl
+	pMtrl = new CMaterial(true);
+	pMtrl->SetShader(FindAsset<CGraphicShader>(L"Std2DAdditiveLessShader"));
+	AddAsset(L"Std2DAdditiveLessMtrl", pMtrl);
+
 	// DebugShapeMtrl
 	pMtrl = new CMaterial(true);
 	pMtrl->SetShader(FindAsset<CGraphicShader>(L"DebugShapeShader"));
@@ -367,7 +372,20 @@ void CAssetMgr::CreateEngineGraphicShader()
 	pShader->SetBSType(BS_TYPE::ADDITIVE);
 
 	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_TRANSPARENT);
+	pShader->AddTexParam(TEX_0, "tex");
 	AddAsset(L"Std2DAdditiveShader", pShader);
+
+	pShader = new CGraphicShader;
+	pShader->CreateVertexShader(L"shader\\std2d.fx", "VS_Std2D");
+	pShader->CreatePixelShader(L"shader\\std2d.fx", "PS_Std2D_Additive");
+
+	pShader->SetRSType(RS_TYPE::CULL_NONE);
+	pShader->SetDSType(DS_TYPE::LESS);
+	pShader->SetBSType(BS_TYPE::ADDITIVE);
+
+	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_TRANSPARENT);
+	pShader->AddTexParam(TEX_0, "tex");
+	AddAsset(L"Std2DAdditiveLessShader", pShader);
 
 	pShader = new CGraphicShader;
 	pShader->CreateVertexShader(L"shader\\std2d.fx", "VS_Std2D");

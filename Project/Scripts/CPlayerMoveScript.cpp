@@ -37,6 +37,8 @@ void CPlayerMoveScript::Begin()
 	INFO& info = GetOwner()->GetInfo();
 	info.bMoveable = true;
 	info.bTackle = false;
+
+	m_vOffset = Collider2D()->GetOffset();
 }
 
 void CPlayerMoveScript::Tick()
@@ -44,7 +46,7 @@ void CPlayerMoveScript::Tick()
 	INFO& info = GetOwner()->GetInfo();
 
 	Vec3 vPos = Transform()->GetRelativePos();
-	Vec3 vRot = Transform()->GetRelativeRotation();
+	Vec3 vRot = GetOwner()->GetChildren()[0]->Transform()->GetRelativeRotation();
 	bool* bMoveable = GetOwner()->GetMoveable();
 	
 	if (info.bMoveable)
@@ -87,9 +89,15 @@ void CPlayerMoveScript::Tick()
 		info.bForce = false;
 	}
 
+	if(OBJ_DIR::DIR_LEFT == GetOwner()->GetDir())
+		Collider2D()->SetOffset(m_vOffset);
+	else
+		Collider2D()->SetOffset(Vec3(m_vOffset.x + 0.2f, m_vOffset.y, m_vOffset.z));
 
-	Transform()->SetRelativePos(Vec3(vPos.x, vPos.y, vPos.y));
-	Transform()->SetRelativeRotation(vRot);
+	Transform()->SetRelativePos(Vec3(vPos.x,vPos.y, Collider2D()->GetWorldPos().y));
+
+	//GetOwner()->Transform()->SetRelativeRotation(vRot);
+	GetOwner()->GetChildren()[0]->Transform()->SetRelativeRotation(vRot);
 }
 
 void CPlayerMoveScript::BeginOverlap(CCollider2D* _OwnCollider, CGameObject* _OtherObj, CCollider2D* _OtherCollider)

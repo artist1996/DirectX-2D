@@ -2,6 +2,7 @@
 #include "CDiagonalHeadShotScript.h"
 
 #include <Engine/CLevelMgr.h>
+#include "CMonsterDamageFontScript.h"
 
 CDiagonalHeadShotScript::CDiagonalHeadShotScript()
 	: CScript(SCRIPT_TYPE::DIAGONALHEADSHOTSCRIPT)
@@ -65,11 +66,50 @@ void CDiagonalHeadShotScript::BeginOverlap(CCollider2D* _OwnCollider, CGameObjec
 		Vec3 vPos = Transform()->GetWorldPos();
 		Vec3 vOtherPos = _OtherObj->Transform()->GetWorldPos();
 
-		if (GetOwner()->GetParent()->GetGroundCollision() && L"MonsterMove" != _OtherObj->GetName())
+		int Rand = CRandomMgr::GetInst()->GetRandom(1);
+
+		if (L"MonsterMove" != _OtherObj->GetName() && 6 == _OtherObj->GetLayerIdx() && OBJ_DIR::DIR_LEFT == _OtherObj->GetParent()->GetDir())
+		{
+			Ptr<CPrefab> pDamage = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\monsterdamage.pref");
+			CGameObject* pObj = pDamage->Instantiate();
+			pObj->Transform()->SetRelativePos(Vec3(vOtherPos.x + 100.f, vOtherPos.y, vOtherPos.z));
+			static_cast<CMonsterDamageFontScript*>(pObj->GetScripts()[0])->SetDamge(3754963);
+			if (0 == Rand)
+			{
+				static_cast<CMonsterDamageFontScript*>(pObj->GetScripts()[0])->SetDamge(3754963);
+				static_cast<CMonsterDamageFontScript*>(pObj->GetScripts()[0])->SetType(FONT_TYPE::NORMAL);
+			}
+			else
+			{
+				static_cast<CMonsterDamageFontScript*>(pObj->GetScripts()[0])->SetDamge(7519926);
+				static_cast<CMonsterDamageFontScript*>(pObj->GetScripts()[0])->SetType(FONT_TYPE::CRITICAL);
+			}
+			CreateObject(pObj, 0);
+		}
+		else if(L"MonsterMove" != _OtherObj->GetName() && 6 == _OtherObj->GetLayerIdx() && OBJ_DIR::DIR_RIGHT == _OtherObj->GetParent()->GetDir())
+		{
+			Ptr<CPrefab> pDamage = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\monsterdamage.pref");
+			CGameObject* pObj = pDamage->Instantiate();
+			pObj->Transform()->SetRelativePos(Vec3(vOtherPos.x - 100.f, vOtherPos.y, vOtherPos.z));
+			if (0 == Rand)
+			{
+				static_cast<CMonsterDamageFontScript*>(pObj->GetScripts()[0])->SetDamge(3754963);
+				static_cast<CMonsterDamageFontScript*>(pObj->GetScripts()[0])->SetType(FONT_TYPE::NORMAL);
+			}
+			else
+			{
+				static_cast<CMonsterDamageFontScript*>(pObj->GetScripts()[0])->SetDamge(7519926);
+				static_cast<CMonsterDamageFontScript*>(pObj->GetScripts()[0])->SetType(FONT_TYPE::CRITICAL);
+			}
+			CreateObject(pObj, 0);
+		}
+
+		if (GetOwner()->GetParent()->IsGroundCollision() && L"MonsterMove" != _OtherObj->GetName())
 		{
 			CGameObject* pObject = m_HitEffectPref->Instantiate();
 			INFO& info = _OtherObj->GetInfo();
-			info.HP -= 70.f;
+			CAssetMgr::GetInst()->FindAsset<CSound>(L"sound\\player\\gun_hit_01.ogg")->Play(1, 0.2f, true);
+
 			if (GetOwner()->GetParent()->GetDir() == OBJ_DIR::DIR_LEFT)
 			{
 				pObject->Transform()->SetRelativePos(Vec3(vOtherPos.x - 150.f, vOtherPos.y, vOtherPos.z - 50.f));
@@ -82,6 +122,14 @@ void CDiagonalHeadShotScript::BeginOverlap(CCollider2D* _OwnCollider, CGameObjec
 			}
 			CreateObject(pObject, 0);
 
+			if (L"juris" != _OtherObj->GetName())
+			{
+				if (0 == Rand)
+					info.HP -= 130.f;
+				else
+					info.HP -= 260.f;
+			}
+
 			if (L"hyungteo" == _OtherObj->GetName())
 			{
 				if (_OtherObj->Rigidbody()->IsGround())
@@ -89,7 +137,21 @@ void CDiagonalHeadShotScript::BeginOverlap(CCollider2D* _OwnCollider, CGameObjec
 			}
 			else if (L"juris" == _OtherObj->GetName())
 			{
-				_OtherObj->FSM()->ChangeState(L"Hit");
+				if (info.bReflection)
+				{
+					if (0 == Rand)
+						CLevelMgr::GetInst()->FindObjectByName(L"Player")->GetInfo().HP -= 130.f;
+					else
+						CLevelMgr::GetInst()->FindObjectByName(L"Player")->GetInfo().HP -= 260.f;
+				}
+				else
+				{
+					_OtherObj->FSM()->ChangeState(L"Hit");
+					if (0 == Rand)
+						info.HP -= 130.f;
+					else
+						info.HP -= 260.f;
+				}
 			}
 			else if (L"direzie" == _OtherObj->GetName() && !info.bSuperArmor)
 			{

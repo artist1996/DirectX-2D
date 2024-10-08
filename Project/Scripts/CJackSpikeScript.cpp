@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "CJackSpikeScript.h"
 
+#include "CMonsterDamageFontScript.h"
+
 CJackSpikeScript::CJackSpikeScript()
 	: CScript(SCRIPT_TYPE::JACKSPIKESCRIPT)
 	, m_Time(0.f)
@@ -29,6 +31,46 @@ void CJackSpikeScript::BeginOverlap(CCollider2D* _OwnCollider, CGameObject* _Oth
 {
 	INFO& info = _OtherObj->GetInfo();
 
+	int Rand = CRandomMgr::GetInst()->GetRandom(1);
+	
+	if (L"MonsterMove" != _OtherObj->GetName() && 6 == _OtherObj->GetLayerIdx() && OBJ_DIR::DIR_LEFT == _OtherObj->GetParent()->GetDir())
+	{
+		Vec3 vOtherPos = _OtherObj->Transform()->GetWorldPos();
+		Ptr<CPrefab> pDamage = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\monsterdamage.pref");
+		CGameObject* pObj = pDamage->Instantiate();
+		pObj->Transform()->SetRelativePos(Vec3(vOtherPos.x + 100.f, vOtherPos.y, vOtherPos.z));
+
+		if (0 == Rand)
+		{
+			static_cast<CMonsterDamageFontScript*>(pObj->GetScripts()[0])->SetDamge(1275849);
+			static_cast<CMonsterDamageFontScript*>(pObj->GetScripts()[0])->SetType(FONT_TYPE::NORMAL);
+		}
+		else
+		{
+			static_cast<CMonsterDamageFontScript*>(pObj->GetScripts()[0])->SetDamge(1754963);
+			static_cast<CMonsterDamageFontScript*>(pObj->GetScripts()[0])->SetType(FONT_TYPE::CRITICAL);
+		}
+		CreateObject(pObj, 0);
+	}
+	else if (L"MonsterMove" != _OtherObj->GetName() && 6 == _OtherObj->GetLayerIdx() && OBJ_DIR::DIR_RIGHT == _OtherObj->GetParent()->GetDir())
+	{
+		Vec3 vOtherPos = _OtherObj->Transform()->GetWorldPos();
+		Ptr<CPrefab> pDamage = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\monsterdamage.pref");
+		CGameObject* pObj = pDamage->Instantiate();
+		pObj->Transform()->SetRelativePos(Vec3(vOtherPos.x - 100.f, vOtherPos.y, vOtherPos.z));
+		if (0 == Rand)
+		{
+			static_cast<CMonsterDamageFontScript*>(pObj->GetScripts()[0])->SetDamge(1275849);
+			static_cast<CMonsterDamageFontScript*>(pObj->GetScripts()[0])->SetType(FONT_TYPE::NORMAL);
+		}
+		else
+		{
+			static_cast<CMonsterDamageFontScript*>(pObj->GetScripts()[0])->SetDamge(1754963);
+			static_cast<CMonsterDamageFontScript*>(pObj->GetScripts()[0])->SetType(FONT_TYPE::CRITICAL);
+		}
+		CreateObject(pObj, 0);
+	}
+
 	if (L"hyungteo" == _OtherObj->GetName() || L"direzie" == _OtherObj->GetName() && !info.bSuperArmor)
 	{
 		Vec3 vPos = Transform()->GetWorldPos();
@@ -36,7 +78,7 @@ void CJackSpikeScript::BeginOverlap(CCollider2D* _OwnCollider, CGameObject* _Oth
 
 		Vec3 vDist = vPos - vOtherPos;
 
-		if (GetOwner()->GetParent()->GetGroundCollision())
+		if (GetOwner()->GetParent()->IsGroundCollision())
 		{
 			CRigidbody* pRB = _OtherObj->Rigidbody();
 

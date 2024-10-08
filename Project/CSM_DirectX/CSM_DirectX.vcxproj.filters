@@ -97,9 +97,6 @@
     <Filter Include="02. EditorUI\01. Inspector\ComponentUI\04. Animator2DUI">
       <UniqueIdentifier>{3119d065-e0e7-469a-8894-15e03d2003f3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. Manager\03. LevelSaveLoad">
-      <UniqueIdentifier>{2546eeea-f8f2-4dfa-82e8-3b8e7168d3d9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. EditorUI\01. Inspector\AssetUI\07. Animation">
       <UniqueIdentifier>{85404e41-c984-4354-a8f6-07835d8bf1e8}</UniqueIdentifier>
     </Filter>
@@ -180,6 +177,9 @@
     </Filter>
     <Filter Include="02. EditorUI\01. Inspector\ComponentUI\11. FontUI">
       <UniqueIdentifier>{57ec26b6-73f1-45fc-9cd6-dcf948095577}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. EditorUI\03. LevelSaveLoad">
+      <UniqueIdentifier>{2546eeea-f8f2-4dfa-82e8-3b8e7168d3d9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -325,7 +325,7 @@
       <Filter>02. EditorUI\01. Inspector\ComponentUI\10. RigidbodyUI</Filter>
     </ClInclude>
     <ClInclude Include="CLevelSaveLoad.h">
-      <Filter>01. Manager\03. LevelSaveLoad</Filter>
+      <Filter>02. EditorUI\03. LevelSaveLoad</Filter>
     </ClInclude>
     <ClInclude Include="SpriteEditor.h">
       <Filter>02. EditorUI\07. Sprite Editor</Filter>
@@ -529,7 +529,7 @@
       <Filter>02. EditorUI\01. Inspector\ComponentUI\10. RigidbodyUI</Filter>
     </ClCompile>
     <ClCompile Include="CLevelSaveLoad.cpp">
-      <Filter>01. Manager\03. LevelSaveLoad</Filter>
+      <Filter>02. EditorUI\03. LevelSaveLoad</Filter>
     </ClCompile>
     <ClCompile Include="SpriteEditor.cpp">
       <Filter>02. EditorUI\07. Sprite Editor</Filter>

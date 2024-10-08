@@ -168,7 +168,9 @@ call CodeGen.exe</Command>
     <ClInclude Include="CDirezieDownHitState.h" />
     <ClInclude Include="CDirezieFlyState.h" />
     <ClInclude Include="CDirezieHideState.h" />
+    <ClInclude Include="CDirezieHitBBQState.h" />
     <ClInclude Include="CDirezieHitState.h" />
+    <ClInclude Include="CDirezieHoldingState.h" />
     <ClInclude Include="CDirezieIdleState.h" />
     <ClInclude Include="CDirezieStiffnessState.h" />
     <ClInclude Include="CDirezieTraceState.h" />
@@ -219,7 +221,9 @@ call CodeGen.exe</Command>
     <ClCompile Include="CDirezieDownHitState.cpp" />
     <ClCompile Include="CDirezieFlyState.cpp" />
     <ClCompile Include="CDirezieHideState.cpp" />
+    <ClCompile Include="CDirezieHitBBQState.cpp" />
     <ClCompile Include="CDirezieHitState.cpp" />
+    <ClCompile Include="CDirezieHoldingState.cpp" />
     <ClCompile Include="CDirezieIdleState.cpp" />
     <ClCompile Include="CDirezieStiffnessState.cpp" />
     <ClCompile Include="CDirezieTraceState.cpp" />

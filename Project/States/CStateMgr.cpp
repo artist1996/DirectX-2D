@@ -12,7 +12,9 @@
 #include "CDirezieFallState.h"
 #include "CDirezieFlyState.h"
 #include "CDirezieHideState.h"
+#include "CDirezieHitBBQState.h"
 #include "CDirezieHitState.h"
+#include "CDirezieHoldingState.h"
 #include "CDirezieIdleState.h"
 #include "CDirezieStiffnessState.h"
 #include "CDirezieTraceState.h"
@@ -61,7 +63,9 @@ void CStateMgr::GetStateInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CDirezieFallState");
 	_vec.push_back(L"CDirezieFlyState");
 	_vec.push_back(L"CDirezieHideState");
+	_vec.push_back(L"CDirezieHitBBQState");
 	_vec.push_back(L"CDirezieHitState");
+	_vec.push_back(L"CDirezieHoldingState");
 	_vec.push_back(L"CDirezieIdleState");
 	_vec.push_back(L"CDirezieStiffnessState");
 	_vec.push_back(L"CDirezieTraceState");
@@ -122,8 +126,12 @@ CState * CStateMgr::GetState(const wstring& _strStateName)
 		return new CDirezieFlyState;
 	if (L"CDirezieHideState" == _strStateName)
 		return new CDirezieHideState;
+	if (L"CDirezieHitBBQState" == _strStateName)
+		return new CDirezieHitBBQState;
 	if (L"CDirezieHitState" == _strStateName)
 		return new CDirezieHitState;
+	if (L"CDirezieHoldingState" == _strStateName)
+		return new CDirezieHoldingState;
 	if (L"CDirezieIdleState" == _strStateName)
 		return new CDirezieIdleState;
 	if (L"CDirezieStiffnessState" == _strStateName)
@@ -232,8 +240,14 @@ CState * CStateMgr::GetState(UINT _iStateType)
 	case (UINT)STATE_TYPE::DIREZIEHIDESTATE:
 		return new CDirezieHideState;
 		break;
+	case (UINT)STATE_TYPE::DIREZIEHITBBQSTATE:
+		return new CDirezieHitBBQState;
+		break;
 	case (UINT)STATE_TYPE::DIREZIEHITSTATE:
 		return new CDirezieHitState;
+		break;
+	case (UINT)STATE_TYPE::DIREZIEHOLDINGSTATE:
+		return new CDirezieHoldingState;
 		break;
 	case (UINT)STATE_TYPE::DIREZIEIDLESTATE:
 		return new CDirezieIdleState;
@@ -389,8 +403,16 @@ const wchar_t * CStateMgr::GetStateName(CState * _pState)
 		return L"CDirezieHideState";
 		break;
 
+	case STATE_TYPE::DIREZIEHITBBQSTATE:
+		return L"CDirezieHitBBQState";
+		break;
+
 	case STATE_TYPE::DIREZIEHITSTATE:
 		return L"CDirezieHitState";
+		break;
+
+	case STATE_TYPE::DIREZIEHOLDINGSTATE:
+		return L"CDirezieHoldingState";
 		break;
 
 	case STATE_TYPE::DIREZIEIDLESTATE:

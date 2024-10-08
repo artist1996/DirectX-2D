@@ -28,8 +28,18 @@ void CSkillGroundScript::LoadFromFile(FILE* _pFile)
 
 void CSkillGroundScript::BeginOverlap(CCollider2D* _OwnCollider, CGameObject* _OtherObj, CCollider2D* _OtherCollider)
 {
-	if (L"MonsterMove" == _OtherObj->GetName() || L"Platform" == _OtherObj->GetName())
+	if (7 == GetOwner()->GetLayerIdx())
 	{
-		GetOwner()->SetGroundCollision(true);
+		if (L"MonsterMove" == _OtherObj->GetName() || L"Platform" == _OtherObj->GetName())
+		{
+			GetOwner()->SetGroundCollision(true);
+		}
+	}
+	else if (8 == GetOwner()->GetLayerIdx())
+	{
+		if (L"PlayerMove" == _OtherObj->GetName())
+		{
+			GetOwner()->SetGroundCollision(true);
+		}
 	}
 }

@@ -63,6 +63,8 @@ public:
     void SetProjScale(float _Scale)   { m_ProjectionScale = _Scale; }
     void SetUI(bool _Set)   { m_UI = _Set; }
 
+    void YSorting();
+
     PROJ_TYPE GetProjType() { return m_ProjType; }
     float GetWidth()        { return m_Width; }
     float GetHeight()       { return m_Height; }

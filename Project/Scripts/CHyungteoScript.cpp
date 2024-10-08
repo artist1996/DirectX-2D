@@ -76,7 +76,17 @@ void CHyungteoScript::Tick()
 	{
 		FSM()->ChangeState(L"Dead");
 		m_Dead = true;
+		info.bDead = true;
+		CGameObject* pObject = CLevelMgr::GetInst()->FindObjectByName(L"NamedMonsterHUD");
+		pObject->SetActive(false);
 	}
+
+	CheckZAxis();
+}
+
+void CHyungteoScript::CheckZAxis()
+{
+	GetOwner()->Transform()->SetZAxis(GetOwner()->GetParent()->Collider2D()->GetWorldPos().y);
 }
 
 void CHyungteoScript::BeginOverlap(CCollider2D* _OwnCollider, CGameObject* _OtherObj, CCollider2D* _OtherCollider)

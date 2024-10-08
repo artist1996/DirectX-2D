@@ -34,7 +34,6 @@ void CMeltKnightScript::InitInfo()
 
 void CMeltKnightScript::Begin()
 {
-	//GetOwner()->AddComponent(new CFSM);
 	InitInfo();
 
 	FSM()->SetBlackboardData(L"Target", DATA_TYPE::OBJECT, CObjectPoolMgr::GetInst()->GetPlayerEntity());
@@ -45,8 +44,6 @@ void CMeltKnightScript::Begin()
 	FSM()->AddState(L"Dead", new CMeltKnightDeadState);
 
 	FSM()->ChangeState(L"Idle");
-
-	Collider2D()->SetRender(true);
 }
 
 void CMeltKnightScript::Tick()
@@ -57,6 +54,9 @@ void CMeltKnightScript::Tick()
 	{
 		FSM()->ChangeState(L"Dead");
 		m_Dead = true;
+		m_Info.bDead = true;
+		CGameObject* pObject = CLevelMgr::GetInst()->FindObjectByName(L"MonsterHUD");
+		pObject->SetActive(false);
 	}
 }
 

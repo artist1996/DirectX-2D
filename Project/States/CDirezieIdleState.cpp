@@ -26,8 +26,11 @@ void CDirezieIdleState::FinalTick()
 	CGameObject* pTarget = static_cast<CGameObject*>(GetFSM()->GetBlackboardData(L"Target"));
 	Vec3 vPos = GetOwner()->GetParent()->Transform()->GetRelativePos();
 	Vec3 vTargetPos = pTarget->Transform()->GetRelativePos();
-
+	INFO& info = GetOwner()->GetInfo();
 	Vec3 vDist = vTargetPos - vPos;
+
+	if (0.f >= info.HP)
+		GetFSM()->ChangeState(L"Dead");
 
 	if (0.f < vDist.x)
 	{

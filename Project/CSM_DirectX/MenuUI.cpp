@@ -375,10 +375,35 @@ void MenuUI::AddComponent()
 
 void MenuUI::AddScript()
 {
+	//if (ImGui::BeginMenu("Add Script"))
+	//{
+	//	vector<wstring> vecScriptsName;
+	//	CScriptMgr::GetScriptInfo(vecScriptsName);
+	//
+	//	for (size_t i = 0; i < vecScriptsName.size(); ++i)
+	//	{
+	//		if (ImGui::MenuItem(string(vecScriptsName[i].begin(), vecScriptsName[i].end()).c_str()))
+	//		{
+	//			Inspector* pInspector = (Inspector*)CEditorMgr::GetInst()->FindEditorUI("Inspector");
+	//
+	//			CGameObject* pObject = pInspector->GetTargetObject();
+	//
+	//			if (nullptr != pObject)
+	//			{
+	//				CScript* pScript = CScriptMgr::GetScript(vecScriptsName[i]);
+	//				pObject->AddComponent(pScript);
+	//			}
+	//		}	
+	//	}
+	//
+	//	ImGui::EndMenu();
+	//}
 	if (ImGui::BeginMenu("Add Script"))
 	{
 		vector<wstring> vecScriptsName;
 		CScriptMgr::GetScriptInfo(vecScriptsName);
+
+		ImGui::BeginChild("ScrollableScripts", ImVec2(300, 200), true, ImGuiWindowFlags_AlwaysVerticalScrollbar);
 
 		for (size_t i = 0; i < vecScriptsName.size(); ++i)
 		{
@@ -393,9 +418,10 @@ void MenuUI::AddScript()
 					CScript* pScript = CScriptMgr::GetScript(vecScriptsName[i]);
 					pObject->AddComponent(pScript);
 				}
-			}	
+			}
 		}
 
+		ImGui::EndChild();
 		ImGui::EndMenu();
 	}
 }

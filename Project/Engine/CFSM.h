@@ -36,6 +36,7 @@ public:
     void  SetBlackboardData(const wstring& _strKey, DATA_TYPE _Type, void* _pData);
     void* GetBlackboardData(const wstring& _strKey);
 
+    CState* GetCurrentState()                           { return m_CurState; }
 
 public:
     virtual void SaveToFile(FILE* _pFile)   override {}

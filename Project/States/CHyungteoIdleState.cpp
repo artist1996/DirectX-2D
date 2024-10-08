@@ -23,6 +23,11 @@ void CHyungteoIdleState::FinalTick()
 {
 	m_Time += DT;
 
+	INFO& info = GetOwner()->GetInfo();
+
+	if (0.f >= info.HP)
+		GetFSM()->ChangeState(L"Dead");
+
 	if (1.f < m_Time)
 		GetFSM()->ChangeState(L"Trace");
 }

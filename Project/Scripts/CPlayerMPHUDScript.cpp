@@ -20,12 +20,16 @@ void CPlayerMPHUDScript::CalculateByRatio(INFO& _info)
 
 void CPlayerMPHUDScript::Begin()
 {
+
 	MeshRender()->GetDynamicMaterial();
 	m_pTarget = CLevelMgr::GetInst()->FindObjectByName(L"Player");
 }
 
 void CPlayerMPHUDScript::Tick()
 {
+	if (!m_pTarget)
+		return;
+
 	INFO& info = m_pTarget->GetInfo();
 
 	CalculateByRatio(info);

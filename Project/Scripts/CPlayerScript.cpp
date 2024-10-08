@@ -13,7 +13,6 @@
 
 #include "CPlayerMoveScript.h"
 
-
 CPlayerScript::CPlayerScript()
 	: CScript(SCRIPT_TYPE::PLAYERSCRIPT)
 	, m_Texture(nullptr)
@@ -37,6 +36,8 @@ CPlayerScript::CPlayerScript()
 	, m_GroundPosY(0.f)
 	, m_Time(0.f)
 	, m_BBQTime(0.f)
+	, m_InvincibleTime(0.f)
+	, m_SuperArmorTime(0.f)
 	, m_NextAttack(false)
 	, m_Run(false)
 	, m_Spawn(true)
@@ -44,6 +45,10 @@ CPlayerScript::CPlayerScript()
 	, m_CheckRange(false)
 	, m_GunHawkStandby(false)
 	, m_HeadShotSpawn(true)
+	, m_CutinSpawn(false)
+	, m_LineTwo(false)
+	, m_Foot(false)
+	, m_Color(true)
 	, m_CoolTime{}
 	, m_UseSkill{}
 	, m_Prefabs{}
@@ -63,6 +68,7 @@ CPlayerScript::CPlayerScript()
 	m_CoolTime.fWesternFireCoolTime		= 5.f;
 	m_CoolTime.fPunisherCoolTime		= 4.f;
 	m_CoolTime.fBBQCoolTime				= 10.f;
+	m_CoolTime.fDeathCrisisCoolTime		= 60.f;
 }
 
 CPlayerScript::~CPlayerScript()
@@ -88,6 +94,12 @@ void CPlayerScript::Begin()
 	GetOwner()->SetFontScale(15.f);
 	GetOwner()->SetFontColor(FONT_RGBA(255, 255, 255, 255));
 	GetOwner()->SetFontOffset(Vec2(-25.f, -75.f));
+	const vector<CGameObject*> vecChild = GetOwner()->GetChildren();
+
+	for (size_t i = 0; i < vecChild.size(); ++i)
+	{
+		vecChild[i]->SetActive(false);
+	}
 }
 
 void CPlayerScript::Tick()
@@ -196,11 +208,26 @@ void CPlayerScript::Tick()
 	case CPlayerScript::PLAYER_STATE::BBQSHOOT:
 		SkillBBQShoot();
 		break;
+	case CPlayerScript::PLAYER_STATE::DEATHCRISIS:
+		DeathCrisis();
+		break;
+	case CPlayerScript::PLAYER_STATE::HIT:
+		Hit();
+		break;
 	}
 
 	RunTimeCheck();
 	SkillTimeCheck();
 	SetFontOffset();
+	InvincibleCheck();
+	SuperArmorCheck();
+
+	//if (OBJ_DIR::DIR_LEFT == m_Dir)
+	//	Transform()->SetRelativeScale(Vec3(350.f, 350.f, 1.f));
+	//else
+	//	Transform()->SetRelativeScale(Vec3(-350.f, 350.f, 1.f));
+	
+	ZaxisCheck();
 }
 
 void CPlayerScript::RunTimeCheck()
@@ -245,6 +272,25 @@ void CPlayerScript::SetFontOffset()
 		GetOwner()->SetFontOffset(Vec2(-27.f, -80.f));
 }
 
+void CPlayerScript::InvincibleCheck()
+{
+	INFO& info = GetOwner()->GetInfo();
+	if (info.bInvincible)
+	{
+		m_InvincibleTime += DT;
+		if (0.2f < m_InvincibleTime)
+		{
+			info.bInvincible = false;
+			m_InvincibleTime = 0.f;
+		}
+	}
+}
+
+void CPlayerScript::ZaxisCheck()
+{
+	GetOwner()->Transform()->SetZAxis(GetOwner()->GetParent()->Transform()->GetRelativePos().y);
+}
+
 void CPlayerScript::InitInfo()
 {
 	INFO& info = GetOwner()->GetInfo();
@@ -255,6 +301,7 @@ void CPlayerScript::InitInfo()
 	info.MP = 2000.f;
 	info.MaxFatigue = 156;
 	info.Fatigue = 156;
+	info.iGold = 1000000;
 }
 
 void CPlayerScript::InitPrefabs()
@@ -282,6 +329,11 @@ void CPlayerScript::InitPrefabs()
 	m_Prefabs.PunisherPref = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\punisherground.pref");
 	m_Prefabs.PunisherPistolPref = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\punisherpistol.pref");
 	m_Prefabs.BBQPref = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\bbqground.pref");
+	m_Prefabs.DeathCrisisCutinPref = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\deathcrisiscutin.pref");
+	m_Prefabs.DeathCrisisLineOnePref = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\deathcrisislineone.pref");
+	m_Prefabs.DeathCrisisLineTwoPref = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\deathcrisislinetwo.pref");
+	m_Prefabs.DeathCrisisBigBoomPref = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\deathcrisisbigboom.pref");
+	m_Prefabs.DeathCrisisBoomTwoPref = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\deathcrisisboomtwo.pref");
 }
 
 void CPlayerScript::Idle()
@@ -293,7 +345,7 @@ void CPlayerScript::Idle()
 	Collider2D()->SetScale(Vec3(75.f, 136.f, 1.f));
 
 	GetOwner()->GetParent()->SetSpeed(400.f);
-
+	SetSuperArmor(false);
 	if (KEY_TAP(KEY::LEFT))
 	{
 		SetDirection(OBJ_DIR::DIR_LEFT);
@@ -325,7 +377,6 @@ void CPlayerScript::Idle()
 		vRot.y = XM_PI;
 		SetDirection(OBJ_DIR::DIR_RIGHT);
 		SetState(PLAYER_STATE::MOVE);
-
 		if (!m_Run)
 		{
 			m_State = PLAYER_STATE::MOVE;
@@ -377,6 +428,8 @@ void CPlayerScript::Idle()
 	
 	if (KEY_TAP(KEY::X))
 	{
+		CAssetMgr::GetInst()->FindAsset<CSound>(L"sound\\player\\wrevolverb.ogg")->Play(1, 0.5f, true);
+		CAssetMgr::GetInst()->FindAsset<CSound>(L"sound\\player\\gun_draw1.ogg")->Play(1, 1.f, true);
 		if (m_CheckRange)
 		{
 			SetState(PLAYER_STATE::DG_AT1);
@@ -401,6 +454,7 @@ void CPlayerScript::Idle()
 
 	if (KEY_TAP(KEY::C))
 	{
+		CAssetMgr::GetInst()->FindAsset<CSound>(L"sound\\player\\gn_jump.ogg")->Play(1, 1.f, false);
 		SetState(PLAYER_STATE::JUMP);
 		Animator2D()->Play((int)PLAYER_STATE::JUMP, 5.f, false);
 		Rigidbody()->Jump();
@@ -463,6 +517,8 @@ void CPlayerScript::Move()
 
 	if (KEY_PRESSED(KEY::DOWN) && KEY_TAP(KEY::X))
 	{
+		CAssetMgr::GetInst()->FindAsset<CSound>(L"sound\\player\\wrevolverb.ogg")->Play(1, 0.5f, true);
+		CAssetMgr::GetInst()->FindAsset<CSound>(L"sound\\player\\gun_draw1.ogg")->Play(1, 1.f, true);
 		SetState(PLAYER_STATE::DG_AT1);
 		Animator2D()->Play((int)PLAYER_STATE::DG_AT1, 15.f, true);
 		CreateMuzzelOfRevolverDiagonal();
@@ -472,6 +528,8 @@ void CPlayerScript::Move()
 
 	else if (KEY_TAP(KEY::X))
 	{
+		CAssetMgr::GetInst()->FindAsset<CSound>(L"sound\\player\\wrevolverb.ogg")->Play(1, 0.5f, true);
+		CAssetMgr::GetInst()->FindAsset<CSound>(L"sound\\player\\gun_draw1.ogg")->Play(1, 1.f, true);
 		SetState(PLAYER_STATE::AT_1);
 		Animator2D()->Play((int)PLAYER_STATE::AT_1, 15.f, false);
 		GetOwner()->GetParent()->SetMove(false);
@@ -480,6 +538,7 @@ void CPlayerScript::Move()
 	// JUMP
 	if (KEY_TAP(KEY::C))
 	{
+		CAssetMgr::GetInst()->FindAsset<CSound>(L"sound\\player\\gn_jump.ogg")->Play(1, 1.f, false);
 		SetState(PLAYER_STATE::JUMP);
 		Animator2D()->Play((int)PLAYER_STATE::JUMP, 5.f, false);
 		Rigidbody()->Jump();
@@ -494,6 +553,8 @@ void CPlayerScript::AT1()
 	GetOwner()->GetParent()->SetMove(false);
 	if (KEY_TAP(KEY::X))
 	{
+		CAssetMgr::GetInst()->FindAsset<CSound>(L"sound\\player\\wrevolverb.ogg")->Play(1, 0.5f, true);
+		CAssetMgr::GetInst()->FindAsset<CSound>(L"sound\\player\\gun_draw1.ogg")->Play(1, 1.f, true);
 		m_NextAttack = true;
 	}
 
@@ -522,6 +583,8 @@ void CPlayerScript::AT2()
 
 	if (KEY_TAP(KEY::X) && !Animator2D()->IsFinish())
 	{
+		CAssetMgr::GetInst()->FindAsset<CSound>(L"sound\\player\\wrevolverb.ogg")->Play(1, 0.5f, true);
+		CAssetMgr::GetInst()->FindAsset<CSound>(L"sound\\player\\gun_draw1.ogg")->Play(1, 1.f, true);
 		m_NextAttack = true;
 	}
 
@@ -577,6 +640,8 @@ void CPlayerScript::AT4()
 		CreatePistol();
 		CreateMuzzelOfRevolver();
 		m_NextAttack = false;
+		CAssetMgr::GetInst()->FindAsset<CSound>(L"sound\\player\\wrevolverb.ogg")->Play(1, 0.5f, true);
+		CAssetMgr::GetInst()->FindAsset<CSound>(L"sound\\player\\gun_draw1.ogg")->Play(1, 1.f, true);
 	}
 
 	if (Animator2D()->IsFinish())
@@ -594,6 +659,8 @@ void CPlayerScript::AT_DG1()
 	GetOwner()->GetParent()->SetMove(false);
 	if (KEY_TAP(KEY::X))
 	{
+		CAssetMgr::GetInst()->FindAsset<CSound>(L"sound\\player\\wrevolverb.ogg")->Play(1, 0.5f, true);
+		CAssetMgr::GetInst()->FindAsset<CSound>(L"sound\\player\\gun_draw1.ogg")->Play(1, 1.f, true);
 		m_NextAttack = true;
 	}
 	
@@ -640,6 +707,8 @@ void CPlayerScript::AT_DG2()
 	GetOwner()->GetParent()->SetMove(false);
 	if (KEY_TAP(KEY::X))
 	{
+		CAssetMgr::GetInst()->FindAsset<CSound>(L"sound\\player\\wrevolverb.ogg")->Play(1, 0.5f, true);
+		CAssetMgr::GetInst()->FindAsset<CSound>(L"sound\\player\\gun_draw1.ogg")->Play(1, 1.f, true);
 		m_NextAttack = true;
 	}
 
@@ -727,6 +796,8 @@ void CPlayerScript::AT_DG4()
 	GetOwner()->GetParent()->SetMove(false);
 	if (m_NextAttack && 5 == Animator2D()->GetCurFrameIndex())
 	{
+		CAssetMgr::GetInst()->FindAsset<CSound>(L"sound\\player\\wrevolverb.ogg")->Play(1, 0.5f, true);
+		CAssetMgr::GetInst()->FindAsset<CSound>(L"sound\\player\\gun_draw1.ogg")->Play(1, 1.f, true);
 		CreateDiagonalPistol();
 		CreateMuzzelOfRevolverDiagonal();
 		m_NextAttack = false;
@@ -771,8 +842,18 @@ void CPlayerScript::Landing()
 {
 	if (Animator2D()->IsFinish())
 	{
-		m_State = PLAYER_STATE::IDLE;
+		SetState(PLAYER_STATE::IDLE);
 		Animator2D()->Play((int)IDLE, 5.f, true);
+	}
+}
+
+void CPlayerScript::Hit()
+{
+	if (Animator2D()->IsFinish())
+	{
+		SetState(PLAYER_STATE::IDLE);
+		Animator2D()->Play((int)IDLE, 5.f, true);
+		GetOwner()->GetParent()->SetMove(true);
 	}
 }
 
@@ -823,6 +904,7 @@ void CPlayerScript::Run()
 
 	if (KEY_TAP(KEY::C))
 	{
+		CAssetMgr::GetInst()->FindAsset<CSound>(L"sound\\player\\gn_jump.ogg")->Play(1, 1.f, false);
 		SetState(PLAYER_STATE::JUMP);
 		Animator2D()->Play((int)PLAYER_STATE::JUMP, 5.f, false);
 		Rigidbody()->Jump();
@@ -830,6 +912,8 @@ void CPlayerScript::Run()
 
 	if (KEY_TAP(KEY::X))
 	{
+		CAssetMgr::GetInst()->FindAsset<CSound>(L"sound\\player\\wrevolverb.ogg")->Play(1, 0.5f, true);
+		CAssetMgr::GetInst()->FindAsset<CSound>(L"sound\\player\\gun_draw1.ogg")->Play(1, 1.f, true);
 		SetState(PLAYER_STATE::TACKLE);
 		Animator2D()->Play((int)ANIMATION_NUM::TACKLE, 10.f, false);
 		GetOwner()->GetParent()->SetMove(false);
@@ -840,6 +924,172 @@ void CPlayerScript::Run()
 
 void CPlayerScript::Dead()
 {
+}
+
+void CPlayerScript::DeathCrisis()
+{
+	GetOwner()->GetParent()->SetMove(false);
+
+	CreateDeathCrisis();
+	DeathCrisisMove();
+
+	if (46 == Animator2D()->GetCurFrameIndex())
+	{
+		CreateDeathCrisisCutin();
+	}
+
+	if (Animator2D()->IsFinish())
+	{
+		CGameObject* pObj = GetOwner()->FindChildByName(L"deathcrisisgun");
+		pObj->SetActive(false);
+		pObj->Animator2D()->Reset();
+		pObj = GetOwner()->FindChildByName(L"deathcrisisguntwo");
+		pObj->SetActive(false);
+		pObj->Animator2D()->Reset();
+		pObj = GetOwner()->FindChildByName(L"feather");
+		pObj->SetActive(false);
+		pObj->Animator2D()->Reset();
+		SetState(PLAYER_STATE::IDLE);
+		Animator2D()->Play((int)ANIMATION_NUM::IDLE, 5.f, true);
+		CGameObject* pBlack = CLevelMgr::GetInst()->FindObjectByName(L"black");
+		DeleteObject(pBlack);
+		
+		if (OBJ_DIR::DIR_LEFT == m_Dir)
+			GetOwner()->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, 0.f));
+		else
+			GetOwner()->Transform()->SetRelativeRotation(Vec3(0.f, XM_PI, 0.f));
+
+		GetOwner()->GetParent()->SetMove(true);
+		m_CutinSpawn = false;
+	}
+}
+
+void CPlayerScript::DeathCrisisMove()
+{
+	Vec3 vPos = Transform()->GetRelativePos();
+	Vec3 vParentPos = GetOwner()->GetParent()->Transform()->GetRelativePos();
+
+	if (OBJ_DIR::DIR_LEFT == m_Dir)
+	{
+		if (5 == Animator2D()->GetCurFrameIndex() && !m_Foot)
+		{
+			CGameObject* pObj = GetOwner()->FindChildByName(L"deathcrisisfoot");
+			pObj->SetActive(true);
+			pObj->Animator2D()->Play(0, 5.f, false);
+			m_Foot = true;
+		}
+		else if (6 == Animator2D()->GetCurFrameIndex())
+			m_Foot = true;
+
+		else if (7 == Animator2D()->GetCurFrameIndex())
+		{
+			vPos = Vec3(-500.f, vParentPos.y, vParentPos.z);
+		}
+		else if (!m_Foot && 17 == Animator2D()->GetCurFrameIndex())
+		{
+			CGameObject* pObj = GetOwner()->FindChildByName(L"deathcrisisfoot");
+			pObj->SetActive(true);
+			pObj->Animator2D()->Play(0, 5.f, false);
+			m_Foot = true;
+		}	
+		else if (20 == Animator2D()->GetCurFrameIndex())
+		{
+			vPos = Vec3(-200.f, vParentPos.y - 200.f, vParentPos.z);
+			m_Foot = false;
+			CGameObject* pObj = GetOwner()->FindChildByName(L"deathcrisisfoot");
+			pObj->SetActive(true);
+			pObj->Animator2D()->Play(0, 5.f, false);
+		}
+		else if (21 <= Animator2D()->GetCurFrameIndex() && 26 >= Animator2D()->GetCurFrameIndex())
+		{
+			vPos += Vec3(1.f, 1.f, 1.f) * 600.f * DT;
+		}
+		else if (23 == Animator2D()->GetCurFrameIndex())
+		{
+			vPos = Vec3(-500.f, -100.f, vParentPos.z);
+		}
+		else if (29 == Animator2D()->GetCurFrameIndex())
+		{
+			vPos = Vec3(-200.f, 300.f, vParentPos.z);
+		}
+		else if (34 == Animator2D()->GetCurFrameIndex())
+		{
+			vPos = Vec3(100.f, 200.f, 1.f);
+		}
+		else if (38 == Animator2D()->GetCurFrameIndex())
+		{
+			vPos = Vec3(0.f, 0.f, 1.f);
+		}
+		else if (46 <= Animator2D()->GetCurFrameIndex() && 49 == Animator2D()->GetCurFrameIndex())
+		{
+			vPos += Vec3(1.f, 0.f, 0.f) * 500.f * DT;
+		}
+		else if (56 == Animator2D()->GetCurFrameIndex())
+		{
+			vPos = Vec3(0.f, 0.f, 1.f);
+		}
+	}
+	else if (OBJ_DIR::DIR_RIGHT == m_Dir)
+	{
+		if (5 == Animator2D()->GetCurFrameIndex() && !m_Foot)
+		{
+			CGameObject* pObj = GetOwner()->FindChildByName(L"deathcrisisfoot");
+			pObj->SetActive(true);
+			pObj->Animator2D()->Play(0, 5.f, false);
+			m_Foot = true;
+		}
+		else if (6 == Animator2D()->GetCurFrameIndex())
+			m_Foot = true;
+		else if (7 == Animator2D()->GetCurFrameIndex())
+		{
+			vPos = Vec3(500.f, vParentPos.y, vParentPos.z);
+		}
+		else if (!m_Foot && 17 == Animator2D()->GetCurFrameIndex())
+		{
+			CGameObject* pObj = GetOwner()->FindChildByName(L"deathcrisisfoot");
+			pObj->SetActive(true);
+			pObj->Animator2D()->Play(0, 5.f, false);
+			m_Foot = true;
+		}
+		else if (20 == Animator2D()->GetCurFrameIndex())
+		{
+			vPos = Vec3(200.f, vParentPos.y - 200.f, vParentPos.z);
+			m_Foot = false;
+			CGameObject* pObj = GetOwner()->FindChildByName(L"deathcrisisfoot");
+			pObj->SetActive(true);
+			pObj->Animator2D()->Play(0, 5.f, false);
+		}
+		else if (21 <= Animator2D()->GetCurFrameIndex() && 26 >= Animator2D()->GetCurFrameIndex())
+		{
+			vPos += Vec3(-1.f, 1.f, 1.f) * 600.f * DT;
+		}
+		else if (23 == Animator2D()->GetCurFrameIndex())
+		{
+			vPos = Vec3(-500.f, -100.f, vParentPos.z);
+		}
+		else if (29 == Animator2D()->GetCurFrameIndex())
+		{
+			vPos = Vec3(-200.f, 300.f, vParentPos.z);
+		}
+		else if (34 == Animator2D()->GetCurFrameIndex())
+		{
+			vPos = Vec3(100.f, 200.f, 1.f);
+		}
+		else if (38 == Animator2D()->GetCurFrameIndex())
+		{
+			vPos = Vec3(0.f, 0.f, 1.f);
+		}
+		else if (46 <= Animator2D()->GetCurFrameIndex() && 49 == Animator2D()->GetCurFrameIndex())
+		{
+			vPos += Vec3(-1.f, 0.f, 0.f) * 500.f * DT;
+		}
+		else if (56 == Animator2D()->GetCurFrameIndex())
+		{
+			vPos = Vec3(0.f, 0.f, 1.f);
+		}
+	}
+
+	Transform()->SetRelativePos(vPos);
 }
 
 void CPlayerScript::DeathByRevolver()
@@ -857,6 +1107,7 @@ void CPlayerScript::DeathByRevolver()
 void CPlayerScript::JackSpike()
 {
 	GetOwner()->GetParent()->SetMove(false);
+	SetSuperArmor(true);
 
 	if (Animator2D()->IsFinish())
 	{
@@ -991,10 +1242,12 @@ void CPlayerScript::GunHawkStandBy()
 
 	if (!Animator2D()->IsFinish() && KEY_TAP(KEY::Q))
 	{
+		CAssetMgr::GetInst()->FindAsset<CSound>(L"sound\\player\\gn_dgunhawk_third.ogg")->Play(1, 0.7f, true);
 		SetState(PLAYER_STATE::GUNHAWKLASTSHOOT);
 		Animator2D()->Play((int)ANIMATION_NUM::GUNHAWKSHOOT, 7.f, true);
 		GetOwner()->GetParent()->SetForce(false);
 		CreateGunHawkSecond();
+		
 	}
 
 	else if (Animator2D()->IsFinish())
@@ -1115,6 +1368,7 @@ void CPlayerScript::SkillBBQ()
 		Animator2D()->Play((int)ANIMATION_NUM::IDLE, 5.f, true);
 		GetOwner()->GetParent()->SetMove(true);
 		m_Spawn = true;
+		CAssetMgr::GetInst()->FindAsset<CSound>(L"sound\\player\\gatling_shot.ogg")->Stop();
 	}
 }
 
@@ -1126,6 +1380,7 @@ void CPlayerScript::BBQReady()
 		GetOwner()->GetChildren()[0]->Animator2D()->Play(1, 8.f, true);
 		SetState(PLAYER_STATE::BBQSHOOT);
 		Animator2D()->Play((int)ANIMATION_NUM::BBQSHOOT, 5.f, true);
+		CAssetMgr::GetInst()->FindAsset<CSound>(L"sound\\player\\gatling_shot.ogg")->Play(0, 0.5f, false);
 	}
 }
 
@@ -1133,7 +1388,6 @@ void CPlayerScript::SkillBBQShoot()
 {
 	GetOwner()->GetParent()->SetMove(false);
 	m_BBQTime += DT;
-
 	if (2.f < m_BBQTime)
 	{
 		m_BBQTime = 0.f;
@@ -1143,6 +1397,7 @@ void CPlayerScript::SkillBBQShoot()
 		Animator2D()->Play((int)ANIMATION_NUM::IDLE, 5.f, true);
 		GetOwner()->GetParent()->SetMove(true);
 		m_Spawn = true;
+		CAssetMgr::GetInst()->FindAsset<CSound>(L"sound\\player\\gatling_shot.ogg")->Stop();
 	}
 }
 
@@ -1258,12 +1513,50 @@ void CPlayerScript::SkillTimeCheck()
 			m_CoolTime.fBBQTime = 0.f;
 		}
 	}
+	if (m_UseSkill.bDeathCrisis)
+	{
+		m_CoolTime.fDeathCrisisTime += DT;
+
+		if (m_CoolTime.fDeathCrisisCoolTime <= m_CoolTime.fDeathCrisisTime)
+		{
+			m_UseSkill.bDeathCrisis = false;
+			m_CoolTime.fDeathCrisisTime = 0.f;
+		}
+	}
+}
+
+void CPlayerScript::SuperArmorCheck()
+{
+	INFO& info = GetOwner()->GetInfo();
+	if (info.bSuperArmor)
+	{
+		m_SuperArmorTime += DT;
+		MeshRender()->GetMaterial()->SetScalarParam(INT_3, 1);
+		if(m_Color)
+			MeshRender()->GetMaterial()->SetScalarParam(VEC4_1, Vec4(1.f, 0.f, 0.f, 0.1f));
+		else
+			MeshRender()->GetMaterial()->SetScalarParam(VEC4_1, Vec4(1.f, 1.f, 0.f, 0.1f));
+	}
+	else
+	{
+		MeshRender()->GetMaterial()->SetScalarParam(INT_3, 0);
+	}
+
+	if (0.2f < m_SuperArmorTime)
+	{
+		if (m_Color)
+			m_Color = false;
+		else
+			m_Color = true;
+		m_SuperArmorTime = 0.f;
+	}
 }
 
 void CPlayerScript::Stylish()
 {
 	if (!m_UseSkill.bJackSpike && KEY_TAP(KEY::Z))
 	{
+		CAssetMgr::GetInst()->FindAsset<CSound>(L"sound\\player\\gn_jspike_01.ogg")->Play(1, 1.f, true);
 		SetState(PLAYER_STATE::SK_1);
 		Animator2D()->Play((int)ANIMATION_NUM::JACKSPIKE, 11.f, false);
 		CreateJackSpike();
@@ -1278,11 +1571,15 @@ void CPlayerScript::Stylish()
 		else
 			Animator2D()->Play((int)ANIMATION_NUM::AT_3, 25.f, false);
 
+		CAssetMgr::GetInst()->FindAsset<CSound>(L"sound\\player\\gn_hshot_01.ogg")->Play(1, 1.f, true);
+
 		m_UseSkill.bHeadShot = true;
+		SetSuperArmor(true);
 	}
 
 	if (!m_UseSkill.bRisingShot && KEY_TAP(KEY::S))
 	{
+		CAssetMgr::GetInst()->FindAsset<CSound>(L"sound\\player\\gn_risingshot.ogg")->Play(1, 1.f, true);
 		SetState(PLAYER_STATE::SK_2);
 		Animator2D()->Play((int)ANIMATION_NUM::AT_3, 20.f, false);
 		m_UseSkill.bRisingShot = true;
@@ -1290,25 +1587,31 @@ void CPlayerScript::Stylish()
 
 	if (!m_UseSkill.bWindMill && KEY_TAP(KEY::D))
 	{
+		CAssetMgr::GetInst()->FindAsset<CSound>(L"sound\\player\\gn_windmill_01.ogg")->Play(1, 1.f, true);
 		SetState(PLAYER_STATE::SK_6);
 		Animator2D()->Play((int)ANIMATION_NUM::WINDMILL, 20.f, false);
 		CreateWindMill();
 		m_UseSkill.bWindMill = true;
+		SetSuperArmor(true);
 	}
 
 	if (!m_UseSkill.bMachKick && KEY_TAP(KEY::F))
 	{
+		CAssetMgr::GetInst()->FindAsset<CSound>(L"sound\\player\\gn_mach_01.ogg")->Play(1, 1.f, true);
 		SetState(PLAYER_STATE::SK_7);
 		Animator2D()->Play((int)ANIMATION_NUM::MACHKICK, 20.f, false);
 		CreateMachKick();
 		m_UseSkill.bMachKick = true;
+		SetSuperArmor(true);
 	}
 
 	if (!m_UseSkill.bRandShoot && KEY_TAP(KEY::G))
 	{
+		CAssetMgr::GetInst()->FindAsset<CSound>(L"sound\\player\\gn_rshot.ogg")->Play(1, 1.f, false);
 		SetState(PLAYER_STATE::SK_4);
 		Animator2D()->Play((int)ANIMATION_NUM::RANDOMSHOT, 30.f, false);
 		m_UseSkill.bRandShoot = true;
+		SetSuperArmor(true);
 	}
 
 	if (!m_UseSkill.bDeathByRevolver && KEY_TAP(KEY::SPACE))
@@ -1317,10 +1620,12 @@ void CPlayerScript::Stylish()
 		Animator2D()->Play((int)ANIMATION_NUM::DEATHBYREVOLVER, 17.f, false);
 		CreateDeathByRevolver();
 		m_UseSkill.bDeathByRevolver = true;
+		CAssetMgr::GetInst()->FindAsset<CSound>(L"sound\\player\\gn_db_revolver.ogg")->Play(1, 0.7f, true);
 	}
 
 	if (!m_UseSkill.bGunHawk && KEY_TAP(KEY::Q))
 	{
+		CAssetMgr::GetInst()->FindAsset<CSound>(L"sound\\player\\gn_dgunhawk_sec.ogg")->Play(1, 1.f, true);
 		SetState(PLAYER_STATE::GUNHAWKSHOOT);
 		Animator2D()->Play((int)ANIMATION_NUM::GUNHAWKSHOOT, 7.f, false);
 		CreateGunHawkFirst();
@@ -1338,9 +1643,12 @@ void CPlayerScript::Stylish()
 		else
 			Animator2D()->Play((int)ANIMATION_NUM::AT_3, 25.f, false);
 
+		CAssetMgr::GetInst()->FindAsset<CSound>(L"sound\\player\\gn_hshot_03.ogg")->Play(1, 1.f, false);
+
 		CreateWesternFire();
 		m_Spawn = true;
 		m_UseSkill.bWesternFire = true;
+		SetSuperArmor(true);
 	}
 
 	if (!m_UseSkill.bPunisher && KEY_TAP(KEY::W))
@@ -1358,6 +1666,42 @@ void CPlayerScript::Stylish()
 		CreateBBQ();
 		m_UseSkill.bBBQ = true;
 		CAssetMgr::GetInst()->FindAsset<CSound>(L"sound\\player\\gn_bbq_01.ogg")->Play(1, 0.7f, true);
+		SetSuperArmor(true);
+	}
+	if (false == m_UseSkill.bDeathCrisis && KEY_TAP(KEY::CTRL))
+	{
+		CAssetMgr::GetInst()->FindAsset<CSound>(L"sound\\player\\deathcrisisfirst.ogg")->Play(1, 1.f, true);
+		CAssetMgr::GetInst()->FindAsset<CSound>(L"sound\\player\\death_crisis_1st.ogg")->Play(1, 1.f, false);
+		SetState(PLAYER_STATE::DEATHCRISIS);
+		GetOwner()->GetParent()->SetMove(false);
+		Animator2D()->Play((int)ANIMATION_NUM::DEATHCRISIS, 13.f, false);
+		m_UseSkill.bDeathCrisis = true;
+		if (OBJ_DIR::DIR_LEFT == m_Dir)
+		{
+			GetOwner()->Transform()->SetRelativeRotation(Vec3(0.f, XM_PI, 0.f));
+			//GetOwner()->GetParent()->SetDir(OBJ_DIR::DIR_LEFT);
+		}
+		else
+		{
+			GetOwner()->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, 0.f));
+			//GetOwner()->GetParent()->SetDir(OBJ_DIR::DIR_RIGHT);
+		}
+
+		Ptr<CPrefab> BlackPref = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\black.pref");
+		CGameObject* pBlack = BlackPref->Instantiate();
+		CreateObject(pBlack, 0);
+
+		CGameObject* pObj = GetOwner()->FindChildByName(L"deathcrisisgun");
+		pObj->SetActive(true);
+		pObj->Animator2D()->Play(0, 13.f, false);
+		pObj = GetOwner()->FindChildByName(L"deathcrisisguntwo");
+		pObj->SetActive(true);
+		pObj->Animator2D()->Play(0, 13.f, false);
+		pObj = GetOwner()->FindChildByName(L"feather");
+		pObj->SetActive(true);
+		pObj->Animator2D()->Play(0, 13.f, true);
+
+		SetSuperArmor(true);
 	}
 }
 
@@ -1373,7 +1717,6 @@ void CPlayerScript::CreateDeathByRevolver()
 	pBuff->Transform()->SetRelativePos(Vec3(vPos.x, pCam->Transform()->GetWorldPos().y, vPos.z + 500.f));
 	pBuff->Transform()->SetRelativeScale(Vec3(470.f, 768.f, 1.f));
 	pBuff->Transform()->SetRelativeRotation(vRot);
-	//pBuff->MeshRender()->GetMaterial()->SetShader(CAssetMgr::GetInst()->FindAsset<CGraphicShader>(L"Std2DAdditiveShader"));
 
 	CreateObject(pBuff, 0);
 }
@@ -2034,13 +2377,15 @@ void CPlayerScript::CreateWesternFire()
 	{
 		pObject->Transform()->SetRelativeRotation(Vec3(0.f, XM_PI, 0.f));
 		GetOwner()->GetParent()->SetDir(OBJ_DIR::DIR_LEFT);
-		GetOwner()->GetParent()->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, 0.f));
+		GetOwner()->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, 0.f));
+		//GetOwner()->GetParent()->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, 0.f));
 	}
 	else
 	{
 		pObject->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, 0.f));
 		GetOwner()->GetParent()->SetDir(OBJ_DIR::DIR_RIGHT);
-		GetOwner()->GetParent()->Transform()->SetRelativeRotation(Vec3(0.f, XM_PI, 0.f));
+		GetOwner()->Transform()->SetRelativeRotation(Vec3(0.f, XM_PI, 0.f));
+		//GetOwner()->GetParent()->Transform()->SetRelativeRotation(Vec3(0.f, XM_PI, 0.f));
 	}
 	pObject->Transform()->SetRelativePos(Vec3(vColPos.x - 30.f, vColPos.y + 30.f, vColPos.z));
 	CreateObject(pObject, 0);
@@ -2110,8 +2455,564 @@ void CPlayerScript::CreateBBQ()
 	CreateObject(pObject, 7);
 }
 
+void CPlayerScript::CreateDeathCrisisCutin()
+{
+	if (!m_CutinSpawn)
+	{
+		CGameObject* pObj = m_Prefabs.DeathCrisisCutinPref->Instantiate();
+		CreateObject(pObj, 31);
+		m_CutinSpawn = true;
+	}
+}
+
+void CPlayerScript::CreateDeathCrisis()
+{
+	CGameObject* pCam = CLevelMgr::GetInst()->FindObjectByName(L"MainCamera");
+
+	Vec3 vPos = pCam->Transform()->GetRelativePos();
+	Vec3 vWorldPos = GetOwner()->Transform()->GetWorldPos();
+
+	if (!m_LineTwo && 0 == Animator2D()->GetCurFrameIndex())
+	{
+		CGameObject* pObj = m_Prefabs.DeathCrisisLineTwoPref->Instantiate();
+		pObj->Transform()->SetRelativePos(Vec3(vPos.x - 150.f, vPos.y - 200.f, vPos.z));
+		pObj->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, XM_PI / 2.5f));
+		pObj->Transform()->SetRelativeScale(Vec3(1500.f, 200.f, 1.f));
+		CreateObject(pObj, 7);
+		m_LineTwo = true;
+	}
+	else if (1 == Animator2D()->GetCurFrameIndex())
+	{
+		m_LineTwo = false;
+	}
+	else if (!m_LineTwo && 2 == Animator2D()->GetCurFrameIndex())
+	{
+		CGameObject* pObj = m_Prefabs.DeathCrisisLineTwoPref->Instantiate();
+		pObj->Transform()->SetRelativePos(Vec3(vPos.x + 150.f, vPos.y - 100.f, vPos.z));
+		pObj->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, XM_PI / 1.5f));
+		pObj->Transform()->SetRelativeScale(Vec3(1500.f, 200.f, 1.f));
+		CreateObject(pObj, 7);
+		m_LineTwo = true;
+	}
+	else if (3 == Animator2D()->GetCurFrameIndex())
+	{
+		m_LineTwo = false;
+	}
+	else if (!m_LineTwo && 4 == Animator2D()->GetCurFrameIndex())
+	{
+		CGameObject* pObj = m_Prefabs.DeathCrisisLineTwoPref->Instantiate();
+		pObj->Transform()->SetRelativePos(Vec3(vPos.x - 150.f, vPos.y + 100.f, vPos.z));
+		pObj->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, 5.497787f));
+		pObj->Transform()->SetRelativeScale(Vec3(1200.f, 200.f, 1.f));
+		CreateObject(pObj, 7);
+
+		pObj = m_Prefabs.DeathCrisisLineOnePref->Instantiate();
+		pObj->Transform()->SetRelativePos(Vec3(vPos.x - 600.f, vPos.y, vPos.z));
+		pObj->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, 0.f));
+		pObj->Transform()->SetRelativeScale(Vec3(3000.f, 100.f, 1.f));
+		CreateObject(pObj, 7);
+
+		m_LineTwo = true;
+	}
+	else if (5 == Animator2D()->GetCurFrameIndex())
+	{
+		m_LineTwo = false;
+	}
+	else if (!m_LineTwo && 6 == Animator2D()->GetCurFrameIndex())
+	{
+		CGameObject* pObj = m_Prefabs.DeathCrisisLineTwoPref->Instantiate();
+		pObj->Transform()->SetRelativePos(Vec3(vPos.x + 200.f, vPos.y + 50.f, vPos.z));
+		pObj->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, 3.926991f));
+		pObj->Transform()->SetRelativeScale(Vec3(1500.f, 200.f, 1.f));
+		CreateObject(pObj, 7);
+
+		m_LineTwo = true;
+	}
+	else if (7 == Animator2D()->GetCurFrameIndex())
+	{
+		m_LineTwo = false;
+	}
+	else if (!m_LineTwo && 8 == Animator2D()->GetCurFrameIndex())
+	{
+		CGameObject* pObj = m_Prefabs.DeathCrisisLineTwoPref->Instantiate();
+		pObj->Transform()->SetRelativePos(Vec3(vPos.x + 150.f, vPos.y, vPos.z));
+		pObj->Transform()->SetRelativeRotation(Vec3(0.f, XM_PI, 0.f));
+		pObj->Transform()->SetRelativeScale(Vec3(1800.f, 200.f, 1.f));
+		CreateObject(pObj, 7);
+
+		pObj = m_Prefabs.DeathCrisisLineOnePref->Instantiate();
+		pObj->Transform()->SetRelativePos(Vec3(vPos.x - 600.f, vPos.y + 300.f, vPos.z));
+		pObj->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, 5.497787f));
+		pObj->Transform()->SetRelativeScale(Vec3(3000.f, 100.f, 1.f));
+		CreateObject(pObj, 7);
+		m_LineTwo = true;
+	}
+	else if (9 == Animator2D()->GetCurFrameIndex())
+	{
+		m_LineTwo = false;
+	}
+	else if (!m_LineTwo && 10 == Animator2D()->GetCurFrameIndex())
+	{
+		CGameObject* pObj = m_Prefabs.DeathCrisisLineTwoPref->Instantiate();
+		pObj->Transform()->SetRelativePos(Vec3(vPos.x + 50.f, vPos.y, vPos.z));
+		pObj->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, 1.570796f));
+		pObj->Transform()->SetRelativeScale(Vec3(900.f, 200.f, 1.f));
+		CreateObject(pObj, 7);
+
+		pObj = m_Prefabs.DeathCrisisBoomTwoPref->Instantiate();
+		pObj->Transform()->SetRelativePos(Vec3(vWorldPos.x, vWorldPos.y, 300.f));
+		pObj->Transform()->SetRelativeScale(Vec3(1000.f, 1000.f, 1.f));
+		CreateObject(pObj, 0);
+		m_LineTwo = true;
+	}
+	else if (11 == Animator2D()->GetCurFrameIndex())
+	{
+		m_LineTwo = false;
+	}
+	else if (!m_LineTwo && 12 == Animator2D()->GetCurFrameIndex())
+	{
+		CGameObject* pObj = m_Prefabs.DeathCrisisLineTwoPref->Instantiate();
+		pObj->Transform()->SetRelativePos(Vec3(vPos.x, vPos.y + 50.f, vPos.z));
+		pObj->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, XM_PI * 1.5f));
+		pObj->Transform()->SetRelativeScale(Vec3(900.f, 200.f, 1.f));
+		CreateObject(pObj, 7);
+
+		pObj = m_Prefabs.DeathCrisisLineOnePref->Instantiate();
+		pObj->Transform()->SetRelativePos(Vec3(vPos.x + 600.f, vPos.y, vPos.z));
+		pObj->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, 0.f));
+		pObj->Transform()->SetRelativeScale(Vec3(3000.f, 100.f, 1.f));
+		CreateObject(pObj, 7);
+		m_LineTwo = true;
+	}
+	else if (13 == Animator2D()->GetCurFrameIndex())
+	{
+		m_LineTwo = false;
+	}
+	else if (!m_LineTwo && 14 == Animator2D()->GetCurFrameIndex())
+	{
+		CGameObject* pObj = m_Prefabs.DeathCrisisLineTwoPref->Instantiate();
+		pObj->Transform()->SetRelativePos(Vec3(vPos.x - 50.f, vPos.y + 75.f, vPos.z));
+		pObj->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, 5.497787f));
+		pObj->Transform()->SetRelativeScale(Vec3(1700.f, 200.f, 1.f));
+		CreateObject(pObj, 7);
+		m_LineTwo = true;
+	}
+	else if (15 == Animator2D()->GetCurFrameIndex())
+	{
+		m_LineTwo = false;
+	}
+	else if (!m_LineTwo && 16 == Animator2D()->GetCurFrameIndex())
+	{
+		CGameObject* pObj = m_Prefabs.DeathCrisisLineTwoPref->Instantiate();
+		pObj->Transform()->SetRelativePos(Vec3(vPos.x - 50.f, vPos.y, vPos.z));
+		pObj->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, 1.570796f));
+		pObj->Transform()->SetRelativeScale(Vec3(900.f, 200.f, 1.f));
+		CreateObject(pObj, 7);
+
+		pObj = m_Prefabs.DeathCrisisLineOnePref->Instantiate();
+		pObj->Transform()->SetRelativePos(Vec3(vPos.x - 600.f, vPos.y, vPos.z));
+		pObj->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, 0.f));
+		pObj->Transform()->SetRelativeScale(Vec3(3000.f, 100.f, 1.f));
+		CreateObject(pObj, 7);
+		m_LineTwo = true;
+	}
+	else if (17 == Animator2D()->GetCurFrameIndex())
+	{
+		m_LineTwo = false;
+	}
+	else if (!m_LineTwo && 18 == Animator2D()->GetCurFrameIndex())
+	{
+		CGameObject* pObj = m_Prefabs.DeathCrisisLineTwoPref->Instantiate();
+		pObj->Transform()->SetRelativePos(Vec3(vPos.x + 50.f, vPos.y, vPos.z));
+		pObj->Transform()->SetRelativeRotation(Vec3(0.f, XM_PI, 0.f));
+		pObj->Transform()->SetRelativeScale(Vec3(1200.f, 200.f, 1.f));
+		CreateObject(pObj, 0);
+
+		pObj = m_Prefabs.DeathCrisisLineOnePref->Instantiate();
+		pObj->Transform()->SetRelativePos(Vec3(vPos.x - 350.f, vPos.y + 300.f, vPos.z));
+		pObj->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, 5.497787f));
+		pObj->Transform()->SetRelativeScale(Vec3(3000.f, 100.f, 1.f));
+		CreateObject(pObj, 7);
+		m_LineTwo = true;
+	}
+	else if (19 == Animator2D()->GetCurFrameIndex())
+	{
+		m_LineTwo = false;
+	}
+	else if (!m_LineTwo && 20 == Animator2D()->GetCurFrameIndex())
+	{
+		CGameObject* pObj = m_Prefabs.DeathCrisisLineTwoPref->Instantiate();
+		pObj->Transform()->SetRelativePos(Vec3(vPos.x + 50.f, vPos.y - 20.f, vPos.z));
+		pObj->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, 2.356194f));
+		pObj->Transform()->SetRelativeScale(Vec3(1200.f, 200.f, 1.f));
+		CreateObject(pObj, 7);
+
+		pObj = m_Prefabs.DeathCrisisBoomTwoPref->Instantiate();
+		pObj->Transform()->SetRelativePos(Vec3(vWorldPos.x, vWorldPos.y, 300.f));
+		pObj->Transform()->SetRelativeScale(Vec3(1000.f, 1000.f, 1.f));
+		CreateObject(pObj, 0);
+		m_LineTwo = true;
+	}
+	else if (21 == Animator2D()->GetCurFrameIndex())
+	{
+		m_LineTwo = false;
+	}
+
+	if (!m_LineTwo && 22 == Animator2D()->GetCurFrameIndex())
+	{
+		CGameObject* pObj = m_Prefabs.DeathCrisisLineTwoPref->Instantiate();
+		pObj->Transform()->SetRelativePos(Vec3(vPos.x - 150.f, vPos.y - 200.f, vPos.z));
+		pObj->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, XM_PI / 2.5f));
+		pObj->Transform()->SetRelativeScale(Vec3(1500.f, 200.f, 1.f));
+		CreateObject(pObj, 7);
+
+		pObj = m_Prefabs.DeathCrisisLineOnePref->Instantiate();
+		pObj->Transform()->SetRelativePos(Vec3(vPos.x - 600.f, vPos.y - 300.f, vPos.z));
+		pObj->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, 0.785398f));
+		pObj->Transform()->SetRelativeScale(Vec3(3000.f, 100.f, 1.f));
+		CreateObject(pObj, 7);
+		m_LineTwo = true;
+	}
+	else if (23 == Animator2D()->GetCurFrameIndex())
+	{
+		m_LineTwo = false;
+	}
+	else if (!m_LineTwo && 24 == Animator2D()->GetCurFrameIndex())
+	{
+		CGameObject* pObj = m_Prefabs.DeathCrisisLineTwoPref->Instantiate();
+		pObj->Transform()->SetRelativePos(Vec3(vPos.x + 150.f, vPos.y - 100.f, vPos.z));
+		pObj->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, XM_PI / 1.5f));
+		pObj->Transform()->SetRelativeScale(Vec3(1500.f, 200.f, 1.f));
+		CreateObject(pObj, 7);
+
+		pObj = m_Prefabs.DeathCrisisBoomTwoPref->Instantiate();
+		pObj->Transform()->SetRelativePos(Vec3(vWorldPos.x, vWorldPos.y, 300.f));
+		pObj->Transform()->SetRelativeScale(Vec3(800.f, 800.f, 1.f));
+		CreateObject(pObj, 0);
+		m_LineTwo = true;
+		m_LineTwo = true;
+	}
+	else if (25 == Animator2D()->GetCurFrameIndex())
+	{
+		m_LineTwo = false;
+	}
+	else if (!m_LineTwo && 26 == Animator2D()->GetCurFrameIndex())
+	{
+		CGameObject* pObj = m_Prefabs.DeathCrisisLineTwoPref->Instantiate();
+		pObj->Transform()->SetRelativePos(Vec3(vPos.x - 250.f, vPos.y + 100.f, vPos.z));
+		pObj->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, 5.497787f));
+		pObj->Transform()->SetRelativeScale(Vec3(1200.f, 200.f, 1.f));
+		CreateObject(pObj, 7);
+
+		pObj = m_Prefabs.DeathCrisisLineOnePref->Instantiate();
+		pObj->Transform()->SetRelativePos(Vec3(vPos.x + 600.f, vPos.y + 300.f, vPos.z));
+		pObj->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, 5.497787f));
+		pObj->Transform()->SetRelativeScale(Vec3(3000.f, 100.f, 1.f));
+		CreateObject(pObj, 7);
+		m_LineTwo = true;
+	}
+	else if (27 == Animator2D()->GetCurFrameIndex())
+	{
+		m_LineTwo = false;
+	}
+	else if (!m_LineTwo && 28 == Animator2D()->GetCurFrameIndex())
+	{
+		CGameObject* pObj = m_Prefabs.DeathCrisisLineTwoPref->Instantiate();
+		pObj->Transform()->SetRelativePos(Vec3(vPos.x + 200.f, vPos.y + 50.f, vPos.z));
+		pObj->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, 3.926991f));
+		pObj->Transform()->SetRelativeScale(Vec3(1500.f, 200.f, 1.f));
+		CreateObject(pObj, 7);
+		m_LineTwo = true;
+	}
+	else if (29 == Animator2D()->GetCurFrameIndex())
+	{
+		m_LineTwo = false;
+	}
+	else if (!m_LineTwo && 30 == Animator2D()->GetCurFrameIndex())
+	{
+		CAssetMgr::GetInst()->FindAsset<CSound>(L"sound\\player\\deathcrisisthird.ogg")->Play(1, 1.f, false);
+		CAssetMgr::GetInst()->FindAsset<CSound>(L"sound\\player\\death_crisis_2nd.ogg")->Play(1, 0.5f, false);
+		CGameObject* pObj = m_Prefabs.DeathCrisisLineTwoPref->Instantiate();
+		pObj->Transform()->SetRelativePos(Vec3(vPos.x + 150.f, vPos.y, vPos.z));
+		pObj->Transform()->SetRelativeRotation(Vec3(0.f, XM_PI, 0.f));
+		pObj->Transform()->SetRelativeScale(Vec3(1800.f, 200.f, 1.f));
+		CreateObject(pObj, 7);
+
+		pObj = m_Prefabs.DeathCrisisLineOnePref->Instantiate();
+		pObj->Transform()->SetRelativePos(Vec3(vPos.x + 600.f, vPos.y - 300.f, vPos.z));
+		pObj->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, 2.356194f));
+		pObj->Transform()->SetRelativeScale(Vec3(3000.f, 100.f, 1.f));
+		CreateObject(pObj, 7);
+		m_LineTwo = true;
+	}
+	else if (31 == Animator2D()->GetCurFrameIndex())
+	{
+		m_LineTwo = false;
+	}
+	else if (!m_LineTwo && 32 == Animator2D()->GetCurFrameIndex())
+	{
+		CGameObject* pObj = m_Prefabs.DeathCrisisLineTwoPref->Instantiate();
+		pObj->Transform()->SetRelativePos(Vec3(vPos.x + 150.f, vPos.y, vPos.z));
+		pObj->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, 1.570796f));
+		pObj->Transform()->SetRelativeScale(Vec3(900.f, 200.f, 1.f));
+		CreateObject(pObj, 7);
+
+		pObj = m_Prefabs.DeathCrisisBoomTwoPref->Instantiate();
+		pObj->Transform()->SetRelativePos(Vec3(vWorldPos.x, vWorldPos.y, 300.f));
+		pObj->Transform()->SetRelativeScale(Vec3(700.f, 800.f, 1.f));
+		CreateObject(pObj, 0);
+		m_LineTwo = true;
+	}
+	else if (33 == Animator2D()->GetCurFrameIndex())
+	{
+		m_LineTwo = false;
+	}
+	else if (!m_LineTwo && 34 == Animator2D()->GetCurFrameIndex())
+	{
+		CGameObject* pObj = m_Prefabs.DeathCrisisLineTwoPref->Instantiate();
+		pObj->Transform()->SetRelativePos(Vec3(vPos.x + 200.f, vPos.y + 50.f, vPos.z));
+		pObj->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, XM_PI * 1.5f));
+		pObj->Transform()->SetRelativeScale(Vec3(900.f, 200.f, 1.f));
+		CreateObject(pObj, 7);
+
+		pObj = m_Prefabs.DeathCrisisLineOnePref->Instantiate();
+		pObj->Transform()->SetRelativePos(Vec3(vPos.x - 600.f, vPos.y - 300.f, vPos.z));
+		pObj->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, 5.497787f));
+		pObj->Transform()->SetRelativeScale(Vec3(3000.f, 100.f, 1.f));
+		CreateObject(pObj, 7);
+		m_LineTwo = true;
+	}
+	else if (35 == Animator2D()->GetCurFrameIndex())
+	{
+		m_LineTwo = false;
+	}
+	else if (!m_LineTwo && 36 == Animator2D()->GetCurFrameIndex())
+	{
+		CGameObject* pObj = m_Prefabs.DeathCrisisLineTwoPref->Instantiate();
+		pObj->Transform()->SetRelativePos(Vec3(vPos.x - 150.f, vPos.y + 75.f, vPos.z));
+		pObj->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, 5.497787f));
+		pObj->Transform()->SetRelativeScale(Vec3(1700.f, 200.f, 1.f));
+		CreateObject(pObj, 7);
+		m_LineTwo = true;
+	}
+	else if (37 == Animator2D()->GetCurFrameIndex())
+	{
+		m_LineTwo = false;
+	}
+	else if (!m_LineTwo && 38 == Animator2D()->GetCurFrameIndex())
+	{
+		CGameObject* pObj = m_Prefabs.DeathCrisisLineTwoPref->Instantiate();
+		pObj->Transform()->SetRelativePos(Vec3(vPos.x + 100.f, vPos.y, vPos.z));
+		pObj->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, 1.570796f));
+		pObj->Transform()->SetRelativeScale(Vec3(900.f, 200.f, 1.f));
+		CreateObject(pObj, 7);
+		m_LineTwo = true;
+	}
+	else if (39 == Animator2D()->GetCurFrameIndex())
+	{
+		m_LineTwo = false;
+	}
+	else if (!m_LineTwo && 40 == Animator2D()->GetCurFrameIndex())
+	{
+		CGameObject* pObj = m_Prefabs.DeathCrisisLineTwoPref->Instantiate();
+		pObj->Transform()->SetRelativePos(Vec3(vPos.x + 120.f, vPos.y, vPos.z));
+		pObj->Transform()->SetRelativeRotation(Vec3(0.f, XM_PI, 0.f));
+		pObj->Transform()->SetRelativeScale(Vec3(1200.f, 200.f, 1.f));
+		CreateObject(pObj, 7);
+		m_LineTwo = true;
+	}
+	else if (41 == Animator2D()->GetCurFrameIndex())
+	{
+		m_LineTwo = false;
+	}
+	else if (!m_LineTwo && 42 == Animator2D()->GetCurFrameIndex())
+	{
+		CGameObject* pObj = m_Prefabs.DeathCrisisLineTwoPref->Instantiate();
+		pObj->Transform()->SetRelativePos(Vec3(vPos.x + 150.f, vPos.y - 20.f, vPos.z));
+		pObj->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, 2.356194f));
+		pObj->Transform()->SetRelativeScale(Vec3(1200.f, 200.f, 1.f));
+		CreateObject(pObj, 7);
+
+		pObj = m_Prefabs.DeathCrisisLineOnePref->Instantiate();
+		pObj->Transform()->SetRelativePos(Vec3(vPos.x + 600.f, vPos.y + 300.f, vPos.z));
+		pObj->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, 4.101524f));
+		pObj->Transform()->SetRelativeScale(Vec3(3000.f, 100.f, 1.f));
+		CreateObject(pObj, 7);
+		m_LineTwo = true;
+	}
+	else if (43 == Animator2D()->GetCurFrameIndex())
+	{
+		m_LineTwo = false;
+	}
+	else if (!m_LineTwo && 44 == Animator2D()->GetCurFrameIndex())
+	{
+		CGameObject* pObj = m_Prefabs.DeathCrisisLineTwoPref->Instantiate();
+		pObj->Transform()->SetRelativePos(Vec3(vPos.x + 150.f, vPos.y - 100.f, vPos.z));
+		pObj->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, XM_PI / 1.5f));
+		pObj->Transform()->SetRelativeScale(Vec3(1500.f, 200.f, 1.f));
+		CreateObject(pObj, 7);
+		m_LineTwo = true;
+	}
+	else if (45 == Animator2D()->GetCurFrameIndex())
+	{
+		m_LineTwo = false;
+	}
+	else if (!m_LineTwo && 46 == Animator2D()->GetCurFrameIndex())
+	{
+		CGameObject* pObj = m_Prefabs.DeathCrisisLineTwoPref->Instantiate();
+		pObj->Transform()->SetRelativePos(Vec3(vPos.x - 150.f, vPos.y + 100.f, vPos.z));
+		pObj->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, 5.497787f));
+		pObj->Transform()->SetRelativeScale(Vec3(1200.f, 200.f, 1.f));
+		CreateObject(pObj, 7);
+		m_LineTwo = true;
+	}
+	else if (47 == Animator2D()->GetCurFrameIndex())
+	{
+		m_LineTwo = false;
+	}
+	else if (!m_LineTwo && 48 == Animator2D()->GetCurFrameIndex())
+	{
+		CGameObject* pObj = m_Prefabs.DeathCrisisLineTwoPref->Instantiate();
+		pObj->Transform()->SetRelativePos(Vec3(vPos.x + 160.f, vPos.y + 50.f, vPos.z));
+		pObj->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, 3.926991f));
+		pObj->Transform()->SetRelativeScale(Vec3(1500.f, 200.f, 1.f));
+		CreateObject(pObj, 7);
+		m_LineTwo = true;
+	}
+	else if (49 == Animator2D()->GetCurFrameIndex())
+	{
+		m_LineTwo = false;
+	}
+	else if (!m_LineTwo && 50 == Animator2D()->GetCurFrameIndex())
+	{
+		CGameObject* pObj = m_Prefabs.DeathCrisisLineTwoPref->Instantiate();
+		pObj->Transform()->SetRelativePos(Vec3(vPos.x + 150.f, vPos.y, vPos.z));
+		pObj->Transform()->SetRelativeRotation(Vec3(0.f, XM_PI, 0.f));
+		pObj->Transform()->SetRelativeScale(Vec3(1800.f, 200.f, 1.f));
+		CreateObject(pObj, 7);
+
+		pObj = m_Prefabs.DeathCrisisBoomTwoPref->Instantiate();
+		pObj->Transform()->SetRelativePos(Vec3(vWorldPos.x, vWorldPos.y, 300.f));
+		pObj->Transform()->SetRelativeScale(Vec3(1100.f, 900.f, 1.f));
+		CreateObject(pObj, 0);
+
+		m_LineTwo = true;
+	}
+	else if (51 == Animator2D()->GetCurFrameIndex())
+	{
+		m_LineTwo = false;
+	}
+	else if (!m_LineTwo && 52 == Animator2D()->GetCurFrameIndex())
+	{
+		CGameObject* pObj = m_Prefabs.DeathCrisisLineTwoPref->Instantiate();
+		pObj->Transform()->SetRelativePos(Vec3(vPos.x + 200.f, vPos.y, vPos.z));
+		pObj->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, 1.570796f));
+		pObj->Transform()->SetRelativeScale(Vec3(900.f, 200.f, 1.f));
+		CreateObject(pObj, 7);
+
+		pObj = m_Prefabs.DeathCrisisLineOnePref->Instantiate();
+		pObj->Transform()->SetRelativePos(Vec3(vPos.x + 600.f, vPos.y, vPos.z));
+		pObj->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, 0.f));
+		pObj->Transform()->SetRelativeScale(Vec3(3000.f, 100.f, 1.f));
+		CreateObject(pObj, 7);
+		m_LineTwo = true;
+	}
+	else if (53 == Animator2D()->GetCurFrameIndex())
+	{
+		m_LineTwo = false;
+	}
+	else if (!m_LineTwo && 54 == Animator2D()->GetCurFrameIndex())
+	{
+		CGameObject* pObj = m_Prefabs.DeathCrisisLineTwoPref->Instantiate();
+		pObj->Transform()->SetRelativePos(Vec3(vPos.x - 200.f, vPos.y + 50.f, vPos.z));
+		pObj->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, XM_PI * 1.5f));
+		pObj->Transform()->SetRelativeScale(Vec3(900.f, 200.f, 1.f));
+		CreateObject(pObj, 7);
+		m_LineTwo = true;
+	}
+	else if (55 == Animator2D()->GetCurFrameIndex())
+	{
+		m_LineTwo = false;
+	}
+	else if (!m_LineTwo && 56 == Animator2D()->GetCurFrameIndex())
+	{
+		CAssetMgr::GetInst()->FindAsset<CSound>(L"sound\\player\\deathcrisissecond.ogg")->Play(1, 1.f, false);
+		CAssetMgr::GetInst()->FindAsset<CSound>(L"sound\\player\\death_crisis_finish.ogg")->Play(1, 1.f, false);
+		CGameObject* pObj = m_Prefabs.DeathCrisisLineTwoPref->Instantiate();
+		pObj->Transform()->SetRelativePos(Vec3(vPos.x - 150.f, vPos.y + 75.f, vPos.z));
+		pObj->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, 5.497787f));
+		pObj->Transform()->SetRelativeScale(Vec3(1700.f, 200.f, 1.f));
+		CreateObject(pObj, 7);
+
+		pObj = m_Prefabs.DeathCrisisBoomTwoPref->Instantiate();
+		pObj->Transform()->SetRelativePos(Vec3(vWorldPos.x, vWorldPos.y, 300.f));
+		pObj->Transform()->SetRelativeScale(Vec3(1000.f, 1000.f, 1.f));
+		CreateObject(pObj, 0);
+
+		pObj = m_Prefabs.DeathCrisisBigBoomPref->Instantiate();
+		pObj->Transform()->SetRelativePos(Vec3(vPos.x, vPos.y, 1.f));
+		pObj->Transform()->SetRelativeScale(Vec3(500.f, 500.f, 1.f));
+		CreateObject(pObj, 7);
+
+		m_LineTwo = true;
+	}
+	else if (57 == Animator2D()->GetCurFrameIndex())
+	{
+		m_LineTwo = false;
+	}
+	else if (!m_LineTwo && 58 == Animator2D()->GetCurFrameIndex())
+	{
+		CGameObject* pObj = m_Prefabs.DeathCrisisLineTwoPref->Instantiate();
+		pObj->Transform()->SetRelativePos(Vec3(vPos.x + 300.f, vPos.y, vPos.z));
+		pObj->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, 1.570796f));
+		pObj->Transform()->SetRelativeScale(Vec3(900.f, 200.f, 1.f));
+		CreateObject(pObj, 7);
+
+		m_LineTwo = true;
+	}
+	else if (59 == Animator2D()->GetCurFrameIndex())
+	{
+		m_LineTwo = false;
+	}
+	else if (!m_LineTwo && 60 == Animator2D()->GetCurFrameIndex())
+	{
+		CGameObject* pObj = m_Prefabs.DeathCrisisLineTwoPref->Instantiate();
+		pObj->Transform()->SetRelativePos(Vec3(vPos.x - 200.f, vPos.y, vPos.z));
+		pObj->Transform()->SetRelativeRotation(Vec3(0.f, XM_PI, 0.f));
+		pObj->Transform()->SetRelativeScale(Vec3(1200.f, 200.f, 1.f));
+		CreateObject(pObj, 7);
+		m_LineTwo = true;
+	}
+	else if (61 == Animator2D()->GetCurFrameIndex())
+	{
+		m_LineTwo = false;
+	}
+	else if (!m_LineTwo && 62 == Animator2D()->GetCurFrameIndex())
+	{
+		CGameObject* pObj = m_Prefabs.DeathCrisisLineTwoPref->Instantiate();
+		pObj->Transform()->SetRelativePos(Vec3(vPos.x + 150.f, vPos.y - 20.f, vPos.z));
+		pObj->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, 2.356194f));
+		pObj->Transform()->SetRelativeScale(Vec3(1200.f, 200.f, 1.f));
+		CreateObject(pObj, 7);
+		m_LineTwo = true;
+	}
+	else if (63 == Animator2D()->GetCurFrameIndex())
+	{
+		m_LineTwo = false;
+	}
+}
+
+void CPlayerScript::SetSuperArmor(bool _Set)
+{
+	INFO& _info = GetOwner()->GetInfo();
+
+	_info.bSuperArmor = _Set;
+	m_Color = true;
+}
+
 void CPlayerScript::ChangeStateDoubleGunHawkStandBy()
 {
+	CAssetMgr::GetInst()->FindAsset<CSound>(L"sound\\player\\gn_dgunhawk_gun_02.ogg")->Play(1, 0.7f, true);
 	Animator2D()->Play((int)ANIMATION_NUM::GUNHAWKSTANDBY, 1.f, false);
 	SetState(PLAYER_STATE::GUNHAWKSTANDBY);
 	m_GunHawkStandby = true;
@@ -2129,7 +3030,17 @@ void CPlayerScript::ChangeStateBBQReady()
 	GetOwner()->GetChildren()[0]->Animator2D()->Play(0, 8.f, false);
 	Animator2D()->Play((int)ANIMATION_NUM::BBQREADY, 8.f, false);
 	SetState(PLAYER_STATE::BBQREADY);
-	// 개틀링건 생성
+}
+
+void CPlayerScript::ChangeStateHit()
+{
+	if (PLAYER_STATE::HIT == m_State)
+		return;
+
+	SetState(PLAYER_STATE::HIT);
+	Animator2D()->Play((int)ANIMATION_NUM::HIT, 10.f, false);
+	GetOwner()->GetParent()->SetMove(false);
+	CAssetMgr::GetInst()->FindAsset<CSound>(L"sound\\player\\gn_dmg_04.ogg")->Play(1, 1.f, false);
 }
 
 void CPlayerScript::SaveToFile(FILE* _pFile)

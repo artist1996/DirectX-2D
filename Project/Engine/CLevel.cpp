@@ -5,7 +5,7 @@
 #include "CLayer.h"
 #include "CCollisionMgr.h"
 #include "CGameObject.h"
-
+#include "CAssetMgr.h"
 
 CLevel::CLevel()
 	: m_Layer{}
@@ -62,9 +62,15 @@ void CLevel::Begin()
 	if(nullptr != m_BGM)
 		m_BGM->Play(0, 0.7f, false);
 
+	if (L"leshphon4" == GetName())
+		CAssetMgr::GetInst()->FindAsset<CSound>(L"sound\\leshphon.mp3")->Stop();
+
 	CCollisionMgr::GetInst()->CollisionCheckClear();
 
 	CCollisionMgr::GetInst()->SetCollisionMatrix(m_Matrix);
+
+	if (L"leshphon1" == GetName())
+		CCollisionMgr::GetInst()->CollisionCheck(4, 8);
 }
 
 void CLevel::Tick()

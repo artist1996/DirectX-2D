@@ -9,7 +9,9 @@ CDirezieDownHitState
 CDirezieFallState
 CDirezieFlyState
 CDirezieHideState
+CDirezieHitBBQState
 CDirezieHitState
+CDirezieHoldingState
 CDirezieIdleState
 CDirezieStiffnessState
 CDirezieTraceState

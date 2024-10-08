@@ -16,11 +16,6 @@ CBBQScript::~CBBQScript()
 
 void CBBQScript::Begin()
 {
-#ifdef _DEBUG
-	Collider2D()->SetRender(true);
-#else
-	Collider2D()->SetRender(false);
-#endif
 }
 
 void CBBQScript::Tick()
@@ -66,7 +61,27 @@ void CBBQScript::BeginOverlap(CCollider2D* _OwnCollider, CGameObject* _OtherObj,
 
 		else if (L"direzie" == _OtherObj->GetName() && !info.bSuperArmor)
 		{
+			CRigidbody* pRB = _OtherObj->Rigidbody();
+			CPlayerScript* pScript = static_cast<CPlayerScript*>(CLevelMgr::GetInst()->FindObjectByName(L"Player")->FindScriptByName(L"CPlayerScript"));
+			pScript->ChangeStateBBQReady();
 
+			if (pRB->IsGround())
+			{
+				pRB->Rigidbody()->SetJumpSpeed(800.f);
+				pRB->Rigidbody()->SetMaxGravitySpeed(1000.f);
+				pRB->Rigidbody()->Jump();
+				_OtherObj->FSM()->ChangeState(L"HitBBQ");
+			}
+			else
+			{
+				pRB->SetGround(true);
+				pRB->Rigidbody()->SetJumpSpeed(1300.f);
+				pRB->Rigidbody()->SetMaxGravitySpeed(800.f);
+				pRB->Rigidbody()->Jump();
+				_OtherObj->FSM()->ChangeState(L"HitBBQ");
+			}
+
+			DeleteObject(GetOwner()->GetParent());
 		}
 	}
 }

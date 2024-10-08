@@ -9,6 +9,7 @@ private:
 
 private:
     void InitInfo();
+    void CheckZAxis();
 
 public:
     virtual void Begin() override;

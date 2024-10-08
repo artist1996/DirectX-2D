@@ -12,7 +12,12 @@ CEffectScript::~CEffectScript()
 
 void CEffectScript::Begin()
 {
-	Animator2D()->Play(0.f, 7.f, false);
+	if (L"deathcrisiscutin" == GetOwner()->GetName())
+		Animator2D()->Play(0.f, 48.f, false);
+	else if (L"deathcrisisboomtwo" == GetOwner()->GetName())
+		Animator2D()->Play(0.f, 15.f, false);
+	else
+		Animator2D()->Play(0.f, 7.f, false);
 }
 
 void CEffectScript::Tick()

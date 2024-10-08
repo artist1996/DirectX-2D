@@ -321,7 +321,6 @@ void CGameObject::FinalTick()
 	pLayer->RegisterGameObject(this);
 
 	// 자식 오브젝트
-
 	vector<CGameObject*>::iterator iter = m_vecChildren.begin();
 	for (; iter != m_vecChildren.end(); )
 	{
@@ -339,7 +338,7 @@ void CGameObject::Render()
 	if (m_RenderCom)
 		m_RenderCom->Render();
 
-	if (m_strFont.empty())
+	if (m_strFont.empty() || !m_Active)
 		return;
 
 	Vec3 vScreenPos = CarculatePosition();
@@ -370,7 +369,7 @@ Vec3 CGameObject::CarculatePosition()
 
 	Vec3 vScreenPos;
 	vScreenPos.x = (vNDC.x * 0.5f + 0.5f) * Width;
-	vScreenPos.y = (1.0f - (vNDC.y * 0.5f + 0.5f)) * Height; // y는 뒤집어야 함
+	vScreenPos.y = (1.f - (vNDC.y * 0.5f + 0.5f)) * Height; // y는 뒤집어야 함
 
 	return vScreenPos;
 }

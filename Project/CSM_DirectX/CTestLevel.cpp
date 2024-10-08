@@ -30,8 +30,8 @@ void CTestLevel::CreateTestLevel()
 	Ptr<CMaterial> pAlphaBlendMtrl = CAssetMgr::GetInst()->FindAsset<CMaterial>(L"Std2DAlphaBlendMtrl");
 	Ptr<CMaterial> pDebugShapeMtrl = CAssetMgr::GetInst()->FindAsset<CMaterial>(L"DebugShapeMtrl");
 	
-	Ptr<CTexture> pTexture = CAssetMgr::GetInst()->FindAsset<CTexture>(L"texture\\Character.png");
-	pAlphaBlendMtrl->SetTexParam(TEX_0, pTexture);
+	//Ptr<CTexture> pTexture = CAssetMgr::GetInst()->FindAsset<CTexture>(L"texture\\Character.png");
+	//pAlphaBlendMtrl->SetTexParam(TEX_0, pTexture);
 	
 	Ptr<CTexture> pTestTex = CAssetMgr::GetInst()->CreateTexture(L"ComputeShaderTestTex",
 																 1024, 1024,
@@ -60,12 +60,18 @@ void CTestLevel::CreateTestLevel()
 
 	CObjectPoolMgr::GetInst()->Init();
 
-	//ChangeCurLevel(LEVEL_TYPE::SERIAROOM);
+	ChangeCurLevel(LEVEL_TYPE::SERIAROOM);
 	//ChangeCurLevel(LEVEL_TYPE::HENDONMYER);
 	//ChangeCurLevel(LEVEL_TYPE::LESHPHON1);
 	//ChangeCurLevel(LEVEL_TYPE::LESHPHON2);
 	//ChangeCurLevel(LEVEL_TYPE::LESHPHON3);
-	ChangeCurLevel(LEVEL_TYPE::LESHPHON4);
+	//ChangeCurLevel(LEVEL_TYPE::LESHPHON4);
+
+	CGameObject* pEntity = CObjectPoolMgr::GetInst()->GetObj(OBJ_ID::PLAYER);
+	pEntity->Transform()->SetRelativePos(Vec3(650.f, 0.f, 0.f));
+	pEntity->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, 0.f));
+	//
+	CreateObject(pEntity, 4);
 
 	//CGameObject* pCamObj = new CGameObject;
 	//pCamObj->SetName(L"UICamera");
@@ -82,12 +88,6 @@ void CTestLevel::CreateTestLevel()
 	//
 	//
 	//CreateObject(pCamObj, 31);
-
-	CGameObject* pEntity = CObjectPoolMgr::GetInst()->GetObj(OBJ_ID::PLAYER);
-	pEntity->Transform()->SetRelativePos(Vec3(650.f, 0.f, 0.f));
-	pEntity->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, 0.f));
-
-	CreateObject(pEntity, 4);
 
 	//CGameObject* CamObj = new CGameObject;
 	//CamObj->SetName(L"MainCamera");

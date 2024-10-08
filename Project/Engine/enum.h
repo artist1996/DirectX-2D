@@ -294,3 +294,46 @@ enum class LEVEL_TYPE
 
 	END,
 };
+
+enum class ITEM_TYPE
+{
+	WEAPON,
+	COAT,
+	PANTS,
+	SHOULDER,
+	SHOES,
+	BELT,
+
+	RING,
+	NECKLACE,
+	BRACELET,
+	
+	EARRING,
+	MAGICSTONE,
+	ASSISTANCE,
+
+	END,
+};
+
+enum class SLOT_TYPE
+{
+	EQUIP,
+	UNEQUIP,
+	STORE,
+
+	END,
+};
+
+enum class TAP_TYPE
+{
+	EQUIPMENT,
+	CONSUMPTION,
+	STUFF,
+	SPECIALITYMATERIALS,
+	QUEST,
+	
+	BUY,
+	REPURCHASE,
+
+	END,
+};

@@ -5,6 +5,7 @@ class CPlayerMoveScript :
     public CScript
 {
 private:
+    Vec3  m_vOffset;
     float m_Speed;
 
 private:

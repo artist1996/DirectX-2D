@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "CWindmillScript.h"
 
+#include "CMonsterDamageFontScript.h"
+
 CWindmillScript::CWindmillScript()
 	: CScript(SCRIPT_TYPE::WINDMILLSCRIPT)
 	, m_OverlapCount(0)
@@ -14,7 +16,6 @@ CWindmillScript::~CWindmillScript()
 void CWindmillScript::Begin()
 {
 	Animator2D()->Play(0, 20.f, false);
-	Collider2D()->SetRender(true);
 }
 
 void CWindmillScript::Tick()
@@ -38,7 +39,47 @@ void CWindmillScript::Overlap(CCollider2D* _OwnCollider, CGameObject* _OtherObj,
 		if (2 > m_OverlapCount)
 		{
 			m_OverlapCount++;
-			info.HP -= 10.f;
+			info.HP -= 30.f;
+
+			int Rand = CRandomMgr::GetInst()->GetRandom(1);
+
+			if (L"MonsterMove" != _OtherObj->GetName() && 6 == _OtherObj->GetLayerIdx() && OBJ_DIR::DIR_LEFT == _OtherObj->GetParent()->GetDir())
+			{
+				Vec3 vOtherPos = _OtherObj->Transform()->GetWorldPos();
+				Ptr<CPrefab> pDamage = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\monsterdamage.pref");
+				CGameObject* pObj = pDamage->Instantiate();
+				pObj->Transform()->SetRelativePos(Vec3(vOtherPos.x + 100.f, vOtherPos.y, vOtherPos.z));
+
+				if (0 == Rand)
+				{
+					static_cast<CMonsterDamageFontScript*>(pObj->GetScripts()[0])->SetDamge(1864871);
+					static_cast<CMonsterDamageFontScript*>(pObj->GetScripts()[0])->SetType(FONT_TYPE::NORMAL);
+				}
+				else
+				{
+					static_cast<CMonsterDamageFontScript*>(pObj->GetScripts()[0])->SetDamge(2125134);
+					static_cast<CMonsterDamageFontScript*>(pObj->GetScripts()[0])->SetType(FONT_TYPE::CRITICAL);
+				}
+				CreateObject(pObj, 0);
+			}
+			else if (L"MonsterMove" != _OtherObj->GetName() && 6 == _OtherObj->GetLayerIdx() && OBJ_DIR::DIR_RIGHT == _OtherObj->GetParent()->GetDir())
+			{
+				Vec3 vOtherPos = _OtherObj->Transform()->GetWorldPos();
+				Ptr<CPrefab> pDamage = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\monsterdamage.pref");
+				CGameObject* pObj = pDamage->Instantiate();
+				pObj->Transform()->SetRelativePos(Vec3(vOtherPos.x - 100.f, vOtherPos.y, vOtherPos.z));
+				if (0 == Rand)
+				{
+					static_cast<CMonsterDamageFontScript*>(pObj->GetScripts()[0])->SetDamge(1864871);
+					static_cast<CMonsterDamageFontScript*>(pObj->GetScripts()[0])->SetType(FONT_TYPE::NORMAL);
+				}
+				else
+				{
+					static_cast<CMonsterDamageFontScript*>(pObj->GetScripts()[0])->SetDamge(2125134);
+					static_cast<CMonsterDamageFontScript*>(pObj->GetScripts()[0])->SetType(FONT_TYPE::CRITICAL);
+				}
+				CreateObject(pObj, 0);
+			}
 		}
 
 		if (L"direzie" == _OtherObj->GetName())

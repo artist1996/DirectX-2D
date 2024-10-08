@@ -105,7 +105,7 @@ void CMeltKnightTraceState::FinalTick()
 
 	vPos.x += vDist.x * 50.f * DT;
 	vPos.y += vDist.y * 50.f * DT;
-	vPos.z = Height;
+	vPos.z = vPos.y;
 
 
 	float fDist = vTargetPos.x - vPos.x;
@@ -123,6 +123,7 @@ void CMeltKnightTraceState::FinalTick()
 	}
 
 	GetOwner()->GetParent()->Transform()->SetRelativePos(vPos);
+	//GetOwner()->Transform()->SetZAxis(vPos.z);
 }
 
 void CMeltKnightTraceState::Exit()

@@ -41,6 +41,7 @@ float4 PS_Std2D(VTX_OUT _in) : SV_Target
 {
     float4 vColor = float4(0.f, 0.f, 0.f, 1.f);
     
+    float2 SpriteUV = float2(0.f, 0.f);
     // FlipBook 을 사용한다
     if (UseFlipBook)
     {
@@ -50,7 +51,7 @@ float4 PS_Std2D(VTX_OUT _in) : SV_Target
         float2 vSpriteUV = BackGroundLeftTop + (_in.vUV * BackGroundUV);
     
         vSpriteUV -= OffsetUV;       
-        
+        SpriteUV = vSpriteUV;
         if (LeftTopUV.x <= vSpriteUV.x && vSpriteUV.x <= LeftTopUV.x + SliceUV.x
             && LeftTopUV.y <= vSpriteUV.y && vSpriteUV.y <= LeftTopUV.y + SliceUV.y)
         {
@@ -71,15 +72,45 @@ float4 PS_Std2D(VTX_OUT _in) : SV_Target
         }
         else
         {
-            vColor = float4(1.f, 0.f, 1.f, 1.f);
+            vColor = float4(1.f, 0.f, 1.f, 0.f);
         }
     } 
-     
+    
     if (vColor.a == 0.f)
     {
         discard;
     }
     
+    if(g_int_2)
+    {
+        vColor *= float4(2.f, 1.f, 1.f, 1.f);
+    }
+    
+    if (g_int_3)
+    {
+        uint width, height;
+        
+        g_AtlasTex.GetDimensions(width, height);
+        float2 offset = float2(1.f / float(width), 1.f / float(height));
+        
+        float4 leftcolor = g_AtlasTex.Sample(g_sam_1, float2(SpriteUV.x - offset.x, SpriteUV.y));
+        float4 rightcolor = g_AtlasTex.Sample(g_sam_1, float2(SpriteUV.x + offset.x, SpriteUV.y));
+        float4 upcolor = g_AtlasTex.Sample(g_sam_1, float2(SpriteUV.x, SpriteUV.y - offset.y));
+        float4 downcolor = g_AtlasTex.Sample(g_sam_1, float2(SpriteUV.x, SpriteUV.y + offset.y));
+    
+        if (vColor.a != 0.f
+                && 0.f == leftcolor.a
+                || 0.f == rightcolor.a
+                || 0.f == upcolor.a
+                || 0.f == downcolor.a)
+            vColor += g_vec4_1;
+    }
+    
+    //if(g_int_3)
+    //{
+    //    vColor = g_vec4_1;
+    //}
+
     tLight Light = (tLight) 0.f;
     
     for (int i = 0; i < g_Light2DCount; ++i)
@@ -126,10 +157,10 @@ float4 PS_Std2D_Alphablend(VTX_OUT _in) : SV_Target
         }
         else
         {
-            vColor = float4(1.f, 0.f, 1.f, 1.f);
+            discard;
         }
     }
-        
+    
     return vColor;
 }
 
@@ -214,10 +245,10 @@ float4 PS_Std2D_Additive(VTX_OUT _in) : SV_Target
     if (0.03f >= vColor.r && 0.03f >= vColor.g && 0.03f >= vColor.b)
         discard;
     
-    //vColor.r *= 2.f;
-    //vColor.g *= 2.f;
-    //vColor.b *= 2.f;
-    
+    vColor.r *= 2.f;
+    vColor.g *= 2.f;
+    vColor.b *= 2.f;
+     
     return vColor;
 }
 

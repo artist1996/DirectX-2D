@@ -6,6 +6,7 @@
 CJurisAttackState::CJurisAttackState()
 	: CState(STATE_TYPE::JURISATTACKSTATE)
 	, m_AttackPref(nullptr)
+	, m_Spawn(false)
 {
 }
 
@@ -24,10 +25,29 @@ void CJurisAttackState::Enter()
 
 void CJurisAttackState::FinalTick()
 {
+	if (3 == GetOwner()->Animator2D()->GetCurFrameIndex() && !m_Spawn)
+	{
+		CGameObject* pObj = m_AttackPref->Instantiate();
+
+		Vec3 vPos = GetOwner()->GetParent()->Collider2D()->GetWorldPos();
+		Vec3 vScale = GetOwner()->GetParent()->Collider2D()->GetScale();
+
+		Vec3 vFinalPos = vPos - vScale * 0.5f;
+
+		if (OBJ_DIR::DIR_LEFT == GetOwner()->GetParent()->GetDir())
+			pObj->Transform()->SetRelativePos(Vec3(vFinalPos.x - 75.f, vFinalPos.y, vFinalPos.z));
+		else
+			pObj->Transform()->SetRelativePos(Vec3(vFinalPos.x + 75.f, vFinalPos.y, vFinalPos.z));
+
+		CreateObject(pObj, 8);
+		m_Spawn = true;
+	}
+
 	if (GetOwner()->Animator2D()->IsFinish())
 		GetFSM()->ChangeState(L"Idle");
 }
 
 void CJurisAttackState::Exit()
 {
+	m_Spawn = false;
 }

@@ -5,6 +5,8 @@ class CMeltKnightAttackState :
     public CState
 {
 private:
+    Ptr<CPrefab> m_AttackPref;
+    bool         m_Spawn;
 
 public:
     virtual void Enter() override;

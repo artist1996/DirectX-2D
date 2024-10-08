@@ -28,6 +28,10 @@ void CJurisIdleState::FinalTick()
 	Vec3 vTargetPos = pTarget->Transform()->GetRelativePos();
 
 	float fDist = vTargetPos.x - vPos.x;
+	INFO& info = GetOwner()->GetInfo();
+
+	if (0.f >= info.HP)
+		GetFSM()->ChangeState(L"Dead");
 
 	if (0.f < fDist)
 	{

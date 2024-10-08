@@ -24,6 +24,12 @@ struct tPlayerPrefab
     Ptr<CPrefab> PunisherPref;
     Ptr<CPrefab> PunisherPistolPref;
     Ptr<CPrefab> BBQPref;
+    Ptr<CPrefab> DeathCrisisCutinPref;
+    Ptr<CPrefab> DeathCrisisLineTwoPref;
+    Ptr<CPrefab> DeathCrisisLineOnePref;
+    Ptr<CPrefab> DeathCrisisGunHawk0Pref;
+    Ptr<CPrefab> DeathCrisisBigBoomPref;
+    Ptr<CPrefab> DeathCrisisBoomTwoPref;
 };
 
 struct tPlayerSkillTime
@@ -39,6 +45,7 @@ struct tPlayerSkillTime
     float fWesternFireTime;
     float fPunisherTime;
     float fBBQTime;
+    float fDeathCrisisTime;
 
     float fHeadShotCoolTime;
     float fDeathByRevolverCoolTime;
@@ -51,6 +58,7 @@ struct tPlayerSkillTime
     float fWesternFireCoolTime;
     float fPunisherCoolTime;
     float fBBQCoolTime;
+    float fDeathCrisisCoolTime;
 };
 
 struct tPlayerUseSkill
@@ -66,6 +74,7 @@ struct tPlayerUseSkill
     bool bWesternFire;
     bool bPunisher;
     bool bBBQ;
+    bool bDeathCrisis;
 };
 
 class CPlayerScript :
@@ -77,6 +86,7 @@ private:
         JUMP, LANDING, RUN, DG_AT1, DG_AT2, DG_AT3, DG_AT4,
         SK_1, SK_2, SK_3, SK_4, SK_5, SK_6, SK_7, SK_8, SK_9, AT_4, DEAD, TACKLE,
         GUNHAWKSHOOT, GUNHAWKSTANDBY, GUNHAWKLASTSHOOT, WESTERNFIRE, PUNISHER, PUNISHERSHOOT, BBQ, BBQREADY, BBQSHOOT,
+        DEATHCRISIS, HIT,
         END,
     };
 
@@ -84,7 +94,7 @@ private:
         IDLE, MOVE, AT_1, AT_2, AT_3,
         JUMP, LANDING, RUN, DG_AT1, DG_AT2, DG_AT3,
         JACKSPIKE, RANDOMSHOT, DEATHBYREVOLVER, WINDMILL,
-        MACHKICK, TACKLE, GUNHAWKSHOOT, GUNHAWKSTANDBY, PUNISHER, PUNISHERSHOOT, BBQREADY, BBQSHOOT,
+        MACHKICK, TACKLE, GUNHAWKSHOOT, GUNHAWKSTANDBY, PUNISHER, PUNISHERSHOOT, BBQREADY, BBQSHOOT, DEATHCRISIS, HIT,
     };
 
 private:
@@ -117,6 +127,8 @@ private:
                              
     float                    m_Time;
     float                    m_BBQTime;
+    float                    m_InvincibleTime;
+    float                    m_SuperArmorTime;
                              
     bool                     m_NextAttack;
     bool                     m_Run;
@@ -125,8 +137,12 @@ private:
     bool                     m_HeadShotSpawn;
     bool                     m_Muzzel;
     bool                     m_CheckRange;
+    bool                     m_CutinSpawn;
+    bool                     m_LineTwo;
 
     bool                     m_GunHawkStandby;
+    bool                     m_Foot;
+    bool                     m_Color;
 
 private:
     void InitInfo();
@@ -143,6 +159,8 @@ private:
     void SetGroundPos(float _PosY)  { m_GroundPosY = _PosY; }
     bool GroundCheck();
     void SetFontOffset();
+    void InvincibleCheck();
+    void ZaxisCheck();
 
 private:
     void Idle();
@@ -162,7 +180,10 @@ private:
     void Run();
     void Jump();
     void Landing();
+    void Hit();
     void Dead();
+    void DeathCrisis();
+    void DeathCrisisMove();
 
     // Skill
     void DeathByRevolver();
@@ -184,6 +205,7 @@ private:
 
     // Skill TimeCheck
     void SkillTimeCheck();
+    void SuperArmorCheck();
     
     // Stylish Skill
     void Stylish();
@@ -211,11 +233,16 @@ private:
     void CreatePunisher();
     void CreatePunisherPistol();
     void CreateBBQ();
-    
+    void CreateDeathCrisisCutin();
+    void CreateDeathCrisis();
+
+    void SetSuperArmor(bool _Set);
+
 public:
     void ChangeStateDoubleGunHawkStandBy();
     void ChangeStatePunisherShoot();
     void ChangeStateBBQReady();
+    void ChangeStateHit();
     const tPlayerSkillTime& GetSkillTime() { return m_CoolTime; }
     const tPlayerUseSkill& GetUseSkill()   { return m_UseSkill; }
     const PLAYER_STATE& GetState()         { return m_State; }

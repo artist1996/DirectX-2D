@@ -9,6 +9,13 @@ private:
     Ptr<CTexture> m_HoverTex;
     Ptr<CTexture> m_ClickTex;
 
+    bool          m_Normal;
+    bool          m_Hoverd;
+    bool          m_Clicked;
+    
+private:
+    void MouseCheck();
+
 public:
     virtual void Begin() override;
     virtual void Tick() override;

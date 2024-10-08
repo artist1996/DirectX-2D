@@ -116,8 +116,10 @@ void CKeyMgr::Tick()
 			POINT ptMousePos = { };
 			GetCursorPos(&ptMousePos);
 			ScreenToClient(CEngine::GetInst()->GetMainWnd(), &ptMousePos);
-			m_MousePos = Vec2((float)ptMousePos.x, (float)ptMousePos.y);
+			m_MousePos = Vec2((float)ptMousePos.x - 640.f, 384.f - (float)ptMousePos.y);
 			m_DragDir = m_MousePos - m_PrevMousePos;
+
+			swprintf_s(m_szBuff, L"MouseX : %f, MouseY : %f ", m_MousePos.x, m_MousePos.y);
 		}
 	}
 	
@@ -139,4 +141,9 @@ void CKeyMgr::Tick()
 			m_vecKeyInfo[i].bPressed = false;
 		}
 	}	
+}
+
+void CKeyMgr::Render()
+{
+	CFontMgr::GetInst()->DrawFont(m_szBuff, 10, 40, 16, FONT_RGBA(255, 20, 20, 255));
 }

@@ -9,8 +9,8 @@ CCollider2D::CCollider2D()
 	: CComponent(COMPONENT_TYPE::COLLIDER2D)
 	, m_OverlapCount(0)
 	, m_IndependentScale(false)
-	, m_bRender(true)
-	, m_bActive(true)
+	, m_bRender(false)
+	, m_bActive(false)
 {
 }
 
