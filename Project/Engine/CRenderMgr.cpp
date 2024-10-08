@@ -40,6 +40,7 @@ CRenderMgr::~CRenderMgr()
 void CRenderMgr::Init()
 {
 	m_PostProcessTex = CAssetMgr::GetInst()->FindAsset<CTexture>(L"PostProcessTex");
+	m_CopyTex = CAssetMgr::GetInst()->FindAsset<CTexture>(L"CopyTexture");
 
 	m_DebugObject = new CGameObject;
 	m_DebugObject->AddComponent(new CTransform);
@@ -78,9 +79,9 @@ void CRenderMgr::Tick()
 			RenderDebugShape();
 		}
 	}
-
 	CTimeMgr::GetInst()->Render();
 	CKeyMgr::GetInst()->Render();
+	CopyTexture();
 
 	Clear();
 }
@@ -99,6 +100,12 @@ void CRenderMgr::PostProcessCopy()
 {
 	Ptr<CTexture> pRTTex = CAssetMgr::GetInst()->FindAsset<CTexture>(L"RenderTargetTex");
 	CONTEXT->CopyResource(m_PostProcessTex->GetTex2D().Get(), pRTTex->GetTex2D().Get());
+}
+
+void CRenderMgr::CopyTexture()
+{
+	Ptr<CTexture> pRTTex = CAssetMgr::GetInst()->FindAsset<CTexture>(L"RenderTargetTex");
+	CONTEXT->CopyResource(m_CopyTex->GetTex2D().Get(), pRTTex->GetTex2D().Get());
 }
 
 void CRenderMgr::RenderDebugShape()
@@ -178,8 +185,11 @@ void CRenderMgr::RenderStart()
 		m_Light2DBuffer->Create(sizeof(tLightInfo), (UINT)vecLight2DInfo.size(), SB_TYPE::SRV_ONLY, true);
 	}
 
-	m_Light2DBuffer->SetData(vecLight2DInfo.data());
-	m_Light2DBuffer->Binding(11);
+	if (!m_vecLight2D.empty())
+	{
+		m_Light2DBuffer->SetData(vecLight2DInfo.data());
+		m_Light2DBuffer->Binding(11);
+	}
 
 	static CConstBuffer* pGlobalCB = CDevice::GetInst()->GetConstBuffer(CB_TYPE::GLOBAL);
 	pGlobalCB->SetData(&g_GlobalData);

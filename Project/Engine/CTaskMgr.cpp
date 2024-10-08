@@ -7,7 +7,6 @@
 #include "CGameObject.h"
 
 #include "CAssetMgr.h"
-#include "CObjectPoolMgr.h"
 
 CTaskMgr::CTaskMgr()
 {}
@@ -93,18 +92,6 @@ void CTaskMgr::ExecuteTask()
 			pLevel->ChangeLevelState(NextState);
 		}
 		break;
-		case TASK_TYPE::CHANGE_LEVEL2:
-		{
-			LEVEL_TYPE Type = (LEVEL_TYPE)m_vecTask[i].Param_0;
-			CLevel* pLevel = CLevelMgr::GetInst()->GetCurrentLevel();
-			if (nullptr != pLevel)
-				pLevel->Exit();
-			
-			CLevelMgr::GetInst()->ChangeCurLevel(Type);
-			
-			CLevelMgr::GetInst()->LevelChanged();
-		}
-		break;
 		case TASK_TYPE::ASSET_CHANGED:
 		{
 			CAssetMgr::GetInst()->m_Changed = true;
@@ -114,20 +101,6 @@ void CTaskMgr::ExecuteTask()
 		case TASK_TYPE::LEVEL_CHANGED:
 		{
 			CLevelMgr::GetInst()->m_LevelChanged = true;
-		}
-		break;
-
-		case TASK_TYPE::DISCONNECT_LAYER:
-		{
-			CGameObject* pObject = (CGameObject*)m_vecTask[i].Param_0;
-			CLevel* pLevel = CLevelMgr::GetInst()->GetCurrentLevel();
-		
-			CLayer* pLayer = pLevel->GetLayer(pObject->m_LayerIdx);
-
-			pLayer->DisconnectWithObject(pObject);
-			CObjectPoolMgr::GetInst()->RetrieveObject(pObject->GetID(), pObject);
-			pObject->m_LayerIdx = -1;
-			CLevelMgr::GetInst()->LevelChanged();
 		}
 		break;
 		}

@@ -20,24 +20,15 @@ private:
     CGameObject*         m_Parent;
     vector<CGameObject*> m_vecChildren;
 
-    OBJ_DIR              m_Dir;
-    OBJ_DIR              m_PrevDir;
-    OBJ_DIR              m_TBDir;
-
     int                  m_LayerIdx;    // 소속 레이어의 인덱스 번호
     bool                 m_Dead;        // Object Dead
 
     Vec3                 m_InitPos;
-    bool                 m_Moveable[(UINT)PLATFORM_TYPE::END];
     bool                 m_GroundCollision;
     bool                 m_Active;
 
     CGameObject*         m_Owner;
     CGameObject*         m_Target;
-
-    OBJ_ID               m_ID;
-
-    INFO                 m_Info;
 
     wstring              m_strFont;
     UINT                 m_Color;
@@ -60,15 +51,6 @@ public:
     int GetLayerIdx() { return m_LayerIdx; }
     void AddChild(CGameObject* _ChildObject);
 
-    void SetMoveable(PLATFORM_TYPE _Type, bool _Set) { m_Moveable[(UINT)_Type] = _Set; }
-    bool* GetMoveable()                              { return m_Moveable; }
-   
-    void SetMove(bool _Set)   { m_Info.bMoveable = _Set; }
-    void  SetInfo(INFO _Info) { m_Info = _Info; }
-    INFO& GetInfo()           { return m_Info; }
-
-    void SetForce(bool _Set)  { m_Info.bForce = _Set; }
-    
     void SetGroundCollision(bool _Set) { m_GroundCollision = _Set; }
     bool IsGroundCollision()          { return m_GroundCollision; }
 
@@ -84,18 +66,6 @@ public:
     bool IsDead() { return m_Dead; }
     bool IsAncestor(CGameObject* _Object);
 
-    void SetDir(OBJ_DIR _Dir)   { m_Dir = _Dir; }
-    OBJ_DIR GetDir()            { return m_Dir; }
-
-    void SetTBDir(OBJ_DIR _Dir) { m_TBDir = _Dir; }
-    OBJ_DIR GetTBDir()          { return m_TBDir; }
-
-    void SetPrevDir(OBJ_DIR _Dir) { m_PrevDir = _Dir; }
-    OBJ_DIR GetPrevDir()          { return m_PrevDir; }
-
-    void SetID(OBJ_ID _ID) { m_ID = _ID;  }
-    OBJ_ID GetID()         { return m_ID; }
-
     void SetInitPos(Vec3 _Pos) { m_InitPos = _Pos; }
     Vec3 GetInitPos()          { return m_InitPos; }
 
@@ -104,8 +74,6 @@ public:
 
     void SetTarget(CGameObject* _Target) { m_Target = _Target; }
     CGameObject* GetTarget()             { return m_Target; }
-
-    void SetSpeed(float _Speed)          { m_Info.Speed = _Speed; }
 
     void SetFontScale(float _Scale)       { m_FontScale = _Scale; }
     void SetFont(const wstring& _strFont) { m_strFont = _strFont; }

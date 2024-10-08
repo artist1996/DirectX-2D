@@ -21,6 +21,7 @@ private:
 	CStructuredBuffer*	    m_Light2DBuffer;
 
 	Ptr<CTexture>			m_PostProcessTex;
+	Ptr<CTexture>			m_CopyTex;
 
 public:
 	void AddDebugShapeInfo(tDebugShapeInfo _Info) { m_DebugShapeList.push_back(_Info); }
@@ -29,6 +30,9 @@ public:
 	void RegisterLight2D(CLight2D* _Light) { m_vecLight2D.push_back(_Light); }
 
 	void PostProcessCopy();
+	void CopyTexture();
+
+	Ptr<CTexture> GetCopyTex() { return m_CopyTex; }
 
 private:
 	void RenderDebugShape();

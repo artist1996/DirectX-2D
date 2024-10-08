@@ -29,7 +29,7 @@ public:
     void* GetVtxSysMem() { return m_VtxSysMem; }
 
 public:
-    CMesh();
+    CMesh(bool _IsEngine = false);
     virtual ~CMesh();
 };
 

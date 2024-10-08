@@ -157,15 +157,14 @@ int CDevice::CreateView()
 	ComPtr<ID3D11Texture2D> RenderTargetTex;
 	
 	m_SwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)RenderTargetTex.GetAddressOf());
-	m_RTTex = CAssetMgr::GetInst()->CreateTexutre(L"RenderTargetTex", RenderTargetTex);
-	
+	m_RTTex = CAssetMgr::GetInst()->CreateTexutre(L"RenderTargetTex", RenderTargetTex);	
+
 	// DepthStencil Texture 생성
 	m_DSTex = CAssetMgr::GetInst()->CreateTexture(L"DepthStencilTex"
 												, (UINT)m_vResolution.x
 												, (UINT)m_vResolution.y
 												, DXGI_FORMAT_D24_UNORM_S8_UINT
 												, D3D11_BIND_DEPTH_STENCIL);
-
 	// View 종류
 	// RenderTargetView
 	// DepthStencilView

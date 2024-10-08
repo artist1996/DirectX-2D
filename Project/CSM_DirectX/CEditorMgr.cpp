@@ -24,14 +24,12 @@ CEditorMgr::CEditorMgr()
 
 CEditorMgr::~CEditorMgr()
 {
-#ifdef _DEBUG
 	Delete_Vec(m_vecEditorObject);
 	Delete_Map(m_mapUI);
 
 	ImGui_ImplDX11_Shutdown();
 	ImGui_ImplWin32_Shutdown();
 	ImGui::DestroyContext();
-#endif
 }
 
 void CEditorMgr::Init()
@@ -50,9 +48,6 @@ void CEditorMgr::Init()
 
 void CEditorMgr::Tick()
 {
-	if (m_mapUI.empty())
-		return;
-
 	ShortCut();
 
 	// Editor Object

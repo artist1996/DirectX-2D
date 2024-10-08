@@ -9,8 +9,8 @@ class CLevel :
 {
 private:
     CLayer*      m_Layer[MAX_LAYER];
-    LEVEL_STATE  m_State;
     UINT         m_Matrix[MAX_LAYER];
+    LEVEL_STATE  m_State;
 
     Ptr<CSound>  m_BGM;
 

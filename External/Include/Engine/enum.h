@@ -63,56 +63,6 @@ enum DIR
 	FRONT,
 };
 
-enum class OBJ_DIR
-{
-	DIR_LEFT,
-	DIR_RIGHT,
-	DIR_UP,
-	DIR_DOWN,
-
-	END,
-};
-
-enum class MONSTER_STATE
-{
-	IDLE,
-	TRACE,
-	ATTACK,
-	DEAD,
-
-	END,
-};
-
-enum class HUD_TYPE
-{
-	INFO,
-	INVENTORY,
-	QUEST,
-	SKILL,
-	AUCTION,
-	MENU,
-	CAHSSHOP,
-
-	END,
-};
-
-enum class PLAYER_SKILLTYPE
-{
-	HEADSHOT,	   // A
-	RISINGSHOT,    // S
-	WINDMILL,	   // D
-	MACHKICK,      // F
-	RANDOMSHOOT,   // G
-	WESTERNFIRE,   // H
-	GUNHAWK,	   // Q
-	PUNISHER,      // W
-	BBQ,	       // E
-	MULTIHEADSHOT, // R
-	DEATHCRYSIS,   // CTRL
-
-	END,
-};
-
 enum class RS_TYPE
 {
 	CULL_BACK,
@@ -247,16 +197,6 @@ enum class ANIMATION_EDITOR
 	END,
 };
 
-enum class PLATFORM_TYPE
-{
-	LEFT,
-	UP,
-	RIGHT,
-	BOTTOM,
-
-	END,
-};
-
 enum class PARTICLE_MODULE
 {
 	SPAWN,
@@ -266,74 +206,6 @@ enum class PARTICLE_MODULE
 	DRAG,
 	NOISE_FORCE,
 	RENDER,
-
-	END,
-};
-
-enum class OBJ_ID
-{
-	PLAYER,
-	RANDOMSHOOT,
-	HEADSHOT,
-	
-
-	END,
-};
-
-enum class LEVEL_TYPE
-{
-	SERIAROOM,
-	HENDONMYER,
-	LESHPHON1,
-	LESHPHON2,
-	LESHPHON3,
-	LESHPHON4,
-	LESHPHON5,
-	LESHPHON6,
-	LESHPHON7,
-
-	END,
-};
-
-enum class ITEM_TYPE
-{
-	WEAPON,
-	COAT,
-	PANTS,
-	SHOULDER,
-	SHOES,
-	BELT,
-
-	RING,
-	NECKLACE,
-	BRACELET,
-	
-	EARRING,
-	MAGICSTONE,
-	ASSISTANCE,
-
-	END,
-};
-
-enum class SLOT_TYPE
-{
-	EQUIP,
-	UNEQUIP,
-	STORE,
-
-	END,
-};
-
-enum class TAP_TYPE
-{
-	EQUIPMENT,
-	CONSUMPTION,
-	STUFF,
-	SPECIALITYMATERIALS,
-	QUEST,
-	
-	BUY,
-	REPURCHASE,
 
 	END,
 };

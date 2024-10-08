@@ -26,12 +26,8 @@ MenuUI::~MenuUI()
 {
 }
 
-
 void MenuUI::Tick()
 {
-	if (!IsActive())
-		return;
-
 	if (ImGui::BeginMainMenuBar())
 	{
 		Update();

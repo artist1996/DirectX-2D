@@ -4,6 +4,7 @@
 #include "ImGui/imgui_impl_dx11.h"
 #include "ImGui/imgui_impl_win32.h"
 #include <Engine/CDevice.h>
+#include <Engine/CRenderMgr.h>
 
 #include "ParamUI.h"
 
@@ -183,6 +184,8 @@ void CEditorMgr::ImGuiProgress()
 	// ImGui Tick
 	ImGuiTick();
 
+	Docking();
+	RenderGameScreen();
 	// ImGui Render    
 	ImGui::Render();
 	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
@@ -216,11 +219,12 @@ void CEditorMgr::CreateEditorUI()
 	m_mapUI.insert(make_pair(pList->GetName(), pList));
 
 	EditorUI* pOutliner = new Outliner;
-	pOutliner->SetName("Outliner");
+	pOutliner->SetName("Hierarchy");
 	m_mapUI.insert(make_pair(pOutliner->GetName(), pOutliner));
 
 	EditorUI* pMenu = new MenuUI;
 	pMenu->SetName("MainMenu");
+	pMenu->SetActive(true);
 	pMenu->Init();
 	m_mapUI.insert(make_pair(pMenu->GetName(), pMenu));
 
@@ -299,6 +303,52 @@ void CEditorMgr::CreateEditorUI()
 	pLevelEditor->SetName("Level Editor");
 	pLevelEditor->Init();
 	m_mapUI.insert(make_pair(pLevelEditor->GetName(), pLevelEditor));
+}
+
+void CEditorMgr::Docking()
+{
+	// 메뉴바 플래그 설정 (필요시 추가)
+	ImGuiWindowFlags window_flags = ImGuiWindowFlags_MenuBar;// | ImGuiWindowFlags_NoDocking;
+
+	// 메인 뷰포트 크기를 가져옴
+	ImGuiViewport* viewport = ImGui::GetMainViewport();
+	ImGui::SetNextWindowPos(viewport->Pos);
+	ImGui::SetNextWindowSize(viewport->Size);
+	ImGui::SetNextWindowViewport(viewport->ID);
+
+	// 윈도우 설정을 위해 플래그 설정
+	window_flags |= ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove;
+	window_flags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
+
+	// 도킹 영역 윈도우 생성
+	ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
+	ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
+	ImGui::Begin("DockSpace Demo", nullptr, window_flags);
+	ImGui::PopStyleVar(2);
+
+	// 도킹 스페이스 생성
+	ImGuiID dockspace_id = ImGui::GetID("MyDockSpace");
+	ImGui::DockSpace(dockspace_id, ImVec2(0.f, 0.f), ImGuiDockNodeFlags_None);
+
+	ImGui::End();
+}
+
+void CEditorMgr::RenderGameScreen()
+{
+	//if (RTTex.Get() && RTTex->GetSRV().Get())
+	//{
+	//	// ImGui 윈도우를 만들고 렌더 타겟 영역을 정한다.
+	//	ImGui::Begin("Game Screen");
+	//
+	//	// 텍스처를 ImGui 윈도우에 출력
+	//	ImGui::Image((void*)RTTex->GetSRV().Get(), ImVec2(RTTex->Width(), RTTex->Height())); // 렌더 타겟 크기에 맞게 설정
+	//
+	//	ImGui::End();
+	//}
+
+	ImGui::Begin("Game Screen");
+	ImGui::Image((void*)CRenderMgr::GetInst()->GetCopyTex()->GetSRV().Get(), ImVec2(1280.f, 768.f));
+	ImGui::End();
 }
 
 EditorUI* CEditorMgr::FindEditorUI(const string& _strName)

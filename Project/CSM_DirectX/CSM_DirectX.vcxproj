@@ -182,7 +182,6 @@
     <ClInclude Include="LevelEditor.h" />
     <ClInclude Include="Light2DUI.h" />
     <ClInclude Include="ListUI.h" />
-    <ClInclude Include="LoadLevel.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="MaterialUI.h" />
     <ClInclude Include="MenuUI.h" />
@@ -254,7 +253,6 @@
     <ClCompile Include="LevelEditor.cpp" />
     <ClCompile Include="Light2DUI.cpp" />
     <ClCompile Include="ListUI.cpp" />
-    <ClCompile Include="LoadLevel.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MaterialUI.cpp" />
     <ClCompile Include="MenuUI.cpp" />

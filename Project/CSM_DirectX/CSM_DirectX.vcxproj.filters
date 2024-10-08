@@ -172,9 +172,6 @@
     <Filter Include="04. Level">
       <UniqueIdentifier>{8dd39063-01cc-4190-aa28-46babfbbdc34}</UniqueIdentifier>
     </Filter>
-    <Filter Include="04. Level\01. Loading">
-      <UniqueIdentifier>{e97e6d8c-8bed-4f03-968c-f2aca3b991d3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. EditorUI\01. Inspector\ComponentUI\11. FontUI">
       <UniqueIdentifier>{57ec26b6-73f1-45fc-9cd6-dcf948095577}</UniqueIdentifier>
     </Filter>
@@ -384,9 +381,6 @@
     <ClInclude Include="LevelEditor.h">
       <Filter>02. EditorUI\12. Level Editor</Filter>
     </ClInclude>
-    <ClInclude Include="LoadLevel.h">
-      <Filter>04. Level\01. Loading</Filter>
-    </ClInclude>
     <ClInclude Include="FontUI.h">
       <Filter>02. EditorUI\01. Inspector\ComponentUI\11. FontUI</Filter>
     </ClInclude>
@@ -587,9 +581,6 @@
     </ClCompile>
     <ClCompile Include="LevelEditor.cpp">
       <Filter>02. EditorUI\12. Level Editor</Filter>
-    </ClCompile>
-    <ClCompile Include="LoadLevel.cpp">
-      <Filter>04. Level\01. Loading</Filter>
     </ClCompile>
     <ClCompile Include="FontUI.cpp">
       <Filter>02. EditorUI\01. Inspector\ComponentUI\11. FontUI</Filter>

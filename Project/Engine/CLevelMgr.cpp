@@ -21,8 +21,8 @@ CLevelMgr::CLevelMgr()
 
 CLevelMgr::~CLevelMgr()
 {
-	Delete_Vec(m_vecLevel);
-	//SAFE_DELETE(m_CurLevel);
+	//Delete_Vec(m_vecLevel);
+	SAFE_DELETE(m_CurLevel);
 }
 
 CGameObject* CLevelMgr::FindObjectByName(const wstring& _strName)
@@ -69,14 +69,6 @@ bool CLevelMgr::ChangeLevel(CLevel* _NextLevel)
 	LevelChanged();
 
 	return true;
-}
-
-void CLevelMgr::ChangeCurLevel(LEVEL_TYPE _Type)
-{
-	m_CurLevel = m_vecLevel[(UINT)_Type];
-	m_CurLevel->Enter();
-
-	LevelChanged();
 }
 
 void CLevelMgr::LevelChanged()

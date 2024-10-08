@@ -10,7 +10,6 @@
 
 #include "CLevelSaveLoad.h"
 #include "CTestLevel.h"
-#include "LoadLevel.h"
 
 // 전역 변수:
 HINSTANCE g_hInst = nullptr;                               // 현재 인스턴스입니다.

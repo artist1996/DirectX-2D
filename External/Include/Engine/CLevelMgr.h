@@ -14,7 +14,6 @@ private:
 
 public:
 	CLevel* GetCurrentLevel() { return m_CurLevel; }
-	CLevel* FindLevel(LEVEL_TYPE _Type) { return m_vecLevel[(UINT)_Type]; }
 	CGameObject* FindObjectByName(const wstring& _strName);
 
 	void AddLevel(CLevel* _pLevel) { m_vecLevel.push_back(_pLevel); }
@@ -29,7 +28,6 @@ public:
 
 private:
 	bool ChangeLevel(CLevel* _NextLevel);
-	void ChangeCurLevel(LEVEL_TYPE _Type);
 
 public:
 	void Init();

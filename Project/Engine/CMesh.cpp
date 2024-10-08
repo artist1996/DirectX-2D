@@ -3,7 +3,7 @@
 
 #include "CDevice.h"
 
-CMesh::CMesh()
+CMesh::CMesh(bool _IsEngine)
 	: CAsset(ASSET_TYPE::MESH)
 	, m_VtxSysMem(nullptr)
 	, m_IdxSysMem(nullptr)
@@ -12,6 +12,8 @@ CMesh::CMesh()
 	, m_VtxCount(0)
 	, m_IdxCount(0)
 {
+	if (_IsEngine)
+		SetEngineAsset();
 }
 
 CMesh::~CMesh()

@@ -17,17 +17,6 @@ CLevel::CLevel()
 	{
 		m_Layer[i] = new CLayer(i);
 	}
-
-	m_Layer[0]->SetName(L"Default");
-	m_Layer[1]->SetName(L"Background");
-	m_Layer[2]->SetName(L"Tile");
-	m_Layer[3]->SetName(L"Platform");
-	m_Layer[4]->SetName(L"Player");
-	m_Layer[5]->SetName(L"Movement");
-	m_Layer[6]->SetName(L"Monster");
-	m_Layer[7]->SetName(L"PlayerProjectile");
-	m_Layer[8]->SetName(L"MonsterProjectile");
-	m_Layer[9]->SetName(L"Gate");
 }
 
 CLevel::CLevel(const CLevel& _Origin)
@@ -58,19 +47,6 @@ void CLevel::Begin()
 	{
 		m_Layer[i]->Begin();
 	}
-
-	if(nullptr != m_BGM)
-		m_BGM->Play(0, 0.7f, false);
-
-	if (L"leshphon4" == GetName())
-		CAssetMgr::GetInst()->FindAsset<CSound>(L"sound\\leshphon.mp3")->Stop();
-
-	CCollisionMgr::GetInst()->CollisionCheckClear();
-
-	CCollisionMgr::GetInst()->SetCollisionMatrix(m_Matrix);
-
-	if (L"leshphon1" == GetName())
-		CCollisionMgr::GetInst()->CollisionCheck(4, 8);
 }
 
 void CLevel::Tick()
@@ -91,16 +67,10 @@ void CLevel::FinalTick()
 
 void CLevel::Exit()
 {
-	if (L"leshphon1" != GetName())
-	{
-		if(nullptr != m_BGM)
-			m_BGM->Stop();
-	}
 }
 
 CGameObject* CLevel::FindObjectByName(const wstring& _strName)
 {
-	
 	for (int i = 0; i < MAX_LAYER; ++i)
 	{
 		const vector<CGameObject*> vecParent = m_Layer[i]->GetParentObjects();

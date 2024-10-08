@@ -6,13 +6,11 @@
 #include "CTimeMgr.h"
 #include "CAssetMgr.h"
 #include "CLevelMgr.h"
-#include "CDistanceMgr.h"
 #include "CRenderMgr.h"
 #include "CCollisionMgr.h"
 #include "CTaskMgr.h"
 #include "CFontMgr.h"
 #include "CPrefab.h"
-#include "CObjectPoolMgr.h"
 
 CEngine::CEngine()
 	: m_hWnd(nullptr)
@@ -78,7 +76,6 @@ void CEngine::Progress()
 	CTimeMgr::GetInst()->Tick();
 	CAssetMgr::GetInst()->Tick();
 	CLevelMgr::GetInst()->Progress();
-	CDistanceMgr::GetInst()->Tick();
 
 	// Collision
 	CCollisionMgr::GetInst()->Tick();

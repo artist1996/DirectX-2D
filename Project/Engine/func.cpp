@@ -52,15 +52,6 @@ void ChangeLevel(CLevel* _NextLevel, LEVEL_STATE _NextLevelState)
 	CTaskMgr::GetInst()->AddTask(Task);
 }
 
-void ChangeCurLevel(LEVEL_TYPE _Type)
-{
-	tTask Task = {};
-	Task.Type = TASK_TYPE::CHANGE_LEVEL2;
-	Task.Param_0 = (DWORD_PTR)_Type;
-
-	CTaskMgr::GetInst()->AddTask(Task);
-}
-
 bool IsValid(CGameObject*& _Object)
 {
 	if (nullptr == _Object)

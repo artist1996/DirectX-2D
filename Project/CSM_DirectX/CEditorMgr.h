@@ -32,5 +32,7 @@ private:
     void ImGuiProgress();
     void ImGuiTick();
     void CreateEditorUI();
+    void Docking();
+    void RenderGameScreen();
 };
 

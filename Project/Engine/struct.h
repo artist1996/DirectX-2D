@@ -5,6 +5,10 @@ struct Vtx
 	Vec3	vPos;
 	Vec4	vColor;
 	Vec2	vUV;
+
+	Vec3	vTangent;
+	Vec3    vNormal;
+	Vec3    vBinormal;
 };
 
 // ====================
@@ -72,32 +76,6 @@ struct tTask
 	DWORD_PTR Param_0;
 	DWORD_PTR Param_1;
 };
-
-typedef struct tObjInfo
-{
-	int   MaxFatigue;
-	int   Fatigue;
-	int   iGold;
-	float MaxHP;
-	float HP;
-	float MaxMP;
-	float MP;
-	float MinAttack;
-	float MaxAttack;
-	float Defense;
-	float Speed;
-	bool  bTackle;
-	bool  bMoveable;
-	bool  bHit;
-	bool  bDead;
-	bool  bJump;
-	bool  bHitFly;
-	bool  bForce;
-	bool  bAirHit;
-	bool  bSuperArmor;
-	bool  bInvincible;
-	bool  bReflection;
-}INFO;
 
 struct tLight
 {
